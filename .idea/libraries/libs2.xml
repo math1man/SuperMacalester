@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="libs2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-desktop/libs/gdx-backend-lwjgl-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-desktop/libs/gdx-backend-lwjgl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-desktop/libs/gdx-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-desktop/libs/gdx-backend-lwjgl-natives.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
