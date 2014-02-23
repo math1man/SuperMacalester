@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.objects.Bird;
+import com.arnopaja.supermac.world.GameWorld;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -8,14 +8,19 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class InputHandler implements InputProcessor {
 
-    private Bird bird;
+    private GameWorld world;
 
-    public InputHandler(Bird bird) {
-        this.bird = bird;
+    private float scaleFactorX;
+    private float scaleFactorY;
+
+    public InputHandler(GameWorld world, float scaleFactorX, float scaleFactorY) {
+        this.world = world;
+        this.scaleFactorX = scaleFactorX;
+        this.scaleFactorY = scaleFactorY;
     }
 
     @Override
-    public boolean keyDown(int i) {
+    public boolean keyDown(int keycode) {
         return false;
     }
 
@@ -30,13 +35,12 @@ public class InputHandler implements InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int i, int i2, int i3, int i4) {
-        bird.onClick();
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean touchUp(int i, int i2, int i3, int i4) {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
     }
 
@@ -53,5 +57,13 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean scrolled(int i) {
         return false;
+    }
+
+    private int scaleX(int screenX) {
+        return (int) (screenX / scaleFactorX);
+    }
+
+    private int scaleY(int screenY) {
+        return (int) (screenY / scaleFactorY);
     }
 }
