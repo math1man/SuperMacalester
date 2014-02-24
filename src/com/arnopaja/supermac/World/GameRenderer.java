@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class GameRenderer {
 
-    private GameWorld world;
+    private com.arnopaja.supermac.world.GameWorld world;
     private OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
