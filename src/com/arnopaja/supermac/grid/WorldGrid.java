@@ -1,9 +1,12 @@
-package com.arnopaja.supermac.objects;
+package com.arnopaja.supermac.grid;
 
 /**
+ * Implementation of Grid for the world.
+ * Has a fixed size and is filled based on the map of Macalester.
+ *
  * @author Ari Weiland
  */
-public class WorldGrid extends GridSpace {
+public class WorldGrid extends Grid {
 
     public static final int WORLD_WIDTH = 16;
     public static final int WORLD_HEIGHT = 16;

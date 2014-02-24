@@ -1,5 +1,10 @@
 package com.arnopaja.supermac.world;
 
+import com.arnopaja.supermac.objects.Building;
+import com.arnopaja.supermac.grid.WorldGrid;
+
+import java.util.List;
+
 /**
  * @author Ari Weiland
  */
@@ -9,6 +14,9 @@ public class GameWorld {
 
     private float runTime;
     private GameState currentState;
+
+    private WorldGrid worldGrid;
+    private List<Building> buildings;
 
     public GameWorld() {
         currentState = GameState.MENU;

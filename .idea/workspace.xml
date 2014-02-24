@@ -10,11 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainCharacter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BuildingGrid.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/WorldGrid.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -79,44 +84,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GameScreen.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java">
+      <file leaf-file-name="Grid.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="64" selection-start="896" selection-end="896" vertical-scroll-proportion="0.59075344" vertical-offset="0" max-vertical-offset="1020">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GridSpace.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="41" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+            <state line="56" column="32" selection-start="1566" selection-end="1566" vertical-scroll-proportion="0.0" vertical-offset="1051" max-vertical-offset="1635">
               <folding>
-                <element signature="e#436#437#0" expanded="true" />
-                <element signature="e#468#469#0" expanded="true" />
-                <element signature="e#502#503#0" expanded="true" />
-                <element signature="e#535#536#0" expanded="true" />
-                <element signature="e#568#569#0" expanded="true" />
-                <element signature="e#595#596#0" expanded="true" />
+                <element signature="e#760#761#0" expanded="true" />
+                <element signature="e#792#793#0" expanded="true" />
+                <element signature="e#826#827#0" expanded="true" />
+                <element signature="e#859#860#0" expanded="true" />
+                <element signature="e#897#898#0" expanded="true" />
+                <element signature="e#929#930#0" expanded="true" />
+                <marker date="1393259444000" expanded="true" signature="1020:1574" placeholder="/**...*/" />
+                <marker date="1393259444000" expanded="true" signature="2699:3065" placeholder="/**...*/" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldGrid.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/WorldGrid.java">
+      <file leaf-file-name="RenderGrid.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="41" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+            <state line="16" column="10" selection-start="514" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorldGrid.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="65" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="BuildingGrid.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BuildingGrid.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="4" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="255">
+            <state line="4" column="48" selection-start="140" selection-end="140" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
               <folding />
             </state>
           </provider>
@@ -125,36 +132,7 @@
       <file leaf-file-name="InputHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="1454" selection-end="1454" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1125">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameRenderer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="0" selection-start="1691" selection-end="1691" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="945">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameWorld.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="25" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" vertical-offset="316" max-vertical-offset="1065">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Building.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+            <state line="24" column="5" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="1110">
               <folding />
             </state>
           </provider>
@@ -163,16 +141,51 @@
       <file leaf-file-name="Tile.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="4" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+            <state line="38" column="40" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0" vertical-offset="76" max-vertical-offset="780">
+              <folding>
+                <element signature="e#633#634#0" expanded="true" />
+                <element signature="e#660#661#0" expanded="true" />
+                <element signature="e#695#696#0" expanded="true" />
+                <element signature="e#728#729#0" expanded="true" />
+                <element signature="e#802#803#0" expanded="true" />
+                <element signature="e#853#854#0" expanded="true" />
+                <element signature="e#897#898#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainCharacter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainCharacter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="28" selection-start="455" selection-end="455" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AssetLoader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java">
+      <file leaf-file-name="GameRenderer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="60" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="645">
+            <state line="61" column="0" selection-start="1691" selection-end="1691" vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="1020">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GridSpace.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="50" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.7688356" vertical-offset="211" max-vertical-offset="825">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameWorld.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="25" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1020">
               <folding />
             </state>
           </provider>
@@ -213,18 +226,25 @@
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/ScrollHandler.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/tween/Value.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/tween/ValueAccessor.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/SplashScreen.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameRenderer.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/WorldGrid.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BuildingGrid.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/RenderGrid.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainCharacter.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java" />
       </list>
     </option>
   </component>
@@ -261,6 +281,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -453,14 +475,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="supermac" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -490,6 +532,8 @@
       <recent name="$PROJECT_DIR$/data" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.arnopaja.supermac.grid" />
+      <recent name="com.arnopaja.supermac.objects" />
       <recent name="com.arnopaja.supermac.world" />
       <recent name="com.arnopaja.supermac.Screen" />
     </key>
@@ -810,7 +854,9 @@
       <workItem from="1392672474991" duration="362000" />
       <workItem from="1392832622749" duration="3242000" />
       <workItem from="1393004263423" duration="17021000" />
-      <workItem from="1393188459050" duration="752000" />
+      <workItem from="1393188459050" duration="1409000" />
+      <workItem from="1393256596798" duration="76000" />
+      <workItem from="1393256703248" duration="3534000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -832,14 +878,18 @@
       <created>1393187927254</created>
       <updated>1393187927254</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Building up the grid&#10;">
+      <created>1393189222074</created>
+      <updated>1393189222074</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22382000" />
+    <option name="totallyTimeSpent" value="26649000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="704" extended-state="6" />
+    <frame x="0" y="22" width="1280" height="704" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -864,7 +914,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -891,7 +941,8 @@
     <MESSAGE value="Zombie Flappy Bird is coming along.&#10;We should easily be able to use their framework." />
     <MESSAGE value="Stripping down framework for our game" />
     <MESSAGE value="Stripping down framework for our game&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stripping down framework for our game&#10;" />
+    <MESSAGE value="Building up the grid&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Building up the grid&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -908,28 +959,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="50" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
+        <state line="9" column="41" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="600">
           <folding>
-            <element signature="e#436#437#0" expanded="true" />
-            <element signature="e#468#469#0" expanded="true" />
-            <element signature="e#502#503#0" expanded="true" />
-            <element signature="e#535#536#0" expanded="true" />
-            <element signature="e#568#569#0" expanded="true" />
-            <element signature="e#595#596#0" expanded="true" />
+            <element signature="e#760#761#0" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+            <element signature="e#826#827#0" expanded="true" />
+            <element signature="e#859#860#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
+            <element signature="e#929#930#0" expanded="true" />
+            <marker date="1393259444000" expanded="true" signature="1020:1574" placeholder="/**...*/" />
+            <marker date="1393259444000" expanded="true" signature="2699:3065" placeholder="/**...*/" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/WorldGrid.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="41" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="300">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BuildingGrid.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="4" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="83" selection-start="390" selection-end="390" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="1110">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="0" selection-start="1691" selection-end="1691" vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="25" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" vertical-offset="316" max-vertical-offset="1065">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="285">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="4" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="60" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="64" selection-start="896" selection-end="896" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1080">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="50" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
+          <folding>
+            <element signature="e#760#761#0" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+            <element signature="e#826#827#0" expanded="true" />
+            <element signature="e#859#860#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
+            <element signature="e#929#930#0" expanded="true" />
+            <marker date="1393259444000" expanded="true" signature="1020:1574" placeholder="/**...*/" />
+            <marker date="1393259444000" expanded="true" signature="2699:3065" placeholder="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="41" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="4" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="255">
           <folding />
@@ -960,13 +1092,11 @@
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="56" column="0" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="945">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="4" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="210">
           <folding />
@@ -1004,9 +1134,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="5" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="240">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1057,19 +1185,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../SuperMacalester-android/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="26" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-          <folding>
-            <element signature="e#363#381#0" expanded="false" />
-            <element signature="e#469#487#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="13" column="26" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../SuperMacalester-android/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="43" selection-start="94" selection-end="94" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="2" column="43" selection-start="94" selection-end="94" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../SuperMacalester-android/assets/data/shadow.fnt">
@@ -1084,18 +1205,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/tween/SpriteAccessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="61" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="1454" selection-end="1454" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1125">
-          <folding />
-        </state>
+        <state line="9" column="61" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/ui/SimpleButton.java">
@@ -1105,37 +1215,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BuildingGrid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="4" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="60" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="645">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Building.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="4" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/WorldGrid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="41" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+        <state line="12" column="0" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="315">
           <folding />
         </state>
       </provider>
@@ -1144,15 +1226,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="61" column="0" selection-start="1691" selection-end="1691" vertical-scroll-proportion="0.0" vertical-offset="645" max-vertical-offset="1020">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="25" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1165,23 +1238,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/GridSpace.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="41" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+        <state line="27" column="64" selection-start="896" selection-end="896" vertical-scroll-proportion="0.0" vertical-offset="166" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/InputHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="5" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="1110">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/BuildingGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="48" selection-start="140" selection-end="140" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="32" selection-start="1566" selection-end="1566" vertical-scroll-proportion="0.0" vertical-offset="1051" max-vertical-offset="1635">
           <folding>
-            <element signature="e#436#437#0" expanded="true" />
-            <element signature="e#468#469#0" expanded="true" />
-            <element signature="e#502#503#0" expanded="true" />
-            <element signature="e#535#536#0" expanded="true" />
-            <element signature="e#568#569#0" expanded="true" />
-            <element signature="e#595#596#0" expanded="true" />
+            <element signature="e#760#761#0" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+            <element signature="e#826#827#0" expanded="true" />
+            <element signature="e#859#860#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
+            <element signature="e#929#930#0" expanded="true" />
+            <marker date="1393259444000" expanded="true" signature="1020:1574" placeholder="/**...*/" />
+            <marker date="1393259444000" expanded="true" signature="2699:3065" placeholder="/**...*/" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="64" selection-start="896" selection-end="896" vertical-scroll-proportion="0.59075344" vertical-offset="0" max-vertical-offset="1020">
+        <state line="26" column="60" selection-start="789" selection-end="789" vertical-scroll-proportion="0.5119863" vertical-offset="16" max-vertical-offset="645">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/world/GameWorld.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="25" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="40" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0" vertical-offset="76" max-vertical-offset="780">
+          <folding>
+            <element signature="e#633#634#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
+            <element signature="e#695#696#0" expanded="true" />
+            <element signature="e#728#729#0" expanded="true" />
+            <element signature="e#802#803#0" expanded="true" />
+            <element signature="e#853#854#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="10" selection-start="514" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/WorldGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="65" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainCharacter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="28" selection-start="455" selection-end="455" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/GridSpace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="50" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.7688356" vertical-offset="211" max-vertical-offset="825">
           <folding />
         </state>
       </provider>
