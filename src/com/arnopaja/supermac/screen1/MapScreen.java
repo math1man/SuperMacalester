@@ -1,21 +1,21 @@
-package com.arnopaja.supermac.screen;
+package com.arnopaja.supermac.screen1;
 
 import com.arnopaja.supermac.helpers.InputHandler;
-import com.arnopaja.supermac.world.GameRenderer;
-import com.arnopaja.supermac.world.GameWorld;
+import com.arnopaja.supermac.world1.GameWorld;
+import com.arnopaja.supermac.world1.MapRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 /**
  * @author Ari Weiland
  */
-public class GameScreen implements Screen {
+public class MapScreen implements Screen {
 
     private GameWorld world;
-    private GameRenderer renderer;
+    private MapRenderer renderer;
     private float runTime;
 
-    public GameScreen() {
+    public MapScreen() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
@@ -25,7 +25,7 @@ public class GameScreen implements Screen {
 
         world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
-        renderer = new GameRenderer(world, gameWidth, gameHeight);
+        renderer = new MapRenderer(world, gameWidth, gameHeight);
     }
 
     @Override
@@ -37,27 +37,27 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("GameScreen - resizing");
+        System.out.println("MapScreen - resizing");
     }
 
     @Override
     public void show() {
-        System.out.println("GameScreen - show called");
+        System.out.println("MapScreen - show called");
     }
 
     @Override
     public void hide() {
-        System.out.println("GameScreen - hide called");
+        System.out.println("MapScreen - hide called");
     }
 
     @Override
     public void pause() {
-        System.out.println("GameScreen - pause called");
+        System.out.println("MapScreen - pause called");
     }
 
     @Override
     public void resume() {
-        System.out.println("GameScreen - resume called");
+        System.out.println("MapScreen - resume called");
     }
 
     @Override

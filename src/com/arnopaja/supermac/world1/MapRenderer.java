@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.world;
+package com.arnopaja.supermac.world1;
 
 import com.arnopaja.supermac.grid.RenderGrid;
 import com.arnopaja.supermac.objects.MainCharacter;
@@ -13,16 +13,16 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class GameRenderer {
+public class MapRenderer {
 
-    private com.arnopaja.supermac.world.GameWorld world;
+    private GameWorld world;
     private OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
 
     private float gameWidth, gameHeight;
 
-    public GameRenderer(GameWorld world, float gameWidth, float gameHeight) {
+    public MapRenderer(GameWorld world, float gameWidth, float gameHeight) {
         this.world = world;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;

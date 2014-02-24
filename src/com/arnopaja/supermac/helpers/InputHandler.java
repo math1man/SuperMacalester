@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.world.GameWorld;
+import com.arnopaja.supermac.world1.GameWorld;
 import com.badlogic.gdx.InputProcessor;
 
 /**

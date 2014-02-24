@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.world;
+package com.arnopaja.supermac.world1;
 
 import com.arnopaja.supermac.objects.Building;
 import com.arnopaja.supermac.grid.WorldGrid;
