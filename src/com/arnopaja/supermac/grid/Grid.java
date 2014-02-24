@@ -9,15 +9,15 @@ public class Grid {
 
     public final int gridWidth, gridHeight;
 
-    protected GridSpace[][] gridArray;
+    protected GridElement[][] gridArray;
 
     protected Grid(int gridWidth, int gridHeight) {
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
-        gridArray = new GridSpace[gridWidth][gridHeight];
+        gridArray = new GridElement[gridWidth][gridHeight];
     }
 
-    protected Grid(GridSpace[][] gridArray) {
+    protected Grid(GridElement[][] gridArray) {
         this.gridArray = gridArray;
         gridWidth = gridArray.length;
         gridHeight = gridArray[0].length;
@@ -37,11 +37,11 @@ public class Grid {
         return gridHeight;
     }
 
-    public GridSpace[][] getGrid() {
+    public GridElement[][] getGrid() {
         return gridArray;
     }
 
-    public GridSpace getTile(int x, int y) {
+    public GridElement getTile(int x, int y) {
         return gridArray[x][y];
     }
 
@@ -56,8 +56,8 @@ public class Grid {
      * @param height the height of the subgrid array
      * @return the subgrid array
      */
-    public GridSpace[][] getSubGridArray(int x, int y, int width, int height) {
-        GridSpace[][] subGrid = new GridSpace[width][height];
+    public GridElement[][] getSubGridArray(int x, int y, int width, int height) {
+        GridElement[][] subGrid = new GridElement[width][height];
         for (int i=0; i<width; i++) {
             for (int j=0; j<height; j++) {
                 if (i+x < gridArray.length && i+x >= 0

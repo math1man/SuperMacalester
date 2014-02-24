@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  *
  * @author Ari Weiland
  */
-public abstract class GridSpace {
+public abstract class GridElement {
 
     public static enum direction { NORTH, EAST, SOUTH, WEST }
 
@@ -15,7 +15,7 @@ public abstract class GridSpace {
     protected int y;
     protected boolean isRendered;
 
-    protected GridSpace(int x, int y, boolean isRendered) {
+    protected GridElement(int x, int y, boolean isRendered) {
         this.x = x;
         this.y = y;
         this.isRendered = isRendered;

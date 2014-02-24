@@ -1,11 +1,11 @@
 package com.arnopaja.supermac.objects;
 
-import com.arnopaja.supermac.grid.GridSpace;
+import com.arnopaja.supermac.grid.GridElement;
 
 /**
  * @author Ari Weiland
  */
-public class Tile extends GridSpace {
+public class Tile extends GridElement {
 
     public static enum TileType {
         PATH(true),

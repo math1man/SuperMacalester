@@ -18,7 +18,7 @@ public class RenderGrid extends Grid {
         super(RENDER_WIDTH, RENDER_HEIGHT);
     }
 
-    protected RenderGrid(GridSpace[][] grid) {
+    protected RenderGrid(GridElement[][] grid) {
         super(grid);
         if (grid.length != RENDER_WIDTH || grid[0].length != RENDER_HEIGHT) {
             throw new IllegalArgumentException();

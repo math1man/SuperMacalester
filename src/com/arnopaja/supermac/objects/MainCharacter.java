@@ -1,11 +1,11 @@
 package com.arnopaja.supermac.objects;
 
-import com.arnopaja.supermac.grid.GridSpace;
+import com.arnopaja.supermac.grid.GridElement;
 
 /**
  * @author Ari Weiland
  */
-public class MainCharacter extends GridSpace {
+public class MainCharacter extends GridElement {
     public MainCharacter(int x, int y, boolean isRendered) {
         super(x, y, true);
     }
