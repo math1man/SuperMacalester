@@ -1,43 +1,32 @@
 package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.GridElement;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Ari Weiland
  */
 public class Tile extends GridElement {
 
-    public static enum TileType {
-        PATH(true),
-        GROUND(true),
-        BUILDING(false);
-
-        public final boolean isPathable;
-
-        TileType(boolean isPathable) {
-            this.isPathable = isPathable;
-        }
-    }
-
-    private TileType type;
+    private TextureRegion sprite;
     private boolean isPathable;
 
-    public Tile(int x, int y, TileType type) {
-        super(x, y, true);
-        this.type = type;
-        isPathable = type.isPathable;
+    public Tile(int x, int y,TextureRegion sprite, boolean isPathable) {
+        super(true);
+        this.sprite = sprite;
+        this.isPathable = isPathable;
     }
 
-    public TileType getType() {
-        return type;
+    public TextureRegion getSprite() {
+        return sprite;
     }
 
     public boolean isPathable() {
         return isPathable;
     }
 
-    public void setType(TileType type) {
-        this.type = type;
+    public void setSprite(TextureRegion sprite) {
+        this.sprite = sprite;
     }
 
     public void setPathable(boolean isPathable) {

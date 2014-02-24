@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.grid;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Superclass for all types of grids.
  *
@@ -14,7 +16,7 @@ public class Grid {
     protected Grid(int gridWidth, int gridHeight) {
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
-        gridArray = new GridElement[gridWidth][gridHeight];
+        clear();
     }
 
     protected Grid(GridElement[][] gridArray) {
@@ -48,7 +50,7 @@ public class Grid {
     /**
      * Returns an array of GridSpaces that corresponds to the described subgrid.
      * If the described subgrid covers area outside the caller's grid array, the
-     * missing elements are set to null.
+     * missing elements are set as not rendered.
      *
      * @param x the x coordinate of upper left hand corner of the subgrid array.  Can be negative
      * @param y the y coordinate of upper left hand corner of the subgrid array.  Can be negative
@@ -65,11 +67,23 @@ public class Grid {
                         && i+y >= 0) {
                     subGrid[i][j] = gridArray[i+x][j+x];
                 } else {
-                    subGrid[i][j] = null;
+                    subGrid[i][j] = new GridElement(false);
                 }
             }
         }
         return subGrid;
+    }
+
+    /**
+     * Duplicate of the other getSubGridArray method using a Vector2 instead of x and y coords.
+     *
+     * @param position the coordinates of upper left hand corner of the subgrid array.  Can be negative
+     * @param width the width of the subgrid array
+     * @param height the height of the subgrid array
+     * @return the subgrid array
+     */
+    public GridElement[][] getSubGridArray(Vector2 position, int width, int height) {
+        return getSubGridArray((int) position.x, (int) position.y, width, height);
     }
 
     /**
@@ -86,9 +100,21 @@ public class Grid {
     }
 
     /**
+     * Duplicate of the other getSubGrid method using a Vector2 instead of x and y coords.
+     *
+     * @param position the coordinates of upper left hand corner of the subgrid.  Can be negative
+     * @param width the width of the subgrid
+     * @param height the height of the subgrid
+     * @return the subgrid
+     */
+    public Grid getSubGrid(Vector2 position, int width, int height) {
+        return getSubGrid((int) position.x, (int) position.y, width, height);
+    }
+
+    /**
      * Returns a RenderGrid of the calling grid centered at the given coordinates.
      * If the RenderGrid covers spaces not in the calling grid, those spaces will be
-     * set to null.
+     * set as not rendered.
      *
      * @param x the x coordinate of the center of the RenderGrid
      * @param y the x coordinate of the center of the RenderGrid
@@ -99,5 +125,19 @@ public class Grid {
         int cornerY = y - (RenderGrid.RENDER_HEIGHT - 1)/2;
         return new RenderGrid(getSubGrid(cornerX, cornerY,
                 RenderGrid.RENDER_WIDTH, RenderGrid.RENDER_HEIGHT));
+    }
+
+    /**
+     * Duplicate of the other getRenderGrid method using a Vector2 instead of x and y coords.
+     *
+     * @param position the coordinates of the center of the RenderGrid
+     * @return the RenderGrid
+     */
+    public RenderGrid getRenderGrid(Vector2 position) {
+        return getRenderGrid((int) position.x, (int) position.y);
+    }
+
+    public void clear() {
+        gridArray = new GridElement[gridWidth][gridHeight];
     }
 }
