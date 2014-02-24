@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Armor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Character.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Hero.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Inventory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Item.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Party.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/SpecialItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Weapon.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -106,7 +96,7 @@
       <file leaf-file-name="MainParty.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="1.002457" vertical-offset="0" max-vertical-offset="578">
+            <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.65912765" vertical-offset="0" max-vertical-offset="619">
               <folding />
             </state>
           </provider>
@@ -655,17 +645,21 @@
       <workItem from="1392672474991" duration="36000" />
       <workItem from="1393007116203" duration="814000" />
       <workItem from="1393224164227" duration="28000" />
-      <workItem from="1393265229575" duration="3557000" />
+      <workItem from="1393265229575" duration="3622000" />
     </task>
     <task id="LOCAL-00001" summary="nolan test">
       <created>1393265458530</created>
       <updated>1393265458530</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Base Character,Item, etc. definitions">
+      <created>1393268863159</created>
+      <updated>1393268863159</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5440000" />
+    <option name="totallyTimeSpent" value="5505000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1808" height="754" extended-state="6" />
@@ -686,7 +680,7 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32868218" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32868218" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -717,7 +711,8 @@
     </option>
     <MESSAGE value="nolan test" />
     <MESSAGE value="Base Characters, Weapons, Armor, Items, etc. definitions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Base Characters, Weapons, Armor, Items, etc. definitions." />
+    <MESSAGE value="Base Character,Item, etc. definitions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Base Character,Item, etc. definitions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -825,7 +820,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="1.002457" vertical-offset="0" max-vertical-offset="578">
+        <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.65912765" vertical-offset="0" max-vertical-offset="619">
           <folding />
         </state>
       </provider>
