@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.GridElement;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -8,11 +9,18 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MainCharacter extends GridElement {
 
+    // position in the WorldGrid or BuildingGrid
     private int x;
     private int y;
 
-    public MainCharacter(boolean isRendered) {
+    public MainCharacter() {
         super(true);
+    }
+
+    @Override
+    public boolean render(SpriteBatch batcher, float x, float y) {
+        // TODO: finish this method.  Needs to deal with animations, etc.
+        return true;
     }
 
     public void move(direction dir) {

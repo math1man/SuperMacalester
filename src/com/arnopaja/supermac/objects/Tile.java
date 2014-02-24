@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.GridElement;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -15,6 +16,12 @@ public class Tile extends GridElement {
         super(true);
         this.sprite = sprite;
         this.isPathable = isPathable;
+    }
+
+    @Override
+    public boolean render(SpriteBatch batcher, float x, float y) {
+        batcher.draw(sprite, x, y);
+        return true;
     }
 
     public TextureRegion getSprite() {

@@ -53,18 +53,24 @@ public class GameRenderer {
 
         MainCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
-        RenderGrid renderTileGrid = world.getWorldTileGrid().getRenderGrid(centerPosition);
-        RenderGrid renderEntityGrid = world.getWorldEntityGrid().getRenderGrid(centerPosition);
+        RenderGrid tileGrid = world.getWorldTileGrid().getRenderGrid(centerPosition);
+        RenderGrid entityGrid = world.getWorldEntityGrid().getRenderGrid(centerPosition);
 
         shapeRenderer.begin(ShapeType.Filled);
 
         // Draw Background color
-        shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
+        shapeRenderer.setColor(0, 0, 0, 1);
         shapeRenderer.rect(0, 0, gameWidth, gameHeight);
 
         shapeRenderer.end();
 
         batcher.begin();
+        batcher.disableBlending();
+        float x = 0;
+        float y = 0;
+        tileGrid.render(batcher, x, y);   // Render the base tiles
+        batcher.enableBlending();
+        entityGrid.render(batcher, x, y); // Render entities on top of the tiles
         batcher.end();
     }
 }

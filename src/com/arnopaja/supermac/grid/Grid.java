@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Grid {
 
+    public static final int GRID_PIXEL_DIMENSION = 16; // the pixel width and height of a grid space
+
     public final int gridWidth, gridHeight;
 
     protected GridElement[][] gridArray;
@@ -50,7 +52,7 @@ public class Grid {
     /**
      * Returns an array of GridSpaces that corresponds to the described subgrid.
      * If the described subgrid covers area outside the caller's grid array, the
-     * missing elements are set as not rendered.
+     * missing elements are set as blank elements.
      *
      * @param x the x coordinate of upper left hand corner of the subgrid array.  Can be negative
      * @param y the y coordinate of upper left hand corner of the subgrid array.  Can be negative
@@ -62,12 +64,13 @@ public class Grid {
         GridElement[][] subGrid = new GridElement[width][height];
         for (int i=0; i<width; i++) {
             for (int j=0; j<height; j++) {
-                if (i+x < gridArray.length && i+x >= 0
-                        && i+y < gridArray[0].length
-                        && i+y >= 0) {
-                    subGrid[i][j] = gridArray[i+x][j+x];
+                if (i+x < gridArray.length
+                        && i+x >= 0
+                        && j+y < gridArray[0].length
+                        && j+y >= 0) {
+                    subGrid[i][j] = gridArray[i+x][j+y];
                 } else {
-                    subGrid[i][j] = new GridElement(false);
+                    subGrid[i][j] = new BlankElement();
                 }
             }
         }
@@ -114,7 +117,7 @@ public class Grid {
     /**
      * Returns a RenderGrid of the calling grid centered at the given coordinates.
      * If the RenderGrid covers spaces not in the calling grid, those spaces will be
-     * set as not rendered.
+     * set as blank elements.
      *
      * @param x the x coordinate of the center of the RenderGrid
      * @param y the x coordinate of the center of the RenderGrid
