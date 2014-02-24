@@ -3,11 +3,11 @@ package com.arnopaja.supermac.grid;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Abstract superclass for things that go in a grid.
+ * Superclass for things that go in a grid.
  *
  * @author Ari Weiland
  */
-public abstract class GridElement {
+public class GridElement {
 
     public static enum direction { NORTH, EAST, SOUTH, WEST }
 
