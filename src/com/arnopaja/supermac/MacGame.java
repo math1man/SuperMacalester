@@ -1,7 +1,7 @@
 package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.screen1.MapScreen;
+import com.arnopaja.supermac.screen.MapScreen;
 import com.badlogic.gdx.Game;
 
 public class MacGame extends Game {

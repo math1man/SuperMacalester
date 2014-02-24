@@ -1,8 +1,8 @@
-package com.arnopaja.supermac.screen1;
+package com.arnopaja.supermac.screen;
 
 import com.arnopaja.supermac.helpers.InputHandler;
-import com.arnopaja.supermac.world1.GameWorld;
-import com.arnopaja.supermac.world1.MapRenderer;
+import com.arnopaja.supermac.world.GameWorld;
+import com.arnopaja.supermac.world.MapRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
