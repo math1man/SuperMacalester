@@ -1,11 +1,14 @@
 package com.arnopaja.supermac.world;
 
+import com.arnopaja.supermac.grid.RenderGrid;
+import com.arnopaja.supermac.objects.MainCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Ari Weiland
@@ -48,6 +51,11 @@ public class GameRenderer {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        MainCharacter mainCharacter = world.getMainCharacter();
+        Vector2 centerPosition = mainCharacter.getPosition();
+        RenderGrid renderTileGrid = world.getWorldTileGrid().getRenderGrid(centerPosition);
+        RenderGrid renderEntityGrid = world.getWorldEntityGrid().getRenderGrid(centerPosition);
+
         shapeRenderer.begin(ShapeType.Filled);
 
         // Draw Background color
@@ -56,7 +64,7 @@ public class GameRenderer {
 
         shapeRenderer.end();
 
-//        batcher.begin();
-//        batcher.end();
+        batcher.begin();
+        batcher.end();
     }
 }
