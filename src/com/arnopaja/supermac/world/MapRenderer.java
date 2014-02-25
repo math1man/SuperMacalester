@@ -22,6 +22,7 @@ public class MapRenderer {
 
     private float gameWidth, gameHeight;
 
+
     public MapRenderer(GameWorld world, float gameWidth, float gameHeight) {
         this.world = world;
         this.gameWidth = gameWidth;

@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.objects;
 
-import com.arnopaja.supermac.grid.BuildingGrid;
+import com.arnopaja.supermac.grid.FloorGrid;
 
 /**
  * @author Ari Weiland
@@ -11,12 +11,12 @@ public class Building {
     // number refers to the array index, not the actual floor number
     // the ground floor is defined as the first floor
     private int groundFloorIndex;
-    private BuildingGrid[] floors;
+    private FloorGrid[] floors;
 
     public Building(int floorCount, int groundFloorIndex, int floorWidth, int floorHeight) {
-        floors = new BuildingGrid[floorCount];
-        for (BuildingGrid floor : floors) {
-            floor = new BuildingGrid(floorWidth, floorHeight);
+        floors = new FloorGrid[floorCount];
+        for (FloorGrid floor : floors) {
+            floor = new FloorGrid(floorWidth, floorHeight);
         }
         this.groundFloorIndex = groundFloorIndex;
     }
@@ -25,10 +25,14 @@ public class Building {
      * Returns the specified floor by the array index
      *
      * @param floorIndex the array index of the requested floor
-     * @return the BuildingGrid representing the specified floor
+     * @return the FloorGrid representing the specified floor
      */
-    public BuildingGrid getFloorByIndex(int floorIndex) {
+    public FloorGrid getFloorByIndex(int floorIndex) {
         return floors[floorIndex];
+    }
+
+    public void setFloorByIndex(int floorIndex, FloorGrid grid) {
+        floors[floorIndex] = grid;
     }
 
     /**
@@ -38,9 +42,9 @@ public class Building {
      *
      * @param floorNumber the number of the floor.  The ground floor specified
      *                    by groundFloorIndex is defined as the first floor
-     * @return the BuildingGrid representing the specificed floor
+     * @return the FloorGrid representing the specificed floor
      */
-    public BuildingGrid getFloorByNumber(int floorNumber) {
+    public FloorGrid getFloorByNumber(int floorNumber) {
         return floors[floorNumber-1+groundFloorIndex];
     }
 

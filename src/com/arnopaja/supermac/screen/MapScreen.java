@@ -11,6 +11,8 @@ import com.badlogic.gdx.Screen;
  */
 public class MapScreen implements Screen {
 
+    public static final float GAME_HEIGHT = 480;
+
     private GameWorld world;
     private MapRenderer renderer;
     private float runTime;
@@ -20,11 +22,12 @@ public class MapScreen implements Screen {
         float screenHeight = Gdx.graphics.getHeight();
 
         // TODO: figure these out
-        float gameHeight = 480;
+        float gameHeight = GAME_HEIGHT;
         float gameWidth = gameHeight * screenWidth / screenHeight;
 
         world = new GameWorld();
-        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
+        Gdx.input.setInputProcessor(new InputHandler(world, gameWidth, gameHeight,
+                gameWidth/screenWidth, gameHeight/screenHeight));
         renderer = new MapRenderer(world, gameWidth, gameHeight);
     }
 

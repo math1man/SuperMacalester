@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.objects;
 
+import com.arnopaja.supermac.grid.BlankElement;
+import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.GridElement;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,19 +13,32 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Character extends GridElement {
 
-    private Animation animation;
-    private TextureRegion sprite;
+    protected Animation animation;
+    protected TextureRegion sprite;
 
-    // position in the WorldGrid or BuildingGrid
-    private int x;
-    private int y;
-    private Direction facing;
+    // position in the WorldGrid or FloorGrid
+    protected Grid grid;
+    protected int x;
+    protected int y;
+    protected Direction facing;
 
-    public Character() {
-        super(true);
-        int x = 0;
-        int y = 0;
-        facing = Direction.SOUTH;
+    protected Character() {
+        this(null, 0, 0, Direction.SOUTH);
+    }
+
+    protected Character(Grid grid, int x, int y, Direction facing) {
+        this(grid, x, y, facing, false);
+    }
+
+    protected Character(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
+        super(true, isInteractable);
+        changeGrid(grid, x, y, facing);
+    }
+
+    public void changeGrid(Grid grid, int x, int y, Direction facing) {
+        this.grid = grid;
+        setPosition(x, y);
+        setFacing(facing);
     }
 
     @Override
@@ -35,13 +50,24 @@ public abstract class Character extends GridElement {
 
     public abstract void update(float delta);
 
-    public void move(Direction dir) {
-        switch (dir) {
-            case NORTH: y--; break;
-            case EAST: x++; break;
-            case SOUTH: y++; break;
-            case WEST: x--; break;
+    public boolean move(Direction dir) {
+        GridElement element = grid.getAdjacentGridElement(x, y, dir);
+        if ((element != null) && (element instanceof BlankElement)) {
+            grid.setGridElement(x, y, element);
+            switch (dir) {
+                case NORTH: y--; break;
+                case EAST: x++; break;
+                case SOUTH: y++; break;
+                case WEST: x--; break;
+            }
+            grid.setGridElement(x, y, this);
+            return true;
         }
+        return false;
+    }
+
+    public Grid getGrid() {
+        return grid;
     }
 
     public int getX() {
@@ -69,16 +95,31 @@ public abstract class Character extends GridElement {
     }
 
     public void setPosition (int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     public void setPosition (Vector2 position) {
-        this.x = (int) position.x;
-        this.y = (int) position.y;
+        setPosition((int) position.x, (int) position.y);
     }
 
     public void setFacing(Direction facing) {
         this.facing = facing;
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public TextureRegion getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(TextureRegion sprite) {
+        this.sprite = sprite;
     }
 }

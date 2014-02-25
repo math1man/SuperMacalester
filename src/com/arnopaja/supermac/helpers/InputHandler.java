@@ -1,5 +1,8 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.grid.GridElement.Direction;
+import com.arnopaja.supermac.objects.MainCharacter;
 import com.arnopaja.supermac.world.GameWorld;
 import com.badlogic.gdx.InputProcessor;
 
@@ -10,11 +13,16 @@ public class InputHandler implements InputProcessor {
 
     private GameWorld world;
 
+    private float gameWidth;
+    private float gameHeight;
     private float scaleFactorX;
     private float scaleFactorY;
 
-    public InputHandler(GameWorld world, float scaleFactorX, float scaleFactorY) {
+    public InputHandler(GameWorld world, float gameWidth, float gameHeight,
+                        float scaleFactorX, float scaleFactorY) {
         this.world = world;
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
     }
@@ -36,6 +44,20 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        int gameX = scaleX(screenX);
+        int gameY = scaleY(screenY);
+        MainCharacter character = world.getMainCharacter();
+        if (gameX < Grid.GRID_PIXEL_DIMENSION) {
+            character.move(Direction.WEST);
+        } else if (gameX > gameWidth - Grid.GRID_PIXEL_DIMENSION) {
+            character.move(Direction.EAST);
+        } else if (gameY < Grid.GRID_PIXEL_DIMENSION) {
+            character.move(Direction.SOUTH);
+        } else if (gameY > gameHeight - Grid.GRID_PIXEL_DIMENSION) {
+            character.move(Direction.NORTH);
+        } else {
+            character.interact();
+        }
         return false;
     }
 
@@ -60,10 +82,10 @@ public class InputHandler implements InputProcessor {
     }
 
     private int scaleX(int screenX) {
-        return (int) (screenX / scaleFactorX);
+        return (int) (screenX * scaleFactorX);
     }
 
     private int scaleY(int screenY) {
-        return (int) (screenY / scaleFactorY);
+        return (int) (screenY * scaleFactorY);
     }
 }

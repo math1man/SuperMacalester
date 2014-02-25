@@ -13,7 +13,7 @@ public class Tile extends GridElement {
     private boolean isPathable;
 
     public Tile(int x, int y,TextureRegion sprite, boolean isPathable) {
-        super(true);
+        super(true, false);
         this.sprite = sprite;
         this.isPathable = isPathable;
     }

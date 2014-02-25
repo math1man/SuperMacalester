@@ -12,9 +12,11 @@ public abstract class GridElement {
     public static enum Direction { NORTH, EAST, SOUTH, WEST }
 
     protected boolean isRendered;
+    protected boolean isInteractable;
 
-    protected GridElement(boolean isRendered) {
+    protected GridElement(boolean isRendered, boolean isInteractable) {
         this.isRendered = isRendered;
+        this.isInteractable = isInteractable;
     }
 
     /**
@@ -34,5 +36,13 @@ public abstract class GridElement {
 
     public void setRendered(boolean isRendered) {
         this.isRendered = isRendered;
+    }
+
+    public boolean isInteractable() {
+        return isInteractable;
+    }
+
+    public void setInteractable(boolean isInteractable) {
+        this.isInteractable = isInteractable;
     }
 }

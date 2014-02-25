@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class BlankElement extends GridElement {
 
-    protected BlankElement() {
-        super(false);
+    public BlankElement() {
+        super(false, false);
     }
 
     @Override

@@ -6,9 +6,9 @@ package com.arnopaja.supermac.grid;
  *
  * @author Ari Weiland
  */
-public class BuildingGrid extends Grid {
+public class FloorGrid extends Grid {
 
-    public BuildingGrid(int gridWidth, int gridHeight) {
+    public FloorGrid(int gridWidth, int gridHeight) {
         super(gridWidth, gridHeight);
     }
 }

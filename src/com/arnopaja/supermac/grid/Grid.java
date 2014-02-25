@@ -45,8 +45,20 @@ public class Grid {
         return gridArray;
     }
 
-    public GridElement getTile(int x, int y) {
+    public GridElement getGridElement(int x, int y) {
         return gridArray[x][y];
+    }
+
+    public GridElement getGridElement(Vector2 position) {
+        return getGridElement((int) position.x, (int) position.y);
+    }
+
+    public void setGridElement(int x, int y, GridElement element) {
+        gridArray[x][y] = element;
+    }
+
+    public void setGridElement(Vector2 position, GridElement element) {
+        setGridElement((int) position.x, (int) position.y, element);
     }
 
     /**
@@ -138,6 +150,20 @@ public class Grid {
      */
     public RenderGrid getRenderGrid(Vector2 position) {
         return getRenderGrid((int) position.x, (int) position.y);
+    }
+
+    public GridElement getAdjacentGridElement(int x, int y, GridElement.Direction dir) {
+        switch (dir) {
+            case NORTH: y--; break;
+            case EAST: x++; break;
+            case SOUTH: y++; break;
+            case WEST: x--; break;
+        }
+        if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight) {
+            return getGridElement(x, y);
+        } else {
+            return null;
+        }
     }
 
     public void clear() {

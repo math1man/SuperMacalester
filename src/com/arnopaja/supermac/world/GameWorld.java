@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world;
 
+import com.arnopaja.supermac.grid.GridElement.Direction;
 import com.arnopaja.supermac.grid.WorldGrid;
 import com.arnopaja.supermac.objects.Building;
 import com.arnopaja.supermac.objects.Character;
@@ -29,6 +30,8 @@ public class GameWorld {
         tileGrid = new WorldGrid();
         tileGrid.fillMacMap();
         entityGrid = new WorldGrid();
+        mainCharacter = new MainCharacter(entityGrid, 0, 0, Direction.SOUTH);
+        initBuildings();
     }
 
     private void initBuildings() {
