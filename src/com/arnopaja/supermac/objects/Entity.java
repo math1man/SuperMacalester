@@ -18,18 +18,26 @@ public abstract class Entity extends GridElement {
         super(isRendered, isInteractable);
     }
 
+    // TODO: should this and the changeGrid methods maybe be in character instead?
     public boolean move(Direction dir) {
-        Tile element = grid.getTile(Direction.getAdjacent(position, dir));
-        // TODO: add entity collision in addition to tile pathing
-        if ((element != null) && (element.isPathable())) {
+        facing = dir;
+        if (grid.moveEntity(this, dir)) {
             position = Direction.getAdjacent(position, dir);
-            grid.moveEntity(this, dir);
             return true;
         }
         return false;
     }
 
+    public void changeGrid(Grid newGrid, int x, int y) {
+        changeGrid(newGrid, new Vector2(x, y));
+    }
 
+    public void changeGrid(Grid newGrid, Vector2 position) {
+        grid.removeEntity(position);
+        grid = newGrid;
+        // TODO: what about collisions?
+        newGrid.putEntity(this, position);
+    }
 
     public Grid getGrid() {
         return grid;

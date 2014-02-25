@@ -5,6 +5,7 @@ import com.arnopaja.supermac.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Ari Weiland
@@ -19,18 +20,24 @@ public abstract class Character extends Entity {
     }
 
     protected Character(Grid grid, int x, int y, Direction facing) {
-        this(grid, x, y, facing, false);
+        this(grid, new Vector2(x, y), facing);
+    }
+
+    protected Character(Grid grid, Vector2 position, Direction facing) {
+        this(grid, position, facing, false);
     }
 
     protected Character(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
-        super(true, isInteractable);
-        changeGrid(grid, x, y, facing);
+        this(grid, new Vector2(x, y), facing, isInteractable);
     }
 
-    public void changeGrid(Grid grid, int x, int y, Direction facing) {
+    protected Character(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+        super(true, isInteractable);
         this.grid = grid;
-        setPosition(x, y);
-        setFacing(facing);
+        this.position = position;
+        this.facing = facing;
+        // TODO: what about collisions?
+        grid.putEntity(this);
     }
 
     @Override

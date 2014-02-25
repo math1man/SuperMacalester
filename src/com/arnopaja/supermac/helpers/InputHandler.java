@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.grid.GridElement.Direction;
 import com.arnopaja.supermac.objects.MainCharacter;
 import com.arnopaja.supermac.world.GameWorld;
 import com.badlogic.gdx.InputProcessor;
