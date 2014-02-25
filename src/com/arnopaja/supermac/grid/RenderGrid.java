@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Implementation of Grid used for rendering purposes.
  * This is the subsection of a grid that is rendered on screen.
  * It has a size that is either fixed or dependent on screen resolution.
+ * It should never be instantiated except by the getRenderGrid method in Grid.
  *
  * @author Ari Weiland
  */
@@ -13,22 +14,22 @@ public class RenderGrid extends Grid {
 
     // TODO: decide on these dimensions
     // TODO: alternatively, may need to be dynamic based on screen res
-    public static final int RENDER_WIDTH = 15;
-    public static final int RENDER_HEIGHT = 15;
+    public static final int RENDER_WIDTH = 17;
+    public static final int RENDER_HEIGHT = 27;
 
     private final int renderWidth = RENDER_WIDTH;
     private final int renderHeight = RENDER_HEIGHT;
 
     protected RenderGrid(GridElement[][] grid) {
         super(grid);
-        if (grid.length != renderWidth || grid[0].length != renderHeight) {
+        if ((grid.length != renderWidth) || (grid[0].length != renderHeight)) {
             throw new IllegalArgumentException();
         }
     }
 
     protected RenderGrid(Grid grid) {
         super(grid);
-        if (grid.getGridWidth() != renderWidth || grid.gridHeight != renderHeight) {
+        if ((grid.gridWidth != renderWidth) || (grid.gridHeight != renderHeight)) {
             throw new IllegalArgumentException();
         }
     }

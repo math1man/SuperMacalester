@@ -1,9 +1,11 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.objects.Building;
 import com.arnopaja.supermac.grid.WorldGrid;
+import com.arnopaja.supermac.objects.Building;
+import com.arnopaja.supermac.objects.Character;
 import com.arnopaja.supermac.objects.MainCharacter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,14 +17,23 @@ public class GameWorld {
 
     private GameState currentState;
 
-    private WorldGrid worldTileGrid;
-    private WorldGrid worldEntityGrid;
+    private WorldGrid tileGrid;
+    private WorldGrid entityGrid;
     private List<Building> buildings;
 
     private MainCharacter mainCharacter;
+    private List<Character> characters;
 
     public GameWorld() {
-        currentState = GameState.MENU;
+        currentState = GameState.RUNNING;
+        tileGrid = new WorldGrid();
+        tileGrid.fillMacMap();
+        entityGrid = new WorldGrid();
+    }
+
+    private void initBuildings() {
+        buildings = new ArrayList<Building>();
+        // TODO: add buildings here
     }
 
     public void update(float delta) {
@@ -38,7 +49,10 @@ public class GameWorld {
     }
 
     public void updateRunning(float delta) {
-
+        mainCharacter.update(delta);
+        for (Character character : characters) {
+            character.update(delta);
+        }
     }
 
     public void ready() {
@@ -65,12 +79,12 @@ public class GameWorld {
         return currentState == GameState.RUNNING;
     }
 
-    public WorldGrid getWorldTileGrid() {
-        return worldTileGrid;
+    public WorldGrid getTileGrid() {
+        return tileGrid;
     }
 
-    public WorldGrid getWorldEntityGrid() {
-        return worldEntityGrid;
+    public WorldGrid getEntityGrid() {
+        return entityGrid;
     }
 
     public MainCharacter getMainCharacter() {

@@ -20,8 +20,8 @@ public class MapScreen implements Screen {
         float screenHeight = Gdx.graphics.getHeight();
 
         // TODO: figure these out
-        float gameWidth = 136;
-        float gameHeight = screenHeight / (screenWidth / gameWidth);
+        float gameHeight = 480;
+        float gameWidth = gameHeight * screenWidth / screenHeight;
 
         world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));

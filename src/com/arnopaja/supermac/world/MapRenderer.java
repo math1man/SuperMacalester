@@ -53,8 +53,8 @@ public class MapRenderer {
 
         MainCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
-        RenderGrid tileGrid = world.getWorldTileGrid().getRenderGrid(centerPosition);
-        RenderGrid entityGrid = world.getWorldEntityGrid().getRenderGrid(centerPosition);
+        RenderGrid tileGrid = world.getTileGrid().getRenderGrid(centerPosition);
+        RenderGrid entityGrid = world.getEntityGrid().getRenderGrid(centerPosition);
 
         shapeRenderer.begin(ShapeType.Filled);
 
