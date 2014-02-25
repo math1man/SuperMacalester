@@ -1,0 +1,48 @@
+Map data document.  All maps should be generated here in a very specific form:
+map: [map name]
+width: [width]
+height: [height]
+[grid of tile codes]
+
+The grid of tile codes must have the exact specified dimensions.
+List of current tile codes:
+b = building    - unpathable
+g = ground      - pathable
+p = path        - pathable
+n = null tile   - unpathable, not rendered (default if left blank)
+
+map: World
+width: 32
+height: 32
+b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
+b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
+b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b

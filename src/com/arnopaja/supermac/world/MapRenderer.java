@@ -54,8 +54,7 @@ public class MapRenderer {
 
         MainCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
-        RenderGrid tileGrid = world.getTileGrid().getRenderGrid(centerPosition);
-        RenderGrid entityGrid = world.getEntityGrid().getRenderGrid(centerPosition);
+        RenderGrid renderGrid = world.getWorldGrid().getRenderGrid(centerPosition);
 
         shapeRenderer.begin(ShapeType.Filled);
 
@@ -67,11 +66,12 @@ public class MapRenderer {
 
         batcher.begin();
         batcher.disableBlending();
+        // TODO: should these shifting coordinates not be 0?
         float x = 0;
         float y = 0;
-        tileGrid.render(batcher, x, y);   // Render the base tiles
+        renderGrid.renderTiles(batcher, x, y);    // Render the base tiles
         batcher.enableBlending();
-        entityGrid.render(batcher, x, y); // Render entities on top of the tiles
+        renderGrid.renderEntities(batcher, x, y); // Render entities on top of the tiles
         batcher.end();
     }
 }

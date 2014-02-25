@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.objects;
 
-import com.arnopaja.supermac.grid.FloorGrid;
+import com.arnopaja.supermac.grid.Grid;
 
 /**
  * @author Ari Weiland
@@ -11,12 +11,12 @@ public class Building {
     // number refers to the array index, not the actual floor number
     // the ground floor is defined as the first floor
     private int groundFloorIndex;
-    private FloorGrid[] floors;
+    private Grid[] floors;
 
     public Building(int floorCount, int groundFloorIndex, int floorWidth, int floorHeight) {
-        floors = new FloorGrid[floorCount];
-        for (FloorGrid floor : floors) {
-            floor = new FloorGrid(floorWidth, floorHeight);
+        floors = new Grid[floorCount];
+        for (Grid floor : floors) {
+            floor = new Grid(floorWidth, floorHeight);
         }
         this.groundFloorIndex = groundFloorIndex;
     }
@@ -25,13 +25,13 @@ public class Building {
      * Returns the specified floor by the array index
      *
      * @param floorIndex the array index of the requested floor
-     * @return the FloorGrid representing the specified floor
+     * @return the Grid representing the specified floor
      */
-    public FloorGrid getFloorByIndex(int floorIndex) {
+    public Grid getFloorByIndex(int floorIndex) {
         return floors[floorIndex];
     }
 
-    public void setFloorByIndex(int floorIndex, FloorGrid grid) {
+    public void setFloorByIndex(int floorIndex, Grid grid) {
         floors[floorIndex] = grid;
     }
 
@@ -42,9 +42,9 @@ public class Building {
      *
      * @param floorNumber the number of the floor.  The ground floor specified
      *                    by groundFloorIndex is defined as the first floor
-     * @return the FloorGrid representing the specificed floor
+     * @return the Grid representing the specificed floor
      */
-    public FloorGrid getFloorByNumber(int floorNumber) {
+    public Grid getFloorByNumber(int floorNumber) {
         return floors[floorNumber-1+groundFloorIndex];
     }
 

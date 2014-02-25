@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public abstract class GridElement {
 
-    public static enum Direction { NORTH, EAST, SOUTH, WEST }
-
     protected boolean isRendered;
     protected boolean isInteractable;
 

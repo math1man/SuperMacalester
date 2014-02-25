@@ -1,7 +1,8 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.grid.GridElement.Direction;
-import com.arnopaja.supermac.grid.WorldGrid;
+import com.arnopaja.supermac.grid.Direction;
+import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.objects.Building;
 import com.arnopaja.supermac.objects.Character;
 import com.arnopaja.supermac.objects.MainCharacter;
@@ -18,8 +19,7 @@ public class GameWorld {
 
     private GameState currentState;
 
-    private WorldGrid tileGrid;
-    private WorldGrid entityGrid;
+    private Grid worldGrid;
     private List<Building> buildings;
 
     private MainCharacter mainCharacter;
@@ -27,10 +27,8 @@ public class GameWorld {
 
     public GameWorld() {
         currentState = GameState.RUNNING;
-        tileGrid = new WorldGrid();
-        tileGrid.fillMacMap();
-        entityGrid = new WorldGrid();
-        mainCharacter = new MainCharacter(entityGrid, 0, 0, Direction.SOUTH);
+        worldGrid = new Grid(AssetLoader.parseTileArray("World"));
+        mainCharacter = new MainCharacter(worldGrid, 0, 0, Direction.SOUTH);
         initBuildings();
     }
 
@@ -82,12 +80,8 @@ public class GameWorld {
         return currentState == GameState.RUNNING;
     }
 
-    public WorldGrid getTileGrid() {
-        return tileGrid;
-    }
-
-    public WorldGrid getEntityGrid() {
-        return entityGrid;
+    public Grid getWorldGrid() {
+        return worldGrid;
     }
 
     public MainCharacter getMainCharacter() {

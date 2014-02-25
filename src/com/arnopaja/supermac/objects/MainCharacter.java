@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.objects;
 
+import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.grid.GridElement;
 
 /**
  * @author Ari Weiland
@@ -18,9 +18,9 @@ public class MainCharacter extends Character {
     }
 
     public void interact() {
-        GridElement element = grid.getAdjacentGridElement(x, y, facing);
-        if (element.isInteractable()) {
-            // TODO: add actual interaction
+        Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
+        if (entity.isInteractable()) {
+            // TODO: interact!
         }
     }
 }

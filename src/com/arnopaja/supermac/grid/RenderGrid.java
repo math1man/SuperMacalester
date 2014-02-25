@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.grid;
 
+import com.arnopaja.supermac.objects.Entity;
+import com.arnopaja.supermac.objects.Tile;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -20,13 +22,6 @@ public class RenderGrid extends Grid {
     private final int renderWidth = RENDER_WIDTH;
     private final int renderHeight = RENDER_HEIGHT;
 
-    protected RenderGrid(GridElement[][] grid) {
-        super(grid);
-        if ((grid.length != renderWidth) || (grid[0].length != renderHeight)) {
-            throw new IllegalArgumentException();
-        }
-    }
-
     protected RenderGrid(Grid grid) {
         super(grid);
         if ((grid.gridWidth != renderWidth) || (grid.gridHeight != renderHeight)) {
@@ -43,11 +38,24 @@ public class RenderGrid extends Grid {
      * @param x the x component of the offset vector
      * @param y the y component of the offset vector
      */
-    public void render(SpriteBatch batcher, float x, float y) {
+    public void renderTiles(SpriteBatch batcher, float x, float y) {
         for (int i=0; i<renderWidth; i++) {
             for (int j=0; j<renderHeight; j++) {
-                GridElement element = gridArray[i][j];
-                element.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
+                Tile tile = tileArray[i][j];
+                if (tile.isRendered()) {
+                    tile.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
+                }
+            }
+        }
+    }
+
+    public void renderEntities(SpriteBatch batcher, float x, float y) {
+        for (int i=0; i<renderWidth; i++) {
+            for (int j=0; j<renderHeight; j++) {
+                Entity entity = getEntity(i, j);
+                if (entity != null && entity.isRendered()) {
+                    entity.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
+                }
             }
         }
     }
