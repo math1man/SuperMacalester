@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Grid {
 
-    public static final int GRID_PIXEL_DIMENSION = 16; // the pixel width and height of a grid space
+    public static final int GRID_PIXEL_DIMENSION = 32; // the pixel width and height of a grid space
 
     public final int gridWidth, gridHeight;
 
