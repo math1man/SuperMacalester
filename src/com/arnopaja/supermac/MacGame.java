@@ -8,8 +8,9 @@ public class MacGame extends Game {
 
     @Override
     public void create() {
-        System.out.println("ZBGame Created!");
+        System.out.println("MacGame Created!");
         AssetLoader.load();
+        System.out.println("Creating screen...");
         setScreen(new MapScreen());
     }
 

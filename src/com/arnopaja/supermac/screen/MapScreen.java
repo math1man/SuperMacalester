@@ -18,6 +18,7 @@ public class MapScreen implements Screen {
     private float runTime;
 
     public MapScreen() {
+        System.out.println("Screen Created!");
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
@@ -25,6 +26,7 @@ public class MapScreen implements Screen {
         float gameHeight = GAME_HEIGHT;
         float gameWidth = gameHeight * screenWidth / screenHeight;
 
+        System.out.println("Creating world...");
         world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, gameWidth, gameHeight,
                 gameWidth/screenWidth, gameHeight/screenHeight));

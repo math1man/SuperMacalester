@@ -54,6 +54,7 @@ public class MapRenderer {
 
         MainCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
+        System.out.println(centerPosition);
         RenderGrid renderGrid = world.getWorldGrid().getRenderGrid(centerPosition);
 
         shapeRenderer.begin(ShapeType.Filled);

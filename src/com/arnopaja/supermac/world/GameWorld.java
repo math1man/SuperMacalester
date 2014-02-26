@@ -26,9 +26,11 @@ public class GameWorld {
     private List<Character> characters;
 
     public GameWorld() {
+        System.out.println("World Created!");
         currentState = GameState.RUNNING;
+        System.out.println("Creating grid...");
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainCharacter(worldGrid, 0, 0, Direction.SOUTH);
+        mainCharacter = new MainCharacter(worldGrid, 1, 1, Direction.SOUTH);
         initBuildings();
     }
 
@@ -51,9 +53,9 @@ public class GameWorld {
 
     public void updateRunning(float delta) {
         mainCharacter.update(delta);
-        for (Character character : characters) {
-            character.update(delta);
-        }
+//        for (Character character : characters) {
+//            character.update(delta);
+//        }
     }
 
     public void ready() {

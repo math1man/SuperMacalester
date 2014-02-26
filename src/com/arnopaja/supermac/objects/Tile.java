@@ -5,74 +5,53 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Ari Weiland
  */
 public class Tile extends GridElement {
 
-    public enum TileType {
-        BUILDING("b", true, AssetLoader.buildingTile, false),
-        GROUND("g", true, AssetLoader.groundTile, true),
-        PATH("p", true, AssetLoader.pathTile, true),
-        NULL("n", false, null, false);
+    public static Map<String, TextureRegion> spriteMap;
 
-        public final String tileCode;
-        public final boolean isRendered;
-        public final TextureRegion sprite; // TODO: resolve this error
-        public final boolean isPathable;
-
-        private TileType(String tileCode, boolean isRendered, TextureRegion sprite, boolean isPathable) {
-            this.tileCode = tileCode;
-            this.isRendered = isRendered;
-            this.sprite = sprite;
-            this.isPathable = isPathable;
-        }
-
-        public static TileType getTileType(String tileCode) {
-            for (TileType tt : TileType.values()) {
-                if (tt.tileCode.equals(tileCode)) {
-                    return tt;
-                }
-            }
-            return NULL;
-        }
-    }
-
-    private TileType type;
     private TextureRegion sprite;
     private boolean isPathable;
 
-    private Tile(TileType type, boolean isRendered, TextureRegion sprite, boolean isPathable) {
-        super(isRendered, false);
-        this.type = type;
+    private Tile(boolean isRendered, TextureRegion sprite, boolean isPathable) {
+        super(isRendered);
         this.sprite = sprite;
         this.isPathable = isPathable;
     }
 
     public static Tile createNullTile() {
-        return createTile(TileType.NULL);
+        return new Tile(false, null, false);
     }
 
     public static Tile createTile(TextureRegion sprite, boolean isPathable) {
-        return new Tile(null, true, sprite, isPathable);
+        return new Tile(true, sprite, isPathable);
     }
 
     public static Tile createTile(String tileCode) {
-        return createTile(TileType.getTileType(tileCode));
-    }
-
-    private static Tile createTile(TileType tileType) {
-        return new Tile(tileType, tileType.isRendered, tileType.sprite, tileType.isPathable);
+        char[] tileFlags = tileCode.toCharArray();
+        if (tileFlags[0] == 'n') {
+            return createNullTile();
+        }
+        TextureRegion sprite = spriteMap.get("" + tileFlags[0]);
+        boolean isPathable = false;
+        for (int i=1; i<tileFlags.length; i++) {
+            // add all optional flags here
+            if (tileFlags[i] == 'p') {
+                isPathable = true;
+            }
+        }
+        return createTile(sprite, isPathable);
     }
 
     @Override
     public boolean render(SpriteBatch batcher, float x, float y) {
         batcher.draw(sprite, x, y);
         return true;
-    }
-
-    public TileType getType() {
-        return type;
     }
 
     public TextureRegion getSprite() {
@@ -83,18 +62,18 @@ public class Tile extends GridElement {
         return isPathable;
     }
 
-    public void setType(TileType type) {
-        this.type = type;
-        isRendered = type.isRendered;
-        sprite = type.sprite;
-        isPathable = type.isPathable;
-    }
-
     public void setSprite(TextureRegion sprite) {
         this.sprite = sprite;
     }
 
     public void setPathable(boolean isPathable) {
         this.isPathable = isPathable;
+    }
+
+    public static void initSpriteMap() {
+        spriteMap = new HashMap<String, TextureRegion>();
+        spriteMap.put("g", AssetLoader.darkgrass1);
+        spriteMap.put("c", AssetLoader.cobblestone1);
+        spriteMap.put("b", AssetLoader.buildingTile);
     }
 }

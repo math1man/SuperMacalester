@@ -32,18 +32,13 @@ public abstract class Character extends Entity {
     }
 
     protected Character(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
-        super(true, isInteractable);
-        this.grid = grid;
-        this.position = position;
-        this.facing = facing;
-        // TODO: what about collisions?
-        grid.putEntity(this);
+        super(true, grid, position, facing, isInteractable);
     }
 
     @Override
     public boolean render(SpriteBatch batcher, float xPos, float yPos) {
         // TODO: finish this method to deal with animations, etc.
-        batcher.draw(sprite, xPos, yPos);
+//        batcher.draw(sprite, xPos, yPos);
         return true;
     }
 

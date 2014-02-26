@@ -16,8 +16,8 @@ public class RenderGrid extends Grid {
 
     // TODO: decide on these dimensions
     // TODO: alternatively, may need to be dynamic based on screen res
-    public static final int RENDER_WIDTH = 17;
-    public static final int RENDER_HEIGHT = 27;
+    public static final int RENDER_WIDTH = 27;
+    public static final int RENDER_HEIGHT = 17;
 
     private final int renderWidth = RENDER_WIDTH;
     private final int renderHeight = RENDER_HEIGHT;
@@ -30,7 +30,7 @@ public class RenderGrid extends Grid {
     }
 
     /**
-     * Renders all elments of this RenderGrid using their appropriate render method.
+     * Renders all elements of this RenderGrid using their appropriate render method.
      * They are rendered at the appropriate position corresponding to their grid space,
      * offset by the vector (x, y).
      *

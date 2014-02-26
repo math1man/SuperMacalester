@@ -6,43 +6,48 @@ height: [height]
 
 The grid of tile codes must have the exact specified dimensions.
 List of current tile codes:
-b = building    - unpathable
-g = ground      - pathable
-p = path        - pathable
-n = null tile   - unpathable, not rendered (default if left blank)
+b = building
+g = grass
+c = cobble
+n = null tile
+
+List of current tile flags:
+p = pathable flag
+
+All tiles are rendered by default except null tiles which by definition cannot be rendered and do not have a sprite
 
 map: World
 width: 32
 height: 32
 b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
-b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
-b	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	p	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
-b	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	g	g	p	p	g	g	g	g	g	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
 b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b

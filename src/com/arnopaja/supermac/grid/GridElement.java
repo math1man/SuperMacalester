@@ -10,11 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class GridElement {
 
     protected boolean isRendered;
-    protected boolean isInteractable;
 
-    protected GridElement(boolean isRendered, boolean isInteractable) {
+    protected GridElement(boolean isRendered) {
         this.isRendered = isRendered;
-        this.isInteractable = isInteractable;
     }
 
     /**
@@ -34,13 +32,5 @@ public abstract class GridElement {
 
     public void setRendered(boolean isRendered) {
         this.isRendered = isRendered;
-    }
-
-    public boolean isInteractable() {
-        return isInteractable;
-    }
-
-    public void setInteractable(boolean isInteractable) {
-        this.isInteractable = isInteractable;
     }
 }

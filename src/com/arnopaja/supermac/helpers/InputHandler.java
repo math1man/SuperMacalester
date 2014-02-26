@@ -52,9 +52,9 @@ public class InputHandler implements InputProcessor {
         } else if (gameX > gameWidth - Grid.GRID_PIXEL_DIMENSION) {
             character.move(Direction.EAST);
         } else if (gameY < Grid.GRID_PIXEL_DIMENSION) {
-            character.move(Direction.SOUTH);
-        } else if (gameY > gameHeight - Grid.GRID_PIXEL_DIMENSION) {
             character.move(Direction.NORTH);
+        } else if (gameY > gameHeight - Grid.GRID_PIXEL_DIMENSION) {
+            character.move(Direction.SOUTH);
         } else {
             character.interact();
         }

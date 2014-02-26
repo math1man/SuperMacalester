@@ -5,6 +5,7 @@ import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class Grid {
     }
 
     public Grid(Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
+        System.out.println(Arrays.toString(tileArray));
         this.tileArray = tileArray;
         this.entityMap = entityMap;
         gridWidth = tileArray.length;
@@ -321,8 +323,8 @@ public class Grid {
      * @return the RenderGrid
      */
     public RenderGrid getRenderGrid(int x, int y) {
-        int cornerX = x - (RenderGrid.RENDER_WIDTH - 1)/2;
-        int cornerY = y - (RenderGrid.RENDER_HEIGHT - 1)/2;
+        int cornerX = x - (RenderGrid.RENDER_WIDTH - 2)/2;
+        int cornerY = y - (RenderGrid.RENDER_HEIGHT - 2)/2;
         return new RenderGrid(getSubGrid(cornerX, cornerY,
                 RenderGrid.RENDER_WIDTH, RenderGrid.RENDER_HEIGHT));
     }

@@ -13,9 +13,16 @@ public abstract class Entity extends GridElement {
     protected Grid grid;
     protected Vector2 position;
     protected Direction facing;
+    protected boolean isInteractable;
 
-    protected Entity(boolean isRendered, boolean isInteractable) {
-        super(isRendered, isInteractable);
+    protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+        super(isRendered);
+        this.grid = grid;
+        this.position = position;
+        this.facing = facing;
+        this.isInteractable = isInteractable;
+        // TODO: what about collisions?
+        grid.putEntity(this);
     }
 
     // TODO: should this and the changeGrid methods maybe be in character instead?
@@ -78,5 +85,13 @@ public abstract class Entity extends GridElement {
 
     public void setFacing(Direction facing) {
         this.facing = facing;
+    }
+
+    public boolean isInteractable() {
+        return isInteractable;
+    }
+
+    public void setInteractable(boolean isInteractable) {
+        this.isInteractable = isInteractable;
     }
 }
