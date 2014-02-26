@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Ari Weiland
  */
 public enum Direction {
+
     NORTH, EAST, SOUTH, WEST;
 
     public static Vector2 getAdjacent(Vector2 position, Direction dir) {

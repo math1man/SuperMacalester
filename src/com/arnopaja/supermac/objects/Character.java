@@ -38,7 +38,7 @@ public abstract class Character extends Entity {
     @Override
     public boolean render(SpriteBatch batcher, float xPos, float yPos) {
         // TODO: finish this method to deal with animations, etc.
-//        batcher.draw(sprite, xPos, yPos);
+        batcher.draw(sprite, xPos, yPos);
         return true;
     }
 

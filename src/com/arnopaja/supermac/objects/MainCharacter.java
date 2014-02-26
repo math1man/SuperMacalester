@@ -2,6 +2,7 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -10,7 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 public class MainCharacter extends Character {
 
     public MainCharacter(Grid grid, int x, int y, Direction facing) {
-        super(grid, x, y, facing);
+        this(grid, new Vector2(x, y), facing);
+        setSprite(AssetLoader.steven);
     }
 
     public MainCharacter(Grid grid, Vector2 position, Direction facing) {
@@ -24,7 +26,7 @@ public class MainCharacter extends Character {
 
     public void interact() {
         Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
-        if (entity.isInteractable()) {
+        if (entity != null && entity.isInteractable()) {
             // TODO: interact!
         }
     }

@@ -22,14 +22,14 @@ public abstract class Entity extends GridElement {
         this.facing = facing;
         this.isInteractable = isInteractable;
         // TODO: what about collisions?
-        grid.putEntity(this);
+        this.grid.putEntity(this);
     }
 
     // TODO: should this and the changeGrid methods maybe be in character instead?
     public boolean move(Direction dir) {
         facing = dir;
         if (grid.moveEntity(this, dir)) {
-            position = Direction.getAdjacent(position, dir);
+            setPosition(Direction.getAdjacent(position, dir));
             return true;
         }
         return false;
@@ -67,16 +67,15 @@ public abstract class Entity extends GridElement {
     }
 
     public void setX(int x) {
-        position.set(x, position.y);
+        setPosition(x, position.y);
     }
 
     public void setY(int y) {
-        position.set(position.x, y);
+        setPosition(position.x, y);
     }
 
-    public void setPosition (int x, int y) {
-        setX(x);
-        setY(y);
+    public void setPosition (float x, float y) {
+        position.set(x, y);
     }
 
     public void setPosition(Vector2 position) {

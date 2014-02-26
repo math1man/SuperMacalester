@@ -5,8 +5,7 @@ import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -19,6 +18,11 @@ public class Grid {
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
 
+    // TODO: decide on these dimensions
+    // TODO: alternatively, may need to be dynamic based on screen res
+    public static final int RENDER_WIDTH = 27;
+    public static final int RENDER_HEIGHT = 17;
+
     protected final int gridWidth, gridHeight;
 
     protected Tile[][] tileArray;
@@ -29,11 +33,10 @@ public class Grid {
     }
 
     public Grid(Tile[][] tileArray) {
-        this(tileArray, new HashMap<Vector2, Entity>());
+        this(tileArray, new Hashtable<Vector2, Entity>());
     }
 
     public Grid(Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
-        System.out.println(Arrays.toString(tileArray));
         this.tileArray = tileArray;
         this.entityMap = entityMap;
         gridWidth = tileArray.length;
@@ -176,7 +179,9 @@ public class Grid {
             if (isInBounds(destination)
                     && (getEntity(destination) == null)
                     && getTile(destination).isPathable()) {
-                entityMap.remove(position);
+                System.out.println(position + ": " + entityMap.entrySet());
+                System.out.println(entityMap.remove(position));
+                System.out.println(entityMap.get(position));
                 entityMap.put(destination, entity);
                 return true;
             }
@@ -255,12 +260,12 @@ public class Grid {
      * @return the sub entity map
      */
     public Map<Vector2, Entity> getSubEntityMap(int x, int y, int width, int height) {
-        Map<Vector2, Entity> subEntityMap = new HashMap<Vector2, Entity>();
+        Map<Vector2, Entity> subEntityMap = new Hashtable<Vector2, Entity>();
         for (int i=0; i<width; i++) {
             for (int j=0; j<height; j++) {
                 Vector2 key = new Vector2(i+x, j+y);
                 if (entityMap.containsKey(key)) {
-                    subEntityMap.put(key, entityMap.get(key));
+                    subEntityMap.put(new Vector2(i, j), entityMap.get(key));
                 }
             }
         }
