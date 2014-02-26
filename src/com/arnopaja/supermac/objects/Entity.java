@@ -28,11 +28,12 @@ public abstract class Entity extends GridElement {
     // TODO: should this and the changeGrid methods maybe be in character instead?
     public boolean move(Direction dir) {
         facing = dir;
-        if (grid.moveEntity(this, dir)) {
-            setPosition(Direction.getAdjacent(position, dir));
-            return true;
-        }
-        return false;
+        return grid.moveEntity(this, dir);
+//        if (grid.moveEntity(this, dir)) {
+//            setPosition(Direction.getAdjacent(position, dir));
+//            return true;
+//        }
+//        return false;
     }
 
     public void changeGrid(Grid newGrid, int x, int y) {
@@ -67,15 +68,15 @@ public abstract class Entity extends GridElement {
     }
 
     public void setX(int x) {
-        setPosition(x, position.y);
+        setPosition(x, (int) position.y);
     }
 
     public void setY(int y) {
-        setPosition(position.x, y);
+        setPosition((int) position.x, y);
     }
 
-    public void setPosition (float x, float y) {
-        position.set(x, y);
+    public void setPosition (int x, int y) {
+        position = new Vector2(x, y);
     }
 
     public void setPosition(Vector2 position) {

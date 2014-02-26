@@ -174,15 +174,16 @@ public class Grid {
      */
     public boolean moveEntity(Entity entity, Direction dir) {
         if (entity != null) {
-            Vector2 position = entity.getPosition();
-            Vector2 destination = Direction.getAdjacent(position, dir);
+            // TODO: WHY THE FUCK DOES THIS WORK?!?!?!?!
+            // Logically, destination and position declarations should be swapped...
+            Vector2 destination = entity.getPosition();
+            Vector2 position = Direction.getAdjacent(destination, dir);
             if (isInBounds(destination)
                     && (getEntity(destination) == null)
                     && getTile(destination).isPathable()) {
-                System.out.println(position + ": " + entityMap.entrySet());
-                System.out.println(entityMap.remove(position));
-                System.out.println(entityMap.get(position));
-                entityMap.put(destination, entity);
+                removeEntity(position);
+                entity.setPosition(destination);
+                putEntity(entity);
                 return true;
             }
         }
