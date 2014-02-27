@@ -3,6 +3,7 @@ package com.arnopaja.supermac.grid;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.Tile;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Implementation of Grid used for rendering purposes.
@@ -43,22 +44,28 @@ public class RenderGrid extends Grid {
             for (int j=0; j<renderHeight; j++) {
                 Tile tile = tileArray[i][j];
                 if (tile.isRendered()) {
-                    tile.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
+                    tile.render(batcher, i + x, j + y);
                 }
             }
         }
     }
 
+    public void renderTiles(SpriteBatch batcher, Vector2 offset) {
+        renderTiles(batcher, offset.x, offset.y);
+    }
+
     public void renderEntities(SpriteBatch batcher, float x, float y) {
-        System.out.println("Rendering Entities...");
         for (int i=0; i<renderWidth; i++) {
             for (int j=0; j<renderHeight; j++) {
                 Entity entity = getEntity(i, j);
                 if (entity != null && entity.isRendered()) {
-                    System.out.println("Rendering " + entity + " at (" + (i*GRID_PIXEL_DIMENSION + x) + ", " + (j*GRID_PIXEL_DIMENSION + y) + ")");
-                    entity.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
+                    entity.render(batcher, i + x, j + y);
                 }
             }
         }
+    }
+
+    public void renderEntities(SpriteBatch batcher, Vector2 offset) {
+        renderEntities(batcher, offset.x, offset.y);
     }
 }

@@ -19,17 +19,11 @@ public class MainCharacter extends Character {
         super(grid, position, facing);
     }
 
-    @Override
-    public void update(float delta) {
-
-    }
-
     public void interact() {
-        System.out.println("INTERACTION (2)");
         Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
         if (entity != null && entity.isInteractable()) {
             // TODO: interact!
-            System.out.println("INTERACTION (3)");
+            System.out.println("INTERACTION");
         }
     }
 

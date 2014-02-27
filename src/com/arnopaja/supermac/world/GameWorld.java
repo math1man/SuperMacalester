@@ -3,7 +3,7 @@ package com.arnopaja.supermac.world;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.objects.Building;
+import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainCharacter;
 

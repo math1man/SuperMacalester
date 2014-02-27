@@ -2,14 +2,17 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.grid.GridElement;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Ari Weiland
  */
-public abstract class Entity extends GridElement {
+public abstract class Entity extends Renderable {
+
+    public static final float MOVE_SPEED = 3f; // grid spaces per second
+    public static final float ALIGN_THRESHOLD = 0.001f;
 
     // Ordered N-E-S-W (same as Direction order)
     protected TextureRegion[] facingSprites;
@@ -18,6 +21,10 @@ public abstract class Entity extends GridElement {
     protected Vector2 position;
     protected Direction facing;
     protected boolean isInteractable;
+
+    protected boolean isMoving = false;
+    protected Vector2 movingOffset = new Vector2(0, 0);
+    protected Vector2 deltaMove;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(isRendered);
@@ -29,16 +36,36 @@ public abstract class Entity extends GridElement {
         this.grid.putEntity(this);
     }
 
-    public abstract void update(float delta);
+    public void update(float delta) {
+        if (isMoving) {
+            movingOffset.add(deltaMove.cpy().scl(delta));
+        }
+        if (movingOffset.isZero(ALIGN_THRESHOLD)) {
+            isMoving = false;
+            movingOffset = new Vector2();
+        }
+    }
+
+    @Override
+    public boolean render(SpriteBatch batcher, float xPos, float yPos) {
+        // TODO: finish this method to deal with animations
+        if (isRendered && getSprite() != null) {
+            batcher.draw(getSprite(), (xPos + movingOffset.x)*Grid.GRID_PIXEL_DIMENSION,
+                    (yPos + movingOffset.y)*Grid.GRID_PIXEL_DIMENSION);
+            return true;
+        }
+        return false;
+    }
 
     public boolean move(Direction dir) {
-        facing = dir;
-        return grid.moveEntity(this, dir);
-//        if (grid.moveEntity(this, dir)) {
-//            setPosition(Direction.getAdjacent(position, dir));
-//            return true;
-//        }
-//        return false;
+        if (!isMoving) {
+            isMoving = true;
+            movingOffset = Direction.getAdjacent(dir).scl(-1);
+            deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
+            facing = dir;
+            return grid.moveEntity(this, dir);
+        }
+        return false;
     }
 
     public void changeGrid(Grid newGrid, int x, int y) {
@@ -72,6 +99,14 @@ public abstract class Entity extends GridElement {
         this.position = position;
     }
 
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public Vector2 getMovingOffset() {
+        return movingOffset;
+    }
+
     public void setFacing(Direction facing) {
         this.facing = facing;
     }
@@ -89,7 +124,10 @@ public abstract class Entity extends GridElement {
     }
 
     public TextureRegion getSprite(Direction dir) {
-        return facingSprites[dir.ordinal()];
+        if (facingSprites != null && facingSprites.length == 4) {
+            return facingSprites[dir.ordinal()];
+        }
+        return null;
     }
 
     public void setFacingSprites(TextureRegion[] facingSprites) {

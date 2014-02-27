@@ -1,22 +1,22 @@
-package com.arnopaja.supermac.grid;
+package com.arnopaja.supermac.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * Superclass for things that go in a grid.
+ * Superclass for things that are rendered.
  *
  * @author Ari Weiland
  */
-public abstract class GridElement {
+public abstract class Renderable {
 
     protected boolean isRendered;
 
-    protected GridElement(boolean isRendered) {
+    protected Renderable(boolean isRendered) {
         this.isRendered = isRendered;
     }
 
     /**
-     * Renders the GridElement if it is renderable, otherwise does nothing.
+     * Renders the Renderable if it is renderable, otherwise does nothing.
      * Returns whether or not something was rendered.
      *
      * @param batcher the SpriteBatch used to render the element

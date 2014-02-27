@@ -9,6 +9,14 @@ public enum Direction {
 
     NORTH, EAST, SOUTH, WEST;
 
+    public static Direction getOpposite(Direction dir) {
+        return Direction.values()[(dir.ordinal() + 2) % 4];
+    }
+
+    public static Vector2 getAdjacent(Direction dir) {
+        return getAdjacent(new Vector2(), dir);
+    }
+
     public static Vector2 getAdjacent(Vector2 position, Direction dir) {
         Vector2 destination = new Vector2(position);
         switch (dir) {

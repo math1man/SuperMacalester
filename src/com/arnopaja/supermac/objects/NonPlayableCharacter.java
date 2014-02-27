@@ -24,9 +24,4 @@ public class NonPlayableCharacter extends Character {
     public NonPlayableCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(grid, position, facing, isInteractable);
     }
-
-    @Override
-    public void update(float delta) {
-
-    }
 }

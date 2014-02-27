@@ -19,11 +19,6 @@ public class Grid {
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
 
-    // TODO: decide on these dimensions
-    // TODO: alternatively, may need to be dynamic based on screen res
-    public static final int RENDER_WIDTH = 27;
-    public static final int RENDER_HEIGHT = 17;
-
     protected final int gridWidth, gridHeight;
 
     protected Tile[][] tileArray;

@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.objects;
 
-import com.arnopaja.supermac.grid.GridElement;
+import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class Tile extends GridElement {
+public class Tile extends Renderable {
 
     public static Map<String, TextureRegion> spriteMap;
 
@@ -50,8 +50,11 @@ public class Tile extends GridElement {
 
     @Override
     public boolean render(SpriteBatch batcher, float x, float y) {
-        batcher.draw(sprite, x, y);
-        return true;
+        if (isRendered && sprite != null) {
+            batcher.draw(sprite, x * Grid.GRID_PIXEL_DIMENSION, y * Grid.GRID_PIXEL_DIMENSION);
+            return true;
+        }
+        return false;
     }
 
     public TextureRegion getSprite() {

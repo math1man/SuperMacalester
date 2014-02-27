@@ -1,6 +1,4 @@
-package com.arnopaja.supermac.objects;
-
-import com.arnopaja.supermac.grid.Grid;
+package com.arnopaja.supermac.grid;
 
 /**
  * @author Ari Weiland

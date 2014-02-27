@@ -50,22 +50,16 @@ public class InputHandler implements InputProcessor {
         int gameY = scaleY(screenY);
         MainCharacter character = world.getMainCharacter();
         if (gameX < SIDE_BUTTON_WIDTH) {
-            System.out.println("west");
             character.move(Direction.WEST);
         } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-            System.out.println("east");
             character.move(Direction.EAST);
         } else if (gameY < SIDE_BUTTON_WIDTH) {
-            System.out.println("north");
             character.move(Direction.NORTH);
         } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
-            System.out.println("south");
             character.move(Direction.SOUTH);
         } else {
-            System.out.println("INTERACTION (1)");
             character.interact();
         }
-        System.out.println(character);
         return true;
     }
 
