@@ -59,11 +59,13 @@ public abstract class Entity extends Renderable {
 
     public boolean move(Direction dir) {
         if (!isMoving) {
-            isMoving = true;
-            movingOffset = Direction.getAdjacent(dir).scl(-1);
-            deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
             facing = dir;
-            return grid.moveEntity(this, dir);
+            if (grid.moveEntity(this, dir)) {
+                isMoving = true;
+                movingOffset = Direction.getAdjacent(dir).scl(-1);
+                deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
+                return true;
+            }
         }
         return false;
     }

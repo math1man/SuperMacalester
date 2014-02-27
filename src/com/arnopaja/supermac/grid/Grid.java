@@ -327,8 +327,8 @@ public class Grid {
      * @return the RenderGrid
      */
     public RenderGrid getRenderGrid(int x, int y) {
-        int cornerX = x - (RenderGrid.RENDER_WIDTH - 2)/2;
-        int cornerY = y - (RenderGrid.RENDER_HEIGHT - 2)/2;
+        int cornerX = x - (RenderGrid.RENDER_WIDTH - 1)/2;
+        int cornerY = y - (RenderGrid.RENDER_HEIGHT - 1)/2;
         return new RenderGrid(getSubGrid(cornerX, cornerY,
                 RenderGrid.RENDER_WIDTH, RenderGrid.RENDER_HEIGHT));
     }

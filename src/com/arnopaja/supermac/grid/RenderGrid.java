@@ -44,7 +44,7 @@ public class RenderGrid extends Grid {
             for (int j=0; j<renderHeight; j++) {
                 Tile tile = tileArray[i][j];
                 if (tile.isRendered()) {
-                    tile.render(batcher, i + x, j + y);
+                    tile.render(batcher, i + x - 1, j + y - 1);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class RenderGrid extends Grid {
             for (int j=0; j<renderHeight; j++) {
                 Entity entity = getEntity(i, j);
                 if (entity != null && entity.isRendered()) {
-                    entity.render(batcher, i + x, j + y);
+                    entity.render(batcher, i + x - 1, j + y - 1);
                 }
             }
         }
