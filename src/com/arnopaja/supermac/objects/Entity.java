@@ -3,12 +3,16 @@ package com.arnopaja.supermac.objects;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.GridElement;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Ari Weiland
  */
 public abstract class Entity extends GridElement {
+
+    // Ordered N-E-S-W (same as Direction order)
+    protected TextureRegion[] facingSprites;
 
     protected Grid grid;
     protected Vector2 position;
@@ -78,6 +82,25 @@ public abstract class Entity extends GridElement {
 
     public void setInteractable(boolean isInteractable) {
         this.isInteractable = isInteractable;
+    }
+
+    public TextureRegion getSprite() {
+        return getSprite(facing);
+    }
+
+    public TextureRegion getSprite(Direction dir) {
+        return facingSprites[dir.ordinal()];
+    }
+
+    public void setFacingSprites(TextureRegion[] facingSprites) {
+        if (facingSprites.length != 4) {
+            throw new IllegalArgumentException("Must have 4 facing sprites: North, East, South, West");
+        }
+        this.facingSprites = facingSprites;
+    }
+
+    public void setSprite(TextureRegion sprite, Direction dir) {
+        facingSprites[dir.ordinal()] = sprite;
     }
 
     @Override

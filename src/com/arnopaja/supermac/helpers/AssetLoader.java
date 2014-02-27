@@ -21,7 +21,7 @@ public class AssetLoader {
 
     public static Texture texture;
     public static TextureRegion darkgrass1, cobblestone1, buildingTile;
-    public static TextureRegion steven;
+    public static TextureRegion[] steven;
 
     public static BitmapFont font, shadow;
 
@@ -45,10 +45,18 @@ public class AssetLoader {
 
         Tile.initSpriteMap(); // Must be called after all tiles are loaded
 
-        temp = new Texture(Gdx.files.internal("data/steven.gif"));
-        steven = new TextureRegion(temp, 0, 0, 32, 32);
-        steven.flip(false, true);
-
+        steven = new TextureRegion[4];
+        temp = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
+        steven[0] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
+        steven[1] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
+        steven[2] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_left.png"));
+        steven[3] = new TextureRegion(temp, 0, 0, 32, 32);
+        for (TextureRegion subSteven : steven) {
+            subSteven.flip(false, true);
+        }
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         font.setScale(.25f, -.25f);

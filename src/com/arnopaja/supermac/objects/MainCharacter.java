@@ -12,7 +12,7 @@ public class MainCharacter extends Character {
 
     public MainCharacter(Grid grid, int x, int y, Direction facing) {
         this(grid, new Vector2(x, y), facing);
-        setSprite(AssetLoader.steven);
+        setFacingSprites(AssetLoader.steven);
     }
 
     public MainCharacter(Grid grid, Vector2 position, Direction facing) {
