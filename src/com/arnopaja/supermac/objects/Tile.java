@@ -49,7 +49,7 @@ public class Tile extends Renderable {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, float x, float y) {
+    public boolean render(SpriteBatch batcher, float x, float y, float runTime) {
         if (isRendered && sprite != null) {
             batcher.draw(sprite, x * Grid.GRID_PIXEL_DIMENSION, y * Grid.GRID_PIXEL_DIMENSION);
             return true;

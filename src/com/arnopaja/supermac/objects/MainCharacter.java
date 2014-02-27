@@ -3,6 +3,7 @@ package com.arnopaja.supermac.objects;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -13,6 +14,7 @@ public class MainCharacter extends Character {
     public MainCharacter(Grid grid, int x, int y, Direction facing) {
         this(grid, new Vector2(x, y), facing);
         setFacingSprites(AssetLoader.steven);
+        setFacingAnimations(AssetLoader.stevenStepping);
     }
 
     public MainCharacter(Grid grid, Vector2 position, Direction facing) {
@@ -24,6 +26,21 @@ public class MainCharacter extends Character {
         if (entity != null && entity.isInteractable()) {
             // TODO: interact!
             System.out.println("INTERACTION");
+        }
+    }
+
+    @Override
+    public TextureRegion getSprite(float runTime) {
+        return getSprite(facing, runTime);
+    }
+
+    @Override
+    public TextureRegion getSprite(Direction dir, float runTime) {
+        int ordinal = dir.ordinal();
+        if (isMoving) {
+            return facingAnimations[ordinal].getKeyFrame(runTime);
+        } else {
+            return facingSprites[ordinal];
         }
     }
 

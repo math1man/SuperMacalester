@@ -47,10 +47,9 @@ public abstract class Entity extends Renderable {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, float xPos, float yPos) {
-        // TODO: finish this method to deal with animations
-        if (isRendered && getSprite() != null) {
-            batcher.draw(getSprite(), (xPos + movingOffset.x)*Grid.GRID_PIXEL_DIMENSION,
+    public boolean render(SpriteBatch batcher, float xPos, float yPos, float runTime) {
+        if (isRendered && getSprite(runTime) != null) {
+            batcher.draw(getSprite(runTime), (xPos + movingOffset.x)*Grid.GRID_PIXEL_DIMENSION,
                     (yPos + movingOffset.y)*Grid.GRID_PIXEL_DIMENSION);
             return true;
         }
@@ -126,7 +125,15 @@ public abstract class Entity extends Renderable {
     }
 
     public TextureRegion getSprite(Direction dir) {
-        if (facingSprites != null && facingSprites.length == 4) {
+        return getSprite(dir, 0);
+    }
+
+    public TextureRegion getSprite(float runTime) {
+        return getSprite(facing, runTime);
+    }
+
+    public TextureRegion getSprite(Direction dir, float runTime) {
+        if ((facingSprites != null) && (facingSprites.length == 4)) {
             return facingSprites[dir.ordinal()];
         }
         return null;

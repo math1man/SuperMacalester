@@ -10,7 +10,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Character extends Entity {
 
-    protected Animation animation;
+    // Ordered N-E-S-W (same as Direction order)
+    protected Animation[] facingAnimations;
 
     protected Character() {
         this(null, 0, 0, Direction.SOUTH);
@@ -33,11 +34,25 @@ public abstract class Character extends Entity {
     }
 
     public Animation getAnimation() {
-        return animation;
+        return getAnimation(facing);
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
+    public Animation getAnimation(Direction dir) {
+        if (facingAnimations != null && facingAnimations.length == 4) {
+            return facingAnimations[dir.ordinal()];
+        }
+        return null;
+    }
+
+    public void setFacingAnimations(Animation[] facingAnimations) {
+        if (facingSprites.length != 4) {
+            throw new IllegalArgumentException("Must have 4 facing animations: North, East, South, West");
+        }
+        this.facingAnimations = facingAnimations;
+    }
+
+    public void setAnimation(Animation animation, Direction dir) {
+        facingAnimations[dir.ordinal()] = animation;
     }
 
     @Override

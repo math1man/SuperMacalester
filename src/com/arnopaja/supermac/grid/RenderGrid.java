@@ -39,33 +39,33 @@ public class RenderGrid extends Grid {
      * @param x the x component of the offset vector
      * @param y the y component of the offset vector
      */
-    public void renderTiles(SpriteBatch batcher, float x, float y) {
+    public void renderTiles(SpriteBatch batcher, float x, float y, float runtime) {
         for (int i=0; i<renderWidth; i++) {
             for (int j=0; j<renderHeight; j++) {
                 Tile tile = tileArray[i][j];
                 if (tile.isRendered()) {
-                    tile.render(batcher, i + x - 1, j + y - 1);
+                    tile.render(batcher, i + x - 1, j + y - 1, runtime);
                 }
             }
         }
     }
 
-    public void renderTiles(SpriteBatch batcher, Vector2 offset) {
-        renderTiles(batcher, offset.x, offset.y);
+    public void renderTiles(SpriteBatch batcher, Vector2 offset, float runtime) {
+        renderTiles(batcher, offset.x, offset.y, runtime);
     }
 
-    public void renderEntities(SpriteBatch batcher, float x, float y) {
+    public void renderEntities(SpriteBatch batcher, float x, float y, float runtime) {
         for (int i=0; i<renderWidth; i++) {
             for (int j=0; j<renderHeight; j++) {
                 Entity entity = getEntity(i, j);
                 if (entity != null && entity.isRendered()) {
-                    entity.render(batcher, i + x - 1, j + y - 1);
+                    entity.render(batcher, i + x - 1, j + y - 1, runtime);
                 }
             }
         }
     }
 
-    public void renderEntities(SpriteBatch batcher, Vector2 offset) {
-        renderEntities(batcher, offset.x, offset.y);
+    public void renderEntities(SpriteBatch batcher, Vector2 offset, float runtime) {
+        renderEntities(batcher, offset.x, offset.y, runtime);
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -21,7 +22,8 @@ public class AssetLoader {
 
     public static Texture texture;
     public static TextureRegion darkgrass1, cobblestone1, buildingTile;
-    public static TextureRegion[] steven;
+    public static TextureRegion[] steven, stevenSteps;
+    public static Animation[] stevenStepping;
 
     public static BitmapFont font, shadow;
 
@@ -54,8 +56,31 @@ public class AssetLoader {
         steven[2] = new TextureRegion(temp, 0, 0, 32, 32);
         temp = new Texture(Gdx.files.internal("data/steven/steven_left.png"));
         steven[3] = new TextureRegion(temp, 0, 0, 32, 32);
-        for (TextureRegion subSteven : steven) {
-            subSteven.flip(false, true);
+
+        stevenSteps = new TextureRegion[8];
+        temp = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
+        stevenSteps[0] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
+        stevenSteps[1] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
+        stevenSteps[2] = new TextureRegion(temp, 0, 0, 32, 32);
+        stevenSteps[3] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
+        stevenSteps[4] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
+        stevenSteps[5] = new TextureRegion(temp, 0, 0, 32, 32);
+        temp = new Texture(Gdx.files.internal("data/steven/steven_left_step.png"));
+        stevenSteps[6] = new TextureRegion(temp, 0, 0, 32, 32);
+        stevenSteps[7] = new TextureRegion(temp, 0, 0, 32, 32);
+
+        stevenStepping = new Animation[4];
+        for (int i=0; i<4; i++) {
+            steven[i].flip(false, true);
+            stevenSteps[2*i].flip(false, true);
+            stevenSteps[2*i + 1].flip(false, true);
+            TextureRegion[] tempSteps = {steven[i], stevenSteps[2*i], steven[i], stevenSteps[2*i+1]};
+            stevenStepping[i] = new Animation(0.1f, tempSteps);
+            stevenStepping[i].setPlayMode(Animation.LOOP);
         }
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));

@@ -67,9 +67,9 @@ public class MapRenderer {
         batcher.begin();
         batcher.disableBlending();
         Vector2 offset = mainCharacter.getMovingOffset().cpy().scl(-1);
-        renderGrid.renderTiles(batcher, offset);    // Render the base tiles
+        renderGrid.renderTiles(batcher, offset, runTime);    // Render the base tiles
         batcher.enableBlending();
-        renderGrid.renderEntities(batcher, offset); // Render entities on top of the tiles
+        renderGrid.renderEntities(batcher, offset, runTime); // Render entities on top of the tiles
         batcher.end();
     }
 }
