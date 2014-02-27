@@ -25,9 +25,21 @@ public class MainCharacter extends Character {
     }
 
     public void interact() {
+        System.out.println("INTERACTION (2)");
         Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
         if (entity != null && entity.isInteractable()) {
             // TODO: interact!
+            System.out.println("INTERACTION (3)");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MainCharacter{" +
+                "grid=" + grid +
+                ", position=" + position +
+                ", facing=" + facing +
+                ", isRendered=" + isRendered +
+                '}';
     }
 }

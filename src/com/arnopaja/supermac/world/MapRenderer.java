@@ -54,9 +54,9 @@ public class MapRenderer {
 
         MainCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
-        System.out.println(centerPosition);
+//        System.out.println(centerPosition);
         RenderGrid renderGrid = world.getWorldGrid().getRenderGrid(centerPosition);
-        System.out.println(renderGrid.getEntityMap().size());
+//        System.out.println(renderGrid.getEntityMap().size());
 
         shapeRenderer.begin(ShapeType.Filled);
 
@@ -68,7 +68,6 @@ public class MapRenderer {
 
         batcher.begin();
         batcher.disableBlending();
-        // TODO: should these offset coordinates not be 0?
         float x = 0;
         float y = 0;
         renderGrid.renderTiles(batcher, x, y);    // Render the base tiles
@@ -76,6 +75,6 @@ public class MapRenderer {
         renderGrid.renderEntities(batcher, x, y); // Render entities on top of the tiles
         batcher.end();
 
-        System.out.println();
+//        System.out.println();
     }
 }

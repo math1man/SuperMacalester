@@ -25,7 +25,8 @@ public abstract class Entity extends GridElement {
         this.grid.putEntity(this);
     }
 
-    // TODO: should this and the changeGrid methods maybe be in character instead?
+    public abstract void update(float delta);
+
     public boolean move(Direction dir) {
         facing = dir;
         return grid.moveEntity(this, dir);
@@ -51,14 +52,6 @@ public abstract class Entity extends GridElement {
         return grid;
     }
 
-    public int getX() {
-        return (int) position.x;
-    }
-
-    public int getY() {
-        return (int) position.y;
-    }
-
     public Vector2 getPosition() {
         return position;
     }
@@ -67,16 +60,8 @@ public abstract class Entity extends GridElement {
         return facing;
     }
 
-    public void setX(int x) {
-        setPosition(x, (int) position.y);
-    }
-
-    public void setY(int y) {
-        setPosition((int) position.x, y);
-    }
-
     public void setPosition (int x, int y) {
-        position = new Vector2(x, y);
+        setPosition(new Vector2(x, y));
     }
 
     public void setPosition(Vector2 position) {
@@ -93,5 +78,16 @@ public abstract class Entity extends GridElement {
 
     public void setInteractable(boolean isInteractable) {
         this.isInteractable = isInteractable;
+    }
+
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "grid=" + grid +
+                ", position=" + position +
+                ", facing=" + facing +
+                ", isInteractable=" + isInteractable +
+                ", isRendered=" + isRendered +
+                '}';
     }
 }

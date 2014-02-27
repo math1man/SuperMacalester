@@ -11,6 +11,8 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class InputHandler implements InputProcessor {
 
+    public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
+
     private GameWorld world;
 
     private float gameWidth;
@@ -47,18 +49,24 @@ public class InputHandler implements InputProcessor {
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
         MainCharacter character = world.getMainCharacter();
-        if (gameX < Grid.GRID_PIXEL_DIMENSION) {
+        if (gameX < SIDE_BUTTON_WIDTH) {
+            System.out.println("west");
             character.move(Direction.WEST);
-        } else if (gameX > gameWidth - Grid.GRID_PIXEL_DIMENSION) {
+        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+            System.out.println("east");
             character.move(Direction.EAST);
-        } else if (gameY < Grid.GRID_PIXEL_DIMENSION) {
+        } else if (gameY < SIDE_BUTTON_WIDTH) {
+            System.out.println("north");
             character.move(Direction.NORTH);
-        } else if (gameY > gameHeight - Grid.GRID_PIXEL_DIMENSION) {
+        } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+            System.out.println("south");
             character.move(Direction.SOUTH);
         } else {
+            System.out.println("INTERACTION (1)");
             character.interact();
         }
-        return false;
+        System.out.println(character);
+        return true;
     }
 
     @Override

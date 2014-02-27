@@ -42,8 +42,6 @@ public abstract class Character extends Entity {
         return true;
     }
 
-    public abstract void update(float delta);
-
     public Animation getAnimation() {
         return animation;
     }
@@ -58,5 +56,15 @@ public abstract class Character extends Entity {
 
     public void setSprite(TextureRegion sprite) {
         this.sprite = sprite;
+    }
+
+    @Override
+    public String toString() {
+        return "Character{" +
+                "grid=" + grid +
+                ", position=" + position +
+                ", facing=" + facing +
+                ", isInteractable=" + isInteractable +
+                '}';
     }
 }

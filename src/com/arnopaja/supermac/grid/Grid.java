@@ -5,6 +5,7 @@ import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -61,6 +62,10 @@ public class Grid {
 
     public Map<Vector2, Entity> getEntityMap() {
         return entityMap;
+    }
+
+    public Collection<Entity> getEntities() {
+        return entityMap.values();
     }
 
     public Tile getTile(int x, int y) {
@@ -174,10 +179,8 @@ public class Grid {
      */
     public boolean moveEntity(Entity entity, Direction dir) {
         if (entity != null) {
-            // TODO: WHY THE FUCK DOES THIS WORK?!?!?!?!
-            // Logically, destination and position declarations should be swapped...
-            Vector2 destination = entity.getPosition();
-            Vector2 position = Direction.getAdjacent(destination, dir);
+            Vector2 position = entity.getPosition();
+            Vector2 destination = Direction.getAdjacent(position, dir);
             if (isInBounds(destination)
                     && (getEntity(destination) == null)
                     && getTile(destination).isPathable()) {
@@ -266,7 +269,7 @@ public class Grid {
             for (int j=0; j<height; j++) {
                 Vector2 key = new Vector2(i+x, j+y);
                 if (entityMap.containsKey(key)) {
-                    subEntityMap.put(new Vector2(i, j), entityMap.get(key));
+                    subEntityMap.put(new Vector2(i, j), getEntity(key));
                 }
             }
         }

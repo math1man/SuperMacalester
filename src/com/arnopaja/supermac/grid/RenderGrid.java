@@ -50,10 +50,12 @@ public class RenderGrid extends Grid {
     }
 
     public void renderEntities(SpriteBatch batcher, float x, float y) {
+        System.out.println("Rendering Entities...");
         for (int i=0; i<renderWidth; i++) {
             for (int j=0; j<renderHeight; j++) {
                 Entity entity = getEntity(i, j);
                 if (entity != null && entity.isRendered()) {
+                    System.out.println("Rendering " + entity + " at (" + (i*GRID_PIXEL_DIMENSION + x) + ", " + (j*GRID_PIXEL_DIMENSION + y) + ")");
                     entity.render(batcher, i*GRID_PIXEL_DIMENSION + x, j*GRID_PIXEL_DIMENSION + y);
                 }
             }

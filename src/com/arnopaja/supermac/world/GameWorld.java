@@ -4,7 +4,7 @@ import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.objects.Building;
-import com.arnopaja.supermac.objects.Character;
+import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainCharacter;
 
 import java.util.ArrayList;
@@ -23,20 +23,22 @@ public class GameWorld {
     private List<Building> buildings;
 
     private MainCharacter mainCharacter;
-    private List<Character> characters;
 
     public GameWorld() {
-        System.out.println("World Created!");
         currentState = GameState.RUNNING;
-        System.out.println("Creating grid...");
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
         mainCharacter = new MainCharacter(worldGrid, 1, 1, Direction.SOUTH);
         initBuildings();
+        initCharacters();
     }
 
     private void initBuildings() {
         buildings = new ArrayList<Building>();
         // TODO: add buildings here
+    }
+
+    private void initCharacters() {
+        // TODO: add characters here?
     }
 
     public void update(float delta) {
@@ -52,10 +54,12 @@ public class GameWorld {
     }
 
     public void updateRunning(float delta) {
-        mainCharacter.update(delta);
-//        for (Character character : characters) {
-//            character.update(delta);
-//        }
+        Grid currentGrid = mainCharacter.getGrid();
+        for (Entity entity : currentGrid.getEntities()) {
+            entity.update(delta);
+            // mainCharacter.update is called inherently because
+            // the main character is an element of the current grid
+        }
     }
 
     public void ready() {
