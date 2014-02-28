@@ -4,6 +4,7 @@ import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +50,10 @@ public class Tile extends Renderable {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, float x, float y, float runTime) {
+    public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
         if (isRendered && sprite != null) {
-            batcher.draw(sprite, x * Grid.GRID_PIXEL_DIMENSION, y * Grid.GRID_PIXEL_DIMENSION);
+            Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
+            batcher.draw(sprite, renderPos.x, renderPos.y);
             return true;
         }
         return false;

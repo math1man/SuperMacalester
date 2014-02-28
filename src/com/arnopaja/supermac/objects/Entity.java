@@ -47,10 +47,10 @@ public abstract class Entity extends Renderable {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, float xPos, float yPos, float runTime) {
+    public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
         if (isRendered && getSprite(runTime) != null) {
-            batcher.draw(getSprite(runTime), (xPos + movingOffset.x)*Grid.GRID_PIXEL_DIMENSION,
-                    (yPos + movingOffset.y)*Grid.GRID_PIXEL_DIMENSION);
+            Vector2 renderPos = position.cpy().add(movingOffset).scl(Grid.GRID_PIXEL_DIMENSION);
+            batcher.draw(getSprite(runTime), renderPos.x, renderPos.y);
             return true;
         }
         return false;

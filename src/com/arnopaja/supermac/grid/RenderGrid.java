@@ -15,18 +15,27 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class RenderGrid extends Grid {
 
-    // TODO: decide on these dimensions
-    // TODO: alternatively, may need to be dynamic based on screen res
-    public static final int RENDER_WIDTH = 27;
-    public static final int RENDER_HEIGHT = 17;
-
-    private final int renderWidth = RENDER_WIDTH;
-    private final int renderHeight = RENDER_HEIGHT;
-
     protected RenderGrid(Grid grid) {
         super(grid);
-        if ((grid.gridWidth != renderWidth) || (grid.gridHeight != renderHeight)) {
-            throw new IllegalArgumentException();
+    }
+
+    /**
+     * Renders all elements of this RenderGrid using their appropriate render method.
+     * They are rendered at the appropriate position corresponding to their grid space,
+     * offset by the vector (x, y).
+     *
+     * @param batcher the SpriteBatch used to render the elements
+     * @param offset the offset vector
+     * @param runTime the current runtime.  Used to properly render animations
+     */
+    public void renderTiles(SpriteBatch batcher, Vector2 offset, float runTime) {
+        for (int i=0; i<gridWidth; i++) {
+            for (int j=0; j<gridHeight; j++) {
+                Tile tile = tileArray[i][j];
+                if (tile.isRendered()) {
+                    tile.render(batcher, new Vector2(i, j).add(offset), runTime);
+                }
+            }
         }
     }
 
@@ -36,36 +45,19 @@ public class RenderGrid extends Grid {
      * offset by the vector (x, y).
      *
      * @param batcher the SpriteBatch used to render the elements
-     * @param x the x component of the offset vector
-     * @param y the y component of the offset vector
+     * @param offset the offset vector
+     * @param runTime the current runtime.  Used to properly render animations
      */
-    public void renderTiles(SpriteBatch batcher, float x, float y, float runtime) {
-        for (int i=0; i<renderWidth; i++) {
-            for (int j=0; j<renderHeight; j++) {
-                Tile tile = tileArray[i][j];
-                if (tile.isRendered()) {
-                    tile.render(batcher, i + x - 1, j + y - 1, runtime);
-                }
-            }
-        }
-    }
-
-    public void renderTiles(SpriteBatch batcher, Vector2 offset, float runtime) {
-        renderTiles(batcher, offset.x, offset.y, runtime);
-    }
-
-    public void renderEntities(SpriteBatch batcher, float x, float y, float runtime) {
-        for (int i=0; i<renderWidth; i++) {
-            for (int j=0; j<renderHeight; j++) {
-                Entity entity = getEntity(i, j);
+    public void renderEntities(SpriteBatch batcher, Vector2 offset, float runTime) {
+        for (int i=0; i<gridWidth; i++) {
+            for (int j=0; j<gridHeight; j++) {
+                Vector2 position = new Vector2(i, j);
+                System.out.println(position);
+                Entity entity = getEntity(position);
                 if (entity != null && entity.isRendered()) {
-                    entity.render(batcher, i + x - 1, j + y - 1, runtime);
+                    entity.render(batcher, position.add(offset), runTime);
                 }
             }
         }
-    }
-
-    public void renderEntities(SpriteBatch batcher, Vector2 offset, float runtime) {
-        renderEntities(batcher, offset.x, offset.y, runtime);
     }
 }
