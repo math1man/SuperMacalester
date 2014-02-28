@@ -1,0 +1,53 @@
+Map data document.  All maps should be generated here in a very specific form:
+map: [map name]
+width: [width]
+height: [height]
+[grid of tile codes]
+
+The grid of tile codes must have the exact specified dimensions.
+List of current tile codes:
+b = building
+g = grass
+c = cobble
+n = null tile
+
+List of current tile flags:
+p = pathable flag
+
+All tiles are rendered by default except null tiles which by definition cannot be rendered and do not have a sprite
+
+map: World
+width: 32
+height: 32
+b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
+b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
