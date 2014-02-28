@@ -2,7 +2,7 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.RenderGrid;
-import com.arnopaja.supermac.objects.MainCharacter;
+import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -70,7 +70,7 @@ public class MapRenderer {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        MainCharacter mainCharacter = world.getMainCharacter();
+        MainMapCharacter mainCharacter = world.getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
         RenderGrid renderGrid = world.getWorldGrid().getRenderGrid(centerPosition, renderGridWidth, renderGridHeight);
 

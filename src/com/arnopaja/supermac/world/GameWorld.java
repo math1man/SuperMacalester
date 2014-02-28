@@ -5,7 +5,7 @@ import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.objects.Entity;
-import com.arnopaja.supermac.objects.MainCharacter;
+import com.arnopaja.supermac.objects.MainMapCharacter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,12 @@ public class GameWorld {
     private Grid worldGrid;
     private List<Building> buildings;
 
-    private MainCharacter mainCharacter;
+    private MainMapCharacter mainCharacter;
 
     public GameWorld() {
         currentState = GameState.RUNNING;
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainCharacter(worldGrid, 1, 1, Direction.SOUTH);
+        mainCharacter = new MainMapCharacter(worldGrid, 1, 1, Direction.SOUTH);
         initBuildings();
         initCharacters();
     }
@@ -90,7 +90,7 @@ public class GameWorld {
         return worldGrid;
     }
 
-    public MainCharacter getMainCharacter() {
+    public MainMapCharacter getMainCharacter() {
         return mainCharacter;
     }
 }

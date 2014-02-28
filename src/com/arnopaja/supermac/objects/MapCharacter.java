@@ -8,28 +8,28 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public abstract class Character extends Entity {
+public abstract class MapCharacter extends Entity {
 
     // Ordered N-E-S-W (same as Direction order)
     protected Animation[] facingAnimations;
 
-    protected Character() {
+    protected MapCharacter() {
         this(null, 0, 0, Direction.SOUTH);
     }
 
-    protected Character(Grid grid, int x, int y, Direction facing) {
+    protected MapCharacter(Grid grid, int x, int y, Direction facing) {
         this(grid, new Vector2(x, y), facing);
     }
 
-    protected Character(Grid grid, Vector2 position, Direction facing) {
+    protected MapCharacter(Grid grid, Vector2 position, Direction facing) {
         this(grid, position, facing, false);
     }
 
-    protected Character(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
+    protected MapCharacter(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
         this(grid, new Vector2(x, y), facing, isInteractable);
     }
 
-    protected Character(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+    protected MapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(true, grid, position, facing, isInteractable);
     }
 
@@ -57,7 +57,7 @@ public abstract class Character extends Entity {
 
     @Override
     public String toString() {
-        return "Character{" +
+        return "MapCharacter{" +
                 "grid=" + grid +
                 ", position=" + position +
                 ", facing=" + facing +
