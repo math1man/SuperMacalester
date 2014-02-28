@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.objects; /**
+package com.arnopaja.supermac.battle; /**
  * Created by Nolan on 2/16/14.
  */
 public class Weapon

@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.objects;import java.util.LinkedList;
+package com.arnopaja.supermac.battle;import java.util.LinkedList;
 
 /**
  * Created by Nolan on 2/16/14.

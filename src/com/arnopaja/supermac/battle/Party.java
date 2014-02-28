@@ -1,6 +1,6 @@
-package com.arnopaja.supermac.objects;
+package com.arnopaja.supermac.battle;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Created by Nolan on 2/24/14.
@@ -10,14 +10,13 @@ public abstract class Party
     //Characters will be added to party in different methods, as defined by their non-abstract subclasses
     protected Party()
     {
-        characters = new LinkedList<Character>();
+        characters = new ArrayList<Character>();
     }
-    protected LinkedList<Character> characters;
+    protected ArrayList<Character> characters;
     public boolean isDefeated()
     {
-        for(int i=0;i<characters.size();i++)
-        {
-            if(!characters.get(i).isFainted()) return false;
+        for (Character character : characters) {
+            if (!character.isFainted()) return false;
         }
         return true;
     }

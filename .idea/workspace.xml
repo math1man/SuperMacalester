@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="">
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Major progress in battle/character class system">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/BattleClass.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/MainParty.java" />
+      <change type="DELETED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Hero.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\MainParty.java" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Armor.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Armor.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Character.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Character.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Inventory.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Inventory.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Item.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Item.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Party.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\SpecialItem.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/SpecialItem.java" />
+      <change type="MOVED" beforePath="C:\Users\Envy\IdeaProjects\SuperMacalester\SuperMacalester\src\com\arnopaja\supermac\objects\Weapon.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Weapon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/gdx_backend_robovm.xml" afterPath="$PROJECT_DIR$/.idea/libraries/gdx_backend_robovm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libs1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libs1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libs2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libs2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -66,91 +83,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="8" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Character.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Character.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Character.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="5" selection-start="580" selection-end="580" vertical-scroll-proportion="0.0" vertical-offset="741" max-vertical-offset="1360">
+            <state line="49" column="5" selection-start="1001" selection-end="1001" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Party.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Party.java">
+      <file leaf-file-name="Party.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="5" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+            <state line="16" column="5" selection-start="411" selection-end="411" vertical-scroll-proportion="0.6683047" vertical-offset="0" max-vertical-offset="493">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainParty.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java">
+      <file leaf-file-name="MainParty.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/MainParty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.65912765" vertical-offset="0" max-vertical-offset="619">
+            <state line="27" column="27" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BattleClass.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/BattleClass.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="75" selection-start="989" selection-end="989" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1411">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Hero.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Hero.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+            <state line="17" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Inventory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Inventory.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Inventory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="22" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+            <state line="11" column="22" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1292">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Armor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Armor.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Armor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="8" selection-start="329" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+            <state line="13" column="8" selection-start="328" selection-end="360" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Weapon.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Weapon.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Weapon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="40" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+            <state line="13" column="40" selection-start="361" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Item.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Item.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Item.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="40" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+            <state line="12" column="40" selection-start="348" selection-end="348" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="357">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="SpecialItem.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/SpecialItem.java">
+        <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/SpecialItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="40" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+            <state line="10" column="40" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="323">
               <folding />
             </state>
           </provider>
@@ -181,14 +198,17 @@
       <list>
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Inventory.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Character.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Armor.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Weapon.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Item.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/SpecialItem.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Character.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Party.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Hero.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/BattleClass.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Hero.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java" />
       </list>
     </option>
   </component>
@@ -295,7 +315,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="objects" />
+              <option name="myItemId" value="battle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -645,7 +665,9 @@
       <workItem from="1392672474991" duration="36000" />
       <workItem from="1393007116203" duration="814000" />
       <workItem from="1393224164227" duration="28000" />
-      <workItem from="1393265229575" duration="3622000" />
+      <workItem from="1393265229575" duration="3685000" />
+      <workItem from="1393437465287" duration="3984000" />
+      <workItem from="1393611052008" duration="1459000" />
     </task>
     <task id="LOCAL-00001" summary="nolan test">
       <created>1393265458530</created>
@@ -655,14 +677,18 @@
       <created>1393268863159</created>
       <updated>1393268863159</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="huh">
+      <created>1393268913591</created>
+      <updated>1393268913591</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5505000" />
+    <option name="totallyTimeSpent" value="11011000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1808" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1808" height="754" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -680,7 +706,7 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32868218" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32868218" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -712,7 +738,9 @@
     <MESSAGE value="nolan test" />
     <MESSAGE value="Base Characters, Weapons, Armor, Items, etc. definitions." />
     <MESSAGE value="Base Character,Item, etc. definitions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Base Character,Item, etc. definitions" />
+    <MESSAGE value="huh" />
+    <MESSAGE value="Major progress in battle/character class system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major progress in battle/character class system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -722,32 +750,162 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Character.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+        <state line="101" column="29" selection-start="2230" selection-end="2230" vertical-scroll-proportion="0.0" vertical-offset="1360" max-vertical-offset="1360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="5" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/MainParty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/BattleClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="22" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0" vertical-offset="1156" max-vertical-offset="1394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Inventory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="22" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Armor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="8" selection-start="329" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Weapon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="40" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="40" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/SpecialItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="40" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+        <state line="12" column="8" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Character.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="5" selection-start="580" selection-end="580" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="1870">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="5" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/MainParty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Inventory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="22" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Armor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="8" selection-start="329" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Weapon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="40" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="40" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/SpecialItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="40" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="323">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
-          <folding />
-        </state>
+        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-          <folding />
-        </state>
+        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="16" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../supermacalester-android/src/com/arnopaja/supermac/MainActivity.java">
@@ -757,70 +915,75 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../supermacalester-desktop/src/com/arnopaja/supermac/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="8" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+        <state line="12" column="8" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="40" selection-start="348" selection-end="348" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="357">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Weapon.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/SpecialItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="40" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+        <state line="10" column="40" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="323">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Item.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="40" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+        <state line="11" column="22" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1292">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/SpecialItem.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Weapon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="40" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+        <state line="13" column="40" selection-start="361" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Armor.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Armor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="8" selection-start="329" selection-end="361" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+        <state line="13" column="8" selection-start="328" selection-end="360" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Inventory.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/MainParty.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="22" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+        <state line="27" column="27" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Character.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Character.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="5" selection-start="580" selection-end="580" vertical-scroll-proportion="0.0" vertical-offset="741" max-vertical-offset="1360">
+        <state line="49" column="5" selection-start="1001" selection-end="1001" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Party.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/BattleClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="5" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+        <state line="29" column="75" selection-start="989" selection-end="989" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1411">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Hero.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Hero.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+        <state line="17" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MainParty.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/battle/Party.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="48" selection-start="560" selection-end="560" vertical-scroll-proportion="0.65912765" vertical-offset="0" max-vertical-offset="619">
+        <state line="16" column="5" selection-start="411" selection-end="411" vertical-scroll-proportion="0.6683047" vertical-offset="0" max-vertical-offset="493">
           <folding />
         </state>
       </provider>

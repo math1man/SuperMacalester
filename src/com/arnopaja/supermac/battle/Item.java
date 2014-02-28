@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.objects;import java.lang.String; /**
+package com.arnopaja.supermac.battle;import java.lang.String; /**
  * Created by Nolan on 2/16/14.
  */
 public class Item
