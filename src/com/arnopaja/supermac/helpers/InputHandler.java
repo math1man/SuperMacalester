@@ -2,7 +2,7 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.objects.MainCharacter;
+import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.world.GameWorld;
 import com.badlogic.gdx.InputProcessor;
 
@@ -48,7 +48,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
-        MainCharacter character = world.getMainCharacter();
+        MainMapCharacter character = world.getMainCharacter();
         if (gameX < SIDE_BUTTON_WIDTH) {
             character.move(Direction.WEST);
         } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {

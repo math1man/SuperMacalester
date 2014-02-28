@@ -9,15 +9,15 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class MainCharacter extends Character {
+public class MainMapCharacter extends MapCharacter {
 
-    public MainCharacter(Grid grid, int x, int y, Direction facing) {
+    public MainMapCharacter(Grid grid, int x, int y, Direction facing) {
         this(grid, new Vector2(x, y), facing);
         setFacingSprites(AssetLoader.steven);
         setFacingAnimations(AssetLoader.stevenStepping);
     }
 
-    public MainCharacter(Grid grid, Vector2 position, Direction facing) {
+    public MainMapCharacter(Grid grid, Vector2 position, Direction facing) {
         super(grid, position, facing);
     }
 
@@ -46,7 +46,7 @@ public class MainCharacter extends Character {
 
     @Override
     public String toString() {
-        return "MainCharacter{" +
+        return "MainMapCharacter{" +
                 "grid=" + grid +
                 ", position=" + position +
                 ", facing=" + facing +
