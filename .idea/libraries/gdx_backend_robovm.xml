@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="gdx-backend-robovm">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../supermacalester-robovm/libs/gdx-backend-robovm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-robovm/libs/gdx-backend-robovm.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

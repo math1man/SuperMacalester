@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.world;
+package com.arnopaja.supermac.render;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.RenderGrid;
@@ -14,9 +14,9 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class MapRenderer {
+public class WorldRenderer {
 
-    private GameWorld world;
+    private WorldInterface world;
     private OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
@@ -25,7 +25,7 @@ public class MapRenderer {
     private final int renderGridWidth, renderGridHeight;
     private final Vector2 renderOffset;
 
-    public MapRenderer(GameWorld world, float gameWidth, float gameHeight) {
+    public WorldRenderer(WorldInterface world, float gameWidth, float gameHeight) {
         this.world = world;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
@@ -42,10 +42,6 @@ public class MapRenderer {
         batcher.setProjectionMatrix(cam.combined);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
-
-        // Call helper methods to initialize instance variables
-        initGameObjects();
-        initAssets();
     }
 
     private static int getRenderDimension(float gameDimension) {
@@ -56,14 +52,6 @@ public class MapRenderer {
             renderDimension += 2;
         }
         return renderDimension;
-    }
-
-    private void initGameObjects() {
-
-    }
-
-    private void initAssets() {
-
     }
 
     public void render(float delta, float runTime) {
