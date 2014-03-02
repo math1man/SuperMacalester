@@ -22,10 +22,6 @@ public abstract class Entity extends Renderable {
     protected Direction facing;
     protected boolean isInteractable;
 
-    protected boolean isMoving = false;
-    protected Vector2 movingOffset = new Vector2(0, 0);
-    protected Vector2 deltaMove;
-
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(isRendered);
         this.grid = grid;
@@ -36,49 +32,19 @@ public abstract class Entity extends Renderable {
         this.grid.putEntity(this);
     }
 
-    public void update(float delta) {
-        if (isMoving) {
-            movingOffset.add(deltaMove.cpy().scl(delta));
-        }
-        if (movingOffset.isZero(ALIGN_THRESHOLD)) {
-            isMoving = false;
-            movingOffset = new Vector2();
-        }
-    }
-
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
         if (isRendered && getSprite(runTime) != null) {
-            Vector2 renderPos = position.cpy().add(movingOffset).scl(Grid.GRID_PIXEL_DIMENSION);
+            Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
             batcher.draw(getSprite(runTime), renderPos.x, renderPos.y);
             return true;
         }
         return false;
     }
 
-    public boolean move(Direction dir) {
-        if (!isMoving) {
-            facing = dir;
-            if (grid.moveEntity(this, dir)) {
-                isMoving = true;
-                movingOffset = Direction.getAdjacent(dir).scl(-1);
-                deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
-                return true;
-            }
-        }
-        return false;
-    }
+    public abstract void update(float delta);
 
-    public void changeGrid(Grid newGrid, int x, int y) {
-        changeGrid(newGrid, new Vector2(x, y));
-    }
-
-    public void changeGrid(Grid newGrid, Vector2 position) {
-        grid.removeEntity(position);
-        grid = newGrid;
-        // TODO: what about collisions?
-        newGrid.putEntity(this, position);
-    }
+    public abstract void interact(MainMapCharacter character);
 
     public Grid getGrid() {
         return grid;
@@ -98,14 +64,6 @@ public abstract class Entity extends Renderable {
 
     public void setPosition(Vector2 position) {
         this.position = position;
-    }
-
-    public boolean isMoving() {
-        return isMoving;
-    }
-
-    public Vector2 getMovingOffset() {
-        return movingOffset;
     }
 
     public void setFacing(Direction facing) {

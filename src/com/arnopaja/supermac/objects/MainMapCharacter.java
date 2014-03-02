@@ -24,9 +24,14 @@ public class MainMapCharacter extends MapCharacter {
     public void interact() {
         Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
         if (entity != null && entity.isInteractable()) {
-            // TODO: interact!
-            System.out.println("INTERACTION");
+            entity.interact(this);
         }
+    }
+
+    @Override
+    public void interact(MainMapCharacter character) {
+        System.out.println("You have somehow managed to interact with yourself");
+        // insert masturbation joke here
     }
 
     @Override
