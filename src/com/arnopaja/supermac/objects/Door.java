@@ -29,4 +29,28 @@ public class Door extends Entity {
     public void interact(MainMapCharacter character) {
         character.changeGrid(building.getFloorByNumber(floor), landingSpace);
     }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public Vector2 getLandingSpace() {
+        return landingSpace;
+    }
+
+    public void setLandingSpace(Vector2 landingSpace) {
+        this.landingSpace = landingSpace;
+    }
 }
