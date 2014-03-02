@@ -6,6 +6,7 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class GameWorld {
     public GameWorld() {
         currentState = GameState.RUNNING;
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainMapCharacter(worldGrid, 1, 1, Direction.SOUTH);
+        mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.SOUTH);
         initBuildings();
         initCharacters();
     }

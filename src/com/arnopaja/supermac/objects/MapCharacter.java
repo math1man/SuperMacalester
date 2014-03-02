@@ -18,19 +18,11 @@ public abstract class MapCharacter extends Entity {
     protected Vector2 deltaMove;
 
     protected MapCharacter() {
-        this(null, 0, 0, Direction.SOUTH);
-    }
-
-    protected MapCharacter(Grid grid, int x, int y, Direction facing) {
-        this(grid, new Vector2(x, y), facing);
+        this(null, new Vector2(0, 0), Direction.SOUTH);
     }
 
     protected MapCharacter(Grid grid, Vector2 position, Direction facing) {
         this(grid, position, facing, false);
-    }
-
-    protected MapCharacter(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
-        this(grid, new Vector2(x, y), facing, isInteractable);
     }
 
     protected MapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {

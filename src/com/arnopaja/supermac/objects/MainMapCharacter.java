@@ -11,14 +11,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MainMapCharacter extends MapCharacter {
 
-    public MainMapCharacter(Grid grid, int x, int y, Direction facing) {
-        this(grid, new Vector2(x, y), facing);
-        setFacingSprites(AssetLoader.steven);
-        setFacingAnimations(AssetLoader.stevenStepping);
-    }
-
     public MainMapCharacter(Grid grid, Vector2 position, Direction facing) {
         super(grid, position, facing);
+        setFacingSprites(AssetLoader.steven);
+        setFacingAnimations(AssetLoader.stevenStepping);
     }
 
     public void interact() {

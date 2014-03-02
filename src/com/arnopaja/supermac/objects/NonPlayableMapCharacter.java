@@ -9,19 +9,16 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class NonPlayableMapCharacter extends MapCharacter {
 
-    public NonPlayableMapCharacter(Grid grid, int x, int y, Direction facing) {
-        super(grid, x, y, facing);
-    }
-
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing) {
-        super(grid, position, facing);
-    }
-
-    public NonPlayableMapCharacter(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
-        super(grid, x, y, facing, isInteractable);
+        this(grid, position, facing, false);
     }
 
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(grid, position, facing, isInteractable);
+    }
+
+    @Override
+    public void interact(MainMapCharacter character) {
+
     }
 }
