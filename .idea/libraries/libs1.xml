@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="libs1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../supermacalester-android/libs/gdx-backend-android-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../supermacalester-android/libs/gdx-backend-android.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-android/libs/gdx-backend-android-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-android/libs/gdx-backend-android.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

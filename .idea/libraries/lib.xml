@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../supermacalester-html/war/WEB-INF/lib/gdx-backend-gwt.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../supermacalester-html/war/WEB-INF/lib/gdx-backend-gwt-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-html/war/WEB-INF/lib/gdx-backend-gwt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../SuperMacalester-html/war/WEB-INF/lib/gdx-backend-gwt-sources.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
