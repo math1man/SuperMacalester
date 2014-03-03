@@ -59,4 +59,9 @@ public class Dialogue {
     public List<String> getOptions() {
         return options;
     }
+
+    @Override
+    public String toString() {
+        return rawDialogue;
+    }
 }

@@ -49,11 +49,11 @@ public enum Direction {
         if (angle < 45 || angle >= 315) {
             return Direction.EAST;
         } else if (angle < 135) {
-            return Direction.NORTH;
+            return Direction.SOUTH;
         } else if (angle < 225) {
             return Direction.WEST;
         } else {
-            return Direction.SOUTH;
+            return Direction.NORTH;
         }
     }
 }

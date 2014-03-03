@@ -25,7 +25,7 @@ public abstract class Interaction {
         };
     }
 
-    public static Interaction getDialogueInteraction(Entity entity, MainMapCharacter character, final String dialogue) {
+    public static Interaction getDialogueInteraction(Entity entity, MainMapCharacter character, final Dialogue dialogue) {
         return new Interaction(entity, character) {
             @Override
             public void runInteraction(DialogueHandler dialogueHandler) {

@@ -4,6 +4,7 @@ import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.objects.Dialogue;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.objects.NonPlayableMapCharacter;
@@ -25,9 +26,10 @@ public class WorldInterface {
     public WorldInterface() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
         mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.SOUTH);
-        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(13, 5), Direction.WEST);
+        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.WEST);
         character.setFacingSprites(AssetLoader.steven);
         character.setInteractable(true);
+        character.setDialogue(new Dialogue("Hi!"));
         worldGrid.putEntity(character);
         initBuildings();
         initCharacters();

@@ -82,7 +82,10 @@ public abstract class Entity extends Renderable {
     }
 
     public TextureRegion getSprite(Direction dir) {
-        return getSprite(dir, 0);
+        if ((facingSprites != null) && (facingSprites.length == 4)) {
+            return facingSprites[dir.ordinal()];
+        }
+        return null;
     }
 
     public TextureRegion getSprite(float runTime) {
@@ -90,10 +93,7 @@ public abstract class Entity extends Renderable {
     }
 
     public TextureRegion getSprite(Direction dir, float runTime) {
-        if ((facingSprites != null) && (facingSprites.length == 4)) {
-            return facingSprites[dir.ordinal()];
-        }
-        return null;
+        return getSprite(dir);
     }
 
     public void setFacingSprites(TextureRegion[] facingSprites) {

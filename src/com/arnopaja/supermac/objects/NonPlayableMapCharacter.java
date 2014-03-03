@@ -21,7 +21,7 @@ public class NonPlayableMapCharacter extends MapCharacter {
     public Interaction getInteraction(MainMapCharacter character) {
         if (isInteractable()) {
             setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
-            return Interaction.getDialogueInteraction(this, character, "Hi!");
+            return Interaction.getDialogueInteraction(this, character, getDialogue());
         }
         return Interaction.getNullInteraction();
     }
