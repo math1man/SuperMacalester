@@ -2,6 +2,7 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.render.Renderable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;

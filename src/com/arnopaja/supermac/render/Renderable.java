@@ -1,10 +1,10 @@
-package com.arnopaja.supermac.objects;
+package com.arnopaja.supermac.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Superclass for things that are rendered.
+ * Superclass for all things that are rendered.
  *
  * @author Ari Weiland
  */
@@ -19,7 +19,6 @@ public abstract class Renderable {
     /**
      * Renders the Renderable if it is renderable, otherwise does nothing.
      * Returns whether or not something was rendered.
-     *
      *
      * @param batcher the SpriteBatch used to render the element
      * @param position the coordinates to render at

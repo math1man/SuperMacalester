@@ -52,7 +52,6 @@ public class RenderGrid extends Grid {
         for (int i=0; i<gridWidth; i++) {
             for (int j=0; j<gridHeight; j++) {
                 Vector2 position = new Vector2(i, j);
-                System.out.println(position);
                 Entity entity = getEntity(position);
                 if (entity != null && entity.isRendered()) {
                     entity.render(batcher, position.add(offset), runTime);
