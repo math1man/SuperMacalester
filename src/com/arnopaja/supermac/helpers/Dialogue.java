@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.MacGame;
+import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,10 +13,10 @@ public class Dialogue {
 
     public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.4f;
 
-    private static MacGame game;
-
     private static Vector2 dialogueSize;
     private static Vector2 dialoguePosition;
+
+    private static WorldScreen worldScreen;
 
     private static boolean displayDialogue = false;
     private static String dialogue;
@@ -26,8 +26,8 @@ public class Dialogue {
     private static boolean giveOptions = false;
     private static String[] options;
 
-    public static void init(MacGame newGame, float gameWidth, float gameHeight) {
-        game = newGame;
+    public static void init(WorldScreen screen, float gameWidth, float gameHeight) {
+        worldScreen = screen;
         // Dialogue size is the width of the game and some fraction of the height
         dialogueSize = new Vector2(gameWidth, gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO);
         // The bottom left corner of the dialogue is the same as that of the game
@@ -42,15 +42,24 @@ public class Dialogue {
      */
     public static void render(SpriteBatch batcher) {
         if (displayDialogue) {
-            // render code goes here
+            if (giveOptions) {
+                // render options
+            } else {
+                // render narration
+            }
         }
+    }
+
+    public static void displayDialogue(String dialogue) {
+        setDialogue(dialogue);
+        displayDialogue();
     }
 
     public static void displayDialogue() {
         parseDialogue();
         position = 0;
+        worldScreen.setRunning(false);
         displayDialogue = true;
-        // TODO: pause game, etc?
     }
 
     public static void onClick(int x, int y) {
@@ -58,6 +67,10 @@ public class Dialogue {
             // deal with options
         } else {
             position++;
+            if (position >= parsedDialogue.length) {
+                displayDialogue = false;
+                worldScreen.setRunning(true);
+            }
         }
     }
 
@@ -66,16 +79,12 @@ public class Dialogue {
         // sequence of strings that are displayable
     }
 
-    public static MacGame getGame() {
-        return game;
+    public static WorldScreen getWorldScreen() {
+        return worldScreen;
     }
 
     public static boolean isDisplayDialogue() {
         return displayDialogue;
-    }
-
-    public static void setDisplayDialogue(boolean displayDialogue) {
-        Dialogue.displayDialogue = displayDialogue;
     }
 
     public static String getDialogue() {

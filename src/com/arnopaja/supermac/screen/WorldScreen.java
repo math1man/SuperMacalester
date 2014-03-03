@@ -21,6 +21,7 @@ public class WorldScreen implements Screen {
     private final float gameWidth, gameHeight;
 
     private float runTime;
+    private boolean isRunning = true;
 
     public WorldScreen(MacGame game) {
         this.game = game;
@@ -33,13 +34,15 @@ public class WorldScreen implements Screen {
         inputHandler = new MapInputHandler(world, gameWidth, gameHeight,
                 gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
 
-        Dialogue.init(game, gameWidth, gameHeight);
+        Dialogue.init(this, gameWidth, gameHeight);
     }
 
     @Override
     public void render(float delta) {
-        runTime += delta;
-        world.update(delta);
+        if (isRunning) {
+            runTime += delta;
+            world.update(delta);
+        }
         renderer.render(delta, runTime);
     }
 
@@ -92,5 +95,13 @@ public class WorldScreen implements Screen {
 
     public float getGameWidth() {
         return gameWidth;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 }

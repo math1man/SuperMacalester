@@ -9,9 +9,10 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Starting a static Dialogue class for displaying dialogue, narration, etc.">
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Dialogue is now designed only for WorldScreen usage">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -77,10 +78,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Dialogue.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Dialogue.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="7" selection-start="1201" selection-end="1201" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1350">
+            <state line="62" column="0" selection-start="1972" selection-end="1972" vertical-scroll-proportion="1.9280206" vertical-offset="150" max-vertical-offset="1515">
               <folding />
             </state>
           </provider>
@@ -89,19 +90,20 @@
       <file leaf-file-name="MacGame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="36" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="975">
+            <state line="40" column="62" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="930">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldScreen.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="WorldScreen.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="58" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0784983" vertical-offset="389" max-vertical-offset="1320">
+            <state line="99" column="32" selection-start="2427" selection-end="2427" vertical-scroll-proportion="0.0" vertical-offset="241" max-vertical-offset="1455">
               <folding>
-                <element signature="e#2007#2008#0" expanded="true" />
-                <element signature="e#2034#2035#0" expanded="true" />
+                <element signature="e#2458#2459#0" expanded="true" />
+                <element signature="e#2507#2508#0" expanded="true" />
+                <element signature="e#2549#2550#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,7 +112,7 @@
       <file leaf-file-name="WorldRenderer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="78" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1185">
+            <state line="19" column="32" selection-start="647" selection-end="652" vertical-scroll-proportion="10.961538" vertical-offset="420" max-vertical-offset="1185">
               <folding />
             </state>
           </provider>
@@ -119,7 +121,7 @@
       <file leaf-file-name="MapInputHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/MapInputHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="78" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1485">
+            <state line="18" column="78" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1425">
               <folding />
             </state>
           </provider>
@@ -199,11 +201,11 @@
         <option value="$PROJECT_DIR$/../SuperMacalester-desktop/src/com/arnopaja/supermac/Main.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/GameScreen.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/BattleScreen.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java" />
       </list>
     </option>
   </component>
@@ -805,7 +807,7 @@
       <workItem from="1393613519850" duration="235000" />
       <workItem from="1393623949097" duration="4231000" />
       <workItem from="1393804927002" duration="2611000" />
-      <workItem from="1393821331994" duration="1042000" />
+      <workItem from="1393821331994" duration="2074000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -935,11 +937,15 @@
       <created>1393808721141</created>
       <updated>1393808721141</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Dialogue is now designed only for WorldScreen usage">
+      <created>1393822406846</created>
+      <updated>1393822406846</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102745000" />
+    <option name="totallyTimeSpent" value="103777000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -967,33 +973,33 @@
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32912534" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736155" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736155" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19386107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31921825" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31862745" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3251634" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3251634" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1041,7 +1047,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Working towards getting the GameRenderer to render the world grid and main character" />
     <MESSAGE value="Working towards getting the GameRenderer to render the world grid and main character&#10;" />
     <MESSAGE value="Renamed GameRenderer and GameScreen MapRenderer and MapScreen" />
     <MESSAGE value="Renamed GameRenderer and GameScreen MapRenderer and MapScreen&#10;" />
@@ -1066,7 +1071,8 @@
     <MESSAGE value="Added structural framework for battle mode and adjusted framework for world mode" />
     <MESSAGE value="merged with updates from battle branch" />
     <MESSAGE value="Starting a static Dialogue class for displaying dialogue, narration, etc." />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting a static Dialogue class for displaying dialogue, narration, etc." />
+    <MESSAGE value="Dialogue is now designed only for WorldScreen usage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dialogue is now designed only for WorldScreen usage" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1140,8 +1146,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="41" selection-start="461" selection-end="461" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="930">
           <folding>
-            <element signature="e#2007#2008#0" expanded="true" />
-            <element signature="e#2034#2035#0" expanded="true" />
+            <element signature="e#2458#2459#0" expanded="true" />
+            <element signature="e#2507#2508#0" expanded="true" />
+            <element signature="e#2549#2550#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1368,6 +1375,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="32" selection-start="647" selection-end="652" vertical-scroll-proportion="10.961538" vertical-offset="420" max-vertical-offset="1185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/MapInputHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="78" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0" vertical-offset="841" max-vertical-offset="1425">
@@ -1375,34 +1389,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="78" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1185">
-          <folding />
+        <state line="99" column="32" selection-start="2427" selection-end="2427" vertical-scroll-proportion="0.0" vertical-offset="871" max-vertical-offset="1455">
+          <folding>
+            <element signature="e#2458#2459#0" expanded="true" />
+            <element signature="e#2507#2508#0" expanded="true" />
+            <element signature="e#2549#2550#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="36" selection-start="1260" selection-end="1260" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="975">
+        <state line="40" column="62" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="930">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/Dialogue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="7" selection-start="1201" selection-end="1201" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1350">
+        <state line="62" column="0" selection-start="1972" selection-end="1972" vertical-scroll-proportion="1.9280206" vertical-offset="150" max-vertical-offset="1515">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="58" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0784983" vertical-offset="389" max-vertical-offset="1320">
-          <folding>
-            <element signature="e#2007#2008#0" expanded="true" />
-            <element signature="e#2034#2035#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

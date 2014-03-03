@@ -10,7 +10,7 @@ public class MacGame extends Game {
 
     public static final float GAME_HEIGHT = 480;
 
-    public enum GameState { MENU, DIALOGUE, WORLD, BATTLE }
+    public enum GameState { MENU, PAUSED, WORLD, BATTLE }
 
     private GameState currentState;
 
@@ -34,13 +34,10 @@ public class MacGame extends Game {
     public void changeGameState(GameState state) {
         currentState = state;
         switch (currentState) {
-                // TODO: make a pause screen?
+            // TODO: make a pause screen?
+            case PAUSED:
             case MENU:
                 setScreen(menuScreen);
-                break;
-            case DIALOGUE:
-                setScreen(worldScreen);
-                worldScreen.pause();
                 break;
             case WORLD:
                 setScreen(worldScreen);

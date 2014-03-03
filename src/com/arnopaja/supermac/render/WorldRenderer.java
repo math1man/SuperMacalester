@@ -2,6 +2,7 @@ package com.arnopaja.supermac.render;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.RenderGrid;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -76,7 +77,7 @@ public class WorldRenderer {
         renderGrid.renderTiles(batcher, offset, runTime);    // Render the base tiles
         batcher.enableBlending();
         renderGrid.renderEntities(batcher, offset, runTime); // Render entities on top of the tiles
-        // TODO: Dialogue.render(batcher, position, size);
+        Dialogue.render(batcher);
         batcher.end();
     }
 }
