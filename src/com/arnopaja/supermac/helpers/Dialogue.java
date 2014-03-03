@@ -5,15 +5,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Static class used to render dialogue boxes on the screen
+ * Static class used to render a dialogue box on the WorldScreen
  *
  * @author Ari Weiland
  */
 public class Dialogue {
 
+    public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.4f;
+
     private static MacGame game;
 
     private static Vector2 dialogueSize;
+    private static Vector2 dialoguePosition;
 
     private static boolean displayDialogue = false;
     private static String dialogue;
@@ -23,8 +26,12 @@ public class Dialogue {
     private static boolean giveOptions = false;
     private static String[] options;
 
-    public static void init(MacGame newGame) {
+    public static void init(MacGame newGame, float gameWidth, float gameHeight) {
         game = newGame;
+        // Dialogue size is the width of the game and some fraction of the height
+        dialogueSize = new Vector2(gameWidth, gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO);
+        // The bottom left corner of the dialogue is the same as that of the game
+        dialoguePosition = new Vector2(0, gameHeight * (1 - DIALOGUE_TO_GAME_HEIGHT_RATIO));
     }
 
     /**
@@ -32,12 +39,9 @@ public class Dialogue {
      * TODO: do we instead/additionally need a ShapeRenderer?
      *
      * @param batcher the SpriteBatch to render with
-     * @param position the upper lefthand corner of teh dialogue box
-     * @param size the size of the rectangle containing the dialogue box
      */
-    public static void render(SpriteBatch batcher, Vector2 position, Vector2 size) {
+    public static void render(SpriteBatch batcher) {
         if (displayDialogue) {
-            dialogueSize = size;
             // render code goes here
         }
     }

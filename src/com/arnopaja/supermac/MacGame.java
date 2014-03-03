@@ -1,7 +1,6 @@
 package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.screen.BattleScreen;
 import com.arnopaja.supermac.screen.MenuScreen;
 import com.arnopaja.supermac.screen.WorldScreen;
@@ -28,8 +27,6 @@ public class MacGame extends Game {
         battleScreen = new BattleScreen(this);
         menuScreen = new MenuScreen(this);
 
-        Dialogue.init(this);
-
         // TODO: start in Menu, and allow navigation
         changeGameState(GameState.WORLD);
     }
@@ -37,13 +34,17 @@ public class MacGame extends Game {
     public void changeGameState(GameState state) {
         currentState = state;
         switch (currentState) {
-            case DIALOGUE:
                 // TODO: make a pause screen?
             case MENU:
                 setScreen(menuScreen);
                 break;
+            case DIALOGUE:
+                setScreen(worldScreen);
+                worldScreen.pause();
+                break;
             case WORLD:
                 setScreen(worldScreen);
+                worldScreen.resume();
                 break;
             case BATTLE:
                 setScreen(battleScreen);
@@ -54,6 +55,9 @@ public class MacGame extends Game {
     @Override
     public void dispose() {
         super.dispose();
+        worldScreen.dispose();
+        battleScreen.dispose();
+        menuScreen.dispose();
         AssetLoader.dispose();
     }
 }

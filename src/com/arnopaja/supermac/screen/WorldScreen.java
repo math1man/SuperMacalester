@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.screen;
 
 import com.arnopaja.supermac.MacGame;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.MapInputHandler;
 import com.arnopaja.supermac.render.WorldInterface;
 import com.arnopaja.supermac.render.WorldRenderer;
@@ -17,8 +18,7 @@ public class WorldScreen implements Screen {
     private final WorldInterface world;
     private final WorldRenderer renderer;
     private final MapInputHandler inputHandler;
-    private final float gameHeight;
-    private final float gameWidth;
+    private final float gameWidth, gameHeight;
 
     private float runTime;
 
@@ -32,6 +32,8 @@ public class WorldScreen implements Screen {
         renderer = new WorldRenderer(world, gameWidth, gameHeight);
         inputHandler = new MapInputHandler(world, gameWidth, gameHeight,
                 gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
+
+        Dialogue.init(game, gameWidth, gameHeight);
     }
 
     @Override
