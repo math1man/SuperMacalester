@@ -77,6 +77,10 @@ public class WorldScreen implements Screen {
 
     }
 
+    public void goToBattle() {
+        game.changeGameState(MacGame.GameState.BATTLE);
+    }
+
     public MacGame getGame() {
         return game;
     }
