@@ -2,7 +2,6 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.helpers.Dialogue;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -19,8 +18,11 @@ public class NonPlayableMapCharacter extends MapCharacter {
     }
 
     @Override
-    public void interact(MainMapCharacter character) {
-        // TODO: display actual dialogue
-        Dialogue.displayDialogue("Hi!");
+    public Interaction getInteraction(MainMapCharacter character) {
+        if (isInteractable()) {
+            setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
+            return Interaction.getDialogueInteraction(this, character, "Hi!");
+        }
+        return Interaction.getNullInteraction();
     }
 }

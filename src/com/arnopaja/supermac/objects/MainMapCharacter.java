@@ -3,7 +3,6 @@ package com.arnopaja.supermac.objects;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -17,41 +16,27 @@ public class MainMapCharacter extends MapCharacter {
         setFacingAnimations(AssetLoader.stevenStepping);
     }
 
-    public void interact() {
-        Entity entity = grid.getEntity(Direction.getAdjacent(position, facing));
-        if (entity != null && entity.isInteractable()) {
-            entity.interact(this);
+    public Interaction interact() {
+        Entity entity = getGrid().getEntity(Direction.getAdjacent(getPosition(), getFacing()));
+        if (entity != null) {
+            return entity.getInteraction(this);
         }
+        return Interaction.getNullInteraction();
     }
 
     @Override
-    public void interact(MainMapCharacter character) {
-        System.out.println("You have somehow managed to interact with yourself");
+    public Interaction getInteraction(MainMapCharacter character) {
         // insert masturbation joke here
-    }
-
-    @Override
-    public TextureRegion getSprite(float runTime) {
-        return getSprite(facing, runTime);
-    }
-
-    @Override
-    public TextureRegion getSprite(Direction dir, float runTime) {
-        int ordinal = dir.ordinal();
-        if (isMoving) {
-            return facingAnimations[ordinal].getKeyFrame(runTime);
-        } else {
-            return facingSprites[ordinal];
-        }
+        return Interaction.getNullInteraction();
     }
 
     @Override
     public String toString() {
         return "MainMapCharacter{" +
-                "grid=" + grid +
-                ", position=" + position +
-                ", facing=" + facing +
-                ", isRendered=" + isRendered +
+                "grid=" + getGrid() +
+                ", position=" + getPosition() +
+                ", facing=" + getFacing() +
+                ", isRendered=" + isRendered() +
                 '}';
     }
 }

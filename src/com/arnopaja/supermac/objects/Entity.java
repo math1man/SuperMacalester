@@ -12,16 +12,14 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Entity extends Renderable {
 
-    public static final float MOVE_SPEED = 3f; // grid spaces per second
-    public static final float ALIGN_THRESHOLD = 0.001f;
+    private Grid grid;
+    private Vector2 position;
+    private Direction facing;
+    private boolean isInteractable;
 
     // Ordered N-E-S-W (same as Direction order)
-    protected TextureRegion[] facingSprites;
-
-    protected Grid grid;
-    protected Vector2 position;
-    protected Direction facing;
-    protected boolean isInteractable;
+    private TextureRegion[] facingSprites;
+    private Dialogue dialogue;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         super(isRendered);
@@ -35,7 +33,7 @@ public abstract class Entity extends Renderable {
 
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered && getSprite(runTime) != null) {
+        if (isRendered() && getSprite(runTime) != null) {
             Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
             batcher.draw(getSprite(runTime), renderPos.x, renderPos.y);
             return true;
@@ -45,7 +43,7 @@ public abstract class Entity extends Renderable {
 
     public abstract void update(float delta);
 
-    public abstract void interact(MainMapCharacter character);
+    public abstract Interaction getInteraction(MainMapCharacter character);
 
     public Grid getGrid() {
         return grid;
@@ -59,8 +57,8 @@ public abstract class Entity extends Renderable {
         return facing;
     }
 
-    public void setPosition (int x, int y) {
-        setPosition(new Vector2(x, y));
+    public void setGrid(Grid grid) {
+        this.grid = grid;
     }
 
     public void setPosition(Vector2 position) {
@@ -105,8 +103,12 @@ public abstract class Entity extends Renderable {
         this.facingSprites = facingSprites;
     }
 
-    public void setSprite(TextureRegion sprite, Direction dir) {
-        facingSprites[dir.ordinal()] = sprite;
+    public Dialogue getDialogue() {
+        return dialogue;
+    }
+
+    public void setDialogue(Dialogue dialogue) {
+        this.dialogue = dialogue;
     }
 
     @Override
@@ -116,7 +118,7 @@ public abstract class Entity extends Renderable {
                 ", position=" + position +
                 ", facing=" + facing +
                 ", isInteractable=" + isInteractable +
-                ", isRendered=" + isRendered +
+                ", isRendered=" + isRendered() +
                 '}';
     }
 }

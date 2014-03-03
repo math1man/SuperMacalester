@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Renderable {
 
-    protected boolean isRendered;
+    private final boolean isRendered;
 
     protected Renderable(boolean isRendered) {
         this.isRendered = isRendered;
@@ -29,9 +29,5 @@ public abstract class Renderable {
 
     public boolean isRendered() {
         return isRendered;
-    }
-
-    public void setRendered(boolean isRendered) {
-        this.isRendered = isRendered;
     }
 }

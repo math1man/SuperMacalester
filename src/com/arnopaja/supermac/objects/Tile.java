@@ -52,7 +52,7 @@ public class Tile extends Renderable {
 
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered && sprite != null) {
+        if (isRendered() && sprite != null) {
             Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
             batcher.draw(sprite, renderPos.x, renderPos.y);
             return true;
@@ -64,16 +64,12 @@ public class Tile extends Renderable {
         return sprite;
     }
 
-    public boolean isPathable() {
-        return isPathable;
-    }
-
     public void setSprite(TextureRegion sprite) {
         this.sprite = sprite;
     }
 
-    public void setPathable(boolean isPathable) {
-        this.isPathable = isPathable;
+    public boolean isPathable() {
+        return isPathable;
     }
 
     public static void initSpriteMap() {

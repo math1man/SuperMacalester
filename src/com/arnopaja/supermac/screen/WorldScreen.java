@@ -1,8 +1,7 @@
 package com.arnopaja.supermac.screen;
 
 import com.arnopaja.supermac.MacGame;
-import com.arnopaja.supermac.helpers.Dialogue;
-import com.arnopaja.supermac.helpers.MapInputHandler;
+import com.arnopaja.supermac.helpers.WorldInputHandler;
 import com.arnopaja.supermac.render.WorldInterface;
 import com.arnopaja.supermac.render.WorldRenderer;
 import com.badlogic.gdx.Gdx;
@@ -17,11 +16,10 @@ public class WorldScreen implements Screen {
 
     private final WorldInterface world;
     private final WorldRenderer renderer;
-    private final MapInputHandler inputHandler;
+    private final WorldInputHandler inputHandler;
     private final float gameWidth, gameHeight;
 
     private float runTime;
-    private boolean isRunning = true;
 
     public WorldScreen(MacGame game) {
         this.game = game;
@@ -31,19 +29,15 @@ public class WorldScreen implements Screen {
 
         world = new WorldInterface();
         renderer = new WorldRenderer(world, gameWidth, gameHeight);
-        inputHandler = new MapInputHandler(world, gameWidth, gameHeight,
+        inputHandler = new WorldInputHandler(world, gameWidth, gameHeight,
                 gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
-
-        Dialogue.init(this, gameWidth, gameHeight);
     }
 
     @Override
     public void render(float delta) {
-        if (isRunning) {
-            runTime += delta;
-            world.update(delta);
-        }
-        renderer.render(delta, runTime);
+        runTime += delta;
+        world.update(delta);
+        renderer.render(runTime);
     }
 
     @Override
@@ -99,13 +93,5 @@ public class WorldScreen implements Screen {
 
     public float getGameWidth() {
         return gameWidth;
-    }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean isRunning) {
-        this.isRunning = isRunning;
     }
 }

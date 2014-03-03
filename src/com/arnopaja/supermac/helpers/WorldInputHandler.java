@@ -2,6 +2,7 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.render.WorldInterface;
 import com.badlogic.gdx.InputProcessor;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.InputProcessor;
 /**
  * @author Ari Weiland
  */
-public class MapInputHandler implements InputProcessor {
+public class WorldInputHandler implements InputProcessor {
 
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
@@ -20,8 +21,8 @@ public class MapInputHandler implements InputProcessor {
     private float scaleFactorX;
     private float scaleFactorY;
 
-    public MapInputHandler(WorldInterface world, float gameWidth, float gameHeight,
-                           float scaleFactorX, float scaleFactorY) {
+    public WorldInputHandler(WorldInterface world, float gameWidth, float gameHeight,
+                             float scaleFactorX, float scaleFactorY) {
         this.world = world;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
@@ -58,7 +59,9 @@ public class MapInputHandler implements InputProcessor {
         } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
             character.move(Direction.SOUTH);
         } else {
-            character.interact();
+            Interaction interaction = character.interact();
+            // TODO: interaction needs to get passed to something that can use it
+            interaction.runInteraction(null);
         }
         return true;
     }

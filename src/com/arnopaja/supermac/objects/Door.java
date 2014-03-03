@@ -2,6 +2,7 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -9,9 +10,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Door extends Entity {
 
-    private Building building;
-    private int floor;
-    private Vector2 landingSpace;
+    private final Building building;
+    private final int floor;
+    private final Vector2 landingSpace;
 
     public Door(Grid grid, Vector2 position, Building building, int floor, Vector2 landingSpace) {
         super(false, grid, position, null, true);
@@ -26,31 +27,24 @@ public class Door extends Entity {
     }
 
     @Override
-    public void interact(MainMapCharacter character) {
-        character.changeGrid(building.getFloorByNumber(floor), landingSpace);
+    public Interaction getInteraction(MainMapCharacter character) {
+        return new Interaction(this, character) {
+            @Override
+            public void runInteraction(DialogueHandler dialogueHandler) {
+                getCharacter().changeGrid(building.getFloorByNumber(floor), landingSpace);
+            }
+        };
     }
 
     public Building getBuilding() {
         return building;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
     public int getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
     public Vector2 getLandingSpace() {
         return landingSpace;
-    }
-
-    public void setLandingSpace(Vector2 landingSpace) {
-        this.landingSpace = landingSpace;
     }
 }

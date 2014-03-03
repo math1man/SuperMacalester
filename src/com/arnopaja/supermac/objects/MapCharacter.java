@@ -4,6 +4,7 @@ import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -11,11 +12,15 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class MapCharacter extends Entity {
 
+    public static final float MOVE_SPEED = 3f; // grid spaces per second
+    public static final float ALIGN_THRESHOLD = 0.001f;
+
+    private boolean isMoving = false;
+    private Vector2 movingOffset = new Vector2(0, 0);
+    private Vector2 deltaMove;
+
     // Ordered N-E-S-W (same as Direction order)
-    protected Animation[] facingAnimations;
-    protected boolean isMoving = false;
-    protected Vector2 movingOffset = new Vector2(0, 0);
-    protected Vector2 deltaMove;
+    private Animation[] facingAnimations;
 
     protected MapCharacter() {
         this(null, new Vector2(0, 0), Direction.SOUTH);
@@ -47,8 +52,8 @@ public abstract class MapCharacter extends Entity {
 
     public boolean move(Direction dir) {
         if (!isMoving) {
-            facing = dir;
-            if (grid.moveEntity(this, dir)) {
+            setFacing(dir);
+            if (getGrid().moveEntity(this, dir)) {
                 isMoving = true;
                 movingOffset = Direction.getAdjacent(dir).scl(-1);
                 deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
@@ -58,13 +63,9 @@ public abstract class MapCharacter extends Entity {
         return false;
     }
 
-    public void changeGrid(Grid newGrid, int x, int y) {
-        changeGrid(newGrid, new Vector2(x, y));
-    }
-
     public void changeGrid(Grid newGrid, Vector2 position) {
-        grid.removeEntity(position);
-        grid = newGrid;
+        getGrid().removeEntity(position);
+        setGrid(newGrid);
         // TODO: what about collisions?
         newGrid.putEntity(this, position);
     }
@@ -77,8 +78,17 @@ public abstract class MapCharacter extends Entity {
         return movingOffset;
     }
 
+    @Override
+    public TextureRegion getSprite(Direction dir, float runTime) {
+        if (isMoving()) {
+            return getAnimation(dir).getKeyFrame(runTime);
+        } else {
+            return getSprite(dir);
+        }
+    }
+
     public Animation getAnimation() {
-        return getAnimation(facing);
+        return getAnimation(getFacing());
     }
 
     public Animation getAnimation(Direction dir) {
@@ -89,23 +99,19 @@ public abstract class MapCharacter extends Entity {
     }
 
     public void setFacingAnimations(Animation[] facingAnimations) {
-        if (facingSprites.length != 4) {
+        if (facingAnimations.length != 4) {
             throw new IllegalArgumentException("Must have 4 facing animations: North, East, South, West");
         }
         this.facingAnimations = facingAnimations;
     }
 
-    public void setAnimation(Animation animation, Direction dir) {
-        facingAnimations[dir.ordinal()] = animation;
-    }
-
     @Override
     public String toString() {
         return "MapCharacter{" +
-                "grid=" + grid +
-                ", position=" + position +
-                ", facing=" + facing +
-                ", isInteractable=" + isInteractable +
+                "grid=" + getGrid() +
+                ", position=" + getPosition() +
+                ", facing=" + getFacing() +
+                ", isInteractable=" + isInteractable() +
                 '}';
     }
 }

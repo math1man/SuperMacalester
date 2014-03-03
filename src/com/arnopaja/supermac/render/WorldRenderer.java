@@ -2,7 +2,7 @@ package com.arnopaja.supermac.render;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.grid.RenderGrid;
-import com.arnopaja.supermac.helpers.Dialogue;
+import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -21,6 +21,7 @@ public class WorldRenderer {
     private OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
+    private DialogueHandler dialogueHandler;
 
     private final float gameWidth, gameHeight;
     private final int renderGridWidth, renderGridHeight;
@@ -43,6 +44,8 @@ public class WorldRenderer {
         batcher.setProjectionMatrix(cam.combined);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
+
+        dialogueHandler = new DialogueHandler(this, gameWidth, gameHeight);
     }
 
     private static int getRenderDimension(float gameDimension) {
@@ -55,7 +58,7 @@ public class WorldRenderer {
         return renderDimension;
     }
 
-    public void render(float delta, float runTime) {
+    public void render(float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -77,7 +80,7 @@ public class WorldRenderer {
         renderGrid.renderTiles(batcher, offset, runTime);    // Render the base tiles
         batcher.enableBlending();
         renderGrid.renderEntities(batcher, offset, runTime); // Render entities on top of the tiles
-        Dialogue.render(batcher);
+        dialogueHandler.render(batcher);
         batcher.end();
     }
 }
