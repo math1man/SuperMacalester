@@ -76,6 +76,7 @@ public class WorldRenderer {
         renderGrid.renderTiles(batcher, offset, runTime);    // Render the base tiles
         batcher.enableBlending();
         renderGrid.renderEntities(batcher, offset, runTime); // Render entities on top of the tiles
+        // TODO: Dialogue.render(batcher, position, size);
         batcher.end();
     }
 }

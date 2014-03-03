@@ -3,8 +3,8 @@ package com.arnopaja.supermac;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.screen.BattleScreen;
-import com.arnopaja.supermac.screen.GameScreen;
 import com.arnopaja.supermac.screen.MenuScreen;
+import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.Game;
 
 public class MacGame extends Game {
@@ -15,7 +15,7 @@ public class MacGame extends Game {
 
     private GameState currentState;
 
-    private GameScreen gameScreen;
+    private WorldScreen worldScreen;
     private BattleScreen battleScreen;
     private MenuScreen menuScreen;
 
@@ -24,7 +24,7 @@ public class MacGame extends Game {
         System.out.println("MacGame Created!");
         AssetLoader.load();
 
-        gameScreen = new GameScreen(this);
+        worldScreen = new WorldScreen(this);
         battleScreen = new BattleScreen(this);
         menuScreen = new MenuScreen(this);
 
@@ -43,7 +43,7 @@ public class MacGame extends Game {
                 setScreen(menuScreen);
                 break;
             case WORLD:
-                setScreen(gameScreen);
+                setScreen(worldScreen);
                 break;
             case BATTLE:
                 setScreen(battleScreen);

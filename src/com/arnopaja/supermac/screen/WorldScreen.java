@@ -10,18 +10,19 @@ import com.badlogic.gdx.Screen;
 /**
  * @author Ari Weiland
  */
-public class GameScreen implements Screen {
+public class WorldScreen implements Screen {
 
     private final MacGame game;
 
     private final WorldInterface world;
     private final WorldRenderer renderer;
+    private final MapInputHandler inputHandler;
     private final float gameHeight;
     private final float gameWidth;
 
     private float runTime;
 
-    public GameScreen(MacGame game) {
+    public WorldScreen(MacGame game) {
         this.game = game;
 
         gameHeight = MacGame.GAME_HEIGHT;
@@ -29,6 +30,8 @@ public class GameScreen implements Screen {
 
         world = new WorldInterface();
         renderer = new WorldRenderer(world, gameWidth, gameHeight);
+        inputHandler = new MapInputHandler(world, gameWidth, gameHeight,
+                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
     }
 
     @Override
@@ -40,33 +43,52 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("GameScreen - resizing");
+        System.out.println("WorldScreen - resizing");
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new MapInputHandler(world, gameWidth, gameHeight,
-                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight()));
-        System.out.println("GameScreen - show called");
+        Gdx.input.setInputProcessor(inputHandler);
+        System.out.println("WorldScreen - show called");
     }
 
     @Override
     public void hide() {
-        System.out.println("GameScreen - hide called");
+        System.out.println("WorldScreen - hide called");
     }
 
     @Override
     public void pause() {
-        System.out.println("GameScreen - pause called");
+        System.out.println("WorldScreen - pause called");
     }
 
     @Override
     public void resume() {
-        System.out.println("GameScreen - resume called");
+        System.out.println("WorldScreen - resume called");
     }
 
     @Override
     public void dispose() {
 
+    }
+
+    public MacGame getGame() {
+        return game;
+    }
+
+    public WorldInterface getWorld() {
+        return world;
+    }
+
+    public WorldRenderer getRenderer() {
+        return renderer;
+    }
+
+    public float getGameHeight() {
+        return gameHeight;
+    }
+
+    public float getGameWidth() {
+        return gameWidth;
     }
 }
