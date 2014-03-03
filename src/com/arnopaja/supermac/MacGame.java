@@ -1,6 +1,7 @@
 package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.screen.BattleScreen;
 import com.arnopaja.supermac.screen.GameScreen;
 import com.arnopaja.supermac.screen.MenuScreen;
@@ -10,7 +11,7 @@ public class MacGame extends Game {
 
     public static final float GAME_HEIGHT = 480;
 
-    public enum GameState { MENU, PAUSED, WORLD, BATTLE }
+    public enum GameState { MENU, DIALOGUE, WORLD, BATTLE }
 
     private GameState currentState;
 
@@ -27,6 +28,8 @@ public class MacGame extends Game {
         battleScreen = new BattleScreen(this);
         menuScreen = new MenuScreen(this);
 
+        Dialogue.init(this);
+
         // TODO: start in Menu, and allow navigation
         changeGameState(GameState.WORLD);
     }
@@ -34,7 +37,7 @@ public class MacGame extends Game {
     public void changeGameState(GameState state) {
         currentState = state;
         switch (currentState) {
-            case PAUSED:
+            case DIALOGUE:
                 // TODO: make a pause screen?
             case MENU:
                 setScreen(menuScreen);
