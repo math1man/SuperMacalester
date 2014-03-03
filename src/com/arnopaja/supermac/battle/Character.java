@@ -1,12 +1,17 @@
-package com.arnopaja.supermac.battle; /**
+package com.arnopaja.supermac.battle;
+
+import java.util.ArrayList;
+
+/**
  * Created by Nolan on 2/16/14.
  */
 public abstract class Character
 {
+    protected ArrayList<Spell> spellsList;
     protected String name;
     protected short health,maxHealth;
     protected short mana,maxMana;
-    protected byte attack,defense,special;
+    protected byte attack,defense,special,speed;
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
     //TODO: image file definitions
@@ -52,6 +57,7 @@ public abstract class Character
     {
         return equippedWeapon;
     }
+    protected short getSpeed(){return speed;}
 
     //SET
     public void setEquippedArmor(Armor a)
@@ -100,5 +106,19 @@ public abstract class Character
     public boolean isFainted()
     {
         return (health == 0);
+    }
+
+    public short doAttack()
+    {
+        //does animation
+        //returns attack roll
+        return 0;
+    }
+    public short doSpell()
+    {
+        //does animation
+        //returns damage roll
+        //decrements mana
+        return 0;
     }
 }

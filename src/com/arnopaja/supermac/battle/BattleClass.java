@@ -17,7 +17,7 @@ public class BattleClass
     private SPECIAL mySpecial;
     private short baseHealth;
     private short baseMana;
-    private byte baseAttack,baseDefense,baseSpecial;
+    private byte baseAttack,baseDefense,baseSpecial,baseSpeed;
     //GET
     public CLASSTYPE getClassType(){return myClass;}
     public SPECIAL getSpecial(){return mySpecial;}
@@ -38,7 +38,8 @@ public class BattleClass
                 baseMana = 10;
                 baseAttack = 5;
                 baseDefense = 10;
-                baseSpecial = 20;
+                baseSpecial = 25;
+                baseSpeed = 15;
                 mySpecial = SPECIAL.BLACK;
                 break;
             case ECON:
@@ -47,6 +48,7 @@ public class BattleClass
                 baseAttack = 20;
                 baseDefense = 15;
                 baseSpecial = 10;
+                baseSpeed = 5;
                 mySpecial = SPECIAL.WHITE;
                 break;
             case NATSCI:
@@ -54,7 +56,8 @@ public class BattleClass
                 baseMana = 5;
                 baseAttack = 10;
                 baseDefense = 10;
-                baseSpecial = 10;
+                baseSpecial = 15;
+                baseSpeed = 10;
                 mySpecial = SPECIAL.RED;
                 break;
             case HUMANITIES:
@@ -63,6 +66,7 @@ public class BattleClass
                 baseAttack = 20;
                 baseDefense = 10;
                 baseSpecial = 5;
+                baseSpeed = 20;
                 mySpecial = SPECIAL.NONE;
                 break;
             default:
