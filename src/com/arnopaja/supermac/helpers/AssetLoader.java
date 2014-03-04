@@ -7,12 +7,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Ari Weiland
  */
 public class AssetLoader {
+
+    public static final float FONT_SHADOW_OFFSET = 0.06f;
 
     private static final String MAP_NAME_LEADER = "map: ";
     private static final String MAP_WIDTH_LEADER = "width: ";
@@ -84,13 +87,23 @@ public class AssetLoader {
         }
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-        font.setScale(.25f, -.25f);
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
-        shadow.setScale(.25f, -.25f);
 
         mapHandle = Gdx.files.internal("data/maps.txt");
 
         prefs = Gdx.app.getPreferences("SuperMacalester");
+    }
+
+    public static void scaleFont(float scale) {
+        font.setScale(scale, -scale);
+        shadow.setScale(scale, -scale);
+    }
+
+    public static void drawWrappedFont(SpriteBatch batcher, String string, float x, float y, float width) {
+        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
+        AssetLoader.shadow.drawWrapped(batcher, string, x + shadowOffset, y + shadowOffset, width);
+        AssetLoader.font.drawWrapped(batcher, string, x, y, width);
+
     }
 
     public static Tile[][] parseTileArray(String name) {

@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
  */
 public class Dialogue {
 
+    public static final String OPTION_CODE = "<options>";
+
     private String rawDialogue;
     private List<String> parsedDialogue;
     private int position;
@@ -44,8 +46,17 @@ public class Dialogue {
         }
     }
 
-    public void next() {
-        position++;
+    public String next() {
+        String line = null;
+        if (position < parsedDialogue.size()) {
+            line = parsedDialogue.get(position);
+            position++;
+        } else if (position == parsedDialogue.size() && hasOptions) {
+            line = OPTION_CODE;
+        } else {
+            position = 0;
+        }
+        return line;
     }
 
     public String getRawDialogue() {

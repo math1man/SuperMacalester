@@ -7,6 +7,8 @@
       <root url="jar://$PROJECT_DIR$/libs/gdx-sources.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/gdx-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

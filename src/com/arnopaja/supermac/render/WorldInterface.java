@@ -29,7 +29,8 @@ public class WorldInterface {
         NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.WEST);
         character.setFacingSprites(AssetLoader.steven);
         character.setInteractable(true);
-        character.setDialogue(new Dialogue("Hi!"));
+        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. I smoke lots of weed and am " +
+                "trying to get a job for this summer."));
         worldGrid.putEntity(character);
         initBuildings();
         initCharacters();

@@ -75,11 +75,19 @@ public class WorldRenderer {
 
         batcher.begin();
         batcher.disableBlending();
+
+        // Render the base tiles
         Vector2 offset = renderOffset.cpy().add(mainCharacter.getMovingOffset()).scl(-1);
-        renderGrid.renderTiles(batcher, offset, runTime);    // Render the base tiles
+        renderGrid.renderTiles(batcher, offset, runTime);
+
         batcher.enableBlending();
-        renderGrid.renderEntities(batcher, offset, runTime); // Render entities on top of the tiles
-        dialogueHandler.render(batcher);
+
+        // Render entities on top of the tiles
+        renderGrid.renderEntities(batcher, offset, runTime);
+
+        // Render any dialogue present
+        dialogueHandler.render(shapeRenderer, batcher);
+
         batcher.end();
     }
 }

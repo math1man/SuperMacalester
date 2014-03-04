@@ -31,7 +31,6 @@ public abstract class Interaction {
             public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
                 screen.pause();
                 dialogueHandler.displayDialogue(dialogue);
-                System.out.println(dialogue);
             }
         };
     }
