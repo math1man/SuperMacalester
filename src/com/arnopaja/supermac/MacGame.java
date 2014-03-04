@@ -10,9 +10,9 @@ public class MacGame extends Game {
 
     public static final float GAME_HEIGHT = 480;
 
-    public enum GameState { MENU, PAUSED, WORLD, BATTLE }
+    public enum ScreenState { MENU, WORLD, BATTLE }
 
-    private GameState currentState;
+    private ScreenState currentState;
 
     private WorldScreen worldScreen;
     private BattleScreen battleScreen;
@@ -28,14 +28,12 @@ public class MacGame extends Game {
         menuScreen = new MenuScreen(this);
 
         // TODO: start in Menu, and allow navigation
-        changeGameState(GameState.WORLD);
+        changeGameState(ScreenState.WORLD);
     }
 
-    public void changeGameState(GameState state) {
+    public void changeGameState(ScreenState state) {
         currentState = state;
         switch (currentState) {
-            // TODO: make a pause screen?
-            case PAUSED:
             case MENU:
                 setScreen(menuScreen);
                 break;
@@ -47,6 +45,10 @@ public class MacGame extends Game {
                 setScreen(battleScreen);
                 break;
         }
+    }
+
+    public ScreenState getCurrentState() {
+        return currentState;
     }
 
     @Override

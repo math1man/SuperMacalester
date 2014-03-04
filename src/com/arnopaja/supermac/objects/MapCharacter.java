@@ -16,7 +16,7 @@ public abstract class MapCharacter extends Entity {
     public static final float ALIGN_THRESHOLD = 0.001f;
 
     private boolean isMoving = false;
-    private Vector2 movingOffset = new Vector2(0, 0);
+    private Vector2 movingOffset = new Vector2();
     private Vector2 deltaMove;
 
     // Ordered N-E-S-W (same as Direction order)
@@ -43,10 +43,10 @@ public abstract class MapCharacter extends Entity {
     public void update(float delta) {
         if (isMoving) {
             movingOffset.add(deltaMove.cpy().scl(delta));
-        }
-        if (movingOffset.isZero(ALIGN_THRESHOLD)) {
-            isMoving = false;
-            movingOffset = new Vector2();
+            if (movingOffset.hasSameDirection(deltaMove)) {
+                isMoving = false;
+                movingOffset = new Vector2();
+            }
         }
     }
 

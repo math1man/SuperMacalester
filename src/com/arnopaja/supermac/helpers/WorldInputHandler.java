@@ -2,9 +2,8 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
-import com.arnopaja.supermac.render.WorldInterface;
+import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -14,16 +13,16 @@ public class WorldInputHandler implements InputProcessor {
 
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
-    private WorldInterface world;
+    private WorldScreen screen;
 
     private float gameWidth;
     private float gameHeight;
     private float scaleFactorX;
     private float scaleFactorY;
 
-    public WorldInputHandler(WorldInterface world, float gameWidth, float gameHeight,
+    public WorldInputHandler(WorldScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
-        this.world = world;
+        this.screen = screen;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         this.scaleFactorX = scaleFactorX;
@@ -49,19 +48,24 @@ public class WorldInputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
-        MainMapCharacter character = world.getMainCharacter();
-        if (gameX < SIDE_BUTTON_WIDTH) {
-            character.move(Direction.WEST);
-        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-            character.move(Direction.EAST);
-        } else if (gameY < SIDE_BUTTON_WIDTH) {
-            character.move(Direction.NORTH);
-        } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
-            character.move(Direction.SOUTH);
-        } else {
-            Interaction interaction = character.interact();
-            // TODO: interaction needs to get passed to something that can use it
-            interaction.runInteraction(null);
+        if (screen.getState() == WorldScreen.GameState.RUNNING) {
+            MainMapCharacter character = screen.getWorld().getMainCharacter();
+            if (gameX < SIDE_BUTTON_WIDTH) {
+                character.move(Direction.WEST);
+            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+                character.move(Direction.EAST);
+            } else if (gameY < SIDE_BUTTON_WIDTH) {
+                character.move(Direction.NORTH);
+            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+                character.move(Direction.SOUTH);
+            } else {
+                screen.runInteraction(character.interact());
+            }
+        } else if (screen.getState() == WorldScreen.GameState.PAUSED) {
+            DialogueHandler dialogueHandler = screen.getDialogueHandler();
+            if (dialogueHandler.onClick(gameX, gameY)) {
+                screen.resume();
+            }
         }
         return true;
     }

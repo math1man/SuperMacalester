@@ -17,35 +17,34 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class WorldRenderer {
 
-    private WorldInterface world;
-    private OrthographicCamera cam;
-    private ShapeRenderer shapeRenderer;
-    private SpriteBatch batcher;
-    private DialogueHandler dialogueHandler;
+    private final WorldInterface world;
+    private final DialogueHandler dialogueHandler;
+    private final ShapeRenderer shapeRenderer;
+    private final SpriteBatch batcher;
 
     private final float gameWidth, gameHeight;
     private final int renderGridWidth, renderGridHeight;
     private final Vector2 renderOffset;
 
-    public WorldRenderer(WorldInterface world, float gameWidth, float gameHeight) {
+    public WorldRenderer(WorldInterface world, DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         this.world = world;
+        this.dialogueHandler = dialogueHandler;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         this.renderGridWidth = getRenderDimension(gameWidth);
         this.renderGridHeight = getRenderDimension(gameHeight);
-        this.renderOffset = new Vector2(renderGridWidth, renderGridHeight)
-                .add(new Vector2(gameWidth, gameHeight).scl(-1.0f/Grid.GRID_PIXEL_DIMENSION))
+        this.renderOffset = new Vector2(gameWidth, gameHeight)
+                .scl(-1.0f / Grid.GRID_PIXEL_DIMENSION)
+                .add(new Vector2(renderGridWidth, renderGridHeight))
                 .scl(0.5f);
 
-        cam = new OrthographicCamera();
+        OrthographicCamera cam = new OrthographicCamera();
         cam.setToOrtho(true, gameWidth, gameHeight);
 
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(cam.combined);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
-
-        dialogueHandler = new DialogueHandler(this, gameWidth, gameHeight);
     }
 
     private static int getRenderDimension(float gameDimension) {

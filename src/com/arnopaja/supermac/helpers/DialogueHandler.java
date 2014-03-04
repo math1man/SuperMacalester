@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.objects.Dialogue;
-import com.arnopaja.supermac.render.WorldRenderer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,13 +19,10 @@ public class DialogueHandler {
     private Vector2 dialogueSize;
     private Vector2 dialoguePosition;
 
-    private WorldRenderer renderer;
-
     private boolean displayDialogue = false;
     private Dialogue dialogue;
 
-    public DialogueHandler(WorldRenderer renderer, float gameWidth, float gameHeight) {
-        this.renderer = renderer;
+    public DialogueHandler(float gameWidth, float gameHeight) {
         // DialogueHandler size is the width of the game and some fraction of the height
         this.dialogueSize = new Vector2(gameWidth, gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO);
         // The bottom left corner of the dialogue is the same as that of the game
@@ -47,13 +43,21 @@ public class DialogueHandler {
 
     public void displayDialogue(Dialogue dialogue) {
         setDialogue(dialogue);
-        // TODO: pause the game somehow?
         displayDialogue = true;
     }
 
-    public void onClick(int x, int y) {
+    /**
+     * Moves on to the next bit of dialogue.
+     * Returns true when no more dialogue exists
+     *
+     * @param x the x coordinate of the click
+     * @param y the y coordinate of the click
+     * @return true only when no more dialogue exists
+     */
+    public boolean onClick(int x, int y) {
         // TODO: this needs to handle options
         dialogue.next();
+        return true;
     }
 
     public boolean shouldDisplayDialogue() {
