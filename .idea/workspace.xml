@@ -9,7 +9,7 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added random movement for NPCs">
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added a canMove boolean to NPCs so we can make ones that don't move">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -89,7 +89,7 @@
       <file leaf-file-name="MapCharacter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
+            <state line="55" column="31" selection-start="1744" selection-end="1744" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1710">
               <folding />
             </state>
           </provider>
@@ -98,10 +98,10 @@
       <file leaf-file-name="NonPlayableMapCharacter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="31" selection-start="875" selection-end="875" vertical-scroll-proportion="0.46232876" vertical-offset="75" max-vertical-offset="915">
+            <state line="34" column="58" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.5012854" vertical-offset="285" max-vertical-offset="915">
               <folding>
-                <element signature="e#1714#1715#0" expanded="true" />
-                <element signature="e#1752#1753#0" expanded="true" />
+                <element signature="e#1724#1725#0" expanded="true" />
+                <element signature="e#1762#1763#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,7 +119,7 @@
       <file leaf-file-name="Grid.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="96" selection-start="1006" selection-end="1006" vertical-scroll-proportion="0.0" vertical-offset="329" max-vertical-offset="4035">
+            <state line="133" column="80" selection-start="3874" selection-end="3874" vertical-scroll-proportion="0.0" vertical-offset="1671" max-vertical-offset="4035">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -779,7 +779,7 @@
       <workItem from="1393821331994" duration="2093000" />
       <workItem from="1393864506638" duration="17597000" />
       <workItem from="1393958388315" duration="8064000" />
-      <workItem from="1394037062069" duration="3212000" />
+      <workItem from="1394037062069" duration="3477000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -949,11 +949,15 @@
       <created>1394044773858</created>
       <updated>1394044773858</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Added a canMove boolean to NPCs so we can make ones that don't move">
+      <created>1394045030349</created>
+      <updated>1394045030349</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132669000" />
+    <option name="totallyTimeSpent" value="132934000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -992,7 +996,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19386107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31862745" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31862745" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1055,7 +1059,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="The map works!!!" />
     <MESSAGE value="Removed some debug code" />
     <MESSAGE value="The main character is buggy.  Trying to resolve" />
     <MESSAGE value="I fixed it... but I have no idea why it works..." />
@@ -1080,7 +1083,8 @@
     <MESSAGE value="HAHA! Dialogue is working! Next thing is to make options work" />
     <MESSAGE value="Fixed some bugs with pausing and resuming the game with dialogue present" />
     <MESSAGE value="Added random movement for NPCs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added random movement for NPCs" />
+    <MESSAGE value="Added a canMove boolean to NPCs so we can make ones that don't move" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a canMove boolean to NPCs so we can make ones that don't move" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1381,15 +1385,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="96" selection-start="1006" selection-end="1006" vertical-scroll-proportion="0.0" vertical-offset="329" max-vertical-offset="4035">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="0" selection-start="2450" selection-end="2450" vertical-scroll-proportion="0.0" vertical-offset="921" max-vertical-offset="1500">
@@ -1408,17 +1403,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
+        <state line="55" column="31" selection-start="1744" selection-end="1744" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1710">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="80" selection-start="3874" selection-end="3874" vertical-scroll-proportion="0.0" vertical-offset="1671" max-vertical-offset="4035">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="31" selection-start="875" selection-end="875" vertical-scroll-proportion="0.46232876" vertical-offset="75" max-vertical-offset="915">
+        <state line="34" column="58" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.5012854" vertical-offset="285" max-vertical-offset="915">
           <folding>
-            <element signature="e#1714#1715#0" expanded="true" />
-            <element signature="e#1752#1753#0" expanded="true" />
+            <element signature="e#1724#1725#0" expanded="true" />
+            <element signature="e#1762#1763#0" expanded="true" />
           </folding>
         </state>
       </provider>

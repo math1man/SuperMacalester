@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class NonPlayableMapCharacter extends MapCharacter {
 
-    public static final float SECONDS_PER_RANDOM_MOVE = 3;
+    public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private boolean canMove = true;
 
@@ -30,7 +30,7 @@ public class NonPlayableMapCharacter extends MapCharacter {
     public void update(float delta) {
         super.update(delta);
         if (!isMoving() && canMove) {
-            double random = Math.random() * SECONDS_PER_RANDOM_MOVE / delta;
+            double random = Math.random() * SECONDS_BETWEEN_RANDOM_MOVES / delta;
             if (random < 1) {
                 int ordinal = (int) (Math.random() * 4);
                 move(Direction.values()[ordinal]);
