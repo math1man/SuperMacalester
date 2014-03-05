@@ -61,10 +61,10 @@ public class WorldInputHandler implements InputProcessor {
             } else {
                 screen.runInteraction(character.interact());
             }
-        } else if (screen.getState() == WorldScreen.GameState.PAUSED) {
+        } else if (screen.isDialogue() || screen.isPrebattle()) {
             DialogueHandler dialogueHandler = screen.getDialogueHandler();
             if (dialogueHandler.onClick(gameX, gameY)) {
-                screen.resume();
+                screen.endDialogue();
             }
         }
         return true;

@@ -14,7 +14,7 @@ import com.badlogic.gdx.Screen;
  */
 public class WorldScreen implements Screen {
 
-    public enum GameState { RUNNING, PAUSED, PREBATTLE }
+    public enum GameState { RUNNING, PAUSED, DIALOGUE, PREBATTLE }
 
     private final MacGame game;
 
@@ -48,10 +48,11 @@ public class WorldScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (state == GameState.RUNNING) {
+        if (isRunning()) {
             runTime += delta;
             world.update(delta);
         }
+        // TODO: implement a pause menu for GameState.PAUSED
         renderer.render(runTime);
     }
 
@@ -81,18 +82,31 @@ public class WorldScreen implements Screen {
         }
     }
 
+    public void dialogue() {
+        System.out.println("WorldScreen - dialogue called");
+        state = GameState.DIALOGUE;
+    }
+
     public void prebattle() {
-        System.out.println("WorldScreen - pause called");
+        System.out.println("WorldScreen - prebattle called");
         state = GameState.PREBATTLE;
+    }
+
+    public void endDialogue() {
+        System.out.println("WorldScreen - endDialogue called");
+        if (state == GameState.DIALOGUE) {
+            state = GameState.RUNNING;
+        } else if (state == GameState.PREBATTLE) {
+            goToBattle();
+        }
     }
 
     @Override
     public void resume() {
         System.out.println("WorldScreen - resume called");
+        dialogueHandler.clear();
         if (state == GameState.PAUSED) {
             state = GameState.RUNNING;
-        } else if (state == GameState.PREBATTLE) {
-            goToBattle();
         }
     }
 
@@ -103,6 +117,22 @@ public class WorldScreen implements Screen {
 
     public void goToBattle() {
         game.changeGameState(MacGame.ScreenState.BATTLE);
+    }
+
+    public boolean isRunning() {
+        return state == GameState.RUNNING;
+    }
+
+    public boolean isPause() {
+        return state == GameState.PAUSED;
+    }
+
+    public boolean isDialogue() {
+        return state == GameState.DIALOGUE;
+    }
+
+    public boolean isPrebattle() {
+        return state == GameState.PREBATTLE;
     }
 
     public WorldInterface getWorld() {

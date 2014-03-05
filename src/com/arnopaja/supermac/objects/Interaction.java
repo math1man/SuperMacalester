@@ -29,7 +29,7 @@ public abstract class Interaction {
         return new Interaction(entity, character) {
             @Override
             public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
-                screen.pause();
+                screen.dialogue();
                 dialogueHandler.displayDialogue(dialogue);
             }
         };

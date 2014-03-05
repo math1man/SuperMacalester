@@ -31,7 +31,7 @@ public class Dialogue {
         int beginOptionIndex = 0, endOptionIndex = lines.length;
         for (int i=0; i<lines.length; i++) {
             String line = lines[i].trim();
-            if (line.contains("<options>")) {
+            if (line.contains(OPTION_CODE)) {
                 hasOptions = true;
                 options = new ArrayList<String>(4);
                 beginOptionIndex = i;
@@ -46,17 +46,19 @@ public class Dialogue {
         }
     }
 
+    public void reset() {
+        position = 0;
+    }
+
     public String next() {
-        String line = null;
         if (position < parsedDialogue.size()) {
-            line = parsedDialogue.get(position);
+            String line = parsedDialogue.get(position);
             position++;
-        } else if (position == parsedDialogue.size() && hasOptions) {
-            line = OPTION_CODE;
+            return line;
         } else {
-            position = 0;
+            reset();
+            return null;
         }
-        return line;
     }
 
     public String getRawDialogue() {

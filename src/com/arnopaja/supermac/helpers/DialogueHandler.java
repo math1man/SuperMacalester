@@ -66,6 +66,7 @@ public class DialogueHandler {
     public void displayDialogue(Dialogue dialogue) {
         setDialogue(dialogue);
         mode = DisplayMode.DIALOGUE;
+        dialogue.reset();
         getNextLine();
     }
 
@@ -92,6 +93,10 @@ public class DialogueHandler {
                 mode = DisplayMode.NONE;
             }
         }
+    }
+
+    public void clear() {
+        mode = DisplayMode.NONE;
     }
 
     public DisplayMode getMode() {
