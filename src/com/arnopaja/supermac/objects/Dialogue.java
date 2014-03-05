@@ -26,11 +26,11 @@ public class Dialogue {
     public void parseDialogue() {
         // converts the basic dialogue string into a List of lines
         // and other functionality
-        String[] lines = rawDialogue.split("\n");
+        String[] lines = rawDialogue.split("[\n]|[.]");
         parsedDialogue = new ArrayList<String>(lines.length);
         int beginOptionIndex = 0, endOptionIndex = lines.length;
         for (int i=0; i<lines.length; i++) {
-            String line = lines[i].trim();
+            String line = lines[i].trim() + ".";
             if (line.contains(OPTION_CODE)) {
                 hasOptions = true;
                 options = new ArrayList<String>(4);
