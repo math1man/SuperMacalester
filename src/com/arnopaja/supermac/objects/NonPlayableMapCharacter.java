@@ -11,18 +11,25 @@ public class NonPlayableMapCharacter extends MapCharacter {
 
     public static final float SECONDS_PER_RANDOM_MOVE = 3;
 
+    private boolean canMove = true;
+
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing) {
         this(grid, position, facing, false);
     }
 
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+        this(grid, position, facing, isInteractable, true);
+    }
+
+    public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable, boolean canMove) {
         super(grid, position, facing, isInteractable);
+        this.canMove = canMove;
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (!isMoving()) {
+        if (!isMoving() && canMove) {
             double random = Math.random() * SECONDS_PER_RANDOM_MOVE / delta;
             if (random < 1) {
                 int ordinal = (int) (Math.random() * 4);
@@ -38,5 +45,13 @@ public class NonPlayableMapCharacter extends MapCharacter {
             return Interaction.getDialogueInteraction(this, character, getDialogue());
         }
         return Interaction.getNullInteraction();
+    }
+
+    public boolean canMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 }

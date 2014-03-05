@@ -9,9 +9,8 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Fixed some bugs with pausing and resuming the game with dialogue present">
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added random movement for NPCs">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -90,25 +89,28 @@
       <file leaf-file-name="MapCharacter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="0" selection-start="2476" selection-end="2476" vertical-scroll-proportion="0.0" vertical-offset="981" max-vertical-offset="1710">
+            <state line="16" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NonPlayableMapCharacter.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="NonPlayableMapCharacter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="81" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="690">
-              <folding />
+            <state line="25" column="31" selection-start="875" selection-end="875" vertical-scroll-proportion="0.46232876" vertical-offset="75" max-vertical-offset="915">
+              <folding>
+                <element signature="e#1714#1715#0" expanded="true" />
+                <element signature="e#1752#1753#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldInterface.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="WorldInterface.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.49871466" vertical-offset="451" max-vertical-offset="840">
+            <state line="54" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.0" vertical-offset="451" max-vertical-offset="840">
               <folding />
             </state>
           </provider>
@@ -184,7 +186,6 @@
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Direction.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/MacGame.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldRenderer.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Dialogue.java" />
@@ -192,9 +193,10 @@
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Interaction.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/WorldInputHandler.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/screen/WorldScreen.java" />
-        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Grid.java" />
         <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java" />
+        <option value="$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java" />
       </list>
     </option>
   </component>
@@ -777,7 +779,7 @@
       <workItem from="1393821331994" duration="2093000" />
       <workItem from="1393864506638" duration="17597000" />
       <workItem from="1393958388315" duration="8064000" />
-      <workItem from="1394037062069" duration="2963000" />
+      <workItem from="1394037062069" duration="3212000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -943,11 +945,15 @@
       <created>1394043704453</created>
       <updated>1394043704453</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Added random movement for NPCs">
+      <created>1394044773858</created>
+      <updated>1394044773858</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132420000" />
+    <option name="totallyTimeSpent" value="132669000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -986,7 +992,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19386107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31862745" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31862745" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1049,7 +1055,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Working on dealing with tiles" />
     <MESSAGE value="The map works!!!" />
     <MESSAGE value="Removed some debug code" />
     <MESSAGE value="The main character is buggy.  Trying to resolve" />
@@ -1074,7 +1079,8 @@
     <MESSAGE value="HAHA! Dialogue is working!" />
     <MESSAGE value="HAHA! Dialogue is working! Next thing is to make options work" />
     <MESSAGE value="Fixed some bugs with pausing and resuming the game with dialogue present" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed some bugs with pausing and resuming the game with dialogue present" />
+    <MESSAGE value="Added random movement for NPCs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added random movement for NPCs" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1384,13 +1390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="2476" selection-end="2476" vertical-scroll-proportion="0.0" vertical-offset="981" max-vertical-offset="1710">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="0" selection-start="2450" selection-end="2450" vertical-scroll-proportion="0.0" vertical-offset="921" max-vertical-offset="1500">
@@ -1400,17 +1399,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="81" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="690">
+        <state line="54" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.0" vertical-offset="451" max-vertical-offset="840">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/render/WorldInterface.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/MapCharacter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.49871466" vertical-offset="451" max-vertical-offset="840">
+        <state line="16" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1710">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/objects/NonPlayableMapCharacter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="31" selection-start="875" selection-end="875" vertical-scroll-proportion="0.46232876" vertical-offset="75" max-vertical-offset="915">
+          <folding>
+            <element signature="e#1714#1715#0" expanded="true" />
+            <element signature="e#1752#1753#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
