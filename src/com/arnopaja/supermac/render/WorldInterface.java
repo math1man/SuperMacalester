@@ -28,6 +28,7 @@ public class WorldInterface {
         mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.SOUTH);
         NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.WEST);
         character.setFacingSprites(AssetLoader.steven);
+        character.setFacingAnimations(AssetLoader.stevenStepping);
         character.setInteractable(true);
         character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. I smoke lots of weed and am " +
                 "trying to get a job for this summer."));
@@ -47,10 +48,10 @@ public class WorldInterface {
 
     public void update(float delta) {
         Grid currentGrid = mainCharacter.getGrid();
-        for (Entity entity : currentGrid.getEntities()) {
-            entity.update(delta);
-            // mainCharacter.update is called inherently because
-            // the main character is an element of the current grid
+        // Cannot just iterate over currentGrid.getEntities() because we cannot modify that iterable
+        Object[] entities = currentGrid.getEntities().toArray();
+        for (Object entity : entities) {
+            ((Entity) entity).update(delta);
         }
     }
 
