@@ -93,7 +93,7 @@ public class WorldScreen implements Screen {
     }
 
     public void endDialogue() {
-        System.out.println("WorldScreen - endDialogue called");
+        System.out.println("WorldScreen - end dialogue called");
         if (state == GameState.DIALOGUE) {
             state = GameState.RUNNING;
         } else if (state == GameState.PREBATTLE) {
