@@ -9,12 +9,16 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added a canMove boolean to NPCs so we can make ones that don't move">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/gdx_backend_robovm.xml" afterPath="$PROJECT_DIR$/.idea/libraries/gdx_backend_robovm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libs1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libs1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libs2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libs2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/asphalt_tile.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/campuscenter.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/chapel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grasstoroad_east.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grasstoroad_north.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grasstoroad_south.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grasstoroad_west.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/roadline_tile_horizontal.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/roadline_tile_vertical.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -125,7 +129,7 @@
       <file leaf-file-name="Building.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Building.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="7" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.4437751" vertical-offset="510" max-vertical-offset="1020">
+            <state line="43" column="7" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.92260695" vertical-offset="278" max-vertical-offset="1020">
               <folding />
             </state>
           </provider>
@@ -829,7 +833,7 @@
       <workItem from="1393864506638" duration="17597000" />
       <workItem from="1393958388315" duration="8064000" />
       <workItem from="1394037062069" duration="3477000" />
-      <workItem from="1394060637574" duration="1120000" />
+      <workItem from="1394060637574" duration="1298000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -1003,11 +1007,15 @@
       <created>1394045030349</created>
       <updated>1394045030349</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype">
+      <created>1394071332195</created>
+      <updated>1394071332195</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134054000" />
+    <option name="totallyTimeSpent" value="134232000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1046,7 +1054,7 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32912534" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736155" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3268229" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1056,8 +1064,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31770834" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31770834" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1109,7 +1117,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Removed some debug code" />
     <MESSAGE value="The main character is buggy.  Trying to resolve" />
     <MESSAGE value="I fixed it... but I have no idea why it works..." />
     <MESSAGE value="I have solved the magical mystery code and all the bugs that it was causing... I am dumb, but so is Vector2" />
@@ -1134,7 +1141,8 @@
     <MESSAGE value="Fixed some bugs with pausing and resuming the game with dialogue present" />
     <MESSAGE value="Added random movement for NPCs" />
     <MESSAGE value="Added a canMove boolean to NPCs so we can make ones that don't move" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a canMove boolean to NPCs so we can make ones that don't move" />
+    <MESSAGE value="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1463,7 +1471,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/Building.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="7" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.4437751" vertical-offset="510" max-vertical-offset="1020">
+        <state line="43" column="7" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.92260695" vertical-offset="278" max-vertical-offset="1020">
           <folding />
         </state>
       </provider>
