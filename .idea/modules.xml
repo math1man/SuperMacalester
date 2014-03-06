@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuperMacalester.iml" filepath="$PROJECT_DIR$/SuperMacalester.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../SuperMacalester-android/SuperMacalester-android.iml" filepath="$PROJECT_DIR$/../SuperMacalester-android/SuperMacalester-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../SuperMacalester-desktop/SuperMacalester-desktop.iml" filepath="$PROJECT_DIR$/../SuperMacalester-desktop/SuperMacalester-desktop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../SuperMacalester-html/SuperMacalester-html.iml" filepath="$PROJECT_DIR$/../SuperMacalester-html/SuperMacalester-html.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../SuperMacalester-robovm/SuperMacalester-robovm.iml" filepath="$PROJECT_DIR$/../SuperMacalester-robovm/SuperMacalester-robovm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../supermacalester-android/SuperMacalester-android.iml" filepath="$PROJECT_DIR$/../supermacalester-android/SuperMacalester-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../supermacalester-desktop/SuperMacalester-desktop.iml" filepath="$PROJECT_DIR$/../supermacalester-desktop/SuperMacalester-desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../supermacalester-html/SuperMacalester-html.iml" filepath="$PROJECT_DIR$/../supermacalester-html/SuperMacalester-html.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../supermacalester-robovm/SuperMacalester-robovm.iml" filepath="$PROJECT_DIR$/../supermacalester-robovm/SuperMacalester-robovm.iml" />
     </modules>
   </component>
 </project>
