@@ -4,6 +4,7 @@ import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.screen.WorldScreen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -14,6 +15,7 @@ public class WorldInputHandler implements InputProcessor {
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
     private WorldScreen screen;
+    private MainMapCharacter character;
 
     private float gameWidth;
     private float gameHeight;
@@ -23,6 +25,7 @@ public class WorldInputHandler implements InputProcessor {
     public WorldInputHandler(WorldScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
         this.screen = screen;
+        this.character = screen.getWorld().getMainCharacter();
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         this.scaleFactorX = scaleFactorX;
@@ -31,7 +34,33 @@ public class WorldInputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (screen.isRunning()) {
+            switch (keycode) {
+                case Keys.UP:
+                    north();
+                    break;
+                case Keys.RIGHT:
+                    east();
+                    break;
+                case Keys.DOWN:
+                    south();
+                    break;
+                case Keys.LEFT:
+                    west();
+                    break;
+                case Keys.SPACE:
+                    interact();
+                    break;
+                default:
+                    return false;
+            }
+        } else if (screen.isDialogue() || screen.isPrebattle()) {
+            // TODO: figure out how to select options with keyboard
+            dialogue(0, 0);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -48,24 +77,22 @@ public class WorldInputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
-        if (screen.getState() == WorldScreen.GameState.RUNNING) {
-            MainMapCharacter character = screen.getWorld().getMainCharacter();
+        if (screen.isRunning()) {
             if (gameX < SIDE_BUTTON_WIDTH) {
-                character.move(Direction.WEST);
+                west();
             } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-                character.move(Direction.EAST);
+                east();
             } else if (gameY < SIDE_BUTTON_WIDTH) {
-                character.move(Direction.NORTH);
+                north();
             } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
-                character.move(Direction.SOUTH);
+                south();
             } else {
-                screen.runInteraction(character.interact());
+                interact();
             }
         } else if (screen.isDialogue() || screen.isPrebattle()) {
-            DialogueHandler dialogueHandler = screen.getDialogueHandler();
-            if (dialogueHandler.onClick(gameX, gameY)) {
-                screen.endDialogue();
-            }
+            dialogue(gameX, gameY);
+        } else {
+            return false;
         }
         return true;
     }
@@ -88,6 +115,33 @@ public class WorldInputHandler implements InputProcessor {
     @Override
     public boolean scrolled(int i) {
         return false;
+    }
+
+    public void north() {
+        character.move(Direction.NORTH);
+    }
+
+    public void east() {
+        character.move(Direction.EAST);
+    }
+
+    public void south() {
+        character.move(Direction.SOUTH);
+    }
+
+    public void west() {
+        character.move(Direction.WEST);
+    }
+
+    public void interact() {
+        screen.runInteraction(character.interact());
+    }
+
+    public void dialogue(int gameX, int gameY) {
+        DialogueHandler dialogueHandler = screen.getDialogueHandler();
+        if (dialogueHandler.onClick(gameX, gameY)) {
+            screen.endDialogue();
+        }
     }
 
     private int scaleX(int screenX) {
