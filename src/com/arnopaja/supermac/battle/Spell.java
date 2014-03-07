@@ -20,4 +20,15 @@ public class Spell implements Usable
     {
         return name;
     }
+
+    @Override
+    public int use(Character source, Character destination) {
+        System.out.println(source.getName() + " casts " + getName());
+        int damage = (int) getDamageModifier() * source.getSpecial();
+        damage /= (destination.getSpecial() / 4);
+        System.out.println(damage + " damage done!");
+        destination.modifyHealth((short) -damage);
+        if(destination.isFainted()) System.out.println(destination.getName() + " fell!");
+        return damage;
+    }
 }

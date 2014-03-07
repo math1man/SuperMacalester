@@ -14,4 +14,10 @@ public class Item implements Usable
     {
         //Generate given its universalID
     }
+
+    @Override
+    public int use(Character source, Character destination) {
+        // TODO: use item
+        return 0;
+    }
 }

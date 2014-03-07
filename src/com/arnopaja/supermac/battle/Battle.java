@@ -59,7 +59,7 @@ public class Battle
                         System.out.println(ba.getSource().getName() + " is defending.");
                         break;
                     case MAGIC:
-                        Spell s = (Spell) ba.getMyUsable();
+                        Spell s = (Spell) ba.getUsable();
                         if(s != null)
                         {
                             System.out.println(ba.getSource().getName() + " casts " + s.getName());
@@ -71,7 +71,7 @@ public class Battle
                         }
                         break;
                     case ITEM:
-                        Item o = (Item) ba.getMyUsable();
+                        Item o = (Item) ba.getUsable();
                         //use item
                         break;
                     default:
@@ -89,12 +89,12 @@ public class Battle
         //allow character actions to be set
         for(Hero h : heroes)
         {
-            perTurnQueue.add(new BattleAction((Character) h,enemyParty.get(battleRandomGen.nextInt(enemyParty.getSize())),BattleAction.ACTIONTYPE.ATTACK,null));
+            perTurnQueue.add(BattleAction.createAttack(h, enemyParty.get(battleRandomGen.nextInt(enemyParty.getSize()))));
         }
         for(int i=0;i<enemyParty.getSize();i++)
         {
             e = (Enemy) enemyParty.get(i);
-            perTurnQueue.add(new BattleAction((Character) e,(Character) heroes[battleRandomGen.nextInt(3)], BattleAction.ACTIONTYPE.ATTACK,null));
+            perTurnQueue.add(BattleAction.createAttack(e, heroes[battleRandomGen.nextInt(3)]));
         }
     }
 }

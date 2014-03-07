@@ -1,6 +1,9 @@
 package com.arnopaja.supermac.render;
 
-import com.arnopaja.supermac.battle.*;
+import com.arnopaja.supermac.battle.BattleAction;
+import com.arnopaja.supermac.battle.EnemyParty;
+import com.arnopaja.supermac.battle.Hero;
+import com.arnopaja.supermac.battle.MainParty;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Comparator;
@@ -43,58 +46,22 @@ public class BattleInterface {
             // run code for if the enemy party is defeated
         } else {
             setTurnActions();
-            int temp;
             for(BattleAction ba : perTurnQueue) {
-                switch(ba.getType()) {
-                    case ATTACK:
-                        System.out.println(ba.getSource().getName() + " attacks " + ba.getDestination().getName());
-                        temp = (int) (ba.getSource().getAttack() * (2 + Math.abs(battleRandomGen.nextGaussian())));
-                        temp /= ba.getDestination().getDefense();
-                        System.out.println(temp + " damage done!");
-                        ba.getDestination().modifyHealth((short)-temp);
-                        if(ba.getDestination().isFainted()) System.out.println(ba.getDestination().getName() + " fell!");
-                        break;
-                    case DEFEND:
-                        //temporarily increase defense
-                        System.out.println(ba.getSource().getName() + " is defending.");
-                        break;
-                    case MAGIC:
-                        Spell s = (Spell) ba.getMyUsable();
-                        if(s != null) {
-                            System.out.println(ba.getSource().getName() + " casts " + s.getName());
-                            temp = (int) s.getDamageModifier() * ba.getSource().getSpecial();
-                            temp /= (ba.getDestination().getSpecial() / 4);
-                            System.out.println(temp + " damage done!");
-                            ba.getDestination().modifyHealth((short)-temp);
-                            if(ba.getDestination().isFainted()) System.out.println(ba.getDestination().getName() + " fell!");
-                        }
-                        break;
-                    case ITEM:
-                        Item o = (Item) ba.getMyUsable();
-                        //use item
-                        break;
-                    default:
-                        //big error
-                        break;
-                }
+                ba.runAction();
             }
         }
     }
 
     public void setTurnActions() {
-        Enemy enemy;
         Hero heroes[] = mainParty.getBattleParty();
-        //allow character actions to be set
+        // TODO: allow character actions to be set
         for(Hero hero : heroes) {
-            perTurnQueue.add(new BattleAction(hero,
-                    enemyParty.get(battleRandomGen.nextInt(enemyParty.getSize())),
-                    BattleAction.ACTIONTYPE.ATTACK, null));
+            perTurnQueue.add(BattleAction.createAttack(hero,
+                    enemyParty.get(battleRandomGen.nextInt(enemyParty.getSize()))));
         }
         for(int i=0; i<enemyParty.getSize(); i++){
-            enemy = (Enemy) enemyParty.get(i);
-            perTurnQueue.add(new BattleAction(enemy,
-                    heroes[battleRandomGen.nextInt(3)],
-                    BattleAction.ACTIONTYPE.ATTACK, null));
+            perTurnQueue.add(BattleAction.createAttack(enemyParty.get(i),
+                    heroes[battleRandomGen.nextInt(3)]));
         }
     }
 
