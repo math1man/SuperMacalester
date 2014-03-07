@@ -21,13 +21,18 @@ public class AssetLoader {
     public static Preferences prefs;
 
     public static Texture texture;
+
+    // Used for World
     public static TextureRegion darkgrass1, cobblestone1, buildingTile;
     public static TextureRegion[] steven, stevenSteps;
     public static Animation[] stevenStepping;
 
-    public static BitmapFont font, shadow;
-
     public static FileHandle mapHandle;
+
+    // Used for Battle
+    public static TextureRegion battleBackground;
+
+    public static BitmapFont font, shadow;
 
     public static void load() {
 
