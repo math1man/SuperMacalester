@@ -1,20 +1,14 @@
-package com.arnopaja.supermac.render;
+package com.arnopaja.supermac.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Superclass for all things that are rendered.
+ * Interface for things rendered in the grid.
  *
  * @author Ari Weiland
  */
-public abstract class Renderable {
-
-    private final boolean isRendered;
-
-    protected Renderable(boolean isRendered) {
-        this.isRendered = isRendered;
-    }
+public interface Renderable {
 
     /**
      * Renders the Renderable if it is renderable, otherwise does nothing.
@@ -27,7 +21,5 @@ public abstract class Renderable {
      */
     public abstract boolean render(SpriteBatch batcher, Vector2 position, float runTime);
 
-    public boolean isRendered() {
-        return isRendered;
-    }
+    public abstract boolean isRendered();
 }

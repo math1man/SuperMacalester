@@ -2,7 +2,6 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.render.Renderable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,15 +12,16 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class Tile extends Renderable {
+public class Tile implements Renderable {
 
     public static Map<String, TextureRegion> spriteMap;
 
+    private final boolean isRendered;
     private TextureRegion sprite;
     private boolean isPathable;
 
     private Tile(boolean isRendered, TextureRegion sprite, boolean isPathable) {
-        super(isRendered);
+        this.isRendered = isRendered;
         this.sprite = sprite;
         this.isPathable = isPathable;
     }
@@ -58,6 +58,11 @@ public class Tile extends Renderable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isRendered() {
+        return isRendered;
     }
 
     public TextureRegion getSprite() {

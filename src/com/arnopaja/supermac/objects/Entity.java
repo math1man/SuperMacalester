@@ -2,7 +2,6 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.render.Renderable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -10,8 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public abstract class Entity extends Renderable {
+public abstract class Entity implements Renderable {
 
+    private final boolean isRendered;
     private Grid grid;
     private Vector2 position;
     private Direction facing;
@@ -22,7 +22,7 @@ public abstract class Entity extends Renderable {
     private Dialogue dialogue;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
-        super(isRendered);
+        this.isRendered = isRendered;
         this.grid = grid;
         this.position = position;
         this.facing = facing;
@@ -39,6 +39,11 @@ public abstract class Entity extends Renderable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isRendered() {
+        return isRendered;
     }
 
     public abstract void update(float delta);
