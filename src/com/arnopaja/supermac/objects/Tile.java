@@ -17,8 +17,8 @@ public class Tile implements Renderable {
     public static Map<String, TextureRegion> spriteMap;
 
     private final boolean isRendered;
-    private TextureRegion sprite;
-    private boolean isPathable;
+    private final TextureRegion sprite;
+    private final boolean isPathable;
 
     private Tile(boolean isRendered, TextureRegion sprite, boolean isPathable) {
         this.isRendered = isRendered;
@@ -67,10 +67,6 @@ public class Tile implements Renderable {
 
     public TextureRegion getSprite() {
         return sprite;
-    }
-
-    public void setSprite(TextureRegion sprite) {
-        this.sprite = sprite;
     }
 
     public boolean isPathable() {
