@@ -1,7 +1,9 @@
-package com.arnopaja.supermac.battle;import java.lang.String; /**
+package com.arnopaja.supermac.battle;
+
+/**
  * Created by Nolan on 2/16/14.
  */
-public class Item
+public class Item implements Usable
 {
     //TODO: image definition
     private String name;

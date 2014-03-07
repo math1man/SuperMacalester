@@ -17,47 +17,49 @@ public abstract class Character
     //TODO: image file definitions
 
     //GET
-    protected String getName()
+    public String getName()
     {
         return name;
     }
-    protected short getHealth()
+    public short getHealth()
     {
         return maxHealth;
     }
-    protected short getCurrentHealth()
+    public short getCurrentHealth()
     {
         return health;
     }
-    protected short getMana()
+    public short getMana()
     {
         return maxMana;
     }
-    protected short getCurrentMana()
+    public short getCurrentMana()
     {
         return mana;
     }
-    protected short getAttack()
+    public short getAttack()
     {
         return attack;
     }
-    protected short getDefense()
+    public short getDefense()
     {
         return defense;
     }
-    protected short getSpecial()
+    public short getSpecial()
     {
         return special;
     }
-    protected Armor getEquippedArmor()
+    public Armor getEquippedArmor()
     {
         return equippedArmor;
     }
-    protected Weapon getEquippedWeapon()
+    public Weapon getEquippedWeapon()
     {
         return equippedWeapon;
     }
-    protected short getSpeed(){return speed;}
+    public short getSpeed(){return speed;}
+    public Spell getSpell(short index){return spellsList.get(index);}
+
 
     //SET
     public void setEquippedArmor(Armor a)
@@ -114,7 +116,7 @@ public abstract class Character
         //returns attack roll
         return 0;
     }
-    public short doSpell()
+    public short doSpell(short index)
     {
         //does animation
         //returns damage roll

@@ -20,4 +20,12 @@ public abstract class Party
         }
         return true;
     }
+    public Character get(int index)
+    {
+        return characters.get(index);
+    }
+    public Character getRandom()
+    {
+        return null;
+    }
 }

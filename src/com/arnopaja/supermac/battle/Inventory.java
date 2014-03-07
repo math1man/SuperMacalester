@@ -5,6 +5,10 @@ package com.arnopaja.supermac.battle;import java.util.LinkedList;
  */
 public class Inventory
 {
+    public static enum INVENTORYTYPE
+    {
+        ARMOR,WEAPON,ITEM,SPECIALITEM;
+    }
     private static LinkedList<Armor> armorInventory;
     private static LinkedList<Weapon> weaponInventory;
     private static LinkedList<Item> itemInventory;
@@ -15,6 +19,18 @@ public class Inventory
         weaponInventory = new LinkedList<Weapon>();
         itemInventory = new LinkedList<Item>();
         specialItemInventory = new LinkedList<SpecialItem>();
+    }
+    //get
+    public static Item get(INVENTORYTYPE t, int index)
+    {
+        switch(t)
+        {
+            case ITEM:
+                return itemInventory.get(index);
+            default:
+                break;
+        }
+        return null;
     }
     //adds
     public static void add(Armor a)

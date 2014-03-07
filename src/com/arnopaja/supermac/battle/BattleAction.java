@@ -5,7 +5,7 @@ package com.arnopaja.supermac.battle;
  */
 public class BattleAction
 {
-    public BattleAction(Character a,Character b,ACTIONTYPE t,short index)
+    public BattleAction(Character a,Character b,ACTIONTYPE t,Usable toUse)
     {
         switch(t)
         {
@@ -25,24 +25,25 @@ public class BattleAction
                 source = a;
                 destination = b;
                 priority = a.getSpeed();
-                myIndex = index;
+                myUsable = toUse;
                 break;
             default:
                 //big error
                 break;
         }
     }
-    public enum ACTIONTYPE
+    public static enum ACTIONTYPE
     {
         ATTACK,MAGIC,ITEM,DEFEND,FLEE;
     }
     private Character source;
     private Character destination;
     private short priority;
-    private short myIndex;
+    private Usable myUsable;
     private ACTIONTYPE type;
     public short getPriority(){return priority;}
     public Character getSource(){return source;}
     public Character getDestination(){return destination;}
     public ACTIONTYPE getType(){return type;}
+    public Usable getMyUsable(){return myUsable;}
 }
