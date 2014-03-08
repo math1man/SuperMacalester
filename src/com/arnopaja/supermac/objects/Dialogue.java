@@ -30,18 +30,21 @@ public class Dialogue {
         parsedDialogue = new ArrayList<String>(lines.length);
         int beginOptionIndex = 0, endOptionIndex = lines.length;
         for (int i=0; i<lines.length; i++) {
-            String line = lines[i].trim() + ".";
-            if (line.contains(OPTION_CODE)) {
+            String line = lines[i].trim();
+            if (Pattern.matches("<options:.*>", line)) {
                 hasOptions = true;
-                options = new ArrayList<String>(4);
+                options = new ArrayList<String>(5);
+                options.add(line.substring(9, line.length() - 1));
                 beginOptionIndex = i;
             } else if (line.contains("</options>")) {
                 endOptionIndex = i;
-            } else if (i > beginOptionIndex && i < endOptionIndex && Pattern.matches("<option:*>", line)) {
+            } else if (i > beginOptionIndex && i < endOptionIndex && Pattern.matches("<option:.*>", line)) {
                 String option = line.substring(8, line.length() - 1);
                 options.add(option);
             } else {
-                parsedDialogue.add(line);
+                if (!line.isEmpty()) {
+                    parsedDialogue.add(line + ".");
+                }
             }
         }
     }
@@ -56,7 +59,6 @@ public class Dialogue {
             position++;
             return line;
         } else {
-            reset();
             return null;
         }
     }

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.List;
+
 /**
  * Static class used to render a dialogue box on the WorldScreen
  *
@@ -29,6 +31,8 @@ public class DialogueHandler {
     private DisplayMode mode = DisplayMode.NONE;
     private Dialogue dialogue;
     private String dialogueLine;
+    private List<String> options;
+    private int optionCount;
 
     public DialogueHandler(float gameWidth, float gameHeight) {
         // The bottom left corner of the dialogue is the same as that of the game
@@ -58,7 +62,20 @@ public class DialogueHandler {
                 AssetLoader.drawWrappedFont(batcher, dialogueLine,
                         fontAreaPosition.x, fontAreaPosition.y, fontAreaSize.x);
             } else {
-                // render options
+                AssetLoader.drawFont(batcher, options.get(0),
+                        fontAreaPosition.x, fontAreaPosition.y);
+                AssetLoader.drawFont(batcher, options.get(1),
+                        fontAreaPosition.x, fontAreaPosition.y + fontAreaSize.y / 3);
+                AssetLoader.drawFont(batcher, options.get(2),
+                        fontAreaSize.x / 2, fontAreaPosition.y + fontAreaSize.y / 3);
+                if (optionCount > 3) {
+                    AssetLoader.drawFont(batcher, options.get(3),
+                            fontAreaPosition.x, fontAreaPosition.y + fontAreaSize.y * 2/3);
+                }
+                if (optionCount > 4) {
+                    AssetLoader.drawFont(batcher, options.get(4),
+                            fontAreaSize.x / 2, fontAreaPosition.y + fontAreaSize.y * 2/3);
+                }
             }
         }
     }
@@ -80,17 +97,21 @@ public class DialogueHandler {
      */
     public boolean onClick(int x, int y) {
         getNextLine();
+        if (mode == DisplayMode.OPTIONS) {
+            // TODO: handle option selection
+        }
         return (mode == DisplayMode.NONE);
     }
 
     public void getNextLine() {
         dialogueLine = dialogue.next();
         if (dialogueLine == null) {
-            if (dialogue.hasOptions()) {
+            if (dialogue.hasOptions() && (mode != DisplayMode.OPTIONS)) {
                 mode = DisplayMode.OPTIONS;
-                // TODO: set up options
+                options = dialogue.getOptions();
+                optionCount = options.size();
             } else {
-                mode = DisplayMode.NONE;
+                clear();
             }
         }
     }

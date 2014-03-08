@@ -31,7 +31,13 @@ public class WorldInterface {
         character.setFacingAnimations(AssetLoader.stevenStepping);
         character.setInteractable(true);
         character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. I smoke lots of weed and am " +
-                "trying to get a job for this summer."));
+                "trying to get a job for this summer.\n" +
+                "<options:Do you like weed?>\n" +
+                "<option:Yes>\n" +
+                "<option:No>\n" +
+                "<option:Maybe>\n" +
+                "<option:Never tried it>\n" +
+                "</options>"));
         worldGrid.putEntity(character);
         initBuildings();
         initCharacters();

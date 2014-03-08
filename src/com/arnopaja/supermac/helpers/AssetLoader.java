@@ -99,11 +99,16 @@ public class AssetLoader {
         shadow.setScale(scale, -scale);
     }
 
+    public static void drawFont(SpriteBatch batcher, String string, float x, float y) {
+        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
+        AssetLoader.shadow.drawMultiLine(batcher, string, x + shadowOffset, y + shadowOffset);
+        AssetLoader.font.drawMultiLine(batcher, string, x, y);
+    }
+
     public static void drawWrappedFont(SpriteBatch batcher, String string, float x, float y, float width) {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
         AssetLoader.shadow.drawWrapped(batcher, string, x + shadowOffset, y + shadowOffset, width);
         AssetLoader.font.drawWrapped(batcher, string, x, y, width);
-
     }
 
     public static Tile[][] parseTileArray(String name) {
