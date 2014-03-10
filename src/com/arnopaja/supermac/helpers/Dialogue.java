@@ -25,7 +25,8 @@ public class Dialogue {
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
         this.rawDialogue = rawDialogue;
-        String[] lines = rawDialogue.split("[\n]");
+        // Separate dialogue windows are split by a <d> sequence in the dialogue
+        String[] lines = rawDialogue.split("<d>");
         parsedDialogue = new ArrayList<String>(lines.length);
         for (String line : lines) {
             line = line.trim();
