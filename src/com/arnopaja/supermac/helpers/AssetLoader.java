@@ -28,9 +28,9 @@ public class AssetLoader {
 
     public static Preferences prefs;
 
-    public static Texture texture;
-    public static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
-    public static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
+    private static Texture texture;
+    private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
+    private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
     public static TextureRegion grass0, grass1, grass2, cobble;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
@@ -73,6 +73,7 @@ public class AssetLoader {
         asphaltEdgeW = new TextureRegion(asphaltEdgeE);
         asphaltEdgeE.flip(false, true);
 
+        // The buildings don't work at the moment because their canvas dimensions are bad
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
 //        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
 //        campusCenter.flip(false, true);
@@ -174,8 +175,8 @@ public class AssetLoader {
     n is a special character for the null tile
     b is a prefix for buildings
     numerals should be used only for arbitrary tiles (ie. different grasses)
+    asterisks are used to represent an arbitrary numeral in the data file
     */
-
     private static void initTileMap() {
         tileMap.put("g0", AssetLoader.grass0);
         tileMap.put("g1", AssetLoader.grass1);
