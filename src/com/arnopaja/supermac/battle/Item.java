@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.helpers.Dialogue;
+
 /**
  * Created by Nolan on 2/16/14.
  */
@@ -16,8 +18,9 @@ public class Item implements Usable
     }
 
     @Override
-    public int use(BattleCharacter source, BattleCharacter destination) {
+    public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item
-        return 0;
+        String dialogue = source.getName() + " uses " + name + " on " + destination.getName() + "!";
+        return new Dialogue(dialogue);
     }
 }

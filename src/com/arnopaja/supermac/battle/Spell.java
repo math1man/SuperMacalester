@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.helpers.Dialogue;
+
 /**
  * Created by Envy on 2/28/14.
  */
@@ -22,13 +24,15 @@ public class Spell implements Usable
     }
 
     @Override
-    public int use(BattleCharacter source, BattleCharacter destination) {
-        System.out.println(source.getName() + " casts " + getName());
+    public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         int damage = (int) getDamageModifier() * source.getSpecial();
         damage /= (destination.getSpecial() / 4);
-        System.out.println(damage + " damage done!");
         destination.modifyHealth((short) -damage);
-        if(destination.isFainted()) System.out.println(destination.getName() + " fell!");
-        return damage;
+        String dialogue = source.getName() + " casts " + getName() + "!" +
+                "\n" + damage + " damage done!";
+        if(destination.isFainted()) {
+            dialogue += "\n" + destination.getName() + " fell!";
+        }
+        return new Dialogue(dialogue);
     }
 }

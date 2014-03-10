@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.helpers.Dialogue;
+
 import java.util.Random;
 
 /**
@@ -45,14 +47,17 @@ public abstract class BattleAction {
     public static BattleAction createAttack(BattleCharacter source, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null) {
             @Override
-            public int runAction() {
-                System.out.println(getSource().getName() + " attacks " + getDestination().getName());
+            public Dialogue runAction() {
                 int damage = (int) (getSource().getAttack() * (2 + Math.abs(battleRandomGen.nextGaussian())));
                 damage /= getDestination().getDefense();
-                System.out.println(damage + " damage done!");
                 getDestination().modifyHealth((short) -damage);
-                if(getDestination().isFainted()) System.out.println(getDestination().getName() + " fell!");
-                return damage;
+                String dialogue = getSource().getName() + " attacks " + getDestination().getName() + "!" +
+                        "\n" + damage + " damage done!";
+                if(getDestination().isFainted()) {
+                    dialogue += "\n" + getDestination().getName() + " fell!";
+                }
+                System.out.println(dialogue);
+                return new Dialogue(dialogue);
             }
         };
     }
@@ -60,7 +65,7 @@ public abstract class BattleAction {
     public static BattleAction createMagic(BattleCharacter source, BattleCharacter destination, Usable spell) {
         return new BattleAction(source, destination, ActionType.MAGIC, source.getSpeed(), spell) {
             @Override
-            public int runAction() {
+            public Dialogue runAction() {
                 return getUsable().use(getSource(), getDestination());
             }
         };
@@ -69,7 +74,7 @@ public abstract class BattleAction {
     public static BattleAction createItem(BattleCharacter source, BattleCharacter destination, Usable item) {
         return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), item) {
             @Override
-            public int runAction() {
+            public Dialogue runAction() {
                 return getUsable().use(getSource(), getDestination());
             }
         };
@@ -78,9 +83,10 @@ public abstract class BattleAction {
     public static BattleAction createDefend(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.DEFEND, Short.MAX_VALUE, null) {
             @Override
-            public int runAction() {
+            public Dialogue runAction() {
                 // TODO: code for defending
-                return 0;
+                String dialogue = getSource().getName() + " is defending!";
+                return new Dialogue(dialogue);
             }
         };
     }
@@ -89,14 +95,15 @@ public abstract class BattleAction {
         // TODO: what is the priority for fleeing?
         return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null) {
             @Override
-            public int runAction() {
+            public Dialogue runAction() {
                 // TODO: code for fleeing
-                return 0;
+                String dialogue = getSource().getName() + " flees!";
+                return new Dialogue(dialogue);
             }
         };
     }
 
-    public abstract int runAction();
+    public abstract Dialogue runAction();
 
     public BattleCharacter getSource() {
         return source;

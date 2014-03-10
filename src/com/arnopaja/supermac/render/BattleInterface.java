@@ -45,7 +45,9 @@ public class BattleInterface {
             // run code for if the enemy party is defeated
         } else {
             setTurnActions();
+            // TODO: this looping should be handled by the update loop
             for(BattleAction ba : perTurnQueue) {
+                // TODO: handle dialogue
                 ba.runAction();
             }
         }
