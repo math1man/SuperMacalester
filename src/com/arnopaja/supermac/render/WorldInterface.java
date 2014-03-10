@@ -4,7 +4,7 @@ import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.objects.Dialogue;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.objects.NonPlayableMapCharacter;

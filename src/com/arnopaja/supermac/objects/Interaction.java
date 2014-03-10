@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.objects;
 
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.screen.WorldScreen;
 
@@ -50,7 +51,6 @@ public abstract class Interaction {
             public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
                 screen.prebattle();
                 dialogueHandler.displayDialogue(dialogue);
-                System.out.println(dialogue);
             }
         };
     }

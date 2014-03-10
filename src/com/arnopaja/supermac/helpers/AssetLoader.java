@@ -112,7 +112,6 @@ public class AssetLoader {
     }
 
     public static Tile[][] parseTileArray(String name) {
-        System.out.println("Parsing tiles");
         String raw = mapHandle.readString();
         String[] lines = raw.split("\n");
         int lineIndex = 0;
@@ -124,7 +123,6 @@ public class AssetLoader {
         if (lineIndex < lines.length && w.contains(MAP_WIDTH_LEADER) && h.contains(MAP_HEIGHT_LEADER)) {
             int width = Integer.parseInt(w.substring(MAP_WIDTH_LEADER.length()).trim());
             int height = Integer.parseInt(h.substring(MAP_HEIGHT_LEADER.length()).trim());
-            System.out.println(width + " by " + height);
             if (width > 0 && height > 0) {
                 Tile[][] tileArray = new Tile[width][height];
                 for (int i=0; i<width; i++) {

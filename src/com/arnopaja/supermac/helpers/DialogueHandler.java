@@ -1,12 +1,9 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.objects.Dialogue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-
-import java.util.List;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Static class used to render a dialogue box on the WorldScreen
@@ -23,28 +20,51 @@ public class DialogueHandler {
 
     public enum DisplayMode { NONE, DIALOGUE, OPTIONS }
 
-    private Vector2 dialogueSize;
-    private Vector2 dialoguePosition;
-    private Vector2 fontAreaSize;
-    private Vector2 fontAreaPosition;
+    private final Rectangle dialogueSpace;
+    private final Rectangle fontSpace;
+    private final Rectangle option1;
+    private final Rectangle option2;
+    private final Rectangle option3;
+    private final Rectangle option4;
 
     private DisplayMode mode = DisplayMode.NONE;
     private Dialogue dialogue;
     private String dialogueLine;
-    private List<String> options;
-    private int optionCount;
+    private DialogueOptions options;
 
     public DialogueHandler(float gameWidth, float gameHeight) {
-        // The bottom left corner of the dialogue is the same as that of the game
-        dialoguePosition = new Vector2(DIALOGUE_BOX_RENDER_GAP,
-                gameHeight * (1 - DIALOGUE_TO_GAME_HEIGHT_RATIO));
-        // DialogueHandler size is the width of the game and some fraction of the height
-        dialogueSize = new Vector2(gameWidth, gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO)
-                .sub(2 * DIALOGUE_BOX_RENDER_GAP, DIALOGUE_BOX_RENDER_GAP);
-        Vector2 fontOffset = new Vector2(DIALOGUE_BOX_RENDER_GAP, DIALOGUE_BOX_RENDER_GAP);
-        fontAreaPosition = dialoguePosition.cpy().add(fontOffset);
-        fontAreaSize = dialogueSize.cpy().sub(fontOffset.scl(2));
-        AssetLoader.scaleFont(fontAreaSize.y / (AssetLoader.font.getLineHeight() * 3));
+        dialogueSpace = new Rectangle(
+                DIALOGUE_BOX_RENDER_GAP,
+                gameHeight * (1 - DIALOGUE_TO_GAME_HEIGHT_RATIO), 
+                gameWidth - 2 * DIALOGUE_BOX_RENDER_GAP, 
+                gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO - DIALOGUE_BOX_RENDER_GAP);
+        fontSpace = new Rectangle(
+                dialogueSpace.getX() + DIALOGUE_BOX_RENDER_GAP,
+                dialogueSpace.getY() + DIALOGUE_BOX_RENDER_GAP,
+                dialogueSpace.getWidth() - 2 * DIALOGUE_BOX_RENDER_GAP,
+                dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
+        AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * 3));
+
+        option1 = new Rectangle(
+                fontSpace.getX(),
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getX() + fontSpace.getWidth() / 2,
+                fontSpace.getY() + fontSpace.getHeight() * 2/3);
+        option2 = new Rectangle(
+                fontSpace.getX() + fontSpace.getWidth() / 2,
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getX() + fontSpace.getWidth(),
+                fontSpace.getY() + fontSpace.getHeight() * 2/3);
+        option3 = new Rectangle(
+                fontSpace.getX(),
+                fontSpace.getY() + fontSpace.getHeight() * 2/3,
+                fontSpace.getX() + fontSpace.getWidth() / 2,
+                fontSpace.getY() + fontSpace.getHeight());
+        option4 = new Rectangle(
+                fontSpace.getX() + fontSpace.getWidth() / 2,
+                fontSpace.getY() + fontSpace.getHeight() * 2/3,
+                fontSpace.getX() + fontSpace.getWidth(),
+                fontSpace.getY() + fontSpace.getHeight());
     }
 
     /**
@@ -56,26 +76,18 @@ public class DialogueHandler {
         if (mode != DisplayMode.NONE) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(1, 1, 1, 0.8f);
-            shapeRenderer.rect(dialoguePosition.x, dialoguePosition.y, dialogueSize.x, dialogueSize.y);
+            shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
+                    dialogueSpace.getWidth(), dialogueSpace.getHeight());
             shapeRenderer.end();
             if (mode == DisplayMode.DIALOGUE) {
                 AssetLoader.drawWrappedFont(batcher, dialogueLine,
-                        fontAreaPosition.x, fontAreaPosition.y, fontAreaSize.x);
+                        fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
             } else {
-                AssetLoader.drawFont(batcher, options.get(0),
-                        fontAreaPosition.x, fontAreaPosition.y);
-                AssetLoader.drawFont(batcher, options.get(1),
-                        fontAreaPosition.x, fontAreaPosition.y + fontAreaSize.y / 3);
-                AssetLoader.drawFont(batcher, options.get(2),
-                        fontAreaSize.x / 2, fontAreaPosition.y + fontAreaSize.y / 3);
-                if (optionCount > 3) {
-                    AssetLoader.drawFont(batcher, options.get(3),
-                            fontAreaPosition.x, fontAreaPosition.y + fontAreaSize.y * 2/3);
-                }
-                if (optionCount > 4) {
-                    AssetLoader.drawFont(batcher, options.get(4),
-                            fontAreaSize.x / 2, fontAreaPosition.y + fontAreaSize.y * 2/3);
-                }
+                AssetLoader.drawFont(batcher, options.getHeader(), fontSpace.getX(), fontSpace.getY());
+                AssetLoader.drawFont(batcher, options.get(1), option1.x, option2.y);
+                AssetLoader.drawFont(batcher, options.get(2), option2.x, option2.y);
+                AssetLoader.drawFont(batcher, options.get(3), option3.x, option3.y);
+                AssetLoader.drawFont(batcher, options.get(4), option4.x, option4.y);
             }
         }
     }
@@ -96,9 +108,22 @@ public class DialogueHandler {
      * @return true only when no more dialogue exists
      */
     public boolean onClick(int x, int y) {
-        getNextLine();
         if (mode == DisplayMode.OPTIONS) {
-            // TODO: handle option selection
+            if (option1.contains(x, y)) {
+                // first option
+                mode = DisplayMode.NONE;
+            } else if (option2.contains(x, y)) {
+                // second option
+                mode = DisplayMode.NONE;
+            } else if (option3.contains(x, y) && options.getCount() > 2) {
+                // third option
+                mode = DisplayMode.NONE;
+            } else if (option4.contains(x, y) && options.getCount() > 3) {
+                // fourth option
+                mode = DisplayMode.NONE;
+            }
+        } else {
+            getNextLine();
         }
         return (mode == DisplayMode.NONE);
     }
@@ -109,7 +134,6 @@ public class DialogueHandler {
             if (dialogue.hasOptions() && (mode != DisplayMode.OPTIONS)) {
                 mode = DisplayMode.OPTIONS;
                 options = dialogue.getOptions();
-                optionCount = options.size();
             } else {
                 clear();
             }
