@@ -57,30 +57,27 @@ public class AssetLoader {
         grass2 = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
         cobble = new TextureRegion(texture, 0, 0, 32, 32);
-        cobble.flip(false, true);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/asphalt_tile.png"));
         asphalt = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_horizontal.png"));
         asphaltLineH = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltLineH.flip(false, true);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_vertical.png"));
         asphaltLineV = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltLineV.flip(false, true);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_north.png"));
         asphaltEdgeN = new TextureRegion(texture, 0, 0, 32, 32);
         asphaltEdgeS = new TextureRegion(asphaltEdgeN);
-        asphaltEdgeN.flip(false, true);
+        asphaltEdgeS.flip(true, false);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_east.png"));
         asphaltEdgeE = new TextureRegion(texture, 0, 0, 32, 32);
         asphaltEdgeW = new TextureRegion(asphaltEdgeE);
         asphaltEdgeE.flip(false, true);
 
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
-//        campusCenter = new TextureRegion(texture, 0, 0, 32, 32);
+//        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
 //        campusCenter.flip(false, true);
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/chapel.png"));
-//        chapel = new TextureRegion(texture, 0, 0, 32, 32);
+//        chapel = new TextureRegion(texture, 0, 0, 192, 192);
 //        chapel.flip(false, true);
 
         initTileMap(); // Must be called after all tiles are loaded
@@ -102,14 +99,14 @@ public class AssetLoader {
         stevenSteps[1] = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
         stevenSteps[2] = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenSteps[3] = new TextureRegion(texture, 0, 0, 32, 32);
+        stevenSteps[3] = new TextureRegion(stevenSteps[2]);
         texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
         stevenSteps[4] = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
         stevenSteps[5] = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/steven/steven_left_step.png"));
         stevenSteps[6] = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenSteps[7] = new TextureRegion(texture, 0, 0, 32, 32);
+        stevenSteps[7] = new TextureRegion(stevenSteps[6]);
 
         stevenStepping = new Animation[4];
         for (int i=0; i<4; i++) {
@@ -160,11 +157,11 @@ public class AssetLoader {
             int height = Integer.parseInt(h.substring(MAP_HEIGHT_LEADER.length()).trim());
             if (width > 0 && height > 0) {
                 Tile[][] tileArray = new Tile[width][height];
-                for (int i=0; i<width; i++) {
+                for (int i=0; i<height; i++) {
                     String line = lines[lineIndex + 3 + i];
                     String[] tileCodes = line.split("\t");
-                    for (int j=0; j<height; j++) {
-                        tileArray[i][j] = Tile.createTile(tileCodes[j].trim());
+                    for (int j=0; j<width; j++) {
+                        tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
                     }
                 }
                 return tileArray;
