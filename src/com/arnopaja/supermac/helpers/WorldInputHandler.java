@@ -139,8 +139,9 @@ public class WorldInputHandler implements InputProcessor {
 
     public void dialogue(int gameX, int gameY) {
         DialogueHandler dialogueHandler = screen.getDialogueHandler();
-        if (dialogueHandler.onClick(gameX, gameY)) {
+        if (dialogueHandler.onClick(gameX, gameY) != DialogueHandler.ClickCode.CONTINUE) {
             screen.endDialogue();
+            // TODO: handle option selection here?
         }
     }
 

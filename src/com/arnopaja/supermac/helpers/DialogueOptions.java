@@ -13,6 +13,8 @@ public class DialogueOptions {
     private final List<String> options;
     private final int count;
 
+    // TODO: I think option output events should be referenced here
+
     public DialogueOptions(String rawOptions) {
         this.rawOptions = rawOptions;
         String[] lines = rawOptions.split("[\n]");

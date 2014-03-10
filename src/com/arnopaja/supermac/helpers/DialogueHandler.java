@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class DialogueHandler {
 
+    public enum ClickCode { CONTINUE, DONE, OPTION_1, OPTION_2, OPTION_3, OPTION_4 }
+
     public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.3f;
     public static final float DIALOGUE_BOX_RENDER_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
 
@@ -107,25 +109,29 @@ public class DialogueHandler {
      * @param y the y coordinate of the click
      * @return true only when no more dialogue exists
      */
-    public boolean onClick(int x, int y) {
+    public ClickCode onClick(int x, int y) {
         if (mode == DisplayMode.OPTIONS) {
             if (option1.contains(x, y)) {
                 // first option
                 mode = DisplayMode.NONE;
+                return ClickCode.OPTION_1;
             } else if (option2.contains(x, y)) {
                 // second option
                 mode = DisplayMode.NONE;
+                return ClickCode.OPTION_2;
             } else if (option3.contains(x, y) && options.getCount() > 2) {
                 // third option
                 mode = DisplayMode.NONE;
+                return ClickCode.OPTION_3;
             } else if (option4.contains(x, y) && options.getCount() > 3) {
                 // fourth option
                 mode = DisplayMode.NONE;
+                return ClickCode.OPTION_4;
             }
         } else {
             getNextLine();
         }
-        return (mode == DisplayMode.NONE);
+        return (mode == DisplayMode.NONE ? ClickCode.DONE : ClickCode.CONTINUE);
     }
 
     public void getNextLine() {
