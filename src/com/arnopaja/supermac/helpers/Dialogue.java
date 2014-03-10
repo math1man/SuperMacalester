@@ -25,12 +25,12 @@ public class Dialogue {
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
         this.rawDialogue = rawDialogue;
-        String[] lines = rawDialogue.split("[\n.]");
+        String[] lines = rawDialogue.split("[\n]");
         parsedDialogue = new ArrayList<String>(lines.length);
         for (String line : lines) {
             line = line.trim();
             if (!line.isEmpty()) {
-                parsedDialogue.add(line + ".");
+                parsedDialogue.add(line);
             }
         }
         hasOptions = (options != null);
