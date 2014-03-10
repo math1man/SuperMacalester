@@ -48,6 +48,7 @@ public class AssetLoader {
         buildingTile = new TextureRegion(temp, 0, 0, 32, 32);
         buildingTile.flip(false, true);
 
+
         Tile.initSpriteMap(); // Must be called after all tiles are loaded
 
         steven = new TextureRegion[4];
