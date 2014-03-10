@@ -30,9 +30,7 @@ public class BattleScreen implements Screen {
         // TODO: eventually, revert aspect ratio to screenHeight/screenWidth
         gameWidth = gameHeight * ASPECT_RATIO;
 
-        battle = new BattleInterface();
         renderer = new BattleRenderer(battle, gameWidth, gameHeight);
-
     }
 
     @Override
@@ -71,5 +69,13 @@ public class BattleScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public BattleInterface getBattle() {
+        return battle;
+    }
+
+    public void setBattle(BattleInterface battle) {
+        this.battle = battle;
     }
 }
