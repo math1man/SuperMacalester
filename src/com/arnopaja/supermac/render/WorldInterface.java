@@ -4,8 +4,11 @@ import com.arnopaja.supermac.grid.Building;
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
+import com.arnopaja.supermac.objects.NonPlayableMapCharacter;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,20 @@ public class WorldInterface {
 
     public WorldInterface() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainMapCharacter(worldGrid, 1, 1, Direction.SOUTH);
+        mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.SOUTH);
+        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.WEST);
+        character.setFacingSprites(AssetLoader.steven);
+        character.setFacingAnimations(AssetLoader.stevenStepping);
+        character.setInteractable(true);
+        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. I smoke lots of weed and am " +
+                "trying to get a job for this summer.\n" +
+                "<options:Do you like weed?>\n" +
+                "<option:Yes>\n" +
+                "<option:No>\n" +
+                "<option:Maybe>\n" +
+                "<option:Never tried it>\n" +
+                "</options>"));
+        worldGrid.putEntity(character);
         initBuildings();
         initCharacters();
     }
@@ -38,10 +54,10 @@ public class WorldInterface {
 
     public void update(float delta) {
         Grid currentGrid = mainCharacter.getGrid();
-        for (Entity entity : currentGrid.getEntities()) {
-            entity.update(delta);
-            // mainCharacter.update is called inherently because
-            // the main character is an element of the current grid
+        // Cannot just iterate over currentGrid.getEntities() because we cannot modify that iterable
+        Object[] entities = currentGrid.getEntities().toArray();
+        for (Object entity : entities) {
+            ((Entity) entity).update(delta);
         }
     }
 

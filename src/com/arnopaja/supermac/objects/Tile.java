@@ -2,7 +2,6 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.render.Renderable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,15 +12,16 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class Tile extends Renderable {
+public class Tile implements Renderable {
 
     public static Map<String, TextureRegion> spriteMap;
 
-    private TextureRegion sprite;
-    private boolean isPathable;
+    private final boolean isRendered;
+    private final TextureRegion sprite;
+    private final boolean isPathable;
 
     private Tile(boolean isRendered, TextureRegion sprite, boolean isPathable) {
-        super(isRendered);
+        this.isRendered = isRendered;
         this.sprite = sprite;
         this.isPathable = isPathable;
     }
@@ -52,12 +52,17 @@ public class Tile extends Renderable {
 
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered && sprite != null) {
+        if (isRendered() && sprite != null) {
             Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
             batcher.draw(sprite, renderPos.x, renderPos.y);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isRendered() {
+        return isRendered;
     }
 
     public TextureRegion getSprite() {
@@ -66,14 +71,6 @@ public class Tile extends Renderable {
 
     public boolean isPathable() {
         return isPathable;
-    }
-
-    public void setSprite(TextureRegion sprite) {
-        this.sprite = sprite;
-    }
-
-    public void setPathable(boolean isPathable) {
-        this.isPathable = isPathable;
     }
 
     public static void initSpriteMap() {

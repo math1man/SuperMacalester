@@ -35,4 +35,25 @@ public enum Direction {
         }
         return destination;
     }
+
+    /**
+     * Returns the cardinal direction closest to the angle of the line between the two points.
+     * Angles round counterclockwise (i.e. due Northeast rounds to North)
+     *
+     * @param from the starting point
+     * @param toward the ending point
+     * @return the closest cardinal direction from "from" to "toward"
+     */
+    public static Direction getDirectionToward(Vector2 from, Vector2 toward) {
+        float angle = toward.cpy().sub(from).angle();
+        if (angle < 45 || angle >= 315) {
+            return Direction.EAST;
+        } else if (angle < 135) {
+            return Direction.SOUTH;
+        } else if (angle < 225) {
+            return Direction.WEST;
+        } else {
+            return Direction.NORTH;
+        }
+    }
 }

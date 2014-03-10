@@ -2,19 +2,19 @@ package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.screen.BattleScreen;
-import com.arnopaja.supermac.screen.GameScreen;
 import com.arnopaja.supermac.screen.MenuScreen;
+import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.Game;
 
 public class MacGame extends Game {
 
     public static final float GAME_HEIGHT = 480;
 
-    public enum GameState { MENU, PAUSED, WORLD, BATTLE }
+    public enum ScreenState { MENU, WORLD, BATTLE }
 
-    private GameState currentState;
+    private ScreenState currentState;
 
-    private GameScreen gameScreen;
+    private WorldScreen worldScreen;
     private BattleScreen battleScreen;
     private MenuScreen menuScreen;
 
@@ -23,24 +23,23 @@ public class MacGame extends Game {
         System.out.println("MacGame Created!");
         AssetLoader.load();
 
-        gameScreen = new GameScreen(this);
+        worldScreen = new WorldScreen(this);
         battleScreen = new BattleScreen(this);
         menuScreen = new MenuScreen(this);
 
         // TODO: start in Menu, and allow navigation
-        changeGameState(GameState.WORLD);
+        changeGameState(ScreenState.WORLD);
     }
 
-    public void changeGameState(GameState state) {
+    public void changeGameState(ScreenState state) {
         currentState = state;
         switch (currentState) {
-            case PAUSED:
-                // TODO: make a pause screen?
             case MENU:
                 setScreen(menuScreen);
                 break;
             case WORLD:
-                setScreen(gameScreen);
+                setScreen(worldScreen);
+                worldScreen.resume();
                 break;
             case BATTLE:
                 setScreen(battleScreen);
@@ -48,9 +47,16 @@ public class MacGame extends Game {
         }
     }
 
+    public ScreenState getCurrentState() {
+        return currentState;
+    }
+
     @Override
     public void dispose() {
         super.dispose();
+        worldScreen.dispose();
+        battleScreen.dispose();
+        menuScreen.dispose();
         AssetLoader.dispose();
     }
 }

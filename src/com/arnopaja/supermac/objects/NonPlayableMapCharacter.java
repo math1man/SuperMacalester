@@ -9,19 +9,49 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class NonPlayableMapCharacter extends MapCharacter {
 
-    public NonPlayableMapCharacter(Grid grid, int x, int y, Direction facing) {
-        super(grid, x, y, facing);
-    }
+    public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
+
+    private boolean canMove = true;
 
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing) {
-        super(grid, position, facing);
-    }
-
-    public NonPlayableMapCharacter(Grid grid, int x, int y, Direction facing, boolean isInteractable) {
-        super(grid, x, y, facing, isInteractable);
+        this(grid, position, facing, false);
     }
 
     public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+        this(grid, position, facing, isInteractable, true);
+    }
+
+    public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable, boolean canMove) {
         super(grid, position, facing, isInteractable);
+        this.canMove = canMove;
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        if (!isMoving() && canMove) {
+            double random = Math.random() * SECONDS_BETWEEN_RANDOM_MOVES / delta;
+            if (random < 1) {
+                int ordinal = (int) (Math.random() * 4);
+                move(Direction.values()[ordinal]);
+            }
+        }
+    }
+
+    @Override
+    public Interaction getInteraction(MainMapCharacter character) {
+        if (isInteractable()) {
+            setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
+            return Interaction.getDialogueInteraction(this, character, getDialogue());
+        }
+        return Interaction.getNullInteraction();
+    }
+
+    public boolean canMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 }

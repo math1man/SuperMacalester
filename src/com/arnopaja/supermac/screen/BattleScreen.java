@@ -14,12 +14,14 @@ public class BattleScreen implements Screen {
 
     public static final float ASPECT_RATIO = 5.0f / 3;
 
-    private MacGame game;
+    private final MacGame game;
 
-    private BattleInterface battle;
-    private BattleRenderer renderer;
+    private final BattleRenderer renderer;
+    private final BattleInputHandler inputHandler;
     private final float gameHeight;
     private final float gameWidth;
+
+    private BattleInterface battle;
 
     private float runTime;
 
@@ -31,6 +33,8 @@ public class BattleScreen implements Screen {
         gameWidth = gameHeight * ASPECT_RATIO;
 
         renderer = new BattleRenderer(battle, gameWidth, gameHeight);
+        inputHandler = new BattleInputHandler(battle, gameWidth, gameHeight,
+                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
     }
 
     @Override
@@ -47,8 +51,7 @@ public class BattleScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new BattleInputHandler(battle, gameWidth, gameHeight,
-                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight()));
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
@@ -69,6 +72,22 @@ public class BattleScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public MacGame getGame() {
+        return game;
+    }
+
+    public BattleRenderer getRenderer() {
+        return renderer;
+    }
+
+    public float getGameHeight() {
+        return gameHeight;
+    }
+
+    public float getGameWidth() {
+        return gameWidth;
     }
 
     public BattleInterface getBattle() {

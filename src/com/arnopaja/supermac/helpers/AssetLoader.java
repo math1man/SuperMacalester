@@ -7,12 +7,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Ari Weiland
  */
 public class AssetLoader {
+
+    public static final float FONT_SHADOW_OFFSET = 0.06f;
 
     private static final String MAP_NAME_LEADER = "map: ";
     private static final String MAP_WIDTH_LEADER = "width: ";
@@ -89,17 +92,31 @@ public class AssetLoader {
         }
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-        font.setScale(.25f, -.25f);
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
-        shadow.setScale(.25f, -.25f);
 
         mapHandle = Gdx.files.internal("data/maps.txt");
 
         prefs = Gdx.app.getPreferences("SuperMacalester");
     }
 
+    public static void scaleFont(float scale) {
+        font.setScale(scale, -scale);
+        shadow.setScale(scale, -scale);
+    }
+
+    public static void drawFont(SpriteBatch batcher, String string, float x, float y) {
+        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
+        AssetLoader.shadow.drawMultiLine(batcher, string, x + shadowOffset, y + shadowOffset);
+        AssetLoader.font.drawMultiLine(batcher, string, x, y);
+    }
+
+    public static void drawWrappedFont(SpriteBatch batcher, String string, float x, float y, float width) {
+        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
+        AssetLoader.shadow.drawWrapped(batcher, string, x + shadowOffset, y + shadowOffset, width);
+        AssetLoader.font.drawWrapped(batcher, string, x, y, width);
+    }
+
     public static Tile[][] parseTileArray(String name) {
-        System.out.println("Parsing tiles");
         String raw = mapHandle.readString();
         String[] lines = raw.split("\n");
         int lineIndex = 0;
@@ -111,7 +128,6 @@ public class AssetLoader {
         if (lineIndex < lines.length && w.contains(MAP_WIDTH_LEADER) && h.contains(MAP_HEIGHT_LEADER)) {
             int width = Integer.parseInt(w.substring(MAP_WIDTH_LEADER.length()).trim());
             int height = Integer.parseInt(h.substring(MAP_HEIGHT_LEADER.length()).trim());
-            System.out.println(width + " by " + height);
             if (width > 0 && height > 0) {
                 Tile[][] tileArray = new Tile[width][height];
                 for (int i=0; i<width; i++) {
