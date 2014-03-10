@@ -12,7 +12,6 @@ import java.util.Random;
 
 /**
  * This class keeps track of what is going on in a battle.
- * Analogous to the WorldInterface.
  *
  * @author Ari Weiland
  */
