@@ -5,49 +5,63 @@ height: [height]
 [grid of tile codes]
 
 The grid of tile codes must have the exact specified dimensions.
-List of current tile codes:
-b = building
-g = grass
-c = cobble
+Tile codes should start with the tile key followed by a hyphen and then the flags.
+An asterisk * means that there are multiple tiles and one should be randomly selected.
+
+List of current tile keys:
 n = null tile
+g* = grass
+c = cobble
+a = asphalt
+ah = asphalt with a horizontal road line
+av = asphalt with a vertical road line
+an = asphalt north edge *
+ae = asphalt east edge *
+as = asphalt south edge *
+aw = asphalt west edge *
+bcc = Campus Center **
+bch = Chapel **
+
+*Currently asphalt edge tiles are rotated so that east is up
+**These tiles are larger building sprites and should be filled in with null tiles
 
 List of current tile flags:
 p = pathable flag
 
-All tiles are rendered by default except null tiles which by definition cannot be rendered and do not have a sprite
+All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
 map: World
 width: 32
 height: 32
-b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	a
+a	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	a
+a	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	a
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a

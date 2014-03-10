@@ -6,15 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Ari Weiland
  */
 public class Tile implements Renderable {
-
-    public static Map<String, TextureRegion> spriteMap;
 
     private final boolean isRendered;
     private final TextureRegion sprite;
@@ -35,18 +30,23 @@ public class Tile implements Renderable {
     }
 
     public static Tile createTile(String tileCode) {
-        char[] tileFlags = tileCode.toCharArray();
-        if (tileFlags[0] == 'n') {
+        if (tileCode.startsWith("n")) {
             return createNullTile();
         }
-        TextureRegion sprite = spriteMap.get("" + tileFlags[0]);
+        String[] temp = tileCode.split("-");
+        String tileKey = temp[0];
+        TextureRegion sprite = AssetLoader.getTileSprite(tileKey);
+
         boolean isPathable = false;
-        for (int i=1; i<tileFlags.length; i++) {
-            // add all optional flags here
-            if (tileFlags[i] == 'p') {
-                isPathable = true;
+        if (temp.length > 1) {
+            for (char tileFlag : temp[1].toCharArray()) {
+                // add all optional flags here
+                if (tileFlag == 'p') {
+                    isPathable = true;
+                }
             }
         }
+
         return createTile(sprite, isPathable);
     }
 
@@ -71,12 +71,5 @@ public class Tile implements Renderable {
 
     public boolean isPathable() {
         return isPathable;
-    }
-
-    public static void initSpriteMap() {
-        spriteMap = new HashMap<String, TextureRegion>();
-        spriteMap.put("g", AssetLoader.darkgrass1);
-        spriteMap.put("c", AssetLoader.cobblestone1);
-        spriteMap.put("b", AssetLoader.buildingTile);
     }
 }
