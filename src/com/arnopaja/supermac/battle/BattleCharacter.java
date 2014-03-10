@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Nolan on 2/16/14.
  */
-public abstract class Character
+public abstract class BattleCharacter
 {
     protected ArrayList<Spell> spellsList;
     protected String name;

@@ -16,7 +16,7 @@ public class Item implements Usable
     }
 
     @Override
-    public int use(Character source, Character destination) {
+    public int use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item
         return 0;
     }

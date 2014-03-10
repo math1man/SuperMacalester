@@ -22,7 +22,7 @@ public class Spell implements Usable
     }
 
     @Override
-    public int use(Character source, Character destination) {
+    public int use(BattleCharacter source, BattleCharacter destination) {
         System.out.println(source.getName() + " casts " + getName());
         int damage = (int) getDamageModifier() * source.getSpecial();
         damage /= (destination.getSpecial() / 4);

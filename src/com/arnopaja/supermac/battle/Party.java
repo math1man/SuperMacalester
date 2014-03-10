@@ -10,21 +10,21 @@ public abstract class Party
     //Characters will be added to party in different methods, as defined by their non-abstract subclasses
     protected Party()
     {
-        characters = new ArrayList<Character>();
+        characters = new ArrayList<BattleCharacter>();
     }
-    protected ArrayList<Character> characters;
+    protected ArrayList<BattleCharacter> characters;
     public boolean isDefeated()
     {
-        for (Character character : characters) {
+        for (BattleCharacter character : characters) {
             if (!character.isFainted()) return false;
         }
         return true;
     }
-    public Character get(int index)
+    public BattleCharacter get(int index)
     {
         return characters.get(index);
     }
-    public Character getRandom()
+    public BattleCharacter getRandom()
     {
         return null;
     }

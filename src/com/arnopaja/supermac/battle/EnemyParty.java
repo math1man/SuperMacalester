@@ -27,7 +27,7 @@ public class EnemyParty extends Party
         return (byte) characters.size();
     }
     @Override
-    public Character getRandom()
+    public BattleCharacter getRandom()
     {
         return(this.get(0));
     }

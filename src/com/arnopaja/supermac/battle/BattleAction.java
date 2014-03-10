@@ -11,13 +11,13 @@ public abstract class BattleAction {
 
     public enum ActionType { ATTACK, MAGIC, ITEM, DEFEND, FLEE }
 
-    private final Character source;
-    private final Character destination;
+    private final BattleCharacter source;
+    private final BattleCharacter destination;
     private final short priority;
     private final Usable usable;
     private final ActionType type;
 
-    private BattleAction(Character source, Character destination, ActionType type, short priority, Usable usable){
+    private BattleAction(BattleCharacter source, BattleCharacter destination, ActionType type, short priority, Usable usable){
         this.source = source;
         this.destination = destination;
         this.type = type;
@@ -25,7 +25,7 @@ public abstract class BattleAction {
         this.usable = usable;
     }
 
-    public static BattleAction create(Character source, Character destination, ActionType type, Usable usable) {
+    public static BattleAction create(BattleCharacter source, BattleCharacter destination, ActionType type, Usable usable) {
         switch(type) {
             case ATTACK:
                 return createAttack(source, destination);
@@ -42,7 +42,7 @@ public abstract class BattleAction {
         }
     }
 
-    public static BattleAction createAttack(Character source, Character destination) {
+    public static BattleAction createAttack(BattleCharacter source, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null) {
             @Override
             public int runAction() {
@@ -57,7 +57,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createMagic(Character source, Character destination, Usable spell) {
+    public static BattleAction createMagic(BattleCharacter source, BattleCharacter destination, Usable spell) {
         return new BattleAction(source, destination, ActionType.MAGIC, source.getSpeed(), spell) {
             @Override
             public int runAction() {
@@ -66,7 +66,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createItem(Character source, Character destination, Usable item) {
+    public static BattleAction createItem(BattleCharacter source, BattleCharacter destination, Usable item) {
         return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), item) {
             @Override
             public int runAction() {
@@ -75,7 +75,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createDefend(Character source) {
+    public static BattleAction createDefend(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.DEFEND, Short.MAX_VALUE, null) {
             @Override
             public int runAction() {
@@ -85,7 +85,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createFlee(Character source) {
+    public static BattleAction createFlee(BattleCharacter source) {
         // TODO: what is the priority for fleeing?
         return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null) {
             @Override
@@ -98,11 +98,11 @@ public abstract class BattleAction {
 
     public abstract int runAction();
 
-    public Character getSource() {
+    public BattleCharacter getSource() {
         return source;
     }
 
-    public Character getDestination() {
+    public BattleCharacter getDestination() {
         return destination;
     }
 
