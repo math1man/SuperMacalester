@@ -34,12 +34,13 @@ public class WorldInterface {
         character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
                 "I smoke lots of weed and am trying to get a job for this summer.<d>" +
                 "Actually, I have decided I am going to work at a startup in Minneapolis this summer.",
-                new DialogueOptions("Do you like weed?\n" +
-                        "Yes\n" +
-                        "No\n" +
-                        "Maybe\n" +
-                        "Never tried it")));
-        worldGrid.putEntity(character);
+                new DialogueOptions("Do you like weed?", DialogueOptions.YES_NO_OPTIONS)));
+//                new DialogueOptions("Do you like weed?\n" +
+//                        "Yes\n" +
+//                        "No\n" +
+//                        "Maybe\n" +
+//                        "Never tried it")));
+                worldGrid.putEntity(character);
         initBuildings();
         initCharacters();
     }

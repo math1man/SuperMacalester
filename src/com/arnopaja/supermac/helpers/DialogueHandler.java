@@ -23,10 +23,10 @@ public class DialogueHandler {
 
     private final Rectangle dialogueSpace;
     private final Rectangle fontSpace;
+    private final Rectangle option0;
     private final Rectangle option1;
     private final Rectangle option2;
     private final Rectangle option3;
-    private final Rectangle option4;
 
     private DisplayMode mode = DisplayMode.NONE;
     private Dialogue dialogue;
@@ -46,26 +46,26 @@ public class DialogueHandler {
                 dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
         AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * 3));
 
+        option0 = new Rectangle(
+                fontSpace.getX(),
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
         option1 = new Rectangle(
-                fontSpace.getX(),
-                fontSpace.getY() + fontSpace.getHeight() / 3,
                 fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() * 2/3);
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
         option2 = new Rectangle(
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() / 3,
-                fontSpace.getX() + fontSpace.getWidth(),
-                fontSpace.getY() + fontSpace.getHeight() * 2/3);
-        option3 = new Rectangle(
                 fontSpace.getX(),
                 fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight());
-        option4 = new Rectangle(
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
+        option3 = new Rectangle(
                 fontSpace.getX() + fontSpace.getWidth() / 2,
                 fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getX() + fontSpace.getWidth(),
-                fontSpace.getY() + fontSpace.getHeight());
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
     }
 
     /**
@@ -85,10 +85,10 @@ public class DialogueHandler {
                         fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
             } else {
                 AssetLoader.drawFont(batcher, options.getHeader(), fontSpace.getX(), fontSpace.getY());
-                AssetLoader.drawFont(batcher, options.getOption(1), option1.x, option2.y);
+                AssetLoader.drawFont(batcher, options.getOption(0), option0.x, option0.y);
+                AssetLoader.drawFont(batcher, options.getOption(1), option1.x, option1.y);
                 AssetLoader.drawFont(batcher, options.getOption(2), option2.x, option2.y);
                 AssetLoader.drawFont(batcher, options.getOption(3), option3.x, option3.y);
-                AssetLoader.drawFont(batcher, options.getOption(4), option4.x, option4.y);
             }
         }
     }
@@ -110,16 +110,16 @@ public class DialogueHandler {
      */
     public Interaction onClick(int x, int y) {
         if (mode == DisplayMode.OPTIONS) {
-            if (option1.contains(x, y)) {
+            if (option0.contains(x, y)) {
                 mode = DisplayMode.NONE;
                 return options.getInteraction(0);
-            } else if (option2.contains(x, y)) {
+            } else if (option1.contains(x, y)) {
                 mode = DisplayMode.NONE;
                 return options.getInteraction(1);
-            } else if (option3.contains(x, y) && options.getCount() > 2) {
+            } else if (option2.contains(x, y) && options.getCount() > 2) {
                 mode = DisplayMode.NONE;
                 return options.getInteraction(2);
-            } else if (option4.contains(x, y) && options.getCount() > 3) {
+            } else if (option3.contains(x, y) && options.getCount() > 3) {
                 mode = DisplayMode.NONE;
                 return options.getInteraction(3);
             }
