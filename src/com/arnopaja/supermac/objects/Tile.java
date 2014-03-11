@@ -52,9 +52,9 @@ public class Tile implements Renderable {
 
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered() && sprite != null) {
+        if (isRendered() && getSprite() != null) {
             Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
-            batcher.draw(sprite, renderPos.x, renderPos.y);
+            batcher.draw(getSprite(), renderPos.x, renderPos.y);
             return true;
         }
         return false;
@@ -65,6 +65,7 @@ public class Tile implements Renderable {
         return isRendered;
     }
 
+    @Override
     public TextureRegion getSprite() {
         return sprite;
     }
