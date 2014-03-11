@@ -39,9 +39,12 @@ public class AssetLoader {
     public static TextureRegion[] steven, stevenSteps;
     public static Animation[] stevenStepping;
 
-    public static BitmapFont font, shadow;
-
     public static FileHandle mapHandle;
+
+    // Used for Battle
+    public static TextureRegion battleBackground;
+
+    public static BitmapFont font, shadow;
 
     public static void load() {
 

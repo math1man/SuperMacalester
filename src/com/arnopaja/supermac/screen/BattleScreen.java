@@ -16,11 +16,12 @@ public class BattleScreen implements Screen {
 
     private final MacGame game;
 
-    private final BattleInterface battle;
     private final BattleRenderer renderer;
     private final BattleInputHandler inputHandler;
     private final float gameHeight;
     private final float gameWidth;
+
+    private BattleInterface battle;
 
     private float runTime;
 
@@ -31,7 +32,6 @@ public class BattleScreen implements Screen {
         // TODO: eventually, revert aspect ratio to screenHeight/screenWidth
         gameWidth = gameHeight * ASPECT_RATIO;
 
-        battle = new BattleInterface();
         renderer = new BattleRenderer(battle, gameWidth, gameHeight);
         inputHandler = new BattleInputHandler(battle, gameWidth, gameHeight,
                 gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
@@ -78,10 +78,6 @@ public class BattleScreen implements Screen {
         return game;
     }
 
-    public BattleInterface getBattle() {
-        return battle;
-    }
-
     public BattleRenderer getRenderer() {
         return renderer;
     }
@@ -92,5 +88,13 @@ public class BattleScreen implements Screen {
 
     public float getGameWidth() {
         return gameWidth;
+    }
+
+    public BattleInterface getBattle() {
+        return battle;
+    }
+
+    public void setBattle(BattleInterface battle) {
+        this.battle = battle;
     }
 }

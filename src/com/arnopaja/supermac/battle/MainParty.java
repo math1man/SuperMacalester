@@ -27,4 +27,14 @@ public class MainParty extends Party
         for(int i=0;i<3;i++) battleParty[i] = (Hero) characters.get(i);
         return battleParty;
     }
+    public byte getSize()
+    {
+        byte c = 0;
+        Hero heroes[] = getBattleParty();
+        for(Hero hero: heroes)
+        {
+            if(hero != null) c++;
+        }
+        return c;
+    }
 }

@@ -1,57 +1,65 @@
-package com.arnopaja.supermac.battle; /**
+package com.arnopaja.supermac.battle;
+
+import java.util.ArrayList;
+
+/**
  * Created by Nolan on 2/16/14.
  */
-public abstract class Character
+public abstract class BattleCharacter
 {
+    protected ArrayList<Spell> spellsList;
     protected String name;
     protected short health,maxHealth;
     protected short mana,maxMana;
-    protected byte attack,defense,special;
+    protected byte attack,defense,special,speed;
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
     //TODO: image file definitions
 
     //GET
-    protected String getName()
+    public String getName()
     {
         return name;
     }
-    protected short getHealth()
+    public short getHealth()
     {
         return maxHealth;
     }
-    protected short getCurrentHealth()
+    public short getCurrentHealth()
     {
         return health;
     }
-    protected short getMana()
+    public short getMana()
     {
         return maxMana;
     }
-    protected short getCurrentMana()
+    public short getCurrentMana()
     {
         return mana;
     }
-    protected short getAttack()
+    public short getAttack()
     {
         return attack;
     }
-    protected short getDefense()
+    public short getDefense()
     {
         return defense;
     }
-    protected short getSpecial()
+    public short getSpecial()
     {
         return special;
     }
-    protected Armor getEquippedArmor()
+    public Armor getEquippedArmor()
     {
         return equippedArmor;
     }
-    protected Weapon getEquippedWeapon()
+    public Weapon getEquippedWeapon()
     {
         return equippedWeapon;
     }
+    public short getSpeed(){return speed;}
+    public Spell getSpell(short index){return spellsList.get(index);}
+
 
     //SET
     public void setEquippedArmor(Armor a)
@@ -100,5 +108,19 @@ public abstract class Character
     public boolean isFainted()
     {
         return (health == 0);
+    }
+
+    public short doAttack()
+    {
+        //does animation
+        //returns attack roll
+        return 0;
+    }
+    public short doSpell(short index)
+    {
+        //does animation
+        //returns damage roll
+        //decrements mana
+        return 0;
     }
 }

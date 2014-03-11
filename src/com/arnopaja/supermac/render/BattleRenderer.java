@@ -49,6 +49,8 @@ public class BattleRenderer {
         batcher.begin();
         batcher.disableBlending();
         // Render background and solid sprites
+        // TODO: eventually, set this up so it doesn't stretch depending on the resolution
+        batcher.draw(battleInterface.getBackground(), 0, 0, gameWidth, gameHeight);
         batcher.enableBlending();
         // Render foreground and transparent sprites
         batcher.end();
