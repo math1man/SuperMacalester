@@ -2,6 +2,7 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.Input.Keys;
@@ -56,7 +57,7 @@ public class WorldInputHandler implements InputProcessor {
             }
         } else if (screen.isDialogue() || screen.isPrebattle()) {
             // TODO: figure out how to select options with keyboard
-            dialogue(0, 0);
+            dialogueInput(0, 0);
         } else {
             return false;
         }
@@ -90,7 +91,7 @@ public class WorldInputHandler implements InputProcessor {
                 interact();
             }
         } else if (screen.isDialogue() || screen.isPrebattle()) {
-            dialogue(gameX, gameY);
+            dialogueInput(gameX, gameY);
         } else {
             return false;
         }
@@ -137,11 +138,12 @@ public class WorldInputHandler implements InputProcessor {
         screen.runInteraction(character.interact());
     }
 
-    public void dialogue(int gameX, int gameY) {
+    public void dialogueInput(int gameX, int gameY) {
         DialogueHandler dialogueHandler = screen.getDialogueHandler();
-        if (dialogueHandler.onClick(gameX, gameY) != DialogueHandler.ClickCode.CONTINUE) {
+        Interaction interaction = dialogueHandler.onClick(gameX, gameY);
+        if (interaction != null) {
             screen.endDialogue();
-            // TODO: handle option selection here?
+            screen.runInteraction(interaction);
         }
     }
 

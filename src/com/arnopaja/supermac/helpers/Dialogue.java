@@ -20,7 +20,7 @@ public class Dialogue {
     }
 
     public Dialogue(String rawDialogue, String rawOptions) {
-        this(rawDialogue, new DialogueOptions(rawOptions));
+        this(rawDialogue, new DialogueOptions(DialogueOptions.parseDialogueOptions(rawOptions)));
     }
 
     public Dialogue(String rawDialogue, DialogueOptions options) {

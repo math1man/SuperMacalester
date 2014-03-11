@@ -4,6 +4,7 @@ import com.arnopaja.supermac.MacGame;
 import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.helpers.WorldInputHandler;
 import com.arnopaja.supermac.objects.Interaction;
+import com.arnopaja.supermac.render.BattleInterface;
 import com.arnopaja.supermac.render.WorldInterface;
 import com.arnopaja.supermac.render.WorldRenderer;
 import com.badlogic.gdx.Gdx;
@@ -27,6 +28,8 @@ public class WorldScreen implements Screen {
 
     private float runTime;
     private GameState state;
+
+    private BattleInterface prebattle;
 
     public WorldScreen(MacGame game) {
         this.game = game;
@@ -87,17 +90,18 @@ public class WorldScreen implements Screen {
         state = GameState.DIALOGUE;
     }
 
-    public void prebattle() {
+    public void prebattle(BattleInterface prebattle) {
         System.out.println("WorldScreen - prebattle called");
         state = GameState.PREBATTLE;
+        this.prebattle = prebattle;
     }
 
     public void endDialogue() {
-        System.out.println("WorldScreen - end dialogue called");
+        System.out.println("WorldScreen - end dialogueInput called");
         if (state == GameState.DIALOGUE) {
             state = GameState.RUNNING;
         } else if (state == GameState.PREBATTLE) {
-            goToBattle();
+            goToBattle(prebattle);
         }
     }
 
@@ -115,8 +119,8 @@ public class WorldScreen implements Screen {
 
     }
 
-    public void goToBattle() {
-        game.changeGameState(MacGame.ScreenState.BATTLE);
+    public void goToBattle(BattleInterface battle) {
+        game.goToBattle(battle);
     }
 
     public boolean isRunning() {

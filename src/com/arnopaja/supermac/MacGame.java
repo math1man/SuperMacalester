@@ -1,6 +1,7 @@
 package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.render.BattleInterface;
 import com.arnopaja.supermac.screen.BattleScreen;
 import com.arnopaja.supermac.screen.MenuScreen;
 import com.arnopaja.supermac.screen.WorldScreen;
@@ -28,23 +29,25 @@ public class MacGame extends Game {
         menuScreen = new MenuScreen(this);
 
         // TODO: start in Menu, and allow navigation
-        changeGameState(ScreenState.WORLD);
+        goToWorld();
     }
 
-    public void changeGameState(ScreenState state) {
-        currentState = state;
-        switch (currentState) {
-            case MENU:
-                setScreen(menuScreen);
-                break;
-            case WORLD:
-                setScreen(worldScreen);
-                worldScreen.resume();
-                break;
-            case BATTLE:
-                setScreen(battleScreen);
-                break;
-        }
+    public void goToMenu() {
+        currentState = ScreenState.MENU;
+        setScreen(menuScreen);
+    }
+
+    public void goToWorld() {
+        currentState = ScreenState.WORLD;
+        setScreen(worldScreen);
+        // TODO: this may need to be fancier than just resume
+        worldScreen.resume();
+    }
+
+    public void goToBattle(BattleInterface battle) {
+        currentState = ScreenState.BATTLE;
+        battleScreen.setBattle(battle);
+        setScreen(battleScreen);
     }
 
     public ScreenState getCurrentState() {
