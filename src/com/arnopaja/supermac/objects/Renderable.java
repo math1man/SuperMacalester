@@ -21,8 +21,7 @@ public interface Renderable {
      * @return true if something was rendered, else false
      */
     public abstract boolean render(SpriteBatch batcher, Vector2 position, float runTime);
-
     public abstract boolean isRendered();
-
     public abstract TextureRegion getSprite();
+    public abstract TextureRegion getSprite(float runTime);
 }

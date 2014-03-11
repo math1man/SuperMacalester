@@ -26,8 +26,8 @@ public class WorldInterface {
 
     public WorldInterface() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.SOUTH);
-        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.WEST);
+        mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.WEST);
+        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.NORTH);
         character.setFacingSprites(AssetLoader.steven);
         character.setFacingAnimations(AssetLoader.stevenStepping);
         character.setInteractable(true);

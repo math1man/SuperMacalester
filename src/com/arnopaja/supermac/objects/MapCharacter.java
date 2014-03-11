@@ -23,7 +23,7 @@ public abstract class MapCharacter extends Entity {
     private Animation[] facingAnimations;
 
     protected MapCharacter() {
-        this(null, new Vector2(0, 0), Direction.SOUTH);
+        this(null, new Vector2(0, 0), Direction.WEST);
     }
 
     protected MapCharacter(Grid grid, Vector2 position, Direction facing) {
@@ -79,11 +79,11 @@ public abstract class MapCharacter extends Entity {
     }
 
     @Override
-    public TextureRegion getSprite(Direction dir, float runTime) {
+    public TextureRegion getSprite(float runTime) {
         if (isMoving()) {
-            return getAnimation(dir).getKeyFrame(runTime);
+            return getAnimation(getFacing()).getKeyFrame(runTime);
         } else {
-            return getSprite(dir);
+            return getSprite();
         }
     }
 

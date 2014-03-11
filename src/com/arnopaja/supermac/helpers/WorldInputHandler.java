@@ -38,16 +38,16 @@ public class WorldInputHandler implements InputProcessor {
         if (screen.isRunning()) {
             switch (keycode) {
                 case Keys.UP:
-                    north();
-                    break;
-                case Keys.RIGHT:
                     east();
                     break;
-                case Keys.DOWN:
+                case Keys.RIGHT:
                     south();
                     break;
-                case Keys.LEFT:
+                case Keys.DOWN:
                     west();
+                    break;
+                case Keys.LEFT:
+                    north();
                     break;
                 case Keys.SPACE:
                     interact();
@@ -80,13 +80,13 @@ public class WorldInputHandler implements InputProcessor {
         int gameY = scaleY(screenY);
         if (screen.isRunning()) {
             if (gameX < SIDE_BUTTON_WIDTH) {
-                west();
-            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-                east();
-            } else if (gameY < SIDE_BUTTON_WIDTH) {
                 north();
-            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
                 south();
+            } else if (gameY < SIDE_BUTTON_WIDTH) {
+                east();
+            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+                west();
             } else {
                 interact();
             }

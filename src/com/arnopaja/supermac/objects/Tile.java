@@ -70,6 +70,11 @@ public class Tile implements Renderable {
         return sprite;
     }
 
+    @Override
+    public TextureRegion getSprite(float runTime) {
+        return getSprite();
+    }
+
     public boolean isPathable() {
         return isPathable;
     }

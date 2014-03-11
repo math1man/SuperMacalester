@@ -20,6 +20,8 @@ public abstract class Entity implements Renderable {
 
     // Ordered N-E-S-W (same as Direction order)
     private TextureRegion[] facingSprites;
+    private TextureRegion currentSprite;
+
     private Dialogue dialogue;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
@@ -84,22 +86,14 @@ public abstract class Entity implements Renderable {
     }
 
     public TextureRegion getSprite() {
-        return getSprite(facing);
-    }
-
-    public TextureRegion getSprite(Direction dir) {
         if ((facingSprites != null) && (facingSprites.length == 4)) {
-            return facingSprites[dir.ordinal()];
+            return facingSprites[facing.ordinal()];
         }
         return null;
     }
 
     public TextureRegion getSprite(float runTime) {
-        return getSprite(facing, runTime);
-    }
-
-    public TextureRegion getSprite(Direction dir, float runTime) {
-        return getSprite(dir);
+        return getSprite();
     }
 
     public void setFacingSprites(TextureRegion[] facingSprites) {
