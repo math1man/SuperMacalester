@@ -5,6 +5,7 @@ import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Dialogue;
+import com.arnopaja.supermac.helpers.DialogueOptions;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.objects.NonPlayableMapCharacter;
@@ -30,15 +31,14 @@ public class WorldInterface {
         character.setFacingSprites(AssetLoader.steven);
         character.setFacingAnimations(AssetLoader.stevenStepping);
         character.setInteractable(true);
-        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. I smoke lots of weed and am " +
-                "trying to get a job for this summer.<d>" +
+        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
+                "I smoke lots of weed and am trying to get a job for this summer.<d>" +
                 "Actually, I have decided I am going to work at a startup in Minneapolis this summer.",
-                "<options:Do you like weed?>\n" +
-                "<option:Yes>\n" +
-                "<option:No>\n" +
-                "<option:Maybe>\n" +
-                "<option:Never tried it>\n" +
-                "</options>"));
+                new DialogueOptions("Do you like weed?\n" +
+                        "Yes\n" +
+                        "No\n" +
+                        "Maybe\n" +
+                        "Never tried it")));
         worldGrid.putEntity(character);
         initBuildings();
         initCharacters();

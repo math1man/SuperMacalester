@@ -19,10 +19,6 @@ public class Dialogue {
         this(rawDialogue, (DialogueOptions) null);
     }
 
-    public Dialogue(String rawDialogue, String rawOptions) {
-        this(rawDialogue, new DialogueOptions(DialogueOptions.parseDialogueOptions(rawOptions)));
-    }
-
     public Dialogue(String rawDialogue, DialogueOptions options) {
         this.rawDialogue = rawDialogue;
         // Separate dialogue windows are split by a <d> sequence in the dialogue

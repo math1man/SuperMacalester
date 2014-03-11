@@ -3,20 +3,24 @@ package com.arnopaja.supermac.helpers;
 import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.render.BattleInterface;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author Ari Weiland
  */
 public class DialogueOptions {
 
+    public static final String[] YES_NO_OPTIONS = {"Yes", "No"};
+
     private final String header;
-    private final List<String> options;
-    private final List<Interaction> interactions;
+    private final String[] options;
+    private final Interaction[] interactions;
     private final int count;
+
+    public DialogueOptions(String rawOptions) {
+        this(parseDialogueOptions(rawOptions));
+    }
 
     /**
      * Constructs a DialogueOptions with the specified header and options,
@@ -25,7 +29,7 @@ public class DialogueOptions {
      * @param header the option header
      * @param options the list of options to select from
      */
-    public DialogueOptions(String header, List<String> options) {
+    public DialogueOptions(String header, String[] options) {
         this(header, options, getNoInteractions());
     }
 
@@ -42,14 +46,14 @@ public class DialogueOptions {
      * @param options the list of options to select from
      * @param interactions the list of interactions resulting from each option
      */
-    public DialogueOptions(String header, List<String> options, List<Interaction> interactions) {
+    public DialogueOptions(String header, String[] options, Interaction[] interactions) {
         this.header = header;
         this.options = options;
         this.interactions = interactions;
-        this.count = options.size();
+        this.count = options.length;
     }
 
-    public DialogueOptions(PreDialogueOptions preOptions, List<Interaction> interactions) {
+    public DialogueOptions(PreDialogueOptions preOptions, Interaction[] interactions) {
         this(preOptions.getHeader(), preOptions.getOptions(), interactions);
     }
 
@@ -61,7 +65,7 @@ public class DialogueOptions {
      * @param battle the battle to initiate
      */
     public DialogueOptions(String header, BattleInterface battle) {
-        this(header, getYesNoOptions(), getYesNoBattleInteractions(battle));
+        this(header, YES_NO_OPTIONS, getYesNoBattleInteractions(battle));
     }
 
     /**
@@ -72,7 +76,7 @@ public class DialogueOptions {
      * @param dialogues the list of dialogues to continue with for each option
      * @return the consturcted DialogueOptions
      */
-    public static DialogueOptions getContinuedDialogueOptions(String header, List<String> options,
+    public static DialogueOptions getContinuedDialogueOptions(String header, String[] options,
                                                               List<Dialogue> dialogues) {
         return new DialogueOptions(header, options, getContinuedDialogueInteractions(dialogues));
     }
@@ -83,15 +87,15 @@ public class DialogueOptions {
 
     public String getOption(int option) {
         if (option < count && option >= 0) {
-            return options.get(option);
+            return options[option];
         } else {
             return "";
         }
     }
 
-    public Interaction getInteraction(int number) {
-        if (number < count && number >= 0) {
-            return interactions.get(number);
+    public Interaction getInteraction(int interaction) {
+        if (interaction < count) {
+            return interactions[interaction];
         } else {
             return Interaction.getNullInteraction();
         }
@@ -103,42 +107,18 @@ public class DialogueOptions {
 
     public static PreDialogueOptions parseDialogueOptions(String rawOptions) {
         String[] lines = rawOptions.split("\n");
-        int beginOptionIndex = 0, endOptionIndex = lines.length;
-        String header = "";
-        List<String> options = new ArrayList<String>(5);
-        for (int i=0; i<lines.length; i++) {
-            String line = lines[i].trim();
-            if (Pattern.matches("<options:.*>", line)) {
-                header = line.substring(9, line.length() - 1);
-                beginOptionIndex = i;
-            } else if (line.contains("</options>")) {
-                endOptionIndex = i;
-            } else if (i > beginOptionIndex && i < endOptionIndex && Pattern.matches("<option:.*>", line)) {
-                String option = line.substring(8, line.length() - 1);
-                options.add(option);
-            }
-        }
+        String header = lines[0];
+        String[] options = Arrays.copyOfRange(lines, 1, lines.length);
         return new PreDialogueOptions(header, options);
-    }
-
-    /**
-     * Returns a List of Strings containing Yes and No in that order
-     * @return
-     */
-    public static List<String> getYesNoOptions() {
-        List<String> options = new ArrayList<String>(2);
-        options.set(0, "Yes");
-        options.set(1, "No");
-        return options;
     }
 
     /**
      * Returns a list of null interactions
      * @return
      */
-    public static List<Interaction> getNoInteractions() {
-        List<Interaction> interactions = new ArrayList<Interaction>(4);
-        Collections.fill(interactions, Interaction.getNullInteraction());
+    public static Interaction[] getNoInteractions() {
+        Interaction[] interactions = new Interaction[4];
+        Arrays.fill(interactions, Interaction.getNullInteraction());
         return interactions;
     }
 
@@ -149,23 +129,23 @@ public class DialogueOptions {
      * @param battle the battle to initiate
      * @return
      */
-    public static List<Interaction> getYesNoBattleInteractions(BattleInterface battle) {
-        List<Interaction> interactions = new ArrayList<Interaction>(4);
-        Collections.fill(interactions, Interaction.getNullInteraction());
-        interactions.set(0, Interaction.getBattleInteraction(battle));
+    public static Interaction[] getYesNoBattleInteractions(BattleInterface battle) {
+        Interaction[] interactions = new Interaction[4];
+        Arrays.fill(interactions, Interaction.getNullInteraction());
+        interactions[0] = Interaction.getBattleInteraction(battle);
         return interactions;
     }
 
     /**
-     * Converts a list of dialogues into a list of dialogue interactions
+     * Converts a list of dialogues into an array of dialogue interactions
      *
      * @param dialogues the list of dialogues to be converted
      * @return
      */
-    public static List<Interaction> getContinuedDialogueInteractions(List<Dialogue> dialogues) {
-        List<Interaction> interactions = new ArrayList<Interaction>(dialogues.size());
+    public static Interaction[] getContinuedDialogueInteractions(List<Dialogue> dialogues) {
+        Interaction[] interactions = new Interaction[dialogues.size()];
         for (int i=0; i<dialogues.size(); i++) {
-            interactions.set(i, Interaction.getDialogueInteraction(dialogues.get(i)));
+            interactions[i] = Interaction.getDialogueInteraction(dialogues.get(i));
         }
         return interactions;
     }
@@ -173,14 +153,14 @@ public class DialogueOptions {
     // Intermediary class used to hold both a header and a list of options
     public static class PreDialogueOptions {
         private final String header;
-        private final List<String> options;
+        private final String[] options;
 
-        public PreDialogueOptions(String header, List<String> options) {
+        public PreDialogueOptions(String header, String[] options) {
             this.header = header;
             this.options = options;
         }
 
-        public List<String> getOptions() {
+        public String[] getOptions() {
             return options;
         }
 
