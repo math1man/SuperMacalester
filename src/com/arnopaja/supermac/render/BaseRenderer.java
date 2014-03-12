@@ -40,24 +40,4 @@ public abstract class BaseRenderer<T extends BaseController> {
     public void setController(T controller) {
         this.controller = controller;
     }
-
-    public DialogueHandler getDialogueHandler() {
-        return dialogueHandler;
-    }
-
-    public ShapeRenderer getShapeRenderer() {
-        return shapeRenderer;
-    }
-
-    public SpriteBatch getBatcher() {
-        return batcher;
-    }
-
-    public float getGameWidth() {
-        return gameWidth;
-    }
-
-    public float getGameHeight() {
-        return gameHeight;
-    }
 }

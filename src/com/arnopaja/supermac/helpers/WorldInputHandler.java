@@ -2,21 +2,20 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
-import com.arnopaja.supermac.screen.WorldScreen;
+import com.arnopaja.supermac.screen.GameScreen;
 import com.badlogic.gdx.Input.Keys;
 
 /**
  * @author Ari Weiland
  */
-public class WorldInputHandler extends BaseInputHandler<WorldScreen> {
+public class WorldInputHandler extends BaseInputHandler {
 
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
-    private MainMapCharacter character;
+    private final MainMapCharacter character;
 
-    public WorldInputHandler(WorldScreen screen, float gameWidth, float gameHeight,
+    public WorldInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
         super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
         this.character = this.screen.getWorld().getMainCharacter();
@@ -79,7 +78,7 @@ public class WorldInputHandler extends BaseInputHandler<WorldScreen> {
             } else {
                 interact();
             }
-        } else if (screen.isDialogue() || screen.isPrebattle()) {
+        } else if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {
             return false;
@@ -108,31 +107,30 @@ public class WorldInputHandler extends BaseInputHandler<WorldScreen> {
     }
 
     public void north() {
-        character.move(Direction.NORTH);
+        if (!character.move(Direction.NORTH)) {
+            interact();
+        }
     }
 
     public void east() {
-        character.move(Direction.EAST);
+        if (!character.move(Direction.EAST)) {
+            interact();
+        }
     }
 
     public void south() {
-        character.move(Direction.SOUTH);
+        if (!character.move(Direction.SOUTH)) {
+            interact();
+        }
     }
 
     public void west() {
-        character.move(Direction.WEST);
+        if (!character.move(Direction.WEST)) {
+            interact();
+        }
     }
 
     public void interact() {
         screen.runInteraction(character.interact());
-    }
-
-    public void dialogueInput(int gameX, int gameY) {
-        DialogueHandler dialogueHandler = screen.getDialogueHandler();
-        Interaction interaction = dialogueHandler.onClick(gameX, gameY);
-        if (interaction != null) {
-            screen.endDialogue();
-            screen.runInteraction(interaction);
-        }
     }
 }

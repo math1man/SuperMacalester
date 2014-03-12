@@ -29,7 +29,7 @@ public class MapNPC extends MapCharacter {
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (!isMoving() && canMove) {
+        if (!isMoving() && canMove()) {
             double random = Math.random() * SECONDS_BETWEEN_RANDOM_MOVES / delta;
             if (random < 1) {
                 int ordinal = (int) (Math.random() * 4);
@@ -42,7 +42,7 @@ public class MapNPC extends MapCharacter {
     public Interaction getInteraction(MainMapCharacter character) {
         if (isInteractable()) {
             setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
-            return Interaction.getDialogueInteraction(this, character, getDialogue());
+            return Interaction.getDialogueInteraction(getDialogue());
         }
         return Interaction.getNullInteraction();
     }
