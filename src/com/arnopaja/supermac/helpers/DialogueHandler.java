@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.objects.Interaction;
+import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;

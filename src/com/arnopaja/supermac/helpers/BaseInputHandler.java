@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.objects.Interaction;
-import com.arnopaja.supermac.screen.GameScreen;
+import com.arnopaja.supermac.GameScreen;
 import com.badlogic.gdx.InputProcessor;
 
 /**

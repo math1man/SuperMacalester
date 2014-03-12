@@ -1,6 +1,7 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.screen.GameScreen;
+import com.arnopaja.supermac.helpers.BaseInputHandler;
+import com.arnopaja.supermac.GameScreen;
 
 /**
  * @author Ari Weiland

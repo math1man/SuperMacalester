@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.objects.Interaction;
-import com.arnopaja.supermac.render.BattleController;
+import com.arnopaja.supermac.battle.BattleController;
 
 import java.util.Arrays;
 import java.util.List;

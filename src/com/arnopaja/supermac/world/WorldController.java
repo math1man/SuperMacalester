@@ -1,14 +1,15 @@
-package com.arnopaja.supermac.render;
+package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.grid.Building;
-import com.arnopaja.supermac.grid.Direction;
-import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.world.grid.Building;
+import com.arnopaja.supermac.world.grid.Direction;
+import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.DialogueOptions;
-import com.arnopaja.supermac.objects.Entity;
-import com.arnopaja.supermac.objects.MainMapCharacter;
-import com.arnopaja.supermac.objects.MapNPC;
+import com.arnopaja.supermac.world.objects.Entity;
+import com.arnopaja.supermac.world.objects.MainMapCharacter;
+import com.arnopaja.supermac.world.objects.MapNPC;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;

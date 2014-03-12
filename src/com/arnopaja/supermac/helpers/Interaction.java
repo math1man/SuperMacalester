@@ -1,9 +1,7 @@
-package com.arnopaja.supermac.objects;
+package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.helpers.Dialogue;
-import com.arnopaja.supermac.helpers.DialogueHandler;
-import com.arnopaja.supermac.render.BattleController;
-import com.arnopaja.supermac.screen.GameScreen;
+import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.GameScreen;
 
 /**
  * This class dictates how an interaction proceeds via its run method

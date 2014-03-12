@@ -1,12 +1,13 @@
-package com.arnopaja.supermac.screen;
+package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.MacGame;
-import com.arnopaja.supermac.helpers.BaseInputHandler;
-import com.arnopaja.supermac.helpers.BattleInputHandler;
-import com.arnopaja.supermac.helpers.DialogueHandler;
-import com.arnopaja.supermac.helpers.WorldInputHandler;
-import com.arnopaja.supermac.objects.Interaction;
-import com.arnopaja.supermac.render.*;
+import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.battle.BattleRenderer;
+import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.battle.BattleInputHandler;
+import com.arnopaja.supermac.world.WorldInputHandler;
+import com.arnopaja.supermac.world.WorldController;
+import com.arnopaja.supermac.world.WorldRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 

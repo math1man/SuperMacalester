@@ -1,9 +1,10 @@
-package com.arnopaja.supermac.render;
+package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.grid.Grid;
-import com.arnopaja.supermac.grid.RenderGrid;
+import com.arnopaja.supermac.helpers.BaseRenderer;
+import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.arnopaja.supermac.helpers.DialogueHandler;
-import com.arnopaja.supermac.objects.MainMapCharacter;
+import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;

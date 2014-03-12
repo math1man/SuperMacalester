@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.grid;
+package com.arnopaja.supermac.world.grid;
 
 import com.badlogic.gdx.math.Vector2;
 

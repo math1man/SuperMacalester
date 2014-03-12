@@ -1,7 +1,7 @@
-package com.arnopaja.supermac.grid;
+package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.objects.Entity;
-import com.arnopaja.supermac.objects.Tile;
+import com.arnopaja.supermac.world.objects.Entity;
+import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 

@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.render;
+package com.arnopaja.supermac.helpers;
 
 /**
  * @author Ari Weiland
