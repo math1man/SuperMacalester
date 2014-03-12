@@ -81,26 +81,22 @@ public abstract class MapCharacter extends Entity {
     @Override
     public TextureRegion getSprite(float runTime) {
         if (isMoving()) {
-            return getAnimation(getFacing()).getKeyFrame(runTime);
+            return getAnimation().getKeyFrame(runTime);
         } else {
             return getSprite();
         }
     }
 
     public Animation getAnimation() {
-        return getAnimation(getFacing());
-    }
-
-    public Animation getAnimation(Direction dir) {
         if (facingAnimations != null && facingAnimations.length == 4) {
-            return facingAnimations[dir.ordinal()];
+            return facingAnimations[getFacing().ordinal()];
         }
         return null;
     }
 
     public void setFacingAnimations(Animation[] facingAnimations) {
         if (facingAnimations.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing animations: North, East, South, West");
+            throw new IllegalArgumentException("Must have 4 facing animations: East, South, West, North");
         }
         this.facingAnimations = facingAnimations;
     }

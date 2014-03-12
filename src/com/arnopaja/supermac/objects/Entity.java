@@ -85,6 +85,7 @@ public abstract class Entity implements Renderable {
         this.isInteractable = isInteractable;
     }
 
+    @Override
     public TextureRegion getSprite() {
         if ((facingSprites != null) && (facingSprites.length == 4)) {
             return facingSprites[facing.ordinal()];
@@ -92,13 +93,14 @@ public abstract class Entity implements Renderable {
         return null;
     }
 
+    @Override
     public TextureRegion getSprite(float runTime) {
         return getSprite();
     }
 
     public void setFacingSprites(TextureRegion[] facingSprites) {
         if (facingSprites.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing sprites: North, East, South, West");
+            throw new IllegalArgumentException("Must have 4 facing sprites: East, South, West, North");
         }
         this.facingSprites = facingSprites;
     }

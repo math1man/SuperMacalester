@@ -8,7 +8,7 @@ import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.DialogueOptions;
 import com.arnopaja.supermac.objects.Entity;
 import com.arnopaja.supermac.objects.MainMapCharacter;
-import com.arnopaja.supermac.objects.NonPlayableMapCharacter;
+import com.arnopaja.supermac.objects.MapNPC;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -27,20 +27,6 @@ public class WorldInterface {
     public WorldInterface() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
         mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.WEST);
-        NonPlayableMapCharacter character = new NonPlayableMapCharacter(worldGrid, new Vector2(5, 5), Direction.NORTH);
-        character.setFacingSprites(AssetLoader.steven);
-        character.setFacingAnimations(AssetLoader.stevenStepping);
-        character.setInteractable(true);
-        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
-                "I smoke lots of weed and am trying to get a job for this summer.<d>" +
-                "Actually, I have decided I am going to work at a startup in Minneapolis this summer.",
-                new DialogueOptions("Do you like weed?", DialogueOptions.YES_NO_OPTIONS)));
-//                new DialogueOptions("Do you like weed?\n" +
-//                        "Yes\n" +
-//                        "No\n" +
-//                        "Maybe\n" +
-//                        "Never tried it")));
-                worldGrid.putEntity(character);
         initBuildings();
         initCharacters();
     }
@@ -52,6 +38,15 @@ public class WorldInterface {
 
     private void initCharacters() {
         // TODO: add characters here?
+        MapNPC character = new MapNPC(worldGrid, new Vector2(5, 5), Direction.NORTH);
+        character.setFacingSprites(AssetLoader.steven);
+        character.setFacingAnimations(AssetLoader.stevenStepping);
+        character.setInteractable(true);
+        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
+                "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
+                "I spent this past summer here working for Libby Shoop designing a website.",
+                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS)));
+        worldGrid.putEntity(character);
     }
 
     public void update(float delta) {
