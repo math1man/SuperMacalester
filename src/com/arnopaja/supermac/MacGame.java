@@ -11,7 +11,7 @@ public class MacGame extends Game {
     @Override
     public void create() {
         AssetLoader.load();
-        setScreen(new GameScreen(this, GAME_HEIGHT * ASPECT_RATIO, GAME_HEIGHT));
+        setScreen(new GameScreen(GAME_HEIGHT * ASPECT_RATIO, GAME_HEIGHT));
     }
 
     @Override

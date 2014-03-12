@@ -1,12 +1,11 @@
 package com.arnopaja.supermac;
 
-import com.arnopaja.supermac.MacGame;
 import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
-import com.arnopaja.supermac.battle.BattleInputHandler;
-import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldController;
+import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,7 +18,6 @@ public class GameScreen implements Screen {
     public enum GameMode { WORLD, BATTLE, MENU }
     public enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    private final MacGame game;
     private final DialogueHandler dialogueHandler;
     private final float gameWidth, gameHeight;
 
@@ -40,8 +38,7 @@ public class GameScreen implements Screen {
     private float runTime;
     private boolean isPreBattle = false;
 
-    public GameScreen(MacGame game, float gameWidth, float gameHeight) {
-        this.game = game;
+    public GameScreen(float gameWidth, float gameHeight) {
         this.dialogueHandler = new DialogueHandler(gameWidth, gameHeight);
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
@@ -56,12 +53,12 @@ public class GameScreen implements Screen {
         battleInputHandler = new BattleInputHandler(this, gameWidth, gameHeight,
                 gameWidth/ Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
 
-        goToMode(GameMode.WORLD);
+        changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
         runTime = 0;
     }
 
-    public void goToMode(GameMode mode) {
+    public void changeMode(GameMode mode) {
         this.mode = mode;
         switch (this.mode) {
             case WORLD:
@@ -154,7 +151,7 @@ public class GameScreen implements Screen {
         isPreBattle = false;
         this.battle = battle;
         // TODO: update this
-        goToMode(GameMode.BATTLE);
+        changeMode(GameMode.BATTLE);
     }
 
     public boolean isWorld() {
@@ -183,10 +180,6 @@ public class GameScreen implements Screen {
 
     public boolean isPrebattle() {
         return isDialogue() && isPreBattle;
-    }
-
-    public MacGame getGame() {
-        return game;
     }
 
     public DialogueHandler getDialogueHandler() {
