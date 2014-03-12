@@ -4,8 +4,8 @@ import com.arnopaja.supermac.helpers.BaseController;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Comparator;
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * This class keeps track of what is going on in a battle.
@@ -16,15 +16,17 @@ public class BattleController implements BaseController {
 
     private static Random battleRandomGen = new Random();
 
-    private boolean isBossFight;
-    private MainParty mainParty;
-    private EnemyParty enemyParty;
-    private PriorityQueue<BattleAction> perTurnQueue;
+    private final boolean isBossFight;
+    private final MainParty mainParty;
+    private final EnemyParty enemyParty;
+    private final PriorityBlockingQueue<BattleAction> perTurnQueue;
 
     private TextureRegion background;
 
-    public BattleController(MainParty heroes, EnemyParty enemies, byte location) {
-        perTurnQueue = new PriorityQueue<BattleAction>(heroes.getSize() + enemies.getSize(),
+    public BattleController(MainParty mainParty, EnemyParty enemyParty, byte location) {
+        this.mainParty = mainParty;
+        this.enemyParty = enemyParty;
+        perTurnQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
@@ -32,7 +34,7 @@ public class BattleController implements BaseController {
                     }
                 }
         );
-        isBossFight = enemies.containsBoss();
+        isBossFight = enemyParty.containsBoss();
     }
 
     @Override
@@ -42,11 +44,12 @@ public class BattleController implements BaseController {
         } else if (enemyParty.isDefeated()) {
             // run code for if the enemy party is defeated
         } else {
-            setTurnActions();
-            // TODO: this looping should be handled by the update loop
-            for(BattleAction ba : perTurnQueue) {
-                // TODO: handle dialogue
-                ba.runAction();
+            BattleAction action = perTurnQueue.poll();
+            if (action == null) {
+                setTurnActions();
+            } else {
+                // TODO: handle dialogue?
+                action.runAction();
             }
         }
     }
@@ -68,27 +71,15 @@ public class BattleController implements BaseController {
         return isBossFight;
     }
 
-    public void setBossFight(boolean isBossFight) {
-        this.isBossFight = isBossFight;
-    }
-
     public MainParty getMainParty() {
         return mainParty;
-    }
-
-    public void setMainParty(MainParty mainParty) {
-        this.mainParty = mainParty;
     }
 
     public EnemyParty getEnemyParty() {
         return enemyParty;
     }
 
-    public void setEnemyParty(EnemyParty enemyParty) {
-        this.enemyParty = enemyParty;
-    }
-
-    public PriorityQueue<BattleAction> getPerTurnQueue() {
+    public PriorityBlockingQueue<BattleAction> getPerTurnQueue() {
         return perTurnQueue;
     }
 

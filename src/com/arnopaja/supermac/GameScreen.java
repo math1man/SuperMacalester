@@ -150,7 +150,6 @@ public class GameScreen implements Screen {
     public void goToBattle(BattleController battle) {
         isPreBattle = false;
         this.battle = battle;
-        // TODO: update this
         changeMode(GameMode.BATTLE);
     }
 
