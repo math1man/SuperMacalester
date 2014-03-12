@@ -23,12 +23,7 @@ public abstract class BaseInputHandler<T extends GameScreen> implements InputPro
     }
 
     public void dialogueInput(int gameX, int gameY) {
-        DialogueHandler dialogueHandler = screen.getDialogueHandler();
-        Interaction interaction = dialogueHandler.onClick(gameX, gameY);
-        if (interaction != null) {
-            screen.endDialogue();
-            screen.runInteraction(interaction);
-        }
+        screen.getDialogueHandler().onClick(gameX, gameY).run(screen);
     }
 
     protected int scaleX(int screenX) {

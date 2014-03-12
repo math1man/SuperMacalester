@@ -2,7 +2,6 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.GameScreen;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +31,7 @@ public class Door extends Entity {
     public Interaction getInteraction(final MainMapCharacter character) {
         return new Interaction() {
             @Override
-            public void run(GameScreen screen, DialogueHandler dialogueHandler) {
+            public void run(GameScreen screen) {
                 character.changeGrid(building.getFloorByNumber(floor), landingSpace);
             }
         };

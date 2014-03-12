@@ -1,16 +1,17 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.battle.BattleController;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Ari Weiland
  */
-public class DialogueOptions {
+public class DialogueOptions implements DialogueDisplayable {
 
     public static final String[] YES_NO_OPTIONS = {"Yes", "No"};
+    public static final String[] BATTLE_OPTIONS = {"Attack", "Defend", "Spell", "Item"};
 
     private final String header;
     private final String[] options;
@@ -29,7 +30,7 @@ public class DialogueOptions {
      * @param options the list of options to select from
      */
     public DialogueOptions(String header, String[] options) {
-        this(header, options, getNoInteractions());
+        this(header, options, getNullInteractions());
     }
 
     public DialogueOptions(PreDialogueOptions preOptions) {
@@ -64,20 +65,7 @@ public class DialogueOptions {
      * @param battle the battle to initiate
      */
     public DialogueOptions(String header, BattleController battle) {
-        this(header, YES_NO_OPTIONS, getYesNoBattleInteractions(battle));
-    }
-
-    /**
-     * Constructs a DialogueOptions with the specified header, options, and
-     * dialogue interactions defined by the specified list of dialogues.
-     * @param header the option header
-     * @param options the list of options to select from
-     * @param dialogues the list of dialogues to continue with for each option
-     * @return the consturcted DialogueOptions
-     */
-    public static DialogueOptions getContinuedDialogueOptions(String header, String[] options,
-                                                              List<Dialogue> dialogues) {
-        return new DialogueOptions(header, options, getContinuedDialogueInteractions(dialogues));
+        this(header, YES_NO_OPTIONS, yesNoGoToBattle(battle));
     }
 
     public String getHeader() {
@@ -96,12 +84,95 @@ public class DialogueOptions {
         if (interaction < count) {
             return interactions[interaction];
         } else {
-            return Interaction.getNullInteraction();
+            return Interaction.getNull();
         }
     }
 
     public int getCount() {
         return count;
+    }
+
+    /**
+     * Returns a 4-array of null interactions
+     * @return
+     */
+    public static Interaction[] getNullInteractions() {
+        Interaction[] interactions = new Interaction[4];
+        Arrays.fill(interactions, Interaction.getNull());
+        return interactions;
+    }
+
+    /**
+     * Converts an array of dialogues into an array of dialogue interactions
+     *
+     * @param dialogues the list of dialogues to be converted
+     * @return
+     */
+    public static Interaction[] convertDialogues(DialogueDisplayable[] dialogues) {
+        Interaction[] interactions = new Interaction[dialogues.length];
+        for (int i=0; i<dialogues.length; i++) {
+            interactions[i] = Interaction.dialogue(dialogues[i]);
+        }
+        return interactions;
+    }
+
+    /**
+     * Returns an 4-array of interactions where each one initiates the specified dialogue
+     *
+     * @param dialogue the dialogue to initiate
+     * @return
+     */
+    public static Interaction[] convertDialogues(DialogueDisplayable dialogue) {
+        DialogueDisplayable[] dialogues = new DialogueDisplayable[4];
+        Arrays.fill(dialogues, dialogue);
+        return convertDialogues(dialogues);
+    }
+
+    /**
+     * Returns a list of interactions with the first being a go to battle interaction,
+     * and the rest being null interactions
+     *
+     * @param battle the battle to initiate
+     * @return
+     */
+    public static Interaction[] yesNoGoToBattle(BattleController battle) {
+        Interaction[] interactions = new Interaction[4];
+        Arrays.fill(interactions, Interaction.getNull());
+        interactions[0] = Interaction.goToBattle(battle);
+        return interactions;
+    }
+
+    /**
+     * Converts an array of battle actions into an array of battle interactions
+     *
+     * @param actions the battle actions to be converted
+     * @return
+     */
+    public static Interaction[] convertActions(BattleAction[] actions) {
+        Interaction[] interactions = new Interaction[actions.length];
+        for (int i=0; i<actions.length; i++) {
+            interactions[i] = Interaction.battle(actions[i]);
+        }
+        return interactions;
+    }
+
+    public static Interaction[] convert(Object... objects) {
+        Interaction[] interactions = new Interaction[objects.length];
+        for (int i=0; i<objects.length; i++) {
+            Object object = objects[i];
+            if (object == null) {
+                interactions[i] = Interaction.getNull();
+            } else if (object instanceof DialogueDisplayable) {
+                interactions[i] = Interaction.dialogue((DialogueDisplayable) object);
+            } else if (object instanceof BattleController) {
+                interactions[i] = Interaction.goToBattle((BattleController) object);
+            } else if (object instanceof BattleAction) {
+                interactions[i] = Interaction.battle((BattleAction) object);
+            } else {
+                interactions[i] = Interaction.getNull();
+            }
+        }
+        return interactions;
     }
 
     public static PreDialogueOptions parseDialogueOptions(String rawOptions) {
@@ -111,43 +182,6 @@ public class DialogueOptions {
         return new PreDialogueOptions(header, options);
     }
 
-    /**
-     * Returns a list of null interactions
-     * @return
-     */
-    public static Interaction[] getNoInteractions() {
-        Interaction[] interactions = new Interaction[4];
-        Arrays.fill(interactions, Interaction.getNullInteraction());
-        return interactions;
-    }
-
-    /**
-     * Returns a list of interactions with the first being a battle interaction,
-     * and the rest being null interactions
-     *
-     * @param battle the battle to initiate
-     * @return
-     */
-    public static Interaction[] getYesNoBattleInteractions(BattleController battle) {
-        Interaction[] interactions = new Interaction[4];
-        Arrays.fill(interactions, Interaction.getNullInteraction());
-        interactions[0] = Interaction.getBattleInteraction(battle);
-        return interactions;
-    }
-
-    /**
-     * Converts a list of dialogues into an array of dialogue interactions
-     *
-     * @param dialogues the list of dialogues to be converted
-     * @return
-     */
-    public static Interaction[] getContinuedDialogueInteractions(List<Dialogue> dialogues) {
-        Interaction[] interactions = new Interaction[dialogues.size()];
-        for (int i=0; i<dialogues.size(); i++) {
-            interactions[i] = Interaction.getDialogueInteraction(dialogues.get(i));
-        }
-        return interactions;
-    }
 
     // Intermediary class used to hold both a header and a list of options
     public static class PreDialogueOptions {

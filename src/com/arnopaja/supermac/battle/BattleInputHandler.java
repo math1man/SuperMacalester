@@ -34,9 +34,14 @@ public class BattleInputHandler extends BaseInputHandler {
         // convert screen coordinates to game coordinates
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
+        if (screen.isDialogue()) {
+            dialogueInput(gameX, gameY);
+        } else {
+            return false;
+        }
 
         // return true if something happens
-        return false;
+        return true;
     }
 
     @Override

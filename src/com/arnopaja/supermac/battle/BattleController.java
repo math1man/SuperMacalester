@@ -1,14 +1,15 @@
 package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Comparator;
+import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
- * This class keeps track of what is going on in a battle.
+ * This class controls what is going on in a battle.
  *
  * @author Ari Weiland
  */
@@ -16,17 +17,31 @@ public class BattleController implements BaseController {
 
     private static Random battleRandomGen = new Random();
 
-    private final boolean isBossFight;
+    private final DialogueHandler dialogueHandler;
+
     private final MainParty mainParty;
     private final EnemyParty enemyParty;
-    private final PriorityBlockingQueue<BattleAction> perTurnQueue;
+    private final boolean isBossFight;
+    private final TextureRegion background;
+    private final Queue<BattleAction> actionQueue;
 
-    private TextureRegion background;
 
-    public BattleController(MainParty mainParty, EnemyParty enemyParty, byte location) {
+    public BattleController(MainParty mainParty, EnemyParty enemyParty) {
+        this(null, mainParty, enemyParty);
+    }
+
+    public BattleController(DialogueHandler dialogueHandler, BattleController battle) {
+        this(dialogueHandler, battle.getMainParty(), battle.getEnemyParty());
+    }
+
+    public BattleController(DialogueHandler dialogueHandler, MainParty mainParty, EnemyParty enemyParty) {
+        this.dialogueHandler = dialogueHandler;
         this.mainParty = mainParty;
         this.enemyParty = enemyParty;
-        perTurnQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
+        this.isBossFight = enemyParty.containsBoss();
+        // TODO: set up background
+        this.background = null;
+        actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
@@ -34,7 +49,6 @@ public class BattleController implements BaseController {
                     }
                 }
         );
-        isBossFight = enemyParty.containsBoss();
     }
 
     @Override
@@ -44,31 +58,45 @@ public class BattleController implements BaseController {
         } else if (enemyParty.isDefeated()) {
             // run code for if the enemy party is defeated
         } else {
-            BattleAction action = perTurnQueue.poll();
+            BattleAction action = actionQueue.poll();
             if (action == null) {
                 setTurnActions();
             } else {
-                // TODO: handle dialogue?
-                action.runAction();
+                dialogueHandler.displayDialogue(action.runAction());
             }
         }
     }
 
     public void setTurnActions() {
-        Hero heroes[] = mainParty.getBattleParty();
-        // TODO: allow character actions to be set
-        for(Hero hero : heroes) {
-            perTurnQueue.add(BattleAction.createAttack(hero,
-                    enemyParty.get(battleRandomGen.nextInt(enemyParty.getSize()))));
-        }
-        for(int i=0; i<enemyParty.getSize(); i++){
-            perTurnQueue.add(BattleAction.createAttack(enemyParty.get(i),
+        BattleCharacter heroes[] = mainParty.getBattleParty();
+        BattleCharacter enemies[] = enemyParty.getBattleParty();
+        int count = enemies.length;
+        String[] enemyNames = new String[count];
+        for (int i=0; i<count; i++) {
+            enemyNames[i] = enemies[i].getName();
+            // TODO: make the enemies more intelligent?
+            addAction(BattleAction.createAttack(enemies[i],
                     heroes[battleRandomGen.nextInt(3)]));
+        }
+        for (BattleCharacter hero : heroes) {
+            BattleAction[] attacks = new BattleAction[count];
+            for (int i=0; i<count; i++) {
+                attacks[i] = BattleAction.createAttack(hero, enemies[i]);
+            }
+            DialogueOptions options = new DialogueOptions("What should " + hero.getName() + " do?",
+                    DialogueOptions.BATTLE_OPTIONS,
+                    DialogueOptions.convert(
+                            new DialogueOptions("Who do you want to attack?", enemyNames,
+                                    DialogueOptions.convertActions(attacks)),
+                            BattleAction.createDefend(hero),
+                            new DialogueOptions("What spell do you want to use?", null, null /*TODO: this line*/),
+                            new DialogueOptions("Which item do you want to use?", null, null /*TODO: this line*/)));
+            dialogueHandler.displayDialogue(options);
         }
     }
 
-    public boolean isBossFight() {
-        return isBossFight;
+    public void addAction(BattleAction action) {
+        actionQueue.add(action);
     }
 
     public MainParty getMainParty() {
@@ -79,15 +107,11 @@ public class BattleController implements BaseController {
         return enemyParty;
     }
 
-    public PriorityBlockingQueue<BattleAction> getPerTurnQueue() {
-        return perTurnQueue;
+    public boolean isBossFight() {
+        return isBossFight;
     }
 
     public TextureRegion getBackground() {
         return background;
-    }
-
-    public void setBackground(TextureRegion background) {
-        this.background = background;
     }
 }

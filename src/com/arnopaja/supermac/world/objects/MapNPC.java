@@ -43,9 +43,9 @@ public class MapNPC extends MapCharacter {
     public Interaction getInteraction(MainMapCharacter character) {
         if (isInteractable()) {
             setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
-            return Interaction.getDialogueInteraction(getDialogue());
+            return Interaction.dialogue(getDialogue());
         }
-        return Interaction.getNullInteraction();
+        return Interaction.getNull();
     }
 
     public boolean canMove() {

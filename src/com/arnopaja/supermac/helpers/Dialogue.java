@@ -1,55 +1,43 @@
 package com.arnopaja.supermac.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Ari Weiland
  */
-public class Dialogue {
+public class Dialogue implements DialogueDisplayable {
 
     private final String rawDialogue;
-    private final List<String> parsedDialogue;
-    private int position;
-
+    private final String[] dialogue;
     private final boolean hasOptions;
     private final DialogueOptions options;
 
+    private int position;
+    private String currentDialogue;
+    private boolean hasNext;
+
     public Dialogue(String rawDialogue) {
-        this(rawDialogue, (DialogueOptions) null);
+        this(rawDialogue, null);
     }
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
         this.rawDialogue = rawDialogue;
-        // Separate dialogue windows are split by a <d> sequence in the dialogue
-        String[] lines = rawDialogue.split("<d>");
-        parsedDialogue = new ArrayList<String>(lines.length);
-        for (String line : lines) {
-            line = line.trim();
-            if (!line.isEmpty()) {
-                parsedDialogue.add(line);
-            }
-        }
-        hasOptions = (options != null);
+        this.dialogue = rawDialogue.split("<d>");
+        this.hasOptions = (options != null);
         this.options = options;
+        reset();
     }
 
-    public void reset() {
-        position = 0;
-    }
-
-    public String next() {
-        if (position < parsedDialogue.size()) {
-            String line = parsedDialogue.get(position);
-            position++;
-            return line;
-        } else {
-            return null;
-        }
+    public void next() {
+        position++;
+        currentDialogue = dialogue[position];
+        hasNext = dialogue.length > 1 + position;
     }
 
     public String getRawDialogue() {
         return rawDialogue;
+    }
+
+    public String[] getDialogue() {
+        return dialogue;
     }
 
     public boolean hasOptions() {
@@ -58,6 +46,20 @@ public class Dialogue {
 
     public DialogueOptions getOptions() {
         return options;
+    }
+
+    public String getCurrentDialogue() {
+        return currentDialogue.trim();
+    }
+
+    public boolean hasNext() {
+        return hasNext;
+    }
+
+    public void reset() {
+        position = 0;
+        currentDialogue = dialogue[0];
+        hasNext = dialogue.length > 1;
     }
 
     @Override

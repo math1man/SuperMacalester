@@ -7,20 +7,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.EnumMap;
+
 /**
  * @author Ari Weiland
  */
 public abstract class MapCharacter extends Entity {
 
     public static final float MOVE_SPEED = 3f; // grid spaces per second
-    public static final float ALIGN_THRESHOLD = 0.001f;
 
     private boolean isMoving = false;
-    private Vector2 movingOffset = new Vector2();
-    private Vector2 deltaMove;
+    private Vector2 renderOffset = new Vector2();
+    private Vector2 renderOffsetDelta;
 
-    // Ordered N-E-S-W (same as Direction order)
-    private Animation[] facingAnimations;
+    private EnumMap<Direction, Animation> facingAnimations = new EnumMap<Direction, Animation>(Direction.class);
 
     protected MapCharacter() {
         this(null, new Vector2(0, 0), Direction.WEST);
@@ -36,16 +36,16 @@ public abstract class MapCharacter extends Entity {
 
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        return super.render(batcher, position.cpy().add(movingOffset), runTime);
+        return super.render(batcher, position.cpy().add(renderOffset), runTime);
     }
 
     @Override
     public void update(float delta) {
         if (isMoving) {
-            movingOffset.add(deltaMove.cpy().scl(delta));
-            if (movingOffset.hasSameDirection(deltaMove)) {
+            renderOffset.add(renderOffsetDelta.cpy().scl(delta));
+            if (renderOffset.hasSameDirection(renderOffsetDelta)) {
                 isMoving = false;
-                movingOffset = new Vector2();
+                renderOffset = new Vector2();
             }
         }
     }
@@ -55,8 +55,8 @@ public abstract class MapCharacter extends Entity {
             setFacing(dir);
             if (getGrid().moveEntity(this, dir)) {
                 isMoving = true;
-                movingOffset = Direction.getAdjacent(dir).scl(-1);
-                deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
+                renderOffset = Direction.getAdjacent(dir).scl(-1);
+                renderOffsetDelta = renderOffset.cpy().scl(-MOVE_SPEED);
                 return true;
             }
         }
@@ -74,8 +74,8 @@ public abstract class MapCharacter extends Entity {
         return isMoving;
     }
 
-    public Vector2 getMovingOffset() {
-        return movingOffset;
+    public Vector2 getRenderOffset() {
+        return renderOffset;
     }
 
     @Override
@@ -88,16 +88,10 @@ public abstract class MapCharacter extends Entity {
     }
 
     public Animation getAnimation() {
-        if (facingAnimations != null && facingAnimations.length == 4) {
-            return facingAnimations[getFacing().ordinal()];
-        }
-        return null;
+        return facingAnimations.get(getFacing());
     }
 
-    public void setFacingAnimations(Animation[] facingAnimations) {
-        if (facingAnimations.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing animations: East, South, West, North");
-        }
+    public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {
         this.facingAnimations = facingAnimations;
     }
 

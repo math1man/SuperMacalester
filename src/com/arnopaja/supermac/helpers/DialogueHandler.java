@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * Class used to render a dialogue box.
  *
@@ -27,9 +30,10 @@ public class DialogueHandler {
     private final Rectangle option2;
     private final Rectangle option3;
 
+    private final Queue<DialogueDisplayable> dialogueQueue = new ConcurrentLinkedQueue<DialogueDisplayable>();
+
     private DisplayMode mode = DisplayMode.NONE;
     private Dialogue dialogue;
-    private String dialogueLine;
     private DialogueOptions options;
 
     public DialogueHandler(float gameWidth, float gameHeight) {
@@ -73,14 +77,14 @@ public class DialogueHandler {
      * @param batcher the SpriteBatch to render with
      */
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batcher) {
-        if (mode != DisplayMode.NONE) {
+        if (!isNone()) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(1, 1, 1, 0.8f);
             shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
                     dialogueSpace.getWidth(), dialogueSpace.getHeight());
             shapeRenderer.end();
-            if (mode == DisplayMode.DIALOGUE) {
-                AssetLoader.drawWrappedFont(batcher, dialogueLine,
+            if (isDialogue()) {
+                AssetLoader.drawWrappedFont(batcher, dialogue.getCurrentDialogue(),
                         fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
             } else {
                 AssetLoader.drawFont(batcher, options.getHeader(), fontSpace.getX(), fontSpace.getY());
@@ -92,11 +96,11 @@ public class DialogueHandler {
         }
     }
 
-    public void displayDialogue(Dialogue dialogue) {
-        setDialogue(dialogue);
-        mode = DisplayMode.DIALOGUE;
-        dialogue.reset();
-        getNextLine();
+    public void displayDialogue(DialogueDisplayable displayableDialogue) {
+        dialogueQueue.add(displayableDialogue);
+        if (isNone()) {
+            pollQueue();
+        }
     }
 
     /**
@@ -108,51 +112,66 @@ public class DialogueHandler {
      * @return null if the dialogue is to continue, or the resulting interaction
      */
     public Interaction onClick(int x, int y) {
-        if (mode == DisplayMode.OPTIONS) {
+        if (isDialogue()) {
+            if (dialogue.hasNext()) {
+                dialogue.next();
+            } else if (dialogue.hasOptions()) {
+                displayDialogue(dialogue.getOptions());
+            } else {
+                pollQueue();
+            }
+        } else if (isOptions()) {
             if (option0.contains(x, y)) {
-                mode = DisplayMode.NONE;
+                pollQueue();
                 return options.getInteraction(0);
             } else if (option1.contains(x, y)) {
-                mode = DisplayMode.NONE;
+                pollQueue();
                 return options.getInteraction(1);
             } else if (option2.contains(x, y) && options.getCount() > 2) {
-                mode = DisplayMode.NONE;
+                pollQueue();
                 return options.getInteraction(2);
             } else if (option3.contains(x, y) && options.getCount() > 3) {
-                mode = DisplayMode.NONE;
+                pollQueue();
                 return options.getInteraction(3);
             }
-        } else {
-            getNextLine();
         }
-        return (mode == DisplayMode.NONE ? Interaction.getNullInteraction() : null);
+        return isNone() ? Interaction.clearDialogue() : Interaction.getNull();
     }
 
-    public void getNextLine() {
-        dialogueLine = dialogue.next();
-        if (dialogueLine == null) {
-            if (dialogue.hasOptions() && (mode != DisplayMode.OPTIONS)) {
-                mode = DisplayMode.OPTIONS;
-                options = dialogue.getOptions();
+    private void pollQueue() {
+        if (dialogueQueue.isEmpty()) {
+            clear();
+        } else {
+            DialogueDisplayable displayableDialogue = dialogueQueue.poll();
+            if (displayableDialogue instanceof Dialogue) {
+                this.dialogue = ((Dialogue) displayableDialogue);
+                mode = DisplayMode.DIALOGUE;
             } else {
-                clear();
+                dialogue = null;
+                mode = DisplayMode.OPTIONS;
+                this.options = ((DialogueOptions) displayableDialogue);
             }
         }
     }
 
     public void clear() {
         mode = DisplayMode.NONE;
+        dialogueQueue.clear();
     }
 
-    public DisplayMode getMode() {
-        return mode;
+    public boolean isNone() {
+        return mode == DisplayMode.NONE;
+    }
+
+    public boolean isDialogue() {
+        return mode == DisplayMode.DIALOGUE;
+    }
+
+    public boolean isOptions() {
+        return mode == DisplayMode.OPTIONS;
     }
 
     public Dialogue getDialogue() {
         return dialogue;
-    }
-
-    public void setDialogue(Dialogue dialogue) {
-        this.dialogue = dialogue;
     }
 }

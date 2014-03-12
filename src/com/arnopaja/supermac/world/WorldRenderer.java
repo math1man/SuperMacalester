@@ -61,7 +61,7 @@ public class WorldRenderer extends BaseRenderer<WorldController> {
         batcher.disableBlending();
 
         // Render the base tiles
-        Vector2 offset = renderOffset.cpy().add(mainCharacter.getMovingOffset()).scl(-1);
+        Vector2 offset = renderOffset.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
         renderGrid.renderTiles(batcher, offset, runTime);
 
         batcher.enableBlending();

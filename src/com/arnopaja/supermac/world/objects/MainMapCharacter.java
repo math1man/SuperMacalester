@@ -22,13 +22,13 @@ public class MainMapCharacter extends MapCharacter {
         if (entity != null) {
             return entity.getInteraction(this);
         }
-        return Interaction.getNullInteraction();
+        return Interaction.getNull();
     }
 
     @Override
     public Interaction getInteraction(MainMapCharacter character) {
         // insert masturbation joke here
-        return Interaction.getNullInteraction();
+        return Interaction.getNull();
     }
 
     @Override

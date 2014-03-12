@@ -44,7 +44,7 @@ public class WorldInputHandler extends BaseInputHandler {
                 default:
                     return false;
             }
-        } else if (screen.isDialogue() || screen.isPrebattle()) {
+        } else if (screen.isDialogue()) {
             // TODO: figure out how to select options with keyboard
             dialogueInput(0, 0);
         } else {
@@ -107,31 +107,31 @@ public class WorldInputHandler extends BaseInputHandler {
         return false;
     }
 
-    public void north() {
+    private void north() {
         if (!character.move(Direction.NORTH)) {
             interact();
         }
     }
 
-    public void east() {
+    private void east() {
         if (!character.move(Direction.EAST)) {
             interact();
         }
     }
 
-    public void south() {
+    private void south() {
         if (!character.move(Direction.SOUTH)) {
             interact();
         }
     }
 
-    public void west() {
+    private void west() {
         if (!character.move(Direction.WEST)) {
             interact();
         }
     }
 
-    public void interact() {
-        screen.runInteraction(character.interact());
+    private void interact() {
+        character.interact().run(screen);
     }
 }

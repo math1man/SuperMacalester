@@ -111,7 +111,7 @@ public class GameScreen implements Screen {
     public void preBattle(BattleController battle) {
         dialogue();
         isPreBattle = true;
-        this.battle = battle;
+        setBattle(battle);
     }
 
     @Override
@@ -143,13 +143,9 @@ public class GameScreen implements Screen {
 
     }
 
-    public void runInteraction(Interaction interaction) {
-        interaction.run(this, dialogueHandler);
-    }
-
     public void goToBattle(BattleController battle) {
         isPreBattle = false;
-        this.battle = battle;
+        setBattle(battle);
         changeMode(GameMode.BATTLE);
     }
 
@@ -210,7 +206,7 @@ public class GameScreen implements Screen {
     }
 
     public void setBattle(BattleController battle) {
-        this.battle = battle;
+        this.battle = new BattleController(dialogueHandler, battle);
     }
 
     public BattleRenderer getBattleRenderer() {

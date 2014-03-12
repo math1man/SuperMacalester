@@ -1,12 +1,14 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.world.grid.Direction;
+import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.EnumMap;
 
 /**
  * @author Ari Weiland
@@ -14,14 +16,13 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Entity implements Renderable {
 
     private final boolean isRendered;
+
     private Grid grid;
     private Vector2 position;
     private Direction facing;
     private boolean isInteractable;
 
-    // Ordered N-E-S-W (same as Direction order)
-    private TextureRegion[] facingSprites;
-    private TextureRegion currentSprite;
+    private EnumMap<Direction, TextureRegion> facingSprites = new EnumMap<Direction, TextureRegion>(Direction.class);
 
     private Dialogue dialogue;
 
@@ -88,8 +89,8 @@ public abstract class Entity implements Renderable {
 
     @Override
     public TextureRegion getSprite() {
-        if ((facingSprites != null) && (facingSprites.length == 4)) {
-            return facingSprites[facing.ordinal()];
+        if ((facingSprites != null)) {
+            return facingSprites.get(facing);
         }
         return null;
     }
@@ -99,10 +100,7 @@ public abstract class Entity implements Renderable {
         return getSprite();
     }
 
-    public void setFacingSprites(TextureRegion[] facingSprites) {
-        if (facingSprites.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing sprites: East, South, West, North");
-        }
+    public void setFacingSprites(EnumMap<Direction, TextureRegion> facingSprites) {
         this.facingSprites = facingSprites;
     }
 

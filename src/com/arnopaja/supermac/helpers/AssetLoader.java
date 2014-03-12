@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -36,8 +38,8 @@ public class AssetLoader {
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
     public static TextureRegion asphaltEdgeN, asphaltEdgeE, asphaltEdgeS, asphaltEdgeW;
     public static TextureRegion campusCenter, chapel;
-    public static TextureRegion[] steven, stevenSteps;
-    public static Animation[] stevenStepping;
+    public static EnumMap<Direction, TextureRegion> steven;
+    public static EnumMap<Direction, Animation> stevenStepping;
 
     public static FileHandle mapHandle;
 
@@ -86,41 +88,7 @@ public class AssetLoader {
 
         initTileMap(); // Must be called after all tiles are loaded
 
-        steven = new TextureRegion[4];
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
-        steven[0] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
-        steven[1] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
-        steven[2] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_left.png"));
-        steven[3] = new TextureRegion(texture, 0, 0, 32, 32);
-
-        stevenSteps = new TextureRegion[8];
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
-        stevenSteps[0] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
-        stevenSteps[1] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
-        stevenSteps[2] = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenSteps[3] = new TextureRegion(stevenSteps[2]);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
-        stevenSteps[4] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
-        stevenSteps[5] = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_left_step.png"));
-        stevenSteps[6] = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenSteps[7] = new TextureRegion(stevenSteps[6]);
-
-        stevenStepping = new Animation[4];
-        for (int i=0; i<4; i++) {
-            steven[i].flip(false, true);
-            stevenSteps[2*i].flip(false, true);
-            stevenSteps[2*i + 1].flip(false, true);
-            TextureRegion[] tempSteps = {steven[i], stevenSteps[2*i], steven[i], stevenSteps[2*i+1]};
-            stevenStepping[i] = new Animation(0.1f, tempSteps);
-            stevenStepping[i].setPlayMode(Animation.LOOP);
-        }
+        loadCharacters(0, 0);
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
@@ -145,6 +113,67 @@ public class AssetLoader {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
         AssetLoader.shadow.drawWrapped(batcher, string, x + shadowOffset, y + shadowOffset, width);
         AssetLoader.font.drawWrapped(batcher, string, x, y, width);
+    }
+
+    public static void loadCharacters(int x, int y) {
+        steven = new EnumMap<Direction, TextureRegion>(Direction.class);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
+        TextureRegion temp = new TextureRegion(texture, x, y, 32, 32);
+        steven.put(Direction.EAST, temp);
+
+        texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
+        steven.put(Direction.SOUTH, temp);
+
+        // North is just South flipped horizontally
+        temp = new TextureRegion(temp);
+        temp.flip(true, false);
+        steven.put(Direction.NORTH, temp);
+
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
+        steven.put(Direction.WEST, temp);
+
+        EnumMap<Direction, TextureRegion> stevenStepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, TextureRegion> stevenStepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
+        stevenStepRight.put(Direction.EAST, temp);
+        // Left step is just right step flipped horizontally
+        temp = new TextureRegion(temp);
+        temp.flip(true, false);
+        stevenStepLeft.put(Direction.EAST, temp);
+
+        texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
+        stevenStepRight.put(Direction.SOUTH, temp);
+        stevenStepLeft.put(Direction.SOUTH, temp);
+
+        // North is just South flipped horizontally
+        temp = new TextureRegion(temp);
+        temp.flip(true, false);
+        stevenStepRight.put(Direction.NORTH, temp);
+        stevenStepLeft.put(Direction.NORTH, temp);
+
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
+        stevenStepRight.put(Direction.WEST, temp);
+        // Left step is just right step flipped horizontally
+        temp = new TextureRegion(temp);
+        temp.flip(true, false);
+        stevenStepLeft.put(Direction.WEST, temp);
+
+        stevenStepping = new EnumMap<Direction, Animation>(Direction.class);
+        for (Direction dir : Direction.values()) {
+            steven.get(dir).flip(false, true);
+            stevenStepRight.get(dir).flip(false, true);
+            stevenStepLeft.get(dir).flip(false, true);
+            TextureRegion[] array = {steven.get(dir), stevenStepRight.get(dir),
+                    steven.get(dir), stevenStepLeft.get(dir)};
+            Animation animation = new Animation(0.1f, array);
+            animation.setPlayMode(Animation.LOOP);
+            stevenStepping.put(dir, animation);
+        }
     }
 
     public static Tile[][] parseTileArray(String name) {
