@@ -2,6 +2,7 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.helpers.Dialogue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,25 +10,22 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public abstract class Entity extends Renderable {
+public abstract class Entity implements Renderable {
 
-    public static final float MOVE_SPEED = 3f; // grid spaces per second
-    public static final float ALIGN_THRESHOLD = 0.001f;
+    private final boolean isRendered;
+    private Grid grid;
+    private Vector2 position;
+    private Direction facing;
+    private boolean isInteractable;
 
     // Ordered N-E-S-W (same as Direction order)
-    protected TextureRegion[] facingSprites;
+    private TextureRegion[] facingSprites;
+    private TextureRegion currentSprite;
 
-    protected Grid grid;
-    protected Vector2 position;
-    protected Direction facing;
-    protected boolean isInteractable;
-
-    protected boolean isMoving = false;
-    protected Vector2 movingOffset = new Vector2(0, 0);
-    protected Vector2 deltaMove;
+    private Dialogue dialogue;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
-        super(isRendered);
+        this.isRendered = isRendered;
         this.grid = grid;
         this.position = position;
         this.facing = facing;
@@ -36,49 +34,24 @@ public abstract class Entity extends Renderable {
         this.grid.putEntity(this);
     }
 
-    public void update(float delta) {
-        if (isMoving) {
-            movingOffset.add(deltaMove.cpy().scl(delta));
-        }
-        if (movingOffset.isZero(ALIGN_THRESHOLD)) {
-            isMoving = false;
-            movingOffset = new Vector2();
-        }
-    }
-
     @Override
     public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered && getSprite(runTime) != null) {
-            Vector2 renderPos = position.cpy().add(movingOffset).scl(Grid.GRID_PIXEL_DIMENSION);
+        if (isRendered() && getSprite(runTime) != null) {
+            Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
             batcher.draw(getSprite(runTime), renderPos.x, renderPos.y);
             return true;
         }
         return false;
     }
 
-    public boolean move(Direction dir) {
-        if (!isMoving) {
-            facing = dir;
-            if (grid.moveEntity(this, dir)) {
-                isMoving = true;
-                movingOffset = Direction.getAdjacent(dir).scl(-1);
-                deltaMove = movingOffset.cpy().scl(-MOVE_SPEED);
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public boolean isRendered() {
+        return isRendered;
     }
 
-    public void changeGrid(Grid newGrid, int x, int y) {
-        changeGrid(newGrid, new Vector2(x, y));
-    }
+    public abstract void update(float delta);
 
-    public void changeGrid(Grid newGrid, Vector2 position) {
-        grid.removeEntity(position);
-        grid = newGrid;
-        // TODO: what about collisions?
-        newGrid.putEntity(this, position);
-    }
+    public abstract Interaction getInteraction(MainMapCharacter character);
 
     public Grid getGrid() {
         return grid;
@@ -92,20 +65,12 @@ public abstract class Entity extends Renderable {
         return facing;
     }
 
-    public void setPosition (int x, int y) {
-        setPosition(new Vector2(x, y));
+    public void setGrid(Grid grid) {
+        this.grid = grid;
     }
 
     public void setPosition(Vector2 position) {
         this.position = position;
-    }
-
-    public boolean isMoving() {
-        return isMoving;
-    }
-
-    public Vector2 getMovingOffset() {
-        return movingOffset;
     }
 
     public void setFacing(Direction facing) {
@@ -120,34 +85,32 @@ public abstract class Entity extends Renderable {
         this.isInteractable = isInteractable;
     }
 
+    @Override
     public TextureRegion getSprite() {
-        return getSprite(facing);
-    }
-
-    public TextureRegion getSprite(Direction dir) {
-        return getSprite(dir, 0);
-    }
-
-    public TextureRegion getSprite(float runTime) {
-        return getSprite(facing, runTime);
-    }
-
-    public TextureRegion getSprite(Direction dir, float runTime) {
         if ((facingSprites != null) && (facingSprites.length == 4)) {
-            return facingSprites[dir.ordinal()];
+            return facingSprites[facing.ordinal()];
         }
         return null;
     }
 
+    @Override
+    public TextureRegion getSprite(float runTime) {
+        return getSprite();
+    }
+
     public void setFacingSprites(TextureRegion[] facingSprites) {
         if (facingSprites.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing sprites: North, East, South, West");
+            throw new IllegalArgumentException("Must have 4 facing sprites: East, South, West, North");
         }
         this.facingSprites = facingSprites;
     }
 
-    public void setSprite(TextureRegion sprite, Direction dir) {
-        facingSprites[dir.ordinal()] = sprite;
+    public Dialogue getDialogue() {
+        return dialogue;
+    }
+
+    public void setDialogue(Dialogue dialogue) {
+        this.dialogue = dialogue;
     }
 
     @Override
@@ -157,7 +120,7 @@ public abstract class Entity extends Renderable {
                 ", position=" + position +
                 ", facing=" + facing +
                 ", isInteractable=" + isInteractable +
-                ", isRendered=" + isRendered +
+                ", isRendered=" + isRendered() +
                 '}';
     }
 }
