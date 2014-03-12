@@ -20,6 +20,8 @@ public abstract class Entity implements Renderable {
 
     // Ordered N-E-S-W (same as Direction order)
     private TextureRegion[] facingSprites;
+    private TextureRegion currentSprite;
+
     private Dialogue dialogue;
 
     protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
@@ -83,28 +85,22 @@ public abstract class Entity implements Renderable {
         this.isInteractable = isInteractable;
     }
 
+    @Override
     public TextureRegion getSprite() {
-        return getSprite(facing);
-    }
-
-    public TextureRegion getSprite(Direction dir) {
         if ((facingSprites != null) && (facingSprites.length == 4)) {
-            return facingSprites[dir.ordinal()];
+            return facingSprites[facing.ordinal()];
         }
         return null;
     }
 
+    @Override
     public TextureRegion getSprite(float runTime) {
-        return getSprite(facing, runTime);
-    }
-
-    public TextureRegion getSprite(Direction dir, float runTime) {
-        return getSprite(dir);
+        return getSprite();
     }
 
     public void setFacingSprites(TextureRegion[] facingSprites) {
         if (facingSprites.length != 4) {
-            throw new IllegalArgumentException("Must have 4 facing sprites: North, East, South, West");
+            throw new IllegalArgumentException("Must have 4 facing sprites: East, South, West, North");
         }
         this.facingSprites = facingSprites;
     }

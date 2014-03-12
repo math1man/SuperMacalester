@@ -1,21 +1,20 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.objects.Interaction;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Static class used to render a dialogue box on the WorldScreen
+ * Class used to render a dialogue box.
  *
  * A dialogue can conclude with a set of options (they must be at the end of the dialogue).
- * A dialogue can also or alternatively conclude by going to a battle.
+ * These options are defined by the DialogueOptions class.
  *
  * @author Ari Weiland
  */
 public class DialogueHandler {
-
-    public enum ClickCode { CONTINUE, DONE, OPTION_1, OPTION_2, OPTION_3, OPTION_4 }
 
     public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.3f;
     public static final float DIALOGUE_BOX_RENDER_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
@@ -24,10 +23,10 @@ public class DialogueHandler {
 
     private final Rectangle dialogueSpace;
     private final Rectangle fontSpace;
+    private final Rectangle option0;
     private final Rectangle option1;
     private final Rectangle option2;
     private final Rectangle option3;
-    private final Rectangle option4;
 
     private DisplayMode mode = DisplayMode.NONE;
     private Dialogue dialogue;
@@ -47,26 +46,26 @@ public class DialogueHandler {
                 dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
         AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * 3));
 
+        option0 = new Rectangle(
+                fontSpace.getX(),
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
         option1 = new Rectangle(
-                fontSpace.getX(),
-                fontSpace.getY() + fontSpace.getHeight() / 3,
                 fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() * 2/3);
+                fontSpace.getY() + fontSpace.getHeight() / 3,
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
         option2 = new Rectangle(
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() / 3,
-                fontSpace.getX() + fontSpace.getWidth(),
-                fontSpace.getY() + fontSpace.getHeight() * 2/3);
-        option3 = new Rectangle(
                 fontSpace.getX(),
                 fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight());
-        option4 = new Rectangle(
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
+        option3 = new Rectangle(
                 fontSpace.getX() + fontSpace.getWidth() / 2,
                 fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getX() + fontSpace.getWidth(),
-                fontSpace.getY() + fontSpace.getHeight());
+                fontSpace.getWidth() / 2,
+                fontSpace.getHeight() / 3);
     }
 
     /**
@@ -86,10 +85,10 @@ public class DialogueHandler {
                         fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
             } else {
                 AssetLoader.drawFont(batcher, options.getHeader(), fontSpace.getX(), fontSpace.getY());
-                AssetLoader.drawFont(batcher, options.get(1), option1.x, option2.y);
-                AssetLoader.drawFont(batcher, options.get(2), option2.x, option2.y);
-                AssetLoader.drawFont(batcher, options.get(3), option3.x, option3.y);
-                AssetLoader.drawFont(batcher, options.get(4), option4.x, option4.y);
+                AssetLoader.drawFont(batcher, options.getOption(0), option0.x, option0.y);
+                AssetLoader.drawFont(batcher, options.getOption(1), option1.x, option1.y);
+                AssetLoader.drawFont(batcher, options.getOption(2), option2.x, option2.y);
+                AssetLoader.drawFont(batcher, options.getOption(3), option3.x, option3.y);
             }
         }
     }
@@ -103,35 +102,31 @@ public class DialogueHandler {
 
     /**
      * Moves on to the next bit of dialogue.
-     * Returns true when no more dialogue exists
+     * Returns null if the dialogue is to continue, or the resulting interaction.
      *
      * @param x the x coordinate of the click
      * @param y the y coordinate of the click
-     * @return true only when no more dialogue exists
+     * @return null if the dialogue is to continue, or the resulting interaction
      */
-    public ClickCode onClick(int x, int y) {
+    public Interaction onClick(int x, int y) {
         if (mode == DisplayMode.OPTIONS) {
-            if (option1.contains(x, y)) {
-                // first option
+            if (option0.contains(x, y)) {
                 mode = DisplayMode.NONE;
-                return ClickCode.OPTION_1;
-            } else if (option2.contains(x, y)) {
-                // second option
+                return options.getInteraction(0);
+            } else if (option1.contains(x, y)) {
                 mode = DisplayMode.NONE;
-                return ClickCode.OPTION_2;
-            } else if (option3.contains(x, y) && options.getCount() > 2) {
-                // third option
+                return options.getInteraction(1);
+            } else if (option2.contains(x, y) && options.getCount() > 2) {
                 mode = DisplayMode.NONE;
-                return ClickCode.OPTION_3;
-            } else if (option4.contains(x, y) && options.getCount() > 3) {
-                // fourth option
+                return options.getInteraction(2);
+            } else if (option3.contains(x, y) && options.getCount() > 3) {
                 mode = DisplayMode.NONE;
-                return ClickCode.OPTION_4;
+                return options.getInteraction(3);
             }
         } else {
             getNextLine();
         }
-        return (mode == DisplayMode.NONE ? ClickCode.DONE : ClickCode.CONTINUE);
+        return (mode == DisplayMode.NONE ? Interaction.getNullInteraction() : null);
     }
 
     public void getNextLine() {

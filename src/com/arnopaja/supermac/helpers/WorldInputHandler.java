@@ -2,34 +2,24 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.grid.Direction;
 import com.arnopaja.supermac.grid.Grid;
+import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 
 /**
  * @author Ari Weiland
  */
-public class WorldInputHandler implements InputProcessor {
+public class WorldInputHandler extends BaseInputHandler<WorldScreen> {
 
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
-    private WorldScreen screen;
     private MainMapCharacter character;
-
-    private float gameWidth;
-    private float gameHeight;
-    private float scaleFactorX;
-    private float scaleFactorY;
 
     public WorldInputHandler(WorldScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
-        this.screen = screen;
-        this.character = screen.getWorld().getMainCharacter();
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-        this.scaleFactorX = scaleFactorX;
-        this.scaleFactorY = scaleFactorY;
+        super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
+        this.character = this.screen.getWorld().getMainCharacter();
     }
 
     @Override
@@ -37,16 +27,16 @@ public class WorldInputHandler implements InputProcessor {
         if (screen.isRunning()) {
             switch (keycode) {
                 case Keys.UP:
-                    north();
-                    break;
-                case Keys.RIGHT:
                     east();
                     break;
-                case Keys.DOWN:
+                case Keys.RIGHT:
                     south();
                     break;
-                case Keys.LEFT:
+                case Keys.DOWN:
                     west();
+                    break;
+                case Keys.LEFT:
+                    north();
                     break;
                 case Keys.SPACE:
                     interact();
@@ -56,7 +46,7 @@ public class WorldInputHandler implements InputProcessor {
             }
         } else if (screen.isDialogue() || screen.isPrebattle()) {
             // TODO: figure out how to select options with keyboard
-            dialogue(0, 0);
+            dialogueInput(0, 0);
         } else {
             return false;
         }
@@ -79,18 +69,18 @@ public class WorldInputHandler implements InputProcessor {
         int gameY = scaleY(screenY);
         if (screen.isRunning()) {
             if (gameX < SIDE_BUTTON_WIDTH) {
-                west();
-            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-                east();
-            } else if (gameY < SIDE_BUTTON_WIDTH) {
                 north();
-            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
                 south();
+            } else if (gameY < SIDE_BUTTON_WIDTH) {
+                east();
+            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+                west();
             } else {
                 interact();
             }
         } else if (screen.isDialogue() || screen.isPrebattle()) {
-            dialogue(gameX, gameY);
+            dialogueInput(gameX, gameY);
         } else {
             return false;
         }
@@ -137,19 +127,12 @@ public class WorldInputHandler implements InputProcessor {
         screen.runInteraction(character.interact());
     }
 
-    public void dialogue(int gameX, int gameY) {
+    public void dialogueInput(int gameX, int gameY) {
         DialogueHandler dialogueHandler = screen.getDialogueHandler();
-        if (dialogueHandler.onClick(gameX, gameY) != DialogueHandler.ClickCode.CONTINUE) {
+        Interaction interaction = dialogueHandler.onClick(gameX, gameY);
+        if (interaction != null) {
             screen.endDialogue();
-            // TODO: handle option selection here?
+            screen.runInteraction(interaction);
         }
-    }
-
-    private int scaleX(int screenX) {
-        return (int) (screenX * scaleFactorX);
-    }
-
-    private int scaleY(int screenY) {
-        return (int) (screenY * scaleFactorY);
     }
 }

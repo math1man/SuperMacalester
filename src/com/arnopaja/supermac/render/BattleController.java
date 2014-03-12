@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author Ari Weiland
  */
-public class BattleInterface {
+public class BattleController implements BaseController {
 
     private static Random battleRandomGen = new Random();
 
@@ -26,7 +26,7 @@ public class BattleInterface {
 
     private TextureRegion background;
 
-    public BattleInterface(MainParty heroes, EnemyParty enemies, byte location) {
+    public BattleController(MainParty heroes, EnemyParty enemies, byte location) {
         perTurnQueue = new PriorityQueue<BattleAction>(heroes.getSize() + enemies.getSize(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
@@ -38,6 +38,7 @@ public class BattleInterface {
         isBossFight = enemies.containsBoss();
     }
 
+    @Override
     public void update(float delta) {
         if (mainParty.isDefeated()) {
             // run code for if the main party is defeated

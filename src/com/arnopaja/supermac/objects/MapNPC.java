@@ -7,21 +7,21 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class NonPlayableMapCharacter extends MapCharacter {
+public class MapNPC extends MapCharacter {
 
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private boolean canMove = true;
 
-    public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing) {
+    public MapNPC(Grid grid, Vector2 position, Direction facing) {
         this(grid, position, facing, false);
     }
 
-    public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+    public MapNPC(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
         this(grid, position, facing, isInteractable, true);
     }
 
-    public NonPlayableMapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable, boolean canMove) {
+    public MapNPC(Grid grid, Vector2 position, Direction facing, boolean isInteractable, boolean canMove) {
         super(grid, position, facing, isInteractable);
         this.canMove = canMove;
     }

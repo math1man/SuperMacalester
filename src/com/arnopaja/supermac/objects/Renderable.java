@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -20,6 +21,7 @@ public interface Renderable {
      * @return true if something was rendered, else false
      */
     public abstract boolean render(SpriteBatch batcher, Vector2 position, float runTime);
-
     public abstract boolean isRendered();
+    public abstract TextureRegion getSprite();
+    public abstract TextureRegion getSprite(float runTime);
 }

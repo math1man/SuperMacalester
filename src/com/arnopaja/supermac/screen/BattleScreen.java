@@ -2,99 +2,29 @@ package com.arnopaja.supermac.screen;
 
 import com.arnopaja.supermac.MacGame;
 import com.arnopaja.supermac.helpers.BattleInputHandler;
-import com.arnopaja.supermac.render.BattleInterface;
+import com.arnopaja.supermac.render.BattleController;
 import com.arnopaja.supermac.render.BattleRenderer;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 
 /**
  * @author Ari Weiland
  */
-public class BattleScreen implements Screen {
+public class BattleScreen extends BaseScreen<BattleController> {
 
     public static final float ASPECT_RATIO = 5.0f / 3;
 
-    private final MacGame game;
-
-    private final BattleRenderer renderer;
-    private final BattleInputHandler inputHandler;
-    private final float gameHeight;
-    private final float gameWidth;
-
-    private BattleInterface battle;
-
-    private float runTime;
-
     public BattleScreen(MacGame game) {
-        this.game = game;
+        super(game, MacGame.GAME_HEIGHT * ASPECT_RATIO, MacGame.GAME_HEIGHT);
+        renderer = new BattleRenderer(dialogueHandler, gameWidth, gameHeight);
+        inputHandler = new BattleInputHandler(this, gameWidth, gameHeight,
+                gameWidth/ Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
 
-        gameHeight = MacGame.GAME_HEIGHT;
-        // TODO: eventually, revert aspect ratio to screenHeight/screenWidth
-        gameWidth = gameHeight * ASPECT_RATIO;
-
-        renderer = new BattleRenderer(battle, gameWidth, gameHeight);
-        inputHandler = new BattleInputHandler(battle, gameWidth, gameHeight,
-                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
     }
 
     @Override
     public void render(float delta) {
         runTime += delta;
-        battle.update(delta);
-        renderer.render(delta, runTime);
-    }
-
-    @Override
-    public void resize(int i, int i2) {
-
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(inputHandler);
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    public MacGame getGame() {
-        return game;
-    }
-
-    public BattleRenderer getRenderer() {
-        return renderer;
-    }
-
-    public float getGameHeight() {
-        return gameHeight;
-    }
-
-    public float getGameWidth() {
-        return gameWidth;
-    }
-
-    public BattleInterface getBattle() {
-        return battle;
-    }
-
-    public void setBattle(BattleInterface battle) {
-        this.battle = battle;
+        controller.update(delta);
+        renderer.render(runTime);
     }
 }

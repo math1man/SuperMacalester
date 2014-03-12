@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 /**
  * @author Ari Weiland
  */
@@ -20,13 +24,18 @@ public class AssetLoader {
     private static final String MAP_NAME_LEADER = "map: ";
     private static final String MAP_WIDTH_LEADER = "width: ";
     private static final String MAP_HEIGHT_LEADER = "height: ";
+    private static final Random random = new Random();
 
     public static Preferences prefs;
 
-    public static Texture texture;
+    private static Texture texture;
+    private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
+    private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
-    // Used for World
-    public static TextureRegion darkgrass1, cobblestone1, buildingTile;
+    public static TextureRegion grass0, grass1, grass2, cobble;
+    public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
+    public static TextureRegion asphaltEdgeN, asphaltEdgeE, asphaltEdgeS, asphaltEdgeW;
+    public static TextureRegion campusCenter, chapel;
     public static TextureRegion[] steven, stevenSteps;
     public static Animation[] stevenStepping;
 
@@ -43,43 +52,65 @@ public class AssetLoader {
 //        texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         // TODO: build a basic texture file and set up tiles
-        Texture temp = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile1.png"));
-        darkgrass1 = new TextureRegion(temp, 0, 0, 32, 32);
-        darkgrass1.flip(false, true);
-        temp = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
-        cobblestone1 = new TextureRegion(temp, 0, 0, 32, 32);
-        cobblestone1.flip(false, true);
-        temp = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile3.png"));
-        buildingTile = new TextureRegion(temp, 0, 0, 32, 32);
-        buildingTile.flip(false, true);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile1.png"));
+        grass0 = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile2.png"));
+        grass1 = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile3.png"));
+        grass2 = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
+        cobble = new TextureRegion(texture, 0, 0, 32, 32);
 
-        Tile.initSpriteMap(); // Must be called after all tiles are loaded
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/asphalt_tile.png"));
+        asphalt = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_horizontal.png"));
+        asphaltLineH = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_vertical.png"));
+        asphaltLineV = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_north.png"));
+        asphaltEdgeN = new TextureRegion(texture, 0, 0, 32, 32);
+        asphaltEdgeS = new TextureRegion(asphaltEdgeN);
+        asphaltEdgeS.flip(true, false);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_east.png"));
+        asphaltEdgeE = new TextureRegion(texture, 0, 0, 32, 32);
+        asphaltEdgeW = new TextureRegion(asphaltEdgeE);
+        asphaltEdgeE.flip(false, true);
+
+        // The buildings don't work at the moment because their canvas dimensions are bad
+//        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
+//        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
+//        campusCenter.flip(false, true);
+//        texture = new Texture(Gdx.files.internal("data/landscapetiles/chapel.png"));
+//        chapel = new TextureRegion(texture, 0, 0, 192, 192);
+//        chapel.flip(false, true);
+
+        initTileMap(); // Must be called after all tiles are loaded
 
         steven = new TextureRegion[4];
-        temp = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
-        steven[0] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
-        steven[1] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
-        steven[2] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_left.png"));
-        steven[3] = new TextureRegion(temp, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
+        steven[0] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
+        steven[1] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
+        steven[2] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_left.png"));
+        steven[3] = new TextureRegion(texture, 0, 0, 32, 32);
 
         stevenSteps = new TextureRegion[8];
-        temp = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
-        stevenSteps[0] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
-        stevenSteps[1] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
-        stevenSteps[2] = new TextureRegion(temp, 0, 0, 32, 32);
-        stevenSteps[3] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
-        stevenSteps[4] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
-        stevenSteps[5] = new TextureRegion(temp, 0, 0, 32, 32);
-        temp = new Texture(Gdx.files.internal("data/steven/steven_left_step.png"));
-        stevenSteps[6] = new TextureRegion(temp, 0, 0, 32, 32);
-        stevenSteps[7] = new TextureRegion(temp, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
+        stevenSteps[0] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
+        stevenSteps[1] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
+        stevenSteps[2] = new TextureRegion(texture, 0, 0, 32, 32);
+        stevenSteps[3] = new TextureRegion(stevenSteps[2]);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
+        stevenSteps[4] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
+        stevenSteps[5] = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_left_step.png"));
+        stevenSteps[6] = new TextureRegion(texture, 0, 0, 32, 32);
+        stevenSteps[7] = new TextureRegion(stevenSteps[6]);
 
         stevenStepping = new Animation[4];
         for (int i=0; i<4; i++) {
@@ -130,11 +161,11 @@ public class AssetLoader {
             int height = Integer.parseInt(h.substring(MAP_HEIGHT_LEADER.length()).trim());
             if (width > 0 && height > 0) {
                 Tile[][] tileArray = new Tile[width][height];
-                for (int i=0; i<width; i++) {
+                for (int i=0; i<height; i++) {
                     String line = lines[lineIndex + 3 + i];
                     String[] tileCodes = line.split("\t");
-                    for (int j=0; j<height; j++) {
-                        tileArray[i][j] = Tile.createTile(tileCodes[j].trim());
+                    for (int j=0; j<width; j++) {
+                        tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
                     }
                 }
                 return tileArray;
@@ -143,8 +174,41 @@ public class AssetLoader {
         return null;
     }
 
+    /* notes:
+    n is a special character for the null tile
+    b is a prefix for buildings
+    numerals should be used only for arbitrary tiles (ie. different grasses)
+    asterisks are used to represent an arbitrary numeral in the data file
+    */
+    private static void initTileMap() {
+        tileMap.put("g0", AssetLoader.grass0);
+        tileMap.put("g1", AssetLoader.grass1);
+        tileMap.put("g2", AssetLoader.grass2);
+        tileMap.put("c", AssetLoader.cobble);
+        tileMap.put("a", AssetLoader.asphalt);
+        tileMap.put("ah", AssetLoader.asphaltLineH);
+        tileMap.put("av", AssetLoader.asphaltLineV);
+        tileMap.put("an", AssetLoader.asphaltEdgeN);
+        tileMap.put("ae", AssetLoader.asphaltEdgeE);
+        tileMap.put("as", AssetLoader.asphaltEdgeS);
+        tileMap.put("aw", AssetLoader.asphaltEdgeW);
+        tileMap.put("bcc", AssetLoader.campusCenter);
+        tileMap.put("bch", AssetLoader.chapel);
+
+        randomTileMap.put("g", 3);
+    }
+
+    public static TextureRegion getTileSprite(String tileKey) {
+        if (tileKey.contains("*")) {
+            tileKey = tileKey.replace("*", "");
+            int temp = randomTileMap.get(tileKey);
+            tileKey += random.nextInt(temp);
+        }
+        return tileMap.get(tileKey);
+    }
+
     public static void dispose() {
-//        texture.dispose();
+        texture.dispose();
         font.dispose();
         shadow.dispose();
     }
