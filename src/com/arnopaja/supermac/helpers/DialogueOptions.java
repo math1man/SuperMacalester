@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.objects.Interaction;
-import com.arnopaja.supermac.render.BattleInterface;
+import com.arnopaja.supermac.render.BattleController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +64,7 @@ public class DialogueOptions {
      * @param header the option header
      * @param battle the battle to initiate
      */
-    public DialogueOptions(String header, BattleInterface battle) {
+    public DialogueOptions(String header, BattleController battle) {
         this(header, YES_NO_OPTIONS, getYesNoBattleInteractions(battle));
     }
 
@@ -129,7 +129,7 @@ public class DialogueOptions {
      * @param battle the battle to initiate
      * @return
      */
-    public static Interaction[] getYesNoBattleInteractions(BattleInterface battle) {
+    public static Interaction[] getYesNoBattleInteractions(BattleController battle) {
         Interaction[] interactions = new Interaction[4];
         Arrays.fill(interactions, Interaction.getNullInteraction());
         interactions[0] = Interaction.getBattleInteraction(battle);

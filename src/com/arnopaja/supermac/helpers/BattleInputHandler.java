@@ -1,30 +1,17 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.render.BattleInterface;
-import com.badlogic.gdx.InputProcessor;
+import com.arnopaja.supermac.screen.BattleScreen;
 
 /**
  * @author Ari Weiland
  */
-public class BattleInputHandler implements InputProcessor {
+public class BattleInputHandler extends BaseInputHandler<BattleScreen> {
 
-    private BattleInterface battle;
 
-    private float gameWidth;
-    private float gameHeight;
-    private float scaleFactorX;
-    private float scaleFactorY;
-
-    public BattleInputHandler(BattleInterface battle,
-                              float gameWidth, float gameHeight,
+    public BattleInputHandler(BattleScreen screen, float gameWidth, float gameHeight,
                               float scaleFactorX, float scaleFactorY) {
-        this.battle = battle;
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-        this.scaleFactorX = scaleFactorX;
-        this.scaleFactorY = scaleFactorY;
+        super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
     }
-
 
     @Override
     public boolean keyDown(int i) {
@@ -69,13 +56,5 @@ public class BattleInputHandler implements InputProcessor {
     @Override
     public boolean scrolled(int i) {
         return false;
-    }
-
-    private int scaleX(int screenX) {
-        return (int) (screenX * scaleFactorX);
-    }
-
-    private int scaleY(int screenY) {
-        return (int) (screenY * scaleFactorY);
     }
 }

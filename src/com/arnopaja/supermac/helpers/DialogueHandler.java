@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Static class used to render a dialogue box on the WorldScreen
+ * Class used to render a dialogue box.
  *
  * A dialogue can conclude with a set of options (they must be at the end of the dialogue).
- * A dialogue can also or alternatively conclude by going to a battle.
+ * These options are defined by the DialogueOptions class.
  *
  * @author Ari Weiland
  */

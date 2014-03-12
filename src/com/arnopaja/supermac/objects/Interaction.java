@@ -2,8 +2,8 @@ package com.arnopaja.supermac.objects;
 
 import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.DialogueHandler;
-import com.arnopaja.supermac.render.BattleInterface;
-import com.arnopaja.supermac.screen.WorldScreen;
+import com.arnopaja.supermac.render.BattleController;
+import com.arnopaja.supermac.screen.BaseScreen;
 
 /**
  * This class dictates how an interaction proceeds via its runInteraction method
@@ -23,7 +23,7 @@ public abstract class Interaction {
     public static Interaction getNullInteraction() {
         return new Interaction(null, null) {
             @Override
-            public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {}
+            public void runInteraction(BaseScreen screen, DialogueHandler dialogueHandler) {}
         };
     }
 
@@ -35,43 +35,43 @@ public abstract class Interaction {
                                                      final Dialogue dialogue) {
         return new Interaction(entity, character) {
             @Override
-            public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
+            public void runInteraction(BaseScreen screen, DialogueHandler dialogueHandler) {
                 screen.dialogue();
                 dialogueHandler.displayDialogue(dialogue);
             }
         };
     }
 
-    public static Interaction getBattleInteraction(BattleInterface battle) {
+    public static Interaction getBattleInteraction(BattleController battle) {
         return getBattleInteraction(null, null, battle);
     }
 
     public static Interaction getBattleInteraction(Entity entity, MainMapCharacter character,
-                                                   final BattleInterface battle) {
+                                                   final BattleController battle) {
         return new Interaction(entity, character) {
             @Override
-            public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
+            public void runInteraction(BaseScreen screen, DialogueHandler dialogueHandler) {
                 screen.goToBattle(battle);
             }
         };
     }
 
-    public static Interaction getPreBattleInteraction(Dialogue dialogue, BattleInterface battle) {
+    public static Interaction getPreBattleInteraction(Dialogue dialogue, BattleController battle) {
         return getPreBattleInteraction(null, null, dialogue, battle);
     }
 
     public static Interaction getPreBattleInteraction(Entity entity, MainMapCharacter character,
-                                                      final Dialogue dialogue, final BattleInterface battle) {
+                                                      final Dialogue dialogue, final BattleController battle) {
         return new Interaction(entity, character) {
             @Override
-            public void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler) {
+            public void runInteraction(BaseScreen screen, DialogueHandler dialogueHandler) {
                 screen.prebattle(battle);
                 dialogueHandler.displayDialogue(dialogue);
             }
         };
     }
 
-    public abstract void runInteraction(WorldScreen screen, DialogueHandler dialogueHandler);
+    public abstract void runInteraction(BaseScreen screen, DialogueHandler dialogueHandler);
 
     public Entity getEntity() {
         return entity;

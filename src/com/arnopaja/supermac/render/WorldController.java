@@ -17,14 +17,14 @@ import java.util.List;
 /**
  * @author Ari Weiland
  */
-public class WorldInterface {
+public class WorldController implements BaseController {
 
     private Grid worldGrid;
     private List<Building> buildings;
 
     private MainMapCharacter mainCharacter;
 
-    public WorldInterface() {
+    public WorldController() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
         mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.WEST);
         initBuildings();
@@ -49,6 +49,7 @@ public class WorldInterface {
         worldGrid.putEntity(character);
     }
 
+    @Override
     public void update(float delta) {
         Grid currentGrid = mainCharacter.getGrid();
         // Cannot just iterate over currentGrid.getEntities() because we cannot modify that iterable

@@ -6,45 +6,26 @@ import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author Ari Weiland
  */
-public class WorldRenderer {
+public class WorldRenderer extends BaseRenderer<WorldController> {
 
-    private final WorldInterface world;
-    private final DialogueHandler dialogueHandler;
-    private final ShapeRenderer shapeRenderer;
-    private final SpriteBatch batcher;
-
-    private final float gameWidth, gameHeight;
     private final int renderGridWidth, renderGridHeight;
     private final Vector2 renderOffset;
 
-    public WorldRenderer(WorldInterface world, DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
-        this.world = world;
-        this.dialogueHandler = dialogueHandler;
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
+    public WorldRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
+        super(dialogueHandler, gameWidth, gameHeight);
+
         this.renderGridWidth = getRenderDimension(gameWidth);
         this.renderGridHeight = getRenderDimension(gameHeight);
         this.renderOffset = new Vector2(gameWidth, gameHeight)
                 .scl(-1.0f / Grid.GRID_PIXEL_DIMENSION)
                 .add(new Vector2(renderGridWidth, renderGridHeight))
                 .scl(0.5f);
-
-        OrthographicCamera cam = new OrthographicCamera();
-        cam.setToOrtho(true, gameWidth, gameHeight);
-
-        batcher = new SpriteBatch();
-        batcher.setProjectionMatrix(cam.combined);
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(cam.combined);
     }
 
     private static int getRenderDimension(float gameDimension) {
@@ -57,13 +38,15 @@ public class WorldRenderer {
         return renderDimension;
     }
 
+    @Override
     public void render(float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        MainMapCharacter mainCharacter = world.getMainCharacter();
+        MainMapCharacter mainCharacter = getController().getMainCharacter();
         Vector2 centerPosition = mainCharacter.getPosition();
-        RenderGrid renderGrid = world.getWorldGrid().getRenderGrid(centerPosition, renderGridWidth, renderGridHeight);
+        RenderGrid renderGrid = getController().getWorldGrid()
+                .getRenderGrid(centerPosition, renderGridWidth, renderGridHeight);
 
         shapeRenderer.begin(ShapeType.Filled);
 

@@ -6,31 +6,20 @@ import com.arnopaja.supermac.objects.Interaction;
 import com.arnopaja.supermac.objects.MainMapCharacter;
 import com.arnopaja.supermac.screen.WorldScreen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 
 /**
  * @author Ari Weiland
  */
-public class WorldInputHandler implements InputProcessor {
+public class WorldInputHandler extends BaseInputHandler<WorldScreen> {
 
     public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
 
-    private WorldScreen screen;
     private MainMapCharacter character;
-
-    private float gameWidth;
-    private float gameHeight;
-    private float scaleFactorX;
-    private float scaleFactorY;
 
     public WorldInputHandler(WorldScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
-        this.screen = screen;
-        this.character = screen.getWorld().getMainCharacter();
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-        this.scaleFactorX = scaleFactorX;
-        this.scaleFactorY = scaleFactorY;
+        super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
+        this.character = this.screen.getWorld().getMainCharacter();
     }
 
     @Override
@@ -145,13 +134,5 @@ public class WorldInputHandler implements InputProcessor {
             screen.endDialogue();
             screen.runInteraction(interaction);
         }
-    }
-
-    private int scaleX(int screenX) {
-        return (int) (screenX * scaleFactorX);
-    }
-
-    private int scaleY(int screenY) {
-        return (int) (screenY * scaleFactorY);
     }
 }
