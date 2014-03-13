@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class DialogueOptions implements DialogueDisplayable {
 
     public static final String[] YES_NO_OPTIONS = {"Yes", "No"};
-    public static final String[] BATTLE_OPTIONS = {"Attack", "Defend", "Spell", "Item"};
+    public static final String[] BATTLE_OPTIONS = {"Attack", "Defend", "Spell", "Item", "Flee"};
 
     private final String header;
     private final String[] options;
@@ -46,7 +46,7 @@ public class DialogueOptions implements DialogueDisplayable {
      * @param options the list of options to select from
      * @param interactions the list of interactions resulting from each option
      */
-    public DialogueOptions(String header, String[] options, Interaction[] interactions) {
+    public DialogueOptions(String header, String[] options, Interaction... interactions) {
         this.header = header;
         this.options = options;
         this.interactions = interactions;
@@ -108,7 +108,7 @@ public class DialogueOptions implements DialogueDisplayable {
      * @param dialogues the list of dialogues to be converted
      * @return
      */
-    public static Interaction[] convertDialogues(DialogueDisplayable[] dialogues) {
+    public static Interaction[] convertDialogues(DialogueDisplayable... dialogues) {
         Interaction[] interactions = new Interaction[dialogues.length];
         for (int i=0; i<dialogues.length; i++) {
             interactions[i] = Interaction.dialogue(dialogues[i]);
@@ -148,7 +148,7 @@ public class DialogueOptions implements DialogueDisplayable {
      * @param actions the battle actions to be converted
      * @return
      */
-    public static Interaction[] convertActions(BattleAction[] actions) {
+    public static Interaction[] convertActions(BattleAction... actions) {
         Interaction[] interactions = new Interaction[actions.length];
         for (int i=0; i<actions.length; i++) {
             interactions[i] = Interaction.battle(actions[i]);

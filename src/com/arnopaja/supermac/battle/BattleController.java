@@ -67,32 +67,38 @@ public class BattleController implements BaseController {
         }
     }
 
-    public void setTurnActions() {
+    private void setTurnActions() {
         BattleCharacter heroes[] = mainParty.getBattleParty();
         BattleCharacter enemies[] = enemyParty.getBattleParty();
         int count = enemies.length;
         String[] enemyNames = new String[count];
-        for (int i=0; i<count; i++) {
-            enemyNames[i] = enemies[i].getName();
+        for (BattleCharacter enemy : enemies) {
             // TODO: make the enemies more intelligent?
-            addAction(BattleAction.createAttack(enemies[i],
+            addAction(BattleAction.createAttack(enemy,
                     heroes[battleRandomGen.nextInt(3)]));
         }
         for (BattleCharacter hero : heroes) {
-            BattleAction[] attacks = new BattleAction[count];
-            for (int i=0; i<count; i++) {
-                attacks[i] = BattleAction.createAttack(hero, enemies[i]);
-            }
-            DialogueOptions options = new DialogueOptions("What should " + hero.getName() + " do?",
-                    DialogueOptions.BATTLE_OPTIONS,
-                    DialogueOptions.convert(
-                            new DialogueOptions("Who do you want to attack?", enemyNames,
-                                    DialogueOptions.convertActions(attacks)),
-                            BattleAction.createDefend(hero),
-                            new DialogueOptions("What spell do you want to use?", null, null /*TODO: this line*/),
-                            new DialogueOptions("Which item do you want to use?", null, null /*TODO: this line*/)));
-            dialogueHandler.displayDialogue(options);
+            dialogueHandler.displayDialogue(getActionOptions(hero, enemies));
         }
+    }
+
+    private DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
+        int count = enemies.length;
+        String[] enemyNames = new String[count];
+        BattleAction[] attacks = new BattleAction[count];
+        for (int i=0; i<count; i++) {
+            enemyNames[i] = enemies[i].getName();
+            attacks[i] = BattleAction.createAttack(hero, enemies[i]);
+        }
+        return new DialogueOptions("What should " + hero.getName() + " do?",
+                DialogueOptions.BATTLE_OPTIONS,
+                DialogueOptions.convert(
+                        new DialogueOptions("Who do you want to attack?", enemyNames,
+                                DialogueOptions.convertActions(attacks)),
+                        BattleAction.createDefend(hero),
+                        new DialogueOptions("What spell do you want to use?", null, null /*TODO: this line*/),
+                        new DialogueOptions("Which item do you want to use?", null, null /*TODO: this line*/),
+                        BattleAction.createFlee(hero)));
     }
 
     public void addAction(BattleAction action) {

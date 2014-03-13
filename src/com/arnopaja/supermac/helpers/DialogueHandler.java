@@ -20,15 +20,15 @@ public class DialogueHandler {
 
     public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.3f;
     public static final float DIALOGUE_BOX_RENDER_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
+    public static final int TEXT_ROWS = 3;
+    public static final int OPTION_ROWS = TEXT_ROWS - 1;
+    public static final int MAX_OPTION_COLUMNS = 5;
 
     public static enum DisplayMode { NONE, DIALOGUE, OPTIONS }
 
     private final Rectangle dialogueSpace;
     private final Rectangle fontSpace;
-    private final Rectangle option0;
-    private final Rectangle option1;
-    private final Rectangle option2;
-    private final Rectangle option3;
+    private final Rectangle[][] optionSpaces;
 
     private final Queue<DialogueDisplayable> dialogueQueue = new ConcurrentLinkedQueue<DialogueDisplayable>();
 
@@ -47,28 +47,26 @@ public class DialogueHandler {
                 dialogueSpace.getY() + DIALOGUE_BOX_RENDER_GAP,
                 dialogueSpace.getWidth() - 2 * DIALOGUE_BOX_RENDER_GAP,
                 dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
-        AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * 3));
+        AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * TEXT_ROWS));
 
-        option0 = new Rectangle(
-                fontSpace.getX(),
-                fontSpace.getY() + fontSpace.getHeight() / 3,
-                fontSpace.getWidth() / 2,
-                fontSpace.getHeight() / 3);
-        option1 = new Rectangle(
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() / 3,
-                fontSpace.getWidth() / 2,
-                fontSpace.getHeight() / 3);
-        option2 = new Rectangle(
-                fontSpace.getX(),
-                fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getWidth() / 2,
-                fontSpace.getHeight() / 3);
-        option3 = new Rectangle(
-                fontSpace.getX() + fontSpace.getWidth() / 2,
-                fontSpace.getY() + fontSpace.getHeight() * 2/3,
-                fontSpace.getWidth() / 2,
-                fontSpace.getHeight() / 3);
+        optionSpaces = initOptionRects(fontSpace.getX(), fontSpace.getY(),
+                    fontSpace.getWidth(), fontSpace.getHeight());
+    }
+
+    private static Rectangle[][] initOptionRects(float x, float y, float width, float height) {
+        Rectangle[][] rects = new Rectangle[MAX_OPTION_COLUMNS][];
+        for (int i=0; i<MAX_OPTION_COLUMNS; i++) {
+            rects[i] = new Rectangle[OPTION_ROWS * (i + 1)];
+            float rectWidth = width / (i + 1);
+            float rectHeight = height / TEXT_ROWS;
+            for (int j=0; j<=i; j++) {
+                for (int k=0; k<OPTION_ROWS; k++) {
+                    rects[i][OPTION_ROWS * j + k] = new Rectangle(x + j*rectWidth,
+                            y + (k+1)*rectHeight, rectWidth, rectHeight);
+                }
+            }
+        }
+        return rects;
     }
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
@@ -98,10 +96,11 @@ public class DialogueHandler {
 
     private void renderOptions(SpriteBatch batch) {
         AssetLoader.drawFont(batch, options.getHeader(), fontSpace.getX(), fontSpace.getY());
-        AssetLoader.drawFont(batch, options.getOption(0), option0.getX(), option0.getY());
-        AssetLoader.drawFont(batch, options.getOption(1), option1.getX(), option1.getY());
-        AssetLoader.drawFont(batch, options.getOption(2), option2.getX(), option2.getY());
-        AssetLoader.drawFont(batch, options.getOption(3), option3.getX(), option3.getY());
+        int count = options.getCount();
+        Rectangle[] spaces = getOptionSpaces(count);
+        for (int i=0; i<count; i++) {
+            AssetLoader.drawFont(batch, options.getOption(i), spaces[i].getX(), spaces[i].getY());
+        }
     }
 
     public void displayDialogue(DialogueDisplayable displayable) {
@@ -129,18 +128,12 @@ public class DialogueHandler {
                 pollQueue();
             }
         } else if (isOptions()) {
-            if (option0.contains(x, y)) {
-                pollQueue();
-                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(0));
-            } else if (option1.contains(x, y)) {
-                pollQueue();
-                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(1));
-            } else if (option2.contains(x, y) && options.getCount() > 2) {
-                pollQueue();
-                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(2));
-            } else if (option3.contains(x, y) && options.getCount() > 3) {
-                pollQueue();
-                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(3));
+            int count = options.getCount();
+            for (int i=0; i<count; i++) {
+                if (getOptionSpaces(count)[i].contains(x, y)) {
+                    pollQueue();
+                    return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(i));
+                }
             }
         }
         return isNone() ? Interaction.clearDialogue() : Interaction.getNull();
@@ -170,6 +163,11 @@ public class DialogueHandler {
     private void display(DialogueOptions options) {
         this.options = options;
         mode = DisplayMode.OPTIONS;
+    }
+
+    private Rectangle[] getOptionSpaces(int count) {
+        int index = (count - 1) / OPTION_ROWS;
+        return optionSpaces[index];
     }
 
     public void clear() {
