@@ -29,7 +29,7 @@ public class DialogueOptions implements DialogueDisplayable {
      * @param header the option header
      * @param options the list of options to select from
      */
-    public DialogueOptions(String header, String[] options) {
+    public DialogueOptions(String header, String... options) {
         this(header, options, getNullInteractions());
     }
 
