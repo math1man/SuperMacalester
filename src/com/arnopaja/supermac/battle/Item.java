@@ -23,4 +23,9 @@ public class Item implements Usable
         String dialogue = source.getName() + " uses " + name + " on " + destination.getName() + "!";
         return new Dialogue(dialogue);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

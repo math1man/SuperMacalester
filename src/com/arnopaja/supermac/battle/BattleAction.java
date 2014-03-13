@@ -11,7 +11,7 @@ public abstract class BattleAction {
 
     private static final Random battleRandomGen = new Random();
 
-    public static enum ActionType { ATTACK, MAGIC, ITEM, DEFEND, FLEE }
+    public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
 
     private final BattleCharacter source;
     private final BattleCharacter destination;
@@ -30,21 +30,21 @@ public abstract class BattleAction {
     public static BattleAction create(BattleCharacter source, BattleCharacter destination, ActionType type, Usable usable) {
         switch(type) {
             case ATTACK:
-                return createAttack(source, destination);
-            case MAGIC:
-                return createMagic(source, destination, usable);
+                return attack(source, destination);
+            case SPELL:
+                return spell(source, usable, destination);
             case ITEM:
-                return createItem(source, destination, usable);
+                return item(source, usable, destination);
             case DEFEND:
-                return createDefend(source);
+                return defend(source);
             case FLEE:
-                return createFlee(source);
+                return flee(source);
             default:
                 return null;
         }
     }
 
-    public static BattleAction createAttack(BattleCharacter source, BattleCharacter destination) {
+    public static BattleAction attack(BattleCharacter source, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null) {
             @Override
             public Dialogue runAction() {
@@ -62,8 +62,19 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createMagic(BattleCharacter source, BattleCharacter destination, Usable spell) {
-        return new BattleAction(source, destination, ActionType.MAGIC, source.getSpeed(), spell) {
+    public static BattleAction spell(BattleCharacter source, Usable spell, BattleCharacter destination) {
+        return usable(source, spell, ActionType.SPELL, destination);
+    }
+
+    public static BattleAction item(BattleCharacter source, Usable item, BattleCharacter destination) {
+        return usable(source, item, ActionType.ITEM, destination);
+    }
+
+    private static BattleAction usable(BattleCharacter source, Usable usable, ActionType type, BattleCharacter destination) {
+        if (type != ActionType.SPELL && type != ActionType.ITEM) {
+            return null;
+        }
+        return new BattleAction(source, destination, type, source.getSpeed(), usable) {
             @Override
             public Dialogue runAction() {
                 return getUsable().use(getSource(), getDestination());
@@ -71,16 +82,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createItem(BattleCharacter source, BattleCharacter destination, Usable item) {
-        return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), item) {
-            @Override
-            public Dialogue runAction() {
-                return getUsable().use(getSource(), getDestination());
-            }
-        };
-    }
-
-    public static BattleAction createDefend(BattleCharacter source) {
+    public static BattleAction defend(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.DEFEND, Short.MAX_VALUE, null) {
             @Override
             public Dialogue runAction() {
@@ -91,7 +93,7 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction createFlee(BattleCharacter source) {
+    public static BattleAction flee(BattleCharacter source) {
         // TODO: what is the priority for fleeing?
         return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null) {
             @Override

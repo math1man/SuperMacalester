@@ -35,4 +35,9 @@ public class Spell implements Usable
         }
         return new Dialogue(dialogue);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

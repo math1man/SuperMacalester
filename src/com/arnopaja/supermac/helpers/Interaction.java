@@ -11,6 +11,8 @@ import com.arnopaja.supermac.battle.BattleController;
  */
 public abstract class Interaction {
 
+    public abstract void run(GameScreen screen);
+
     public static Interaction getNull() {
         return new Interaction() {
             @Override
@@ -105,6 +107,4 @@ public abstract class Interaction {
             };
         }
     }
-
-    public abstract void run(GameScreen screen);
 }

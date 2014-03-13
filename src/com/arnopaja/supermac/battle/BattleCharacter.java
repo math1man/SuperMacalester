@@ -123,4 +123,9 @@ public abstract class BattleCharacter
         //decrements mana
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
