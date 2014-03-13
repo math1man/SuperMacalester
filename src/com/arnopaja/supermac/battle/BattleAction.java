@@ -9,17 +9,17 @@ import java.util.Random;
  */
 public abstract class BattleAction {
 
-    private static final Random battleRandomGen = new Random();
+    private static final Random RANDOM = new Random();
 
     public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
 
     private final BattleCharacter source;
     private final BattleCharacter destination;
-    private final short priority;
+    private final int priority;
     private final Usable usable;
     private final ActionType type;
 
-    private BattleAction(BattleCharacter source, BattleCharacter destination, ActionType type, short priority, Usable usable){
+    private BattleAction(BattleCharacter source, BattleCharacter destination, ActionType type, int priority, Usable usable){
         this.source = source;
         this.destination = destination;
         this.type = type;
@@ -48,13 +48,13 @@ public abstract class BattleAction {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null) {
             @Override
             public Dialogue runAction() {
-                int damage = (int) (getSource().getAttack() * (2 + Math.abs(battleRandomGen.nextGaussian())));
-                damage /= getDestination().getDefense();
-                getDestination().modifyHealth((short) -damage);
-                String dialogue = getSource().getName() + " attacks " + getDestination().getName() + "!" +
-                        "\n" + damage + " damage done!";
+                float damage = (float) (getSource().getAttack() / getDestination().getDefense()
+                        * (2 + Math.abs(RANDOM.nextGaussian())));
+                int damageDone = (int) getDestination().modifyHealth(-damage);
+                String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
+                        damageDone + " damage done.";
                 if(getDestination().isFainted()) {
-                    dialogue += "\n" + getDestination().getName() + " fell!";
+                    dialogue += "\n" + getDestination() + " fell!";
                 }
                 System.out.println(dialogue);
                 return new Dialogue(dialogue);
@@ -83,11 +83,11 @@ public abstract class BattleAction {
     }
 
     public static BattleAction defend(BattleCharacter source) {
-        return new BattleAction(source, null, ActionType.DEFEND, Short.MAX_VALUE, null) {
+        return new BattleAction(source, null, ActionType.DEFEND, Integer.MAX_VALUE, null) {
             @Override
             public Dialogue runAction() {
                 // TODO: code for defending
-                String dialogue = getSource().getName() + " is defending!";
+                String dialogue = getSource() + " is defending!";
                 return new Dialogue(dialogue);
             }
         };
@@ -99,7 +99,7 @@ public abstract class BattleAction {
             @Override
             public Dialogue runAction() {
                 // TODO: code for fleeing
-                String dialogue = getSource().getName() + " flees!";
+                String dialogue = getSource() + " flees!";
                 return new Dialogue(dialogue);
             }
         };
@@ -119,7 +119,7 @@ public abstract class BattleAction {
         return type;
     }
 
-    public short getPriority() {
+    public int getPriority() {
         return priority;
     }
 

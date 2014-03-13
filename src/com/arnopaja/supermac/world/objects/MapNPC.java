@@ -31,9 +31,9 @@ public class MapNPC extends MapCharacter {
     public void update(float delta) {
         super.update(delta);
         if (!isMoving() && canMove()) {
-            double random = Math.random() * SECONDS_BETWEEN_RANDOM_MOVES / delta;
+            float random = RANDOM.nextFloat() * SECONDS_BETWEEN_RANDOM_MOVES / delta;
             if (random < 1) {
-                int ordinal = (int) (Math.random() * 4);
+                int ordinal = RANDOM.nextInt(4);
                 move(Direction.values()[ordinal]);
             }
         }

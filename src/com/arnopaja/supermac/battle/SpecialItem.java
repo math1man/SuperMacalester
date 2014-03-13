@@ -1,13 +1,15 @@
 package com.arnopaja.supermac.battle; /**
  * Created by Nolan on 2/16/14.
  */
-public class SpecialItem
-{
-    //TODO: image definition
-    private String name;
-    private byte universalID;
-    public SpecialItem(byte universalID)
-    {
+public class SpecialItem {
+
+    private final int universalID;
+    private final String name;
+    // TODO: image definition
+
+    public SpecialItem(int universalID) {
+        this.universalID = universalID;
         //Generate given its universalID
+        this.name = null;
     }
 }

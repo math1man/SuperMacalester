@@ -9,11 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.EnumMap;
+import java.util.Random;
 
 /**
  * @author Ari Weiland
  */
 public abstract class Entity implements Renderable {
+
+    public static final Random RANDOM = new Random();
 
     private final boolean isRendered;
 

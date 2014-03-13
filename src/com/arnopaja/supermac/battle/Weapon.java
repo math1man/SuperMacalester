@@ -3,14 +3,19 @@ package com.arnopaja.supermac.battle; /**
  */
 public class Weapon
 {
-    //TODO: image definition
-    private String name;
-    private byte attackModifier;
-    private short value;
-    private short equippableBitMask;
-    private byte universalID;
-    public Weapon(byte universalID)
-    {
+    private final int universalID;
+    private final String name;
+    private final int attackModifier;
+    private final int value;
+    private final int equippableBitMask;
+    // TODO: image definition
+
+    public Weapon(int universalID) {
+        this.universalID = universalID;
         //Generate given its universalID
+        this.name = null;
+        this.attackModifier = 0;
+        this.value = 0;
+        this.equippableBitMask = 0;
     }
 }

@@ -1,26 +1,27 @@
 package com.arnopaja.supermac.battle;
 
+import java.util.ArrayList;
+
 /**
  * Created by Envy on 2/28/14.
  */
-public class EnemyParty extends Party<Enemy>
-{
-    public EnemyParty()
-    {
-        super();
+public class EnemyParty extends Party<Enemy> {
+
+    public EnemyParty() {
+        super(new ArrayList<Enemy>());
     }
-    public boolean containsBoss()
-    {
+
+    public boolean containsBoss() {
         for (Enemy enemy : characters) {
-            if (enemy.checkIfBoss()) {
+            if (enemy.isBoss()) {
                 return true;
             }
         }
         return false;
     }
+
     @Override
-    public BattleCharacter getRandom()
-    {
+    public BattleCharacter getRandom() {
         return(this.get(0));
     }
 }
