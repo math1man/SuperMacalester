@@ -15,8 +15,8 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen {
 
-    public enum GameMode { WORLD, BATTLE, MENU }
-    public enum GameState { RUNNING, PAUSED, DIALOGUE }
+    public static enum GameMode { WORLD, BATTLE, MENU }
+    public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
     private final float gameWidth, gameHeight;
@@ -140,7 +140,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        worldRenderer.dispose();
+        battleRenderer.dispose();
     }
 
     public void goToBattle(BattleController battle) {

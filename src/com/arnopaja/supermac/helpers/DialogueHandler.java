@@ -21,7 +21,7 @@ public class DialogueHandler {
     public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.3f;
     public static final float DIALOGUE_BOX_RENDER_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
 
-    public enum DisplayMode { NONE, DIALOGUE, OPTIONS }
+    public static enum DisplayMode { NONE, DIALOGUE, OPTIONS }
 
     private final Rectangle dialogueSpace;
     private final Rectangle fontSpace;
@@ -71,33 +71,41 @@ public class DialogueHandler {
                 fontSpace.getHeight() / 3);
     }
 
-    /**
-     * Renders the dialogue at the specified position in a rectangle specified by size.
-     *
-     * @param batcher the SpriteBatch to render with
-     */
-    public void render(ShapeRenderer shapeRenderer, SpriteBatch batcher) {
+    public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         if (!isNone()) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(1, 1, 1, 0.8f);
-            shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
-                    dialogueSpace.getWidth(), dialogueSpace.getHeight());
-            shapeRenderer.end();
+            batch.flush();
+            renderRectangle(shapeRenderer);
             if (isDialogue()) {
-                AssetLoader.drawWrappedFont(batcher, dialogue.getCurrentDialogue(),
-                        fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
-            } else {
-                AssetLoader.drawFont(batcher, options.getHeader(), fontSpace.getX(), fontSpace.getY());
-                AssetLoader.drawFont(batcher, options.getOption(0), option0.x, option0.y);
-                AssetLoader.drawFont(batcher, options.getOption(1), option1.x, option1.y);
-                AssetLoader.drawFont(batcher, options.getOption(2), option2.x, option2.y);
-                AssetLoader.drawFont(batcher, options.getOption(3), option3.x, option3.y);
+                renderDialogue(batch);
+            } else  {
+                renderOptions(batch);
             }
         }
     }
 
-    public void displayDialogue(DialogueDisplayable displayableDialogue) {
-        dialogueQueue.add(displayableDialogue);
+    private void renderRectangle(ShapeRenderer shapeRenderer) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(1, 1, 1, 0.8f);
+        shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
+                dialogueSpace.getWidth(), dialogueSpace.getHeight());
+        shapeRenderer.end();
+    }
+
+    private void renderDialogue(SpriteBatch batch) {
+        AssetLoader.drawWrappedFont(batch, dialogue.getCurrentDialogue(),
+                fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
+    }
+
+    private void renderOptions(SpriteBatch batch) {
+        AssetLoader.drawFont(batch, options.getHeader(), fontSpace.getX(), fontSpace.getY());
+        AssetLoader.drawFont(batch, options.getOption(0), option0.getX(), option0.getY());
+        AssetLoader.drawFont(batch, options.getOption(1), option1.getX(), option1.getY());
+        AssetLoader.drawFont(batch, options.getOption(2), option2.getX(), option2.getY());
+        AssetLoader.drawFont(batch, options.getOption(3), option3.getX(), option3.getY());
+    }
+
+    public void displayDialogue(DialogueDisplayable displayable) {
+        dialogueQueue.add(displayable);
         if (isNone()) {
             pollQueue();
         }
@@ -116,23 +124,23 @@ public class DialogueHandler {
             if (dialogue.hasNext()) {
                 dialogue.next();
             } else if (dialogue.hasOptions()) {
-                displayDialogue(dialogue.getOptions());
+                display(dialogue.getOptions());
             } else {
                 pollQueue();
             }
         } else if (isOptions()) {
             if (option0.contains(x, y)) {
                 pollQueue();
-                return options.getInteraction(0);
+                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(0));
             } else if (option1.contains(x, y)) {
                 pollQueue();
-                return options.getInteraction(1);
+                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(1));
             } else if (option2.contains(x, y) && options.getCount() > 2) {
                 pollQueue();
-                return options.getInteraction(2);
+                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(2));
             } else if (option3.contains(x, y) && options.getCount() > 3) {
                 pollQueue();
-                return options.getInteraction(3);
+                return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(3));
             }
         }
         return isNone() ? Interaction.clearDialogue() : Interaction.getNull();
@@ -142,16 +150,26 @@ public class DialogueHandler {
         if (dialogueQueue.isEmpty()) {
             clear();
         } else {
-            DialogueDisplayable displayableDialogue = dialogueQueue.poll();
-            if (displayableDialogue instanceof Dialogue) {
-                this.dialogue = ((Dialogue) displayableDialogue);
-                mode = DisplayMode.DIALOGUE;
+            DialogueDisplayable displayable = dialogueQueue.poll();
+            if (displayable instanceof Dialogue) {
+               display((Dialogue) displayable);
+            } else if (displayable instanceof DialogueOptions) {
+                display((DialogueOptions) displayable);
             } else {
-                dialogue = null;
-                mode = DisplayMode.OPTIONS;
-                this.options = ((DialogueOptions) displayableDialogue);
+                pollQueue();
             }
         }
+    }
+
+    private void display(Dialogue dialogue) {
+        this.dialogue = dialogue;
+        this.dialogue.reset();
+        mode = DisplayMode.DIALOGUE;
+    }
+
+    private void display(DialogueOptions options) {
+        this.options = options;
+        mode = DisplayMode.OPTIONS;
     }
 
     public void clear() {

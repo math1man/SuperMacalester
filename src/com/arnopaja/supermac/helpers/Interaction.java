@@ -55,7 +55,7 @@ public abstract class Interaction {
         }
     }
 
-    public static Interaction preBattle(final Dialogue dialogue, final BattleController battle) {
+    public static Interaction preBattle(final DialogueDisplayable dialogue, final BattleController battle) {
         if (dialogue == null || battle == null) {
             return Interaction.getNull();
         } else {
@@ -77,6 +77,30 @@ public abstract class Interaction {
                 @Override
                 public void run(GameScreen screen) {
                     screen.getBattle().addAction(action);
+                }
+            };
+        }
+    }
+
+    /**
+     * Combines a group of interactions into one new interaction that runs
+     * the run methods of each interaction in the order specified.
+     * This method runs no checks on the interactions, so it is the
+     * responsibility of the user to not do anything stupid.
+     *
+     * @param interactions the interactions to be combined
+     * @return
+     */
+    public static Interaction combine(final Interaction... interactions) {
+        if (interactions == null) {
+            return Interaction.getNull();
+        } else {
+            return new Interaction() {
+                @Override
+                public void run(GameScreen screen) {
+                    for (Interaction interaction : interactions) {
+                        interaction.run(screen);
+                    }
                 }
             };
         }

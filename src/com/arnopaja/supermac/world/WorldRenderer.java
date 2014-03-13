@@ -1,13 +1,12 @@
 package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.BaseRenderer;
+import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.RenderGrid;
-import com.arnopaja.supermac.helpers.DialogueHandler;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -49,29 +48,18 @@ public class WorldRenderer extends BaseRenderer<WorldController> {
         RenderGrid renderGrid = getController().getWorldGrid()
                 .getRenderGrid(centerPosition, renderGridWidth, renderGridHeight);
 
-        shapeRenderer.begin(ShapeType.Filled);
+        renderBackgroundColor();
 
-        // Draw Background color
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.rect(0, 0, gameWidth, gameHeight);
-
-        shapeRenderer.end();
-
-        batcher.begin();
-        batcher.disableBlending();
-
-        // Render the base tiles
+        batch.begin();
+        batch.disableBlending();
         Vector2 offset = renderOffset.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
-        renderGrid.renderTiles(batcher, offset, runTime);
+        renderGrid.renderTiles(batch, offset, runTime);
+        batch.enableBlending();
+        renderGrid.renderEntities(batch, offset, runTime);
+        batch.flush();
 
-        batcher.enableBlending();
+        dialogueHandler.render(shapeRenderer, batch);
 
-        // Render entities on top of the tiles
-        renderGrid.renderEntities(batcher, offset, runTime);
-
-        // Render any dialogue present
-        dialogueHandler.render(shapeRenderer, batcher);
-
-        batcher.end();
+        batch.end();
     }
 }

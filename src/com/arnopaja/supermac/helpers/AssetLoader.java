@@ -103,16 +103,16 @@ public class AssetLoader {
         shadow.setScale(scale, -scale);
     }
 
-    public static void drawFont(SpriteBatch batcher, String string, float x, float y) {
+    public static void drawFont(SpriteBatch batch, String string, float x, float y) {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
-        AssetLoader.shadow.drawMultiLine(batcher, string, x + shadowOffset, y + shadowOffset);
-        AssetLoader.font.drawMultiLine(batcher, string, x, y);
+        AssetLoader.shadow.drawMultiLine(batch, string, x + shadowOffset, y + shadowOffset);
+        AssetLoader.font.drawMultiLine(batch, string, x, y);
     }
 
-    public static void drawWrappedFont(SpriteBatch batcher, String string, float x, float y, float width) {
+    public static void drawWrappedFont(SpriteBatch batch, String string, float x, float y, float width) {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
-        AssetLoader.shadow.drawWrapped(batcher, string, x + shadowOffset, y + shadowOffset, width);
-        AssetLoader.font.drawWrapped(batcher, string, x, y, width);
+        AssetLoader.shadow.drawWrapped(batch, string, x + shadowOffset, y + shadowOffset, width);
+        AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
     public static void loadCharacters(int x, int y) {
@@ -139,28 +139,26 @@ public class AssetLoader {
         texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
         temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepRight.put(Direction.EAST, temp);
-        // Left step is just right step flipped horizontally
-        temp = new TextureRegion(temp);
-        temp.flip(true, false);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepLeft.put(Direction.EAST, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
         temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepRight.put(Direction.SOUTH, temp);
-        stevenStepLeft.put(Direction.SOUTH, temp);
+        stevenStepLeft.put(Direction.SOUTH, new TextureRegion(temp));
 
         // North is just South flipped horizontally
         temp = new TextureRegion(temp);
         temp.flip(true, false);
         stevenStepRight.put(Direction.NORTH, temp);
-        stevenStepLeft.put(Direction.NORTH, temp);
+        stevenStepLeft.put(Direction.NORTH, new TextureRegion(temp));
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
         temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepRight.put(Direction.WEST, temp);
-        // Left step is just right step flipped horizontally
-        temp = new TextureRegion(temp);
-        temp.flip(true, false);
+        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
+        temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepLeft.put(Direction.WEST, temp);
 
         stevenStepping = new EnumMap<Direction, Animation>(Direction.class);

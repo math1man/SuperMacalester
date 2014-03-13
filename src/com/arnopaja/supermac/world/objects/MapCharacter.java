@@ -35,8 +35,8 @@ public abstract class MapCharacter extends Entity {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        return super.render(batcher, position.cpy().add(renderOffset), runTime);
+    public boolean render(SpriteBatch batch, Vector2 position, float runTime) {
+        return super.render(batch, position.cpy().add(renderOffset), runTime);
     }
 
     @Override

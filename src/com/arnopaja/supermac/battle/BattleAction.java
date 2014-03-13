@@ -11,7 +11,7 @@ public abstract class BattleAction {
 
     private static final Random battleRandomGen = new Random();
 
-    public enum ActionType { ATTACK, MAGIC, ITEM, DEFEND, FLEE }
+    public static enum ActionType { ATTACK, MAGIC, ITEM, DEFEND, FLEE }
 
     private final BattleCharacter source;
     private final BattleCharacter destination;

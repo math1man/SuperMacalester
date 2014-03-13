@@ -5,7 +5,7 @@ package com.arnopaja.supermac.battle;import java.util.LinkedList;
  */
 public class Inventory
 {
-    public static enum INVENTORYTYPE
+    public static enum InventoryType
     {
         ARMOR,WEAPON,ITEM,SPECIALITEM;
     }
@@ -21,7 +21,7 @@ public class Inventory
         specialItemInventory = new LinkedList<SpecialItem>();
     }
     //get
-    public static Item get(INVENTORYTYPE t, int index)
+    public static Item get(InventoryType t, int index)
     {
         switch(t)
         {

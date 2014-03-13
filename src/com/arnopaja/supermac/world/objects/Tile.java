@@ -51,10 +51,10 @@ public class Tile implements Renderable {
     }
 
     @Override
-    public boolean render(SpriteBatch batcher, Vector2 position, float runTime) {
-        if (isRendered() && getSprite() != null) {
+    public boolean render(SpriteBatch batch, Vector2 position, float runTime) {
+        if (isRendered() && getSprite(runTime) != null) {
             Vector2 renderPos = position.cpy().scl(Grid.GRID_PIXEL_DIMENSION);
-            batcher.draw(getSprite(), renderPos.x, renderPos.y);
+            batch.draw(getSprite(runTime), renderPos.x, renderPos.y);
             return true;
         }
         return false;

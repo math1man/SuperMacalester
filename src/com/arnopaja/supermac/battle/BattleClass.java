@@ -9,7 +9,7 @@ public enum BattleClass {
     NATSCI(Special.RED, 35, 5, 10, 10, 15, 10),
     HUMANITIES(Special.NONE, 30, 0, 20, 10, 5, 20);
 
-    public enum Special { BLACK, WHITE, RED, NONE }
+    public static enum Special { BLACK, WHITE, RED, NONE }
 
     private final Special special;
     private final int baseHealth;
