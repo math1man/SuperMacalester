@@ -9,24 +9,7 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/dupre.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grass_horizontal_bush.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grass_horizontal_flowerbush.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grass_vertical_bush.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/grass_vertical_flowerbush.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/landscapetiles/redcobblestone.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_back.png" afterPath="$PROJECT_DIR$/data/steven/steven_back.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_back_step_left.png" afterPath="$PROJECT_DIR$/data/steven/steven_back_step_left.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_back_step_right.png" afterPath="$PROJECT_DIR$/data/steven/steven_back_step_right.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_front.png" afterPath="$PROJECT_DIR$/data/steven/steven_front.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_front_step_left.png" afterPath="$PROJECT_DIR$/data/steven/steven_front_step_left.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_front_step_right.png" afterPath="$PROJECT_DIR$/data/steven/steven_front_step_right.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_left.png" afterPath="$PROJECT_DIR$/data/steven/steven_left.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_left_step.png" afterPath="$PROJECT_DIR$/data/steven/steven_left_step.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_right.png" afterPath="$PROJECT_DIR$/data/steven/steven_right.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/steven/steven_right_step.png" afterPath="$PROJECT_DIR$/data/steven/steven_right_step.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" afterPath="$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/AssetLoader.java" />
+    <list default="true" id="58282706-0f59-4f4b-8aba-911b67bfea68" name="Default" comment="moar tiles">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SuperMacalester.iws" />
@@ -91,6 +74,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="dupre.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/dupre.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grass_horizontal_bush.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_horizontal_bush.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grass_horizontal_flowerbush.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_horizontal_flowerbush.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grass_vertical_bush.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_bush.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grass_vertical_flowerbush.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_flowerbush.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grasstoroad_east.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_east.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grasstoroad_north.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_north.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grasstoroad_south.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_south.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="grasstoroad_west.png" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_west.png">
           <provider selected="true" editor-type-id="images">
@@ -98,64 +137,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="darkgrasstile3.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile3.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="darkgrasstile2.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile2.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="darkgrasstile1.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile1.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cobblestone1.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/cobblestone1.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chapel.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/chapel.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="campuscenter.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/campuscenter.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="asphalt_tile.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/asphalt_tile.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="roadline_tile_vertical.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_vertical.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="roadline_tile_horizontal.png" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_horizontal.png">
+      <file leaf-file-name="redcobblestone.png" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/landscapetiles/redcobblestone.png">
           <provider selected="true" editor-type-id="images">
             <state />
           </provider>
@@ -440,7 +423,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="steven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="landscapetiles" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SuperMacalester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indoortiles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -830,7 +849,7 @@
       <workItem from="1393864506638" duration="17597000" />
       <workItem from="1393958388315" duration="8064000" />
       <workItem from="1394037062069" duration="3477000" />
-      <workItem from="1394060637574" duration="5193000" />
+      <workItem from="1394060637574" duration="6373000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -1012,11 +1031,15 @@
       <created>1394071458000</created>
       <updated>1394071458000</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="moar tiles">
+      <created>1394474574294</created>
+      <updated>1394474574294</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138127000" />
+    <option name="totallyTimeSpent" value="139307000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1057,7 +1080,7 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3268229" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32552084" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32552084" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1065,7 +1088,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1942356" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1942356" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31770834" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1115,10 +1138,10 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="The main character is buggy.  Trying to resolve" />
     <MESSAGE value="I fixed it... but I have no idea why it works..." />
     <MESSAGE value="I have solved the magical mystery code and all the bugs that it was causing... I am dumb, but so is Vector2" />
     <MESSAGE value="Huzzah! Steven turns! Next to animate him" />
@@ -1143,7 +1166,8 @@
     <MESSAGE value="Added random movement for NPCs" />
     <MESSAGE value="Added a canMove boolean to NPCs so we can make ones that don't move" />
     <MESSAGE value="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more tiles, such as road as red cobblestone. Also made campus center prototype as well as chapel prototype" />
+    <MESSAGE value="moar tiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="moar tiles" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1154,18 +1178,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/libs/gdx.jar!/com/badlogic/gdx/Screen.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="9" selection-start="277" selection-end="277" vertical-scroll-proportion="0.39033458" vertical-offset="0" max-vertical-offset="538" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/grid/RenderGrid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="63" selection-start="2020" selection-end="2020" vertical-scroll-proportion="0.0" vertical-offset="610" max-vertical-offset="975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arnopaja/supermac/helpers/BattleInputHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="49" column="43" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.43664384" vertical-offset="465" max-vertical-offset="1290">
@@ -1384,22 +1396,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/redcobblestone.png">
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile3.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_flowerbush.png">
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile2.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_bush.png">
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_vertical.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_horizontal_flowerbush.png">
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_horizontal.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/asphalt_tile.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/campuscenter.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/chapel.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/cobblestone1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile1.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1409,7 +1446,32 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_horizontal_bush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_horizontal_flowerbush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_bush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grass_vertical_flowerbush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_east.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/grasstoroad_north.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1424,47 +1486,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile3.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/darkgrasstile1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/cobblestone1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/chapel.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/campuscenter.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/asphalt_tile.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_vertical.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/landscapetiles/roadline_tile_horizontal.png">
+    <entry file="file://$PROJECT_DIR$/data/landscapetiles/redcobblestone.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
