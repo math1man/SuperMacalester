@@ -218,7 +218,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="5" />
+    <option name="y" value="8" />
     <option name="width" value="1612" />
     <option name="height" value="876" />
   </component>
@@ -849,7 +850,7 @@
       <workItem from="1393864506638" duration="17597000" />
       <workItem from="1393958388315" duration="8064000" />
       <workItem from="1394037062069" duration="3477000" />
-      <workItem from="1394060637574" duration="6373000" />
+      <workItem from="1394060637574" duration="6382000" />
     </task>
     <task id="LOCAL-00001" summary="Starting to figure things out">
       <created>1392832865055</created>
@@ -1035,11 +1036,15 @@
       <created>1394474574294</created>
       <updated>1394474574294</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="moar tiles">
+      <created>1394776926522</created>
+      <updated>1394776926522</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139307000" />
+    <option name="totallyTimeSpent" value="139316000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1062,7 +1067,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1612" height="876" extended-state="0" />
+    <frame x="5" y="8" width="1612" height="876" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
