@@ -15,7 +15,6 @@ public enum BattleClass {
     private final int baseMaxHealth;
     private final int baseMaxMana;
     private final int baseAttack, baseDefense, baseSpecial, baseSpeed;
-    private int level;
 
     private BattleClass(SpecialType specialType, int baseMaxHealth, int baseMaxMana,
               int baseAttack, int baseDefense, int baseSpecial, int baseSpeed) {
@@ -26,43 +25,6 @@ public enum BattleClass {
         this.baseDefense = baseDefense;
         this.baseSpecial = baseSpecial;
         this.baseSpeed = baseSpeed;
-        this.level = 0; // Level starts off at 0 for math simplicity
-    }
-
-    public int getMaxHealth() {
-        return round(baseMaxHealth * (1 + level / 8.0));
-    }
-
-    public int getMaxMana() {
-        return round(baseMaxMana * (1 + level / 8.0));
-    }
-
-    public int getAttack() {
-        return baseAttack + level;
-    }
-
-    public int getDefense() {
-        return baseAttack + level;
-    }
-
-    public int getSpecial() {
-        return baseAttack + level;
-    }
-
-    public int getSpeed() {
-        return baseSpeed; // TODO: should speed get modified?
-    }
-
-    public int getVitality() {
-        return round(getMaxHealth() / 8.0);
-    }
-
-    public int getIntelligence() {
-        return round(getMaxMana() / 8.0);
-    }
-
-    public void levelUp() {
-        level++;
     }
 
     public SpecialType getSpecialType() {
@@ -99,17 +61,5 @@ public enum BattleClass {
 
     public int getBaseIntelligence() {
         return (int) Math.round(baseMaxMana / 8.0);
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    private static int round(double value) {
-        return (int) Math.round(value);
     }
 }
