@@ -55,11 +55,11 @@ public enum BattleClass {
         return baseSpeed;
     }
 
-    public int getBaseVitality() {
+    public int getVitality() {
         return (int) Math.round(baseMaxHealth / 8.0);
     }
 
-    public int getBaseIntelligence() {
+    public int getIntelligence() {
         return (int) Math.round(baseMaxMana / 8.0);
     }
 }
