@@ -19,4 +19,12 @@ public class Plot {
         // this will be a very long method if it is hard-coded
         // TODO: make some way to parse goals from an external doc?
     }
+
+    public static void load() {
+
+    }
+
+    public static void save() {
+
+    }
 }
