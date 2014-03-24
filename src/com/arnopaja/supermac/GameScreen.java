@@ -4,6 +4,7 @@ import com.arnopaja.supermac.battle.BattleController;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.WorldController;
 import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
@@ -15,11 +16,14 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen {
 
+    // TODO: allow for variable aspect ratios (i.e. below)
+    public static final float ASPECT_RATIO = 5.0f / 3; //Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+    public static final int GAME_HEIGHT = 480;
+
     public static enum GameMode { WORLD, BATTLE, MENU }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
-    private final float gameWidth, gameHeight;
 
     private final WorldController world;
     private final WorldRenderer worldRenderer;
@@ -38,20 +42,25 @@ public class GameScreen implements Screen {
     private float runTime;
     private boolean isPreBattle = false;
 
-    public GameScreen(float gameWidth, float gameHeight) {
-        this.dialogueHandler = new DialogueHandler(gameWidth, gameHeight);
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
+    public GameScreen() {
+        Settings.gameHeight = GAME_HEIGHT;
+        Settings.gameWidth = GAME_HEIGHT * ASPECT_RATIO;
+
+        this.dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
 
         world = new WorldController();
-        worldRenderer = new WorldRenderer(dialogueHandler, gameWidth, gameHeight);
-        worldRenderer.setController(world);
-        worldInputHandler = new WorldInputHandler(this, gameWidth, gameHeight,
-                gameWidth/Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
 
-        battleRenderer = new BattleRenderer(dialogueHandler, gameWidth, gameHeight);
-        battleInputHandler = new BattleInputHandler(this, gameWidth, gameHeight,
-                gameWidth/ Gdx.graphics.getWidth(), gameHeight/Gdx.graphics.getHeight());
+        float scaleFactorX = Settings.gameWidth/Gdx.graphics.getWidth();
+        float scaleFactorY = Settings.gameHeight/Gdx.graphics.getHeight();
+
+        worldRenderer = new WorldRenderer(dialogueHandler, Settings.gameWidth, Settings.gameHeight);
+        worldRenderer.setController(world);
+        worldInputHandler = new WorldInputHandler(this, Settings.gameWidth, Settings.gameHeight,
+                scaleFactorX, scaleFactorY);
+
+        battleRenderer = new BattleRenderer(dialogueHandler, Settings.gameWidth, Settings.gameHeight);
+        battleInputHandler = new BattleInputHandler(this, Settings.gameWidth, Settings.gameHeight,
+                scaleFactorX, scaleFactorY);
 
         changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
@@ -180,14 +189,6 @@ public class GameScreen implements Screen {
 
     public DialogueHandler getDialogueHandler() {
         return dialogueHandler;
-    }
-
-    public float getGameWidth() {
-        return gameWidth;
-    }
-
-    public float getGameHeight() {
-        return gameHeight;
     }
 
     public WorldController getWorld() {
