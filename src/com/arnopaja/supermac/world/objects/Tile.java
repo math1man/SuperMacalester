@@ -37,12 +37,12 @@ public class Tile implements Renderable {
         String tileKey = temp[0];
         TextureRegion sprite = AssetLoader.getTileSprite(tileKey);
 
-        boolean isPathable = false;
+        boolean isPathable = true;
         if (temp.length > 1) {
             for (char tileFlag : temp[1].toCharArray()) {
                 // add all optional flags here
-                if (tileFlag == 'p') {
-                    isPathable = true;
+                if (tileFlag == 'i') {
+                    isPathable = false;
                 }
             }
         }

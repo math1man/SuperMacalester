@@ -26,42 +26,42 @@ bch = Chapel **
 **These tiles are larger building sprites and should be filled in with null tiles
 
 List of current tile flags:
-p = pathable flag
+i = impassable flag
 
 All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
 map: World
 width: 32
 height: 32
-a	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	a
-as	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-a	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	a
+a-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	a-i
+as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
+a-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	a-i
