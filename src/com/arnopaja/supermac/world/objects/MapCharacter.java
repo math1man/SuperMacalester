@@ -59,11 +59,6 @@ public abstract class MapCharacter extends Entity {
         return false;
     }
 
-    public void changeGrid(Location location) {
-        getGrid().removeEntity(location.getPosition());
-        location.putInGrid(this);
-    }
-
     public boolean isMoving() {
         return isMoving;
     }

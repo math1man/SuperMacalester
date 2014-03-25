@@ -76,7 +76,7 @@ public class DialogueOptions implements DialogueDisplayable {
         if (interaction < count) {
             return interactions[interaction];
         } else {
-            return Interaction.getNull();
+            return Interaction.NULL;
         }
     }
 

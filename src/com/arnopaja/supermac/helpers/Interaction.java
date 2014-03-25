@@ -11,18 +11,19 @@ import com.arnopaja.supermac.battle.BattleController;
  */
 public abstract class Interaction {
 
-    public abstract void run(GameScreen screen);
+    /**
+     * Default null interaction.  Running this does nothing
+     */
+    public static final Interaction NULL = new Interaction() {
+        @Override
+        public void run(GameScreen screen) {}
+    };
 
-    public static Interaction getNull() {
-        return new Interaction() {
-            @Override
-            public void run(GameScreen screen) {}
-        };
-    }
+    public abstract void run(GameScreen screen);
 
     public static Interaction dialogue(final DialogueDisplayable dialogue) {
         if (dialogue == null) {
-            return Interaction.getNull();
+            return NULL;
         } else {
             return new Interaction() {
                 @Override
@@ -46,7 +47,7 @@ public abstract class Interaction {
 
     public static Interaction goToBattle(final BattleController battle) {
         if (battle == null) {
-            return Interaction.getNull();
+            return NULL;
         } else {
             return new Interaction() {
                 @Override
@@ -59,7 +60,7 @@ public abstract class Interaction {
 
     public static Interaction preBattle(final DialogueDisplayable dialogue, final BattleController battle) {
         if (dialogue == null || battle == null) {
-            return Interaction.getNull();
+            return NULL;
         } else {
             return new Interaction() {
                 @Override
@@ -73,7 +74,7 @@ public abstract class Interaction {
 
     public static Interaction battle(final BattleAction action) {
         if (action == null) {
-            return Interaction.getNull();
+            return NULL;
         } else {
             return new Interaction() {
                 @Override
@@ -95,7 +96,7 @@ public abstract class Interaction {
      */
     public static Interaction combine(final Interaction... interactions) {
         if (interactions == null) {
-            return Interaction.getNull();
+            return NULL;
         } else {
             return new Interaction() {
                 @Override

@@ -26,6 +26,6 @@ public class MainMapCharacter extends MapCharacter {
         if (entity != null) {
             return entity.interact(this);
         }
-        return Interaction.getNull();
+        return Interaction.NULL;
     }
 }

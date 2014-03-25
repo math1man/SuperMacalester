@@ -23,7 +23,7 @@ public class InteractionUtils {
      */
     public static Interaction generic(Object object) {
         if (object == null) {
-            return Interaction.getNull();
+            return Interaction.NULL;
         } else if (object instanceof DialogueDisplayable) {
             return Interaction.dialogue((DialogueDisplayable) object);
         } else if (object instanceof BattleController) {
@@ -31,7 +31,7 @@ public class InteractionUtils {
         } else if (object instanceof BattleAction) {
             return Interaction.battle((BattleAction) object);
         } else {
-            return Interaction.getNull();
+            return Interaction.NULL;
         }
     }
 
@@ -86,7 +86,7 @@ public class InteractionUtils {
      */
     public static Interaction[] getNulls(int size) {
         Interaction[] interactions = new Interaction[size];
-        Arrays.fill(interactions, Interaction.getNull());
+        Arrays.fill(interactions, Interaction.NULL);
         return interactions;
     }
 
@@ -140,8 +140,7 @@ public class InteractionUtils {
      * @return
      */
     public static Interaction[] yesNoGoToBattle(BattleController battle, int size) {
-        Interaction[] interactions = new Interaction[size];
-        Arrays.fill(interactions, Interaction.getNull());
+        Interaction[] interactions = getNulls(size);
         interactions[0] = Interaction.goToBattle(battle);
         return interactions;
     }

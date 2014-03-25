@@ -136,7 +136,7 @@ public class DialogueHandler {
                 }
             }
         }
-        return isNone() ? Interaction.clearDialogue() : Interaction.getNull();
+        return isNone() ? Interaction.clearDialogue() : Interaction.NULL;
     }
 
     private void pollQueue() {

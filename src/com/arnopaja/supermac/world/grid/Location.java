@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -12,12 +11,6 @@ public class Location {
     private Vector2 position;
     private Direction facing;
 
-    public Location() {
-        this.grid = null;
-        this.position = null;
-        this.facing = null;
-    }
-
     public Location(Grid grid) {
         this.grid = grid;
         this.position = new Vector2(0, 0);
@@ -28,12 +21,6 @@ public class Location {
         this.grid = grid;
         this.position = position;
         this.facing = facing;
-    }
-
-    public void putInGrid(Entity entity) {
-        entity.setLocation(this);
-        // TODO: what about collisions?
-        grid.putEntity(entity, position);
     }
 
     public RenderGrid getRenderGrid(float renderGridWidth, float renderGridHeight) {

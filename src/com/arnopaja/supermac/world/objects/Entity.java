@@ -25,11 +25,11 @@ public abstract class Entity implements Renderable {
 
     private EnumMap<Direction, TextureRegion> facingSprites = new EnumMap<Direction, TextureRegion>(Direction.class);
 
-    private Interaction interaction;
+    private Interaction interaction = Interaction.NULL;
 
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
-        location.putInGrid(this);
+        putInGrid(location);
         this.isInteractable = isInteractable;
         // TODO: what about collisions?
     }
@@ -56,16 +56,34 @@ public abstract class Entity implements Renderable {
             setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
             return getInteraction();
         }
-        return Interaction.getNull();
+        return Interaction.NULL;
+    }
+
+    public void putInGrid(Location location) {
+        this.location = location;
+        if (isInGrid()) {
+            // TODO: what about collisions?
+            getGrid().putEntity(this);
+        }
+    }
+
+    public void changeGrid(Location location) {
+        if (isInGrid()) {
+            getGrid().removeEntity(getPosition());
+        }
+        putInGrid(location);
+    }
+
+    public void removeFromGrid() {
+        changeGrid(null);
+    }
+
+    public boolean isInGrid() {
+        return location != null;
     }
 
     public Location getLocation() {
         return location;
-    }
-
-    public void removeFromGrid() {
-        getGrid().removeEntity(getPosition());
-        setLocation(null);
     }
 
     public Grid getGrid() {
@@ -80,16 +98,12 @@ public abstract class Entity implements Renderable {
         return location.getFacing();
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public void setPosition(Vector2 position) {
-        this.location.setPosition(position);
+        location.setPosition(position);
     }
 
     public void setFacing(Direction direction) {
-        this.location.setFacing(direction);
+        location.setFacing(direction);
     }
 
     public boolean isInteractable() {

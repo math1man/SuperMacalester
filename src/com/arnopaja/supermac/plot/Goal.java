@@ -32,7 +32,7 @@ public class Goal {
 
     public void activate() {
         state = GoalState.ACTIVE;
-        location.putInGrid(entity);
+        entity.putInGrid(location);
     }
 
     public void complete() {
