@@ -7,8 +7,18 @@ import com.arnopaja.supermac.world.objects.Entity;
 import java.util.List;
 
 /**
- * A goal is a single plot event that will need to be fleshed out
- * It will likely have some characters, dialogue, and possibly battle scenarios
+ * A goal is a single plot interaction.
+ *
+ * It has an entity, an interaction, and a location.  On activation,
+ * the entity is given the interaction and placed at the location.
+ * On completion, the entity will be removed from the grid (or
+ * something like that, we need to figure that out). Also, any goals
+ * that result from the completion of this goal will be activated.
+ *
+ * An entity can be used my multiple goals, so the interaction must
+ * be given on activation, and we will need to design a system or
+ * just structure the plot so that two goals with the same entity
+ * are never active at the same time.
  *
  * @author Ari Weiland
  */
@@ -30,9 +40,15 @@ public class Goal {
         this.location = location;
     }
 
+    /**
+     * Aside from the very first goal(s), this should only be called by
+     * other goals via the complete method.
+     */
     public void activate() {
-        state = GoalState.ACTIVE;
-        entity.putInGrid(location);
+        if (isInactive()) {
+            state = GoalState.ACTIVE;
+            entity.putInGrid(location);
+        }
     }
 
     public void complete() {
