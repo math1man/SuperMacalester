@@ -1,12 +1,10 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Dialogue;
-import com.arnopaja.supermac.helpers.DialogueOptions;
+import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.arnopaja.supermac.world.objects.MapNPC;
@@ -27,7 +25,7 @@ public class WorldController implements BaseController {
 
     public WorldController() {
         worldGrid = new Grid(AssetLoader.parseTileArray("World"));
-        mainCharacter = new MainMapCharacter(worldGrid, new Vector2(1, 1), Direction.WEST);
+        mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(1, 1), Direction.WEST));
         initBuildings();
         initCharacters();
     }
@@ -39,14 +37,14 @@ public class WorldController implements BaseController {
 
     private void initCharacters() {
         // TODO: add characters here?
-        MapNPC character = new MapNPC(worldGrid, new Vector2(5, 5), Direction.NORTH);
+        MapNPC character = new MapNPC(new Location(worldGrid, new Vector2(5, 5), Direction.NORTH));
         character.setFacingSprites(AssetLoader.steven);
         character.setFacingAnimations(AssetLoader.stevenStepping);
         character.setInteractable(true);
-        character.setDialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
+        character.setInteraction(Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
                 "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
                 "I spent this past summer here working for Libby Shoop designing a website.",
-                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS)));
+                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS))));
         worldGrid.putEntity(character);
     }
 

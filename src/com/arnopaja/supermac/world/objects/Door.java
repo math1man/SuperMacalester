@@ -1,25 +1,19 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.world.grid.Building;
-import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.GameScreen;
-import com.badlogic.gdx.math.Vector2;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.world.grid.Location;
 
 /**
  * @author Ari Weiland
  */
 public class Door extends Entity {
 
-    private final Building building;
-    private final int floor;
-    private final Vector2 landingSpace;
+    private final Location destination;
 
-    public Door(Grid grid, Vector2 position, Building building, int floor, Vector2 landingSpace) {
-        super(false, grid, position, null, true);
-        this.building = building;
-        this.floor = floor;
-        this.landingSpace = landingSpace;
+    public Door(Location location, Location destination) {
+        super(false, location, true);
+        this.destination = destination;
     }
 
     @Override
@@ -28,24 +22,17 @@ public class Door extends Entity {
     }
 
     @Override
-    public Interaction getInteraction(final MainMapCharacter character) {
-        return new Interaction() {
+    public Interaction interact(final MainMapCharacter character) {
+        setInteraction(new Interaction() {
             @Override
             public void run(GameScreen screen) {
-                character.changeGrid(building.getFloorByNumber(floor), landingSpace);
+                character.changeGrid(destination);
             }
-        };
+        });
+        return super.interact(character);
     }
 
-    public Building getBuilding() {
-        return building;
-    }
-
-    public int getFloor() {
-        return floor;
-    }
-
-    public Vector2 getLandingSpace() {
-        return landingSpace;
+    public Location getDestination() {
+        return destination;
     }
 }

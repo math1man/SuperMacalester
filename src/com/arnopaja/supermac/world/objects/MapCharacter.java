@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,16 +22,12 @@ public abstract class MapCharacter extends Entity {
 
     private EnumMap<Direction, Animation> facingAnimations = new EnumMap<Direction, Animation>(Direction.class);
 
-    protected MapCharacter() {
-        this(null, new Vector2(0, 0), Direction.WEST);
+    protected MapCharacter(Location location) {
+        this(location, false);
     }
 
-    protected MapCharacter(Grid grid, Vector2 position, Direction facing) {
-        this(grid, position, facing, false);
-    }
-
-    protected MapCharacter(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
-        super(true, grid, position, facing, isInteractable);
+    protected MapCharacter(Location location, boolean isInteractable) {
+        super(true, location, isInteractable);
     }
 
     @Override
@@ -63,11 +59,9 @@ public abstract class MapCharacter extends Entity {
         return false;
     }
 
-    public void changeGrid(Grid newGrid, Vector2 position) {
-        getGrid().removeEntity(position);
-        setGrid(newGrid);
-        // TODO: what about collisions?
-        newGrid.putEntity(this, position);
+    public void changeGrid(Location location) {
+        getGrid().removeEntity(location.getPosition());
+        location.putInGrid(this);
     }
 
     public boolean isMoving() {
@@ -93,15 +87,5 @@ public abstract class MapCharacter extends Entity {
 
     public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {
         this.facingAnimations = facingAnimations;
-    }
-
-    @Override
-    public String toString() {
-        return "MapCharacter{" +
-                "grid=" + getGrid() +
-                ", position=" + getPosition() +
-                ", facing=" + getFacing() +
-                ", isInteractable=" + isInteractable() +
-                '}';
     }
 }

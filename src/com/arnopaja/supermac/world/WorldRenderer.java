@@ -44,9 +44,7 @@ public class WorldRenderer extends BaseRenderer<WorldController> {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         MainMapCharacter mainCharacter = getController().getMainCharacter();
-        Vector2 centerPosition = mainCharacter.getPosition();
-        RenderGrid renderGrid = getController().getWorldGrid()
-                .getRenderGrid(centerPosition, renderGridWidth, renderGridHeight);
+        RenderGrid renderGrid = mainCharacter.getLocation().getRenderGrid(renderGridWidth, renderGridHeight);
 
         renderBackgroundColor();
 

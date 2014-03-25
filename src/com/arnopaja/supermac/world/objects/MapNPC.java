@@ -1,9 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.badlogic.gdx.math.Vector2;
+import com.arnopaja.supermac.world.grid.Location;
 
 /**
  * @author Ari Weiland
@@ -14,16 +12,16 @@ public class MapNPC extends MapCharacter {
 
     private boolean canMove = true;
 
-    public MapNPC(Grid grid, Vector2 position, Direction facing) {
-        this(grid, position, facing, false);
+    public MapNPC(Location location) {
+        this(location, false);
     }
 
-    public MapNPC(Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
-        this(grid, position, facing, isInteractable, true);
+    public MapNPC(Location location, boolean isInteractable) {
+        this(location, isInteractable, true);
     }
 
-    public MapNPC(Grid grid, Vector2 position, Direction facing, boolean isInteractable, boolean canMove) {
-        super(grid, position, facing, isInteractable);
+    public MapNPC(Location location, boolean isInteractable, boolean canMove) {
+        super(location, isInteractable);
         this.canMove = canMove;
     }
 
@@ -37,15 +35,6 @@ public class MapNPC extends MapCharacter {
                 move(Direction.values()[ordinal]);
             }
         }
-    }
-
-    @Override
-    public Interaction getInteraction(MainMapCharacter character) {
-        if (isInteractable()) {
-            setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
-            return Interaction.dialogue(getDialogue());
-        }
-        return Interaction.getNull();
     }
 
     public boolean canMove() {

@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.Dialogue;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -20,23 +20,18 @@ public abstract class Entity implements Renderable {
 
     private final boolean isRendered;
 
-    private Grid grid;
-    private Vector2 position;
-    private Direction facing;
+    private Location location;
     private boolean isInteractable;
 
     private EnumMap<Direction, TextureRegion> facingSprites = new EnumMap<Direction, TextureRegion>(Direction.class);
 
-    private Dialogue dialogue;
+    private Interaction interaction;
 
-    protected Entity(boolean isRendered, Grid grid, Vector2 position, Direction facing, boolean isInteractable) {
+    protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
-        this.grid = grid;
-        this.position = position;
-        this.facing = facing;
+        location.putInGrid(this);
         this.isInteractable = isInteractable;
         // TODO: what about collisions?
-        this.grid.putEntity(this);
     }
 
     @Override
@@ -56,30 +51,45 @@ public abstract class Entity implements Renderable {
 
     public abstract void update(float delta);
 
-    public abstract Interaction getInteraction(MainMapCharacter character);
+    public Interaction interact(MainMapCharacter character) {
+        if (isInteractable()) {
+            setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
+            return getInteraction();
+        }
+        return Interaction.getNull();
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void removeFromGrid() {
+        getGrid().removeEntity(getPosition());
+        setLocation(null);
+    }
 
     public Grid getGrid() {
-        return grid;
+        return location.getGrid();
     }
 
     public Vector2 getPosition() {
-        return position;
+        return location.getPosition();
     }
 
     public Direction getFacing() {
-        return facing;
+        return location.getFacing();
     }
 
-    public void setGrid(Grid grid) {
-        this.grid = grid;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void setPosition(Vector2 position) {
-        this.position = position;
+        this.location.setPosition(position);
     }
 
-    public void setFacing(Direction facing) {
-        this.facing = facing;
+    public void setFacing(Direction direction) {
+        this.location.setFacing(direction);
     }
 
     public boolean isInteractable() {
@@ -93,7 +103,7 @@ public abstract class Entity implements Renderable {
     @Override
     public TextureRegion getSprite() {
         if ((facingSprites != null)) {
-            return facingSprites.get(facing);
+            return facingSprites.get(getFacing());
         }
         return null;
     }
@@ -107,20 +117,18 @@ public abstract class Entity implements Renderable {
         this.facingSprites = facingSprites;
     }
 
-    public Dialogue getDialogue() {
-        return dialogue;
+    public Interaction getInteraction() {
+        return interaction;
     }
 
-    public void setDialogue(Dialogue dialogue) {
-        this.dialogue = dialogue;
+    public void setInteraction(Interaction interaction) {
+        this.interaction = interaction;
     }
 
     @Override
     public String toString() {
         return "Entity{" +
-                "grid=" + grid +
-                ", position=" + position +
-                ", facing=" + facing +
+                "location=" + location +
                 ", isInteractable=" + isInteractable +
                 ", isRendered=" + isRendered() +
                 '}';
