@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.plot;
 
-import com.arnopaja.supermac.world.objects.Entity;
+import com.arnopaja.supermac.helpers.AssetLoader;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This will be a static class that handles the plot structure and everything
@@ -13,24 +13,49 @@ import java.util.List;
  */
 public class Plot {
 
-    private static List<Goal> goals;
-    private static List<Entity> plotEntities;
+    private static Map<Integer, Quest> quests;
 
     public static void init() {
-        goals = new ArrayList<Goal>();
-        plotEntities = new ArrayList<Entity>();
-        // TODO: create goals, entities, and everything that goes into them
+        quests = new HashMap<Integer, Quest>();
+        // TODO: create Quests and everything that goes into them
         // this will be a very long method if it is hard-coded
 
-        // TODO: make some way to parse goals from an external doc?
-        // TODO: make some way to parse entities from an external doc?
+        // TODO: make some way to parse quests from an external doc?
     }
 
     public static void save() {
-        // this method will somehow store which goals are active and complete
+        StringBuilder sb = new StringBuilder();
+        for (Quest quest : quests.values()) {
+            if (!quest.isInactive()) {
+                // All active and complete quests are saved with their ID
+                sb.append(quest.ID);
+                if (quest.isComplete()) {
+                    // All active quests have their current goal appended
+                    sb.append("-").append(quest.getCurrentGoal());
+                }
+                sb.append("\n");
+            }
+        }
+        AssetLoader.prefs.putString("Quests", sb.toString());
     }
 
     public static void load() {
-        // this method will read which goals are active and complete and set them appropriately
+        // this method will first read which quests are complete and complete them
+        // it then needs to set active quests to the proper current goal
+        String load = AssetLoader.prefs.getString("Quests");
+        String[] questIDs = load.split("\n");
+        for (String questID : questIDs) {
+            if (questID.contains("-")) {
+                // loads all active quests to the proper goal
+                String[] split = questID.split("-");
+                int id = new Integer(split[0]);
+                int currentGoal = new Integer(split[1]);
+                quests.get(id).load(currentGoal);
+            } else {
+                // completes all quests that were previously completed
+                int id = new Integer(questID);
+                quests.get(id).complete();
+            }
+        }
     }
 }

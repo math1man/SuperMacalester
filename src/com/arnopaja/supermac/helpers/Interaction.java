@@ -3,6 +3,7 @@ package com.arnopaja.supermac.helpers;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.plot.Quest;
 
 /**
  * This class dictates how an interaction proceeds via its run method
@@ -80,6 +81,19 @@ public abstract class Interaction {
                 @Override
                 public void run(GameScreen screen) {
                     screen.getBattle().addAction(action);
+                }
+            };
+        }
+    }
+
+    public static Interaction nextGoal(final Quest quest) {
+        if (quest == null) {
+            return NULL;
+        } else {
+            return new Interaction() {
+                @Override
+                public void run(GameScreen screen) {
+                    quest.nextGoal();
                 }
             };
         }

@@ -95,7 +95,7 @@ public class AssetLoader {
 
         mapHandle = Gdx.files.internal("data/maps.txt");
 
-        prefs = Gdx.app.getPreferences("SuperMacalester");
+        prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }
 
     public static void scaleFont(float scale) {

@@ -23,7 +23,7 @@ public class Location {
         this.facing = facing;
     }
 
-    public RenderGrid getRenderGrid(float renderGridWidth, float renderGridHeight) {
+    public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
         return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
     }
 
