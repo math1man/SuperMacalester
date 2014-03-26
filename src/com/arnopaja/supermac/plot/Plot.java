@@ -6,13 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This will be a static class that handles the plot structure and everything
- * It will center on a list of Goals that do something TBD
+ * This class will handle the plot structure and everything
+ * It will center on a map of Quests that do things TBD
  *
  * @author Ari Weiland
  */
 public class Plot {
 
+    // TODO: if possible, I think I would like to make this non-static
     private static Map<Integer, Quest> quests;
 
     public static void init() {
@@ -37,6 +38,7 @@ public class Plot {
             }
         }
         AssetLoader.prefs.putString("Quests", sb.toString());
+        AssetLoader.prefs.flush();
     }
 
     public static void load() {
