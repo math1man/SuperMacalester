@@ -4,6 +4,7 @@ import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
@@ -202,7 +203,7 @@ public class Grid {
                 if (isInBounds(position)) {
                     subTileArray[i][j] = tileArray[cast(position.x)][cast(position.y)];
                 } else {
-                    subTileArray[i][j] = Tile.createNullTile();
+                    subTileArray[i][j] = Tile.NULL;
                 }
             }
         }
@@ -258,5 +259,15 @@ public class Grid {
     public void clearAll() {
         clearTiles();
         clearEntities();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Grid)) return false;
+
+        Grid grid = (Grid) o;
+
+        return Arrays.equals(this.getTileGrid(), grid.getTileGrid());
     }
 }

@@ -5,13 +5,16 @@ package com.arnopaja.supermac.world.grid;
  */
 public class Building {
 
+    private final String name;
+
     // tells which floor is at ground level
     // number refers to the array index, not the actual floor number
     // the ground floor is defined as the first floor
     private int groundFloorIndex;
     private Grid[] floors;
 
-    public Building(int floorCount, int groundFloorIndex, int floorWidth, int floorHeight) {
+    public Building(String name, int floorCount, int groundFloorIndex, int floorWidth, int floorHeight) {
+        this.name = name;
         floors = new Grid[floorCount];
         for (Grid floor : floors) {
             floor = new Grid(floorWidth, floorHeight);
@@ -56,5 +59,9 @@ public class Building {
 
     public void setGroundFloorIndex(int groundFloorIndex) {
         this.groundFloorIndex = groundFloorIndex;
+    }
+
+    public String getName() {
+        return name;
     }
 }

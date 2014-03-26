@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Tile implements Renderable {
 
+    public static final Tile NULL = new Tile(false, null, false);
+
     private final boolean isRendered;
     private final TextureRegion sprite;
     private final boolean isPathable;
@@ -31,7 +33,7 @@ public class Tile implements Renderable {
 
     public static Tile createTile(String tileCode) {
         if (tileCode.startsWith("n")) {
-            return createNullTile();
+            return NULL;
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
@@ -77,5 +79,18 @@ public class Tile implements Renderable {
 
     public boolean isPathable() {
         return isPathable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tile)) return false;
+
+        Tile tile = (Tile) o;
+
+        return (!isRendered && !tile.isRendered) || (isPathable == tile.isPathable
+                && (sprite != null ? sprite.equals(tile.sprite) : tile.sprite == null));
+
+
     }
 }

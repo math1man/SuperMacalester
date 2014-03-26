@@ -22,10 +22,6 @@ public abstract class MapCharacter extends Entity {
 
     private EnumMap<Direction, Animation> facingAnimations = new EnumMap<Direction, Animation>(Direction.class);
 
-    protected MapCharacter(Location location) {
-        this(location, false);
-    }
-
     protected MapCharacter(Location location, boolean isInteractable) {
         super(true, location, isInteractable);
     }

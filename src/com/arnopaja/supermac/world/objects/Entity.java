@@ -29,7 +29,7 @@ public abstract class Entity implements Renderable {
 
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
-        putInGrid(location);
+        changeGrid(location);
         this.isInteractable = isInteractable;
         // TODO: what about collisions?
     }
@@ -59,7 +59,10 @@ public abstract class Entity implements Renderable {
         return Interaction.NULL;
     }
 
-    public void putInGrid(Location location) {
+    public void changeGrid(Location location) {
+        if (isInGrid()) {
+            getGrid().removeEntity(getPosition());
+        }
         this.location = location;
         if (isInGrid()) {
             // TODO: what about collisions?
@@ -67,19 +70,12 @@ public abstract class Entity implements Renderable {
         }
     }
 
-    public void changeGrid(Location location) {
-        if (isInGrid()) {
-            getGrid().removeEntity(getPosition());
-        }
-        putInGrid(location);
-    }
-
     public void removeFromGrid() {
-        changeGrid(null);
+        changeGrid(Location.NULL);
     }
 
     public boolean isInGrid() {
-        return location != null;
+        return location != null && !location.equals(Location.NULL);
     }
 
     public Location getLocation() {
@@ -137,14 +133,5 @@ public abstract class Entity implements Renderable {
 
     public void setInteraction(Interaction interaction) {
         this.interaction = interaction;
-    }
-
-    @Override
-    public String toString() {
-        return "Entity{" +
-                "location=" + location +
-                ", isInteractable=" + isInteractable +
-                ", isRendered=" + isRendered() +
-                '}';
     }
 }

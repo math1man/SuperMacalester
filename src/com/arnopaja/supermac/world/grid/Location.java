@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Location {
 
+    public static final Location NULL = new Location(null, null, null);
+
     private final Grid grid;
     private Vector2 position;
     private Direction facing;
@@ -45,5 +47,18 @@ public class Location {
 
     public void setFacing(Direction facing) {
         this.facing = facing;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Location)) return false;
+
+        Location location = (Location) o;
+
+        return facing == location.facing
+                && !(grid != null ? !grid.equals(location.grid) : location.grid != null)
+                && !(position != null ? !position.equals(location.position) : location.position != null);
+
     }
 }

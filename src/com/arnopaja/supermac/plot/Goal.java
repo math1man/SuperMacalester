@@ -23,24 +23,31 @@ import com.arnopaja.supermac.world.objects.Entity;
 public class Goal {
 
     private final Entity entity;
-    private final Interaction interaction;
+    private final Interaction mainInteraction;
     private final Location location;
     private boolean isActive;
+    private Interaction netInteraction = Interaction.NULL;
 
-    public Goal(Entity entity, Location location, Interaction interaction, Quest quest) {
+    public Goal(Entity entity, Location location, Interaction mainInteraction) {
         this.entity = entity;
-        // TODO: the first interaction is the slow one, so this may cause problems
-        this.interaction = Interaction.combine(interaction, Interaction.nextGoal(quest));
+        this.mainInteraction = mainInteraction;
         this.location = location;
         this.isActive = false;
     }
 
+    protected void setQuest(Quest quest) {
+        netInteraction = Interaction.combine(mainInteraction, Interaction.nextGoal(quest));
+    }
+
     public void activate() {
-        entity.putInGrid(location);
+        System.out.println("Goal Activated!");
+        entity.setInteraction(netInteraction);
+        entity.changeGrid(location);
         isActive = true;
     }
 
     public void deactivate() {
+        System.out.println("Goal Deactivated!");
         entity.removeFromGrid();
         isActive = false;
     }
@@ -49,8 +56,8 @@ public class Goal {
         return entity;
     }
 
-    public Interaction getInteraction() {
-        return interaction;
+    public Interaction getMainInteraction() {
+        return mainInteraction;
     }
 
     public Location getLocation() {

@@ -12,6 +12,10 @@ public class MapNPC extends MapCharacter {
 
     private boolean canMove = true;
 
+    public MapNPC() {
+        this(null);
+    }
+
     public MapNPC(Location location) {
         this(location, false);
     }

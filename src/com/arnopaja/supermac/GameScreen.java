@@ -7,6 +7,7 @@ import com.arnopaja.supermac.helpers.BaseController;
 import com.arnopaja.supermac.helpers.BaseInputHandler;
 import com.arnopaja.supermac.helpers.BaseRenderer;
 import com.arnopaja.supermac.helpers.DialogueHandler;
+import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.WorldController;
 import com.arnopaja.supermac.world.WorldInputHandler;
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
+    private final Plot plot;
 
     private final WorldController world;
     private final WorldRenderer worldRenderer;
@@ -49,9 +51,11 @@ public class GameScreen implements Screen {
         Settings.gameHeight = GAME_HEIGHT;
         Settings.gameWidth = GAME_HEIGHT * ASPECT_RATIO;
 
-        this.dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
+        dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
 
         world = new WorldController();
+
+        plot = new Plot(world);
 
         float scaleFactorX = Settings.gameWidth/Gdx.graphics.getWidth();
         float scaleFactorY = Settings.gameHeight/Gdx.graphics.getHeight();
