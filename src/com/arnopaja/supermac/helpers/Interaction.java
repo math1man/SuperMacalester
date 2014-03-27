@@ -43,8 +43,8 @@ public abstract class Interaction {
         return new Interaction() {
             @Override
             public void run(GameScreen screen) {
-                screen.endDialogue();
                 screen.getDialogueHandler().clear();
+                screen.endDialogue();
             }
         };
     }
@@ -84,8 +84,8 @@ public abstract class Interaction {
                 @Override
                 public void run(GameScreen screen) {
                     for (Entity e : entity.getGrid().getEntities()) {
-                        if (e.isToBeRemoved()) {
-                            entity.removeFromGrid();
+                        if (e.isDelayed()) {
+                            e.changeGrid();
                         }
                     }
                     entity.changeGrid(location);
