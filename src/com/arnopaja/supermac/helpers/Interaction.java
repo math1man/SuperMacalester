@@ -3,7 +3,10 @@ package com.arnopaja.supermac.helpers;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.plot.Quest;
+import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.objects.Entity;
 
 /**
  * This class dictates how an interaction proceeds via its run method
@@ -68,6 +71,24 @@ public abstract class Interaction {
                 public void run(GameScreen screen) {
                     screen.preBattle(battle);
                     screen.getDialogueHandler().displayDialogue(dialogue);
+                }
+            };
+        }
+    }
+
+    public static Interaction changeGrid(final Entity entity, final Location location) {
+        if (entity == null) {
+            return NULL;
+        } else {
+            return new Interaction() {
+                @Override
+                public void run(GameScreen screen) {
+                    for (Entity e : entity.getGrid().getEntities()) {
+                        if (e.isToBeRemoved()) {
+                            entity.removeFromGrid();
+                        }
+                    }
+                    entity.changeGrid(location);
                 }
             };
         }

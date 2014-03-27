@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.BaseRenderer;
-import com.arnopaja.supermac.helpers.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;

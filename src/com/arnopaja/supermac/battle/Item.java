@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.helpers.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 
 /**
  * Created by Nolan on 2/16/14.

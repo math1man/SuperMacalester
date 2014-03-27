@@ -1,4 +1,7 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.dialogue;
+
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionUtils;
 
 import java.util.Arrays;
 

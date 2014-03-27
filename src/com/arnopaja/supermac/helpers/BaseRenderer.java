@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

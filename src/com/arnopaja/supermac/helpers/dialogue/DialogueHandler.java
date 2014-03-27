@@ -1,5 +1,7 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.dialogue;
 
+import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

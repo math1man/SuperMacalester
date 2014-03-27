@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.dialogue;
 
 /**
  * Interface for referencing Dialogues and DialogueOptions together

@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.helpers.BaseRenderer;
-import com.arnopaja.supermac.helpers.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 

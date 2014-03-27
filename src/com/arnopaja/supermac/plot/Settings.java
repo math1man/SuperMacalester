@@ -11,11 +11,11 @@ public class Settings {
     public static float gameHeight;
     public static float gameWidth;
 
-    public void save() {
+    public static void save() {
 
     }
 
-    public void load() {
+    public static void load() {
 
     }
 }

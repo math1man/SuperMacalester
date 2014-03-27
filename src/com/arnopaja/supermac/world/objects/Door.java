@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Location;
 
@@ -23,12 +22,7 @@ public class Door extends Entity {
 
     @Override
     public Interaction interact(final MainMapCharacter character) {
-        setInteraction(new Interaction() {
-            @Override
-            public void run(GameScreen screen) {
-                character.changeGrid(destination);
-            }
-        });
+        setInteraction(Interaction.changeGrid(character, destination));
         return super.interact(character);
     }
 

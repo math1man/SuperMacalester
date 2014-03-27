@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Dialogue;
-import com.arnopaja.supermac.helpers.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.WorldController;
 import com.arnopaja.supermac.world.grid.Direction;
@@ -37,14 +37,13 @@ public class Plot {
 
         // TODO: make some way to parse quests from an external doc?
 
-        initTestQuest();
+//        initTestQuest();
     }
 
     private void initTestQuest() {
         MapNPC character = new MapNPC();
         character.setFacingSprites(AssetLoader.steven);
         character.setFacingAnimations(AssetLoader.stevenStepping);
-        character.setInteractable(true);
 
         Location location = new Location(world.getWorldGrid(), new Vector2(5, 5), Direction.NORTH);
 

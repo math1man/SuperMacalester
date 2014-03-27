@@ -1,11 +1,12 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.dialogue;
+
+import java.util.Arrays;
 
 /**
  * @author Ari Weiland
  */
 public class Dialogue implements DialogueDisplayable {
 
-    private final String rawDialogue;
     private final String[] dialogue;
     private final boolean hasOptions;
     private final DialogueOptions options;
@@ -19,8 +20,11 @@ public class Dialogue implements DialogueDisplayable {
     }
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
-        this.rawDialogue = rawDialogue;
-        this.dialogue = rawDialogue.split("<d>");
+        this(rawDialogue.split("<d>"), options);
+    }
+
+    public Dialogue(String[] dialogue, DialogueOptions options) {
+        this.dialogue = dialogue;
         this.hasOptions = (options != null);
         this.options = options;
         reset();
@@ -30,10 +34,6 @@ public class Dialogue implements DialogueDisplayable {
         position++;
         currentDialogue = dialogue[position];
         hasNext = dialogue.length > 1 + position;
-    }
-
-    public String getRawDialogue() {
-        return rawDialogue;
     }
 
     public String[] getDialogue() {
@@ -64,6 +64,6 @@ public class Dialogue implements DialogueDisplayable {
 
     @Override
     public String toString() {
-        return rawDialogue;
+        return Arrays.toString(dialogue);
     }
 }

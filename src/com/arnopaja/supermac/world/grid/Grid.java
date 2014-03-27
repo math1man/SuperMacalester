@@ -98,18 +98,6 @@ public class Grid {
     }
 
     /**
-     * Puts the entity in the map at new coordinates.
-     *
-     * @param entity the entity to be placed in the map
-     * @param newPosition the new position
-     * @return the entity previously at the new location
-     */
-    public Entity putEntity(Entity entity, Vector2 newPosition) {
-        entity.setPosition(newPosition);
-        return putEntity(entity);
-    }
-
-    /**
      * Moves the entity at the specified coordinates in the specified direction.
      *
      * @param position the position of the entity

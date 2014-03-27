@@ -1,6 +1,8 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.battle.*;
+import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
+import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 
 import java.util.Arrays;
 
@@ -119,7 +121,8 @@ public class InteractionUtils {
     }
 
     /**
-     * Returns an 4-array of interactions where each one initiates the specified dialogue
+     * Returns an array of interactions of the specified size
+     * where each one initiates the specified dialogue
      *
      * @param dialogue the dialogue to initiate
      * @return

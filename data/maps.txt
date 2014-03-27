@@ -1,9 +1,16 @@
 Map data document.  All maps should be generated here in a very specific form:
-map: [map name]
-width: [width]
-height: [height]
+<map:[map name]>
 [grid of tile codes]
+</map>
 
+For buildings, the form should be
+<building:[building name]>
+<floors:[floor count]>
+<first_floor_index:[first floor index]>
+[grid of tile codes for the bottommost floor]
+[grid of tile codes for the next bottommost floor]
+[etc]
+</building>
 The grid of tile codes must have the exact specified dimensions.
 Tile codes should start with the tile key followed by a hyphen and then the flags.
 An asterisk * means that there are multiple tiles and one should be randomly selected.
@@ -30,9 +37,7 @@ i = impassable flag
 
 All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
-map: World
-width: 32
-height: 32
+<map:World>
 a-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	a-i
 as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
@@ -65,3 +70,25 @@ as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
 a-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	a-i
+</map>
+
+
+Building info:
+    CAMPUS_CENTER   (3, 1, 0, 0),
+    CHAPEL          (2, 1, 0, 0),
+    OLIN_RICE       (4, 0, 0, 0),
+    OLD_MAIN        (5, 1, 0, 0),
+    CARNEGIE        (5, 1, 0, 0),
+    NEILL_HALL      (3, 0, 0, 0),
+    ART_COMMONS     (3, 1, 0, 0),
+    WEYERHAUSER     (0, 0, 0, 0), // TODO: what is the actual layout?
+    LEONARD_CENTER  (2, 0, 0, 0), // TODO: does the LC have only 2 floors?
+    KAGIN           (3, 1, 0, 0),
+    DUPRE           (6, 1, 0, 0),
+    DOTY            (6, 1, 0, 0), // TODO: does Doty have a basement?
+    TURCK           (6, 1, 0, 0), // TODO: does Turck have 5 floors and a basement?
+    BIGELOW         (5, 1, 0, 0), // TODO: does Bigelow have only 4 floors?
+    THIRTY_MAC      (1, 0, 0, 0), // 30 Mac basement will be part of Bigelow/Wallace
+    WALLACE         (5, 1, 0, 0),
+    KIRK            (3, 1, 0, 0); // The different sections of Kirk are unconnected,
+                                  // but it will be easier to just have one building

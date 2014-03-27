@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -7,17 +8,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Location {
 
-    public static final Location NULL = new Location(null, null, null);
-
     private final Grid grid;
     private Vector2 position;
     private Direction facing;
-
-    public Location(Grid grid) {
-        this.grid = grid;
-        this.position = new Vector2(0, 0);
-        this.facing = Direction.WEST;
-    }
 
     public Location(Grid grid, Vector2 position, Direction facing) {
         this.grid = grid;
@@ -27,6 +20,16 @@ public class Location {
 
     public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
         return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
+    }
+
+    /**
+     * Gets the entity at this location.
+     * In other words, gets the entity at this position in this grid.
+     *
+     * @return the entity
+     */
+    public Entity getEntity() {
+        return grid.getEntity(position);
     }
 
     public Grid getGrid() {
@@ -56,9 +59,9 @@ public class Location {
 
         Location location = (Location) o;
 
-        return facing == location.facing
-                && !(grid != null ? !grid.equals(location.grid) : location.grid != null)
-                && !(position != null ? !position.equals(location.position) : location.position != null);
+        // if grid is not null but position is, it deserves to throw NullPointerExceptions
+        return grid == null ? location.grid == null :
+                (grid.equals(location.grid) && position.equals(location.position));
 
     }
 }

@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
@@ -12,9 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * @author Ari Weiland
@@ -23,16 +19,9 @@ public class AssetLoader {
 
     public static final float FONT_SHADOW_OFFSET = 0.06f;
 
-    private static final String MAP_NAME_LEADER = "map: ";
-    private static final String MAP_WIDTH_LEADER = "width: ";
-    private static final String MAP_HEIGHT_LEADER = "height: ";
-    private static final Random random = new Random();
-
     public static Preferences prefs;
 
     private static Texture texture;
-    private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
-    private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
     public static TextureRegion grass0, grass1, grass2, cobble;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
@@ -86,7 +75,7 @@ public class AssetLoader {
 //        chapel = new TextureRegion(texture, 0, 0, 192, 192);
 //        chapel.flip(false, true);
 
-        initTileMap(); // Must be called after all tiles are loaded
+        MapLoader.initTileMap(); // Must be called after all tiles are loaded
 
         loadCharacters(0, 0);
 
@@ -172,66 +161,6 @@ public class AssetLoader {
             animation.setPlayMode(Animation.LOOP);
             stevenStepping.put(dir, animation);
         }
-    }
-
-    public static Tile[][] parseTileArray(String name) {
-        String raw = mapHandle.readString();
-        String[] lines = raw.split("\n");
-        int lineIndex = 0;
-        while (lineIndex < lines.length && !lines[lineIndex].contains(MAP_NAME_LEADER + name)) {
-            lineIndex++;
-        }
-        String w = lines[lineIndex + 1];
-        String h = lines[lineIndex + 2];
-        if (lineIndex < lines.length && w.contains(MAP_WIDTH_LEADER) && h.contains(MAP_HEIGHT_LEADER)) {
-            int width = Integer.parseInt(w.substring(MAP_WIDTH_LEADER.length()).trim());
-            int height = Integer.parseInt(h.substring(MAP_HEIGHT_LEADER.length()).trim());
-            if (width > 0 && height > 0) {
-                Tile[][] tileArray = new Tile[width][height];
-                for (int i=0; i<height; i++) {
-                    String line = lines[lineIndex + 3 + i];
-                    String[] tileCodes = line.split("\t");
-                    for (int j=0; j<width; j++) {
-                        tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
-                    }
-                }
-                return tileArray;
-            }
-        }
-        return null;
-    }
-
-    /* notes:
-    n is a special character for the null tile
-    b is a prefix for buildings
-    numerals should be used only for arbitrary tiles (ie. different grasses)
-    asterisks are used to represent an arbitrary numeral in the data file
-    */
-    private static void initTileMap() {
-        tileMap.put("g0", AssetLoader.grass0);
-        tileMap.put("g1", AssetLoader.grass1);
-        tileMap.put("g2", AssetLoader.grass2);
-        tileMap.put("c", AssetLoader.cobble);
-        tileMap.put("a", AssetLoader.asphalt);
-        tileMap.put("ah", AssetLoader.asphaltLineH);
-        tileMap.put("av", AssetLoader.asphaltLineV);
-        tileMap.put("an", AssetLoader.asphaltEdgeN);
-        tileMap.put("ae", AssetLoader.asphaltEdgeE);
-        tileMap.put("as", AssetLoader.asphaltEdgeS);
-        tileMap.put("aw", AssetLoader.asphaltEdgeW);
-        tileMap.put("bcc", AssetLoader.campusCenter);
-        tileMap.put("bch", AssetLoader.chapel);
-
-        randomTileMap.put("g", 3);
-    }
-
-    public static TextureRegion getTileSprite(String tileKey) {
-        if (tileKey.contains("*")) {
-            tileKey = tileKey.replace("*", "");
-            int temp = randomTileMap.get(tileKey);
-            tileKey += random.nextInt(temp);
-        }
-        return tileMap.get(tileKey);
     }
 
     public static void dispose() {

@@ -23,16 +23,15 @@ import com.arnopaja.supermac.world.objects.Entity;
 public class Goal {
 
     private final Entity entity;
-    private final Interaction mainInteraction;
     private final Location location;
-    private boolean isActive;
+    private final Interaction mainInteraction;
     private Interaction netInteraction = Interaction.NULL;
+    private boolean isActive = false;
 
     public Goal(Entity entity, Location location, Interaction mainInteraction) {
         this.entity = entity;
-        this.mainInteraction = mainInteraction;
         this.location = location;
-        this.isActive = false;
+        this.mainInteraction = mainInteraction;
     }
 
     protected void setQuest(Quest quest) {
@@ -48,7 +47,8 @@ public class Goal {
 
     public void deactivate() {
         System.out.println("Goal Deactivated!");
-        entity.removeFromGrid();
+        entity.setInteractable(false);
+        entity.delayedRemoveFromGrid();
         isActive = false;
     }
 

@@ -27,6 +27,8 @@ public abstract class Entity implements Renderable {
 
     private Interaction interaction = Interaction.NULL;
 
+    private boolean toBeRemoved = false;
+
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
         changeGrid(location);
@@ -71,11 +73,19 @@ public abstract class Entity implements Renderable {
     }
 
     public void removeFromGrid() {
-        changeGrid(Location.NULL);
+        changeGrid(null);
+    }
+
+    public void delayedRemoveFromGrid() {
+        toBeRemoved = true;
+    }
+
+    public boolean isToBeRemoved() {
+        return toBeRemoved;
     }
 
     public boolean isInGrid() {
-        return location != null && !location.equals(Location.NULL);
+        return location != null;
     }
 
     public Location getLocation() {
@@ -133,5 +143,6 @@ public abstract class Entity implements Renderable {
 
     public void setInteraction(Interaction interaction) {
         this.interaction = interaction;
+        setInteractable(true);
     }
 }

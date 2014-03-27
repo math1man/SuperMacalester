@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.helpers.MapLoader;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -23,10 +23,6 @@ public class Tile implements Renderable {
         this.isPathable = isPathable;
     }
 
-    public static Tile createNullTile() {
-        return new Tile(false, null, false);
-    }
-
     public static Tile createTile(TextureRegion sprite, boolean isPathable) {
         return new Tile(true, sprite, isPathable);
     }
@@ -37,7 +33,7 @@ public class Tile implements Renderable {
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
-        TextureRegion sprite = AssetLoader.getTileSprite(tileKey);
+        TextureRegion sprite = MapLoader.getTileSprite(tileKey);
 
         boolean isPathable = true;
         if (temp.length > 1) {

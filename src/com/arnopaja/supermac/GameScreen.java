@@ -6,7 +6,7 @@ import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.BaseController;
 import com.arnopaja.supermac.helpers.BaseInputHandler;
 import com.arnopaja.supermac.helpers.BaseRenderer;
-import com.arnopaja.supermac.helpers.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.WorldController;
@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
     public GameScreen() {
         Settings.gameHeight = GAME_HEIGHT;
         Settings.gameWidth = GAME_HEIGHT * ASPECT_RATIO;
+        Settings.load();
 
         dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
 
