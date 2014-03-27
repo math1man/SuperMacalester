@@ -34,22 +34,20 @@ public class Goal {
         this.mainInteraction = mainInteraction;
     }
 
-    protected void setQuest(Quest quest) {
-        netInteraction = Interaction.combine(mainInteraction, Interaction.nextGoal(quest));
-    }
-
     public void activate() {
-        System.out.println("Goal Activated!");
         entity.setInteraction(netInteraction);
         entity.changeGrid(location);
         isActive = true;
     }
 
     public void deactivate() {
-        System.out.println("Goal Deactivated!");
         entity.setInteractable(false);
         entity.delayedRemoveFromGrid();
         isActive = false;
+    }
+
+    protected void setQuest(Quest quest) {
+        netInteraction = Interaction.combine(mainInteraction, Interaction.nextGoal(quest));
     }
 
     public Entity getEntity() {

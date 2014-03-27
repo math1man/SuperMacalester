@@ -216,6 +216,6 @@ public abstract class Entity implements Renderable {
 
     public void setInteraction(Interaction interaction) {
         this.interaction = interaction;
-        setInteractable(true);
+        setInteractable(interaction != Interaction.NULL);
     }
 }

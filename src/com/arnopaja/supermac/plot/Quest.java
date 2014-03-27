@@ -30,7 +30,6 @@ public class Quest {
     }
 
     public void activate(Quest quest) {
-        System.out.println("Quest Activated!");
         if (isInactive()) {
             prereqs.remove(quest);
             if (prereqs.isEmpty()) {
@@ -49,7 +48,6 @@ public class Quest {
     }
 
     public void complete() {
-        System.out.println("Quest Completed!");
         state = QuestState.COMPLETE;
         for (Quest quest : postreqs) {
             quest.activate(this);

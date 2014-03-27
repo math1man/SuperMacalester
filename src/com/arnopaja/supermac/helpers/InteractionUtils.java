@@ -18,7 +18,7 @@ public class InteractionUtils {
      * Creates a generic interaction based on the class of the object.
      * DialogueDisplayables will create a dialogue interaction.
      * BattleControllers will create a goToBattle interaction.
-     * BattleActions will create a battle interaction.
+     * BattleActions will create a battleAction interaction.
      * Anything else will create a null interaction.
      * @param object
      * @return
@@ -31,7 +31,7 @@ public class InteractionUtils {
         } else if (object instanceof BattleController) {
             return Interaction.goToBattle((BattleController) object);
         } else if (object instanceof BattleAction) {
-            return Interaction.battle((BattleAction) object);
+            return Interaction.battleAction((BattleAction) object);
         } else {
             return Interaction.NULL;
         }
@@ -47,7 +47,7 @@ public class InteractionUtils {
     }
 
     public static Interaction selectDefend(BattleCharacter hero) {
-        return Interaction.battle(BattleAction.defend(hero));
+        return Interaction.battleAction(BattleAction.defend(hero));
     }
 
     public static Interaction selectSpell(BattleCharacter hero, Spell[] spells, BattleCharacter[] enemies) {
@@ -61,7 +61,7 @@ public class InteractionUtils {
                 spells, spellInteractions));
     }
 
-    // TODO: can items be used on friends?
+    // TODO: can items be used on friends? On self?
     public static Interaction selectItem(BattleCharacter hero, Item[] items, BattleCharacter[] enemies) {
         Interaction[] spellInteractions = new Interaction[items.length];
         for (int i=0; i<items.length; i++) {
@@ -74,7 +74,7 @@ public class InteractionUtils {
     }
 
     public static Interaction selectFlee(BattleCharacter hero) {
-        return Interaction.battle(BattleAction.flee(hero));
+        return Interaction.battleAction(BattleAction.flee(hero));
     }
 
     //-----------------------------
@@ -157,7 +157,7 @@ public class InteractionUtils {
     public static Interaction[] convertActions(BattleAction... actions) {
         Interaction[] interactions = new Interaction[actions.length];
         for (int i=0; i<actions.length; i++) {
-            interactions[i] = Interaction.battle(actions[i]);
+            interactions[i] = Interaction.battleAction(actions[i]);
         }
         return interactions;
     }

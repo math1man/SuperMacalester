@@ -45,7 +45,7 @@ public class WorldInputHandler extends BaseInputHandler {
                     return false;
             }
         } else if (screen.isDialogue()) {
-            // TODO: figure out how to select options with keyboard
+            // TODO: figure out how to select options with keyboard?
             dialogueInput(0, 0);
         } else {
             return false;

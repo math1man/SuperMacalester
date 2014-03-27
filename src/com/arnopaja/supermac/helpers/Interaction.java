@@ -94,7 +94,7 @@ public abstract class Interaction {
         }
     }
 
-    public static Interaction battle(final BattleAction action) {
+    public static Interaction battleAction(final BattleAction action) {
         if (action == null) {
             return NULL;
         } else {
