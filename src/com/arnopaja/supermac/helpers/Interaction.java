@@ -6,6 +6,7 @@ import com.arnopaja.supermac.battle.BattleController;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.objects.Chest;
 import com.arnopaja.supermac.world.objects.Entity;
 
 /**
@@ -76,12 +77,14 @@ public abstract class Interaction {
         }
     }
 
-    public static Interaction chest() {
+    public static Interaction chest(final Chest chest) {
         return new Interaction() {
             @Override
             public void run(GameScreen screen) {
+                chest.open();
                 // TODO: DialogueOptions that allows you to remove items from the chest
                 // Items go into inventory from chest
+                chest.close(); // may need to be delayed
             }
         };
     }

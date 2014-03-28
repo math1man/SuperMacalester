@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Location;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Ari Weiland
@@ -28,5 +29,10 @@ public class Door extends Entity {
 
     public Location getDestination() {
         return destination;
+    }
+
+    @Override
+    public TextureRegion getSprite(float runTime) {
+        return null;
     }
 }

@@ -5,10 +5,8 @@ import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.EnumMap;
 import java.util.Random;
 
 /**
@@ -22,8 +20,6 @@ public abstract class Entity implements Renderable {
 
     private Location location;
     private boolean isInteractable;
-
-    private EnumMap<Direction, TextureRegion> facingSprites = new EnumMap<Direction, TextureRegion>(Direction.class);
 
     private Interaction interaction = Interaction.NULL;
 
@@ -195,23 +191,6 @@ public abstract class Entity implements Renderable {
 
     public void setInteractable(boolean isInteractable) {
         this.isInteractable = isInteractable;
-    }
-
-    @Override
-    public TextureRegion getSprite() {
-        if ((facingSprites != null)) {
-            return facingSprites.get(getFacing());
-        }
-        return null;
-    }
-
-    @Override
-    public TextureRegion getSprite(float runTime) {
-        return getSprite();
-    }
-
-    public void setFacingSprites(EnumMap<Direction, TextureRegion> facingSprites) {
-        this.facingSprites = facingSprites;
     }
 
     public Interaction getInteraction() {
