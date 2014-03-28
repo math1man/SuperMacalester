@@ -133,7 +133,7 @@ public class AssetLoader {
         chestOpen = new TextureRegion(texture, 0, 0, 512, 128);
         chestOpen.flip(false, true);
 
-        loadCharacters(0, 0);
+        loadCharacters();
 
         //--------------------------//
         //          Other           //
@@ -164,14 +164,14 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
-    public static void loadCharacters(int x, int y) {
+    public static void loadCharacters() {
         steven = new EnumMap<Direction, TextureRegion>(Direction.class);
         texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
-        TextureRegion temp = new TextureRegion(texture, x, y, 32, 32);
+        TextureRegion temp = new TextureRegion(texture, 0, 0, 32, 32);
         steven.put(Direction.EAST, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         steven.put(Direction.SOUTH, temp);
 
         // North is just South flipped horizontally
@@ -180,20 +180,20 @@ public class AssetLoader {
         steven.put(Direction.NORTH, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         steven.put(Direction.WEST, temp);
 
         EnumMap<Direction, TextureRegion> stevenStepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stevenStepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
         texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         stevenStepRight.put(Direction.EAST, temp);
         texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         stevenStepLeft.put(Direction.EAST, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         stevenStepRight.put(Direction.SOUTH, temp);
         stevenStepLeft.put(Direction.SOUTH, new TextureRegion(temp));
 
@@ -204,10 +204,10 @@ public class AssetLoader {
         stevenStepLeft.put(Direction.NORTH, new TextureRegion(temp));
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         stevenStepRight.put(Direction.WEST, temp);
         texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
-        temp = new TextureRegion(texture, x, y, 32, 32);
+        temp = new TextureRegion(texture, 0, 0, 32, 32);
         stevenStepLeft.put(Direction.WEST, temp);
 
         stevenStepping = new EnumMap<Direction, Animation>(Direction.class);
