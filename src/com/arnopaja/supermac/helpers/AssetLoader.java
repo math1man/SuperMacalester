@@ -178,19 +178,19 @@ public class AssetLoader {
         EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
         texture = new Texture(Gdx.files.internal("data/" + path));
 
+        TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
         for (int i=0; i<4; i++) {
-            Direction dir = Direction.values()[i];
-            TextureRegion temp = new TextureRegion(texture, 0, 32 * i, 32, 32);
-            temp.flip(false, true);
-            person.put(dir, temp);
-            temp = new TextureRegion(texture, 32, 32 * i, 32, 32);
-            temp.flip(false, true);
-            stepRight.put(dir, temp);
-            if (i % 2 == 0) {
-                temp = new TextureRegion(texture, 64, 0, 32, 32);
-                temp.flip(false, true);
+            for (int j=0; j<4; j++) {
+                regions[i][j].flip(false, true);
             }
-            stepLeft.put(dir, temp);
+            Direction dir = Direction.values()[i];
+            person.put(dir, regions[i][0]);
+            stepRight.put(dir, regions[i][1]);
+            if (i % 2 == 0) {
+                stepLeft.put(dir, regions[i][2]);
+            } else {
+                stepRight.put(dir, regions[i][1]);
+            }
             TextureRegion[] array = { person.get(dir), stepRight.get(dir),
                     person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
