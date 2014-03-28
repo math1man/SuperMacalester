@@ -52,9 +52,9 @@ public class AssetLoader {
 //        texture = new Texture(Gdx.files.internal("data/texture.png"));
 //        texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        //--------------------------//
-        //          Tiles           //
-        //--------------------------//
+        //--------------------------
+        //          Tiles
+        //--------------------------
 
         // TODO: build a basic texture file and set up tiles
         texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile1.png"));
@@ -122,9 +122,9 @@ public class AssetLoader {
 
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
 
-        //--------------------------//
-        //         Entities         //
-        //--------------------------//
+        //--------------------------
+        //         Entities
+        //--------------------------
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/chest_closed.png"));
         chestClosed = new TextureRegion(texture, 0, 0, 512, 128);
@@ -137,9 +137,9 @@ public class AssetLoader {
         steven = saa.sprites;
         stevenStepping = saa.animations;
 
-        //--------------------------//
-        //          Other           //
-        //--------------------------//
+        //--------------------------
+        //          Other
+        //--------------------------
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
