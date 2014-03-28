@@ -24,12 +24,20 @@ public class Chest extends Entity {
     public Chest(Location location, List<AbstractItem> contents) {
         super(true, location, true);
         this.contents = contents;
-        setInteraction(Interaction.chest(this));
+        setInteraction(Interaction.openChest(this));
     }
 
     @Override
     public void update(float delta) {
         // does nothing
+    }
+
+    public void removeItem(AbstractItem item) {
+        contents.remove(item);
+    }
+
+    public boolean isEmpty() {
+        return contents.isEmpty();
     }
 
     public void open() {

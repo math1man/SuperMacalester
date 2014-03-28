@@ -45,7 +45,6 @@ public class GameScreen implements Screen {
     private GameMode mode;
     private GameState state;
     private float runTime;
-    private boolean isPreBattle = false;
 
     public GameScreen() {
         Settings.gameHeight = GAME_HEIGHT;
@@ -125,12 +124,6 @@ public class GameScreen implements Screen {
         state = GameState.DIALOGUE;
     }
 
-    public void preBattle(BattleController battle) {
-        dialogue();
-        isPreBattle = true;
-        setBattle(battle);
-    }
-
     @Override
     public void pause() {
         if (isRunning()) {
@@ -142,9 +135,6 @@ public class GameScreen implements Screen {
         if (isDialogue()) {
             dialogueHandler.clear();
             state = GameState.RUNNING;
-        }
-        if (isPreBattle) {
-            goToBattle(battle);
         }
     }
 
@@ -162,7 +152,6 @@ public class GameScreen implements Screen {
     }
 
     public void goToBattle(BattleController battle) {
-        isPreBattle = false;
         setBattle(battle);
         changeMode(GameMode.BATTLE);
     }
@@ -189,10 +178,6 @@ public class GameScreen implements Screen {
 
     public boolean isDialogue() {
         return state == GameState.DIALOGUE;
-    }
-
-    public boolean isPrebattle() {
-        return isDialogue() && isPreBattle;
     }
 
     public DialogueHandler getDialogueHandler() {

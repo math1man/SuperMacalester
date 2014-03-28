@@ -45,6 +45,18 @@ public class Inventory {
     }
 
     //adds
+    public static void add(AbstractItem item) {
+        if (item instanceof Armor) {
+            add((Armor) item);
+        } else if (item instanceof Weapon) {
+            add((Weapon) item);
+        } else if (item instanceof Item) {
+            add((Item) item);
+        } else if (item instanceof SpecialItem) {
+            add((SpecialItem) item);
+        }
+    }
+
     public static void add(Armor a) {
         armorInventory.add(a);
     }

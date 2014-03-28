@@ -127,17 +127,20 @@ public class DialogueHandler {
                 display(dialogue.getOptions());
             } else {
                 pollQueue();
+                if (dialogue.hasPostInteraction()) {
+                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, dialogue.getPostInteraction());
+                }
             }
         } else if (isOptions()) {
             int count = options.getCount();
             for (int i=0; i<count; i++) {
                 if (getOptionSpaces(count)[i].contains(x, y)) {
                     pollQueue();
-                    return Interaction.combine(Interaction.clearDialogue(), options.getInteraction(i));
+                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, options.getInteraction(i));
                 }
             }
         }
-        return isNone() ? Interaction.clearDialogue() : Interaction.NULL;
+        return isNone() ? Interaction.CLEAR_DIALOGUE : Interaction.NULL;
     }
 
     private void pollQueue() {

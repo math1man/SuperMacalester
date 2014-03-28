@@ -1,11 +1,16 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.battle.*;
-import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.BattleAction;
+import com.arnopaja.supermac.battle.BattleController;
 import com.arnopaja.supermac.battle.Spell;
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.inventory.Item;
+import com.arnopaja.supermac.plot.Quest;
+import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.objects.Chest;
+import com.arnopaja.supermac.world.objects.Entity;
 
 import java.util.Arrays;
 
@@ -18,26 +23,56 @@ import java.util.Arrays;
 public class InteractionUtils {
 
     /**
-     * Creates a generic interaction based on the class of the object.
-     * DialogueDisplayables will create a dialogue interaction.
-     * BattleControllers will create a goToBattle interaction.
-     * BattleActions will create a battleAction interaction.
-     * Anything else will create a null interaction.
-     * @param object
+     * Creates a generic interaction based on the classes passed in
+     *
+     * For 1 parameter:
+     * DialogueDisplayables will create a dialogue interaction
+     * BattleControllers will create a battle interaction
+     * BattleActions will create a battleAction interaction
+     * Chests will create an openChest interaction
+     * Quests will create a nextGoal interaction
+     *
+     * For 2 parameters:
+     * Item followed by Chest will create a takeItem interaction
+     * Entity followed by Location will create a changeGrid interaction
+     *
+     * Note that this method will never create a closeChest interaction
+     *
+     * Anything other parameter combinations will create a null interaction
+     *
+     * @param objects
      * @return
      */
-    public static Interaction generic(Object object) {
-        if (object == null) {
-            return Interaction.NULL;
-        } else if (object instanceof DialogueDisplayable) {
-            return Interaction.dialogue((DialogueDisplayable) object);
-        } else if (object instanceof BattleController) {
-            return Interaction.goToBattle((BattleController) object);
-        } else if (object instanceof BattleAction) {
-            return Interaction.battleAction((BattleAction) object);
-        } else {
-            return Interaction.NULL;
+    public static Interaction create(Object... objects) {
+        if (objects.length > 1) {
+            Object primary = objects[0];
+            if (primary == null) {
+                return Interaction.NULL;
+            }
+            if (objects.length == 2) {
+                Object secondary = objects[1];
+                if (secondary == null) {
+                    return Interaction.NULL;
+                } else if (primary instanceof Item && secondary instanceof Chest) {
+                    return Interaction.takeItem((Item) primary, (Chest) secondary);
+                } else if (primary instanceof Entity && secondary instanceof Location) {
+                    return Interaction.changeGrid((Entity) primary, (Location) secondary);
+                }
+            } else {
+                if (primary instanceof DialogueDisplayable) {
+                    return Interaction.dialogue((DialogueDisplayable) primary);
+                } else if (primary instanceof BattleController) {
+                    return Interaction.battle((BattleController) primary);
+                } else if (primary instanceof BattleAction) {
+                    return Interaction.battleAction((BattleAction) primary);
+                } else if (primary instanceof Chest) {
+                    return Interaction.openChest((Chest) primary);
+                } else if (primary instanceof Quest) {
+                    return Interaction.nextGoal((Quest) primary);
+                }
+            }
         }
+        return Interaction.NULL;
     }
 
     //---------------------------------
@@ -97,14 +132,16 @@ public class InteractionUtils {
 
     /**
      * Converts a set of objects into an array of interactions,
-     * as per the Interaction.generic(Object) method
+     * as per the Interaction.create(Object) method.
+     * Note that an element of objects can itself be an array,
+     * if for example you wanted to create a changeGrid interaction.
      * @param objects
      * @return
      */
     public static Interaction[] convert(Object... objects) {
         Interaction[] interactions = new Interaction[objects.length];
         for (int i=0; i<objects.length; i++) {
-            interactions[i] = generic(objects[i]);
+            interactions[i] = create(objects[i]);
         }
         return interactions;
     }
@@ -147,7 +184,7 @@ public class InteractionUtils {
      */
     public static Interaction[] yesNoGoToBattle(BattleController battle, int size) {
         Interaction[] interactions = getNulls(size);
-        interactions[0] = Interaction.goToBattle(battle);
+        interactions[0] = Interaction.battle(battle);
         return interactions;
     }
 
