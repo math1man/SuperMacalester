@@ -1,8 +1,12 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.characters.EnemyParty;
+import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.inventory.Item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.inventory;
 
 import java.util.LinkedList;
 import java.util.List;

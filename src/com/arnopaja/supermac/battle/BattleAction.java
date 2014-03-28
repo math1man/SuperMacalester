@@ -1,6 +1,8 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.inventory.Item;
 
 import java.util.Random;
 
@@ -16,36 +18,21 @@ public abstract class BattleAction {
     private final BattleCharacter source;
     private final BattleCharacter destination;
     private final int priority;
-    private final Usable usable;
+    private final Spell spell;
+    private final Item item;
     private final ActionType type;
 
-    private BattleAction(BattleCharacter source, BattleCharacter destination, ActionType type, int priority, Usable usable){
+    private BattleAction(BattleCharacter source, BattleCharacter destination, ActionType type, int priority, Spell spell, Item item){
         this.source = source;
         this.destination = destination;
         this.type = type;
         this.priority = priority;
-        this.usable = usable;
-    }
-
-    public static BattleAction create(BattleCharacter source, BattleCharacter destination, ActionType type, Usable usable) {
-        switch(type) {
-            case ATTACK:
-                return attack(source, destination);
-            case SPELL:
-                return spell(source, usable, destination);
-            case ITEM:
-                return item(source, usable, destination);
-            case DEFEND:
-                return defend(source);
-            case FLEE:
-                return flee(source);
-            default:
-                return null;
-        }
+        this.spell = spell;
+        this.item = item;
     }
 
     public static BattleAction attack(BattleCharacter source, BattleCharacter destination) {
-        return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null) {
+        return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null, null) {
             @Override
             public Dialogue runAction() {
                 float damage = (float) (getSource().getAttack() / getDestination().getDefense()
@@ -62,28 +49,26 @@ public abstract class BattleAction {
         };
     }
 
-    public static BattleAction spell(BattleCharacter source, Usable spell, BattleCharacter destination) {
-        return usable(source, spell, ActionType.SPELL, destination);
-    }
-
-    public static BattleAction item(BattleCharacter source, Usable item, BattleCharacter destination) {
-        return usable(source, item, ActionType.ITEM, destination);
-    }
-
-    private static BattleAction usable(BattleCharacter source, Usable usable, ActionType type, BattleCharacter destination) {
-        if (type != ActionType.SPELL && type != ActionType.ITEM) {
-            return null;
-        }
-        return new BattleAction(source, destination, type, source.getSpeed(), usable) {
+    public static BattleAction spell(BattleCharacter source, Spell spell, BattleCharacter destination) {
+        return new BattleAction(source, destination, ActionType.SPELL, source.getSpeed(), spell, null) {
             @Override
             public Dialogue runAction() {
-                return getUsable().use(getSource(), getDestination());
+                return getSpell().use(getSource(), getDestination());
+            }
+        };
+    }
+
+    public static BattleAction item(BattleCharacter source, Item item, BattleCharacter destination) {
+        return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), null, item) {
+            @Override
+            public Dialogue runAction() {
+                return getItem().use(getSource(), getDestination());
             }
         };
     }
 
     public static BattleAction defend(BattleCharacter source) {
-        return new BattleAction(source, null, ActionType.DEFEND, Integer.MAX_VALUE, null) {
+        return new BattleAction(source, null, ActionType.DEFEND, Integer.MAX_VALUE, null, null) {
             @Override
             public Dialogue runAction() {
                 // TODO: code for defending
@@ -95,7 +80,7 @@ public abstract class BattleAction {
 
     public static BattleAction flee(BattleCharacter source) {
         // TODO: what is the priority for fleeing?
-        return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null) {
+        return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null, null) {
             @Override
             public Dialogue runAction() {
                 // TODO: code for fleeing
@@ -123,7 +108,11 @@ public abstract class BattleAction {
         return priority;
     }
 
-    public Usable getUsable() {
-        return usable;
+    public Spell getSpell() {
+        return spell;
+    }
+
+    public Item getItem() {
+        return item;
     }
 }

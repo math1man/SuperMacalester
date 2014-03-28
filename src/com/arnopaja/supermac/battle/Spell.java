@@ -1,11 +1,12 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 
 /**
  * Created by Envy on 2/28/14.
  */
-public class Spell implements Usable {
+public class Spell {
 
     private final int universalID;
     private final String name;
@@ -18,7 +19,6 @@ public class Spell implements Usable {
         this.damageModifier = 0;
     }
 
-    @Override
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         float damage = getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
         int damageDone = (int) destination.modifyHealth(-damage);

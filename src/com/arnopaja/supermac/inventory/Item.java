@@ -1,11 +1,12 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 
 /**
  * Created by Nolan on 2/16/14.
  */
-public class Item implements Usable {
+public class Item {
 
     private final int universalID;
     private final String name;
@@ -21,7 +22,6 @@ public class Item implements Usable {
         this.equippableBitMask = 0;
     }
 
-    @Override
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item
         String dialogue = source + " uses " + this + " on " + destination + "!";

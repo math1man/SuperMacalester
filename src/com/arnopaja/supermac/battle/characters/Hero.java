@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.battle.characters;
 
 /**
  * Created by Envy on 2/24/14.

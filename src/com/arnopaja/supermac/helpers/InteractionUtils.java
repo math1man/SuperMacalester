@@ -1,8 +1,11 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.battle.*;
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.inventory.Item;
 
 import java.util.Arrays;
 
@@ -175,7 +178,7 @@ public class InteractionUtils {
         return attacks;
     }
 
-    private static BattleAction[] spells(BattleCharacter source, Usable spell, BattleCharacter[] destinations) {
+    private static BattleAction[] spells(BattleCharacter source, Spell spell, BattleCharacter[] destinations) {
         int count = destinations.length;
         BattleAction[] spells = new BattleAction[count];
         for (int i=0; i<count; i++) {
@@ -184,7 +187,7 @@ public class InteractionUtils {
         return spells;
     }
 
-    private static BattleAction[] items(BattleCharacter source, Usable item, BattleCharacter[] destinations) {
+    private static BattleAction[] items(BattleCharacter source, Item item, BattleCharacter[] destinations) {
         int count = destinations.length;
         BattleAction[] items = new BattleAction[count];
         for (int i=0; i<count; i++) {
