@@ -1,70 +1,79 @@
-package com.arnopaja.supermac.battle;import java.util.LinkedList;
+package com.arnopaja.supermac.battle;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Nolan on 2/16/14.
  */
-public class Inventory
-{
-    private static LinkedList<Armor> armorInventory;
-    private static LinkedList<Weapon> weaponInventory;
-    private static LinkedList<Item> itemInventory;
-    private static LinkedList<SpecialItem> specialItemInventory;
-    public Inventory()
-    {
-        armorInventory = new LinkedList<Armor>();
-        weaponInventory = new LinkedList<Weapon>();
-        itemInventory = new LinkedList<Item>();
-        specialItemInventory = new LinkedList<SpecialItem>();
+public class Inventory {
+
+    public static enum InventoryType { ARMOR, WEAPON, ITEM, SPECIALITEM }
+
+    // TODO: Why do these have to be LinkedLists?
+    // TODO: Why not make an interface called Retrievable and just have one List for all of these?
+    private static List<Armor> armorInventory = new LinkedList<Armor>();
+    private static List<Weapon> weaponInventory = new LinkedList<Weapon>();
+    private static List<Item> itemInventory = new LinkedList<Item>();
+    private static List<SpecialItem> specialItemInventory = new LinkedList<SpecialItem>();
+
+    //get
+    public static Item get(InventoryType t, int index) {
+        switch(t) {
+            case ITEM:
+                return itemInventory.get(index);
+            default:
+                return null;
+        }
     }
     //adds
-    public static void add(Armor a)
-    {
-        armorInventory.addLast(a);
+    public static void add(Armor a) {
+        armorInventory.add(a);
     }
-    public static void add(Weapon w)
-    {
-        weaponInventory.addLast(w);
+
+    public static void add(Weapon w) {
+        weaponInventory.add(w);
     }
-    public static void add(Item i)
-    {
-        itemInventory.addLast(i);
+
+    public static void add(Item i) {
+        itemInventory.add(i);
     }
-    public static void add(SpecialItem s)
-    {
-        specialItemInventory.addLast(s);
+
+    public static void add(SpecialItem s) {
+        specialItemInventory.add(s);
     }
-    //checks
-    public static boolean check(Armor a)
-    {
+
+    //contains
+    public static boolean contains(Armor a) {
         return armorInventory.contains(a);
     }
-    public static boolean check(Weapon w)
-    {
+
+    public static boolean contains(Weapon w) {
         return weaponInventory.contains(w);
     }
-    public static boolean check(Item i)
-    {
+
+    public static boolean contains(Item i) {
         return itemInventory.contains(i);
     }
-    public static boolean check(SpecialItem s)
-    {
+
+    public static boolean contains(SpecialItem s) {
         return specialItemInventory.contains(s);
     }
+
     //removes
-    public static void remove(Armor a)
-    {
+    public static void remove(Armor a) {
         armorInventory.remove(a);
     }
-    public static void remove(Weapon w)
-    {
+
+    public static void remove(Weapon w) {
         weaponInventory.remove(w);
     }
-    public static void remove(Item i)
-    {
+
+    public static void remove(Item i) {
         itemInventory.remove(i);
     }
-    public static void remove(SpecialItem s)
-    {
+
+    public static void remove(SpecialItem s) {
         specialItemInventory.remove(s);
     }
 }
