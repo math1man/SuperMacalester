@@ -119,7 +119,7 @@ public class MapLoader {
 
     /* notes:
     n is a special character for the null tile
-    b is a prefix for buildings
+    _ is a prefix for buildings
     numerals should be used only for arbitrary tiles (ie. different grasses)
     asterisks are used to represent an arbitrary numeral in the data file
     */
@@ -146,10 +146,10 @@ public class MapLoader {
         tileMap.put("ase", AssetLoader.asphaltCornerSE);
         tileMap.put("asw", AssetLoader.asphaltCornerSW);
         tileMap.put("anw", AssetLoader.asphaltCornerNW);
-        tileMap.put("bcc", AssetLoader.campusCenter);
-        tileMap.put("bc", AssetLoader.chapel);
-        tileMap.put("bd", AssetLoader.dupre);
-        tileMap.put("bw", AssetLoader.weyerhauser);
+        tileMap.put("_cc", AssetLoader.campusCenter);
+        tileMap.put("_c", AssetLoader.chapel);
+        tileMap.put("_d", AssetLoader.dupre);
+        tileMap.put("_w", AssetLoader.weyerhauser);
 
         randomTileMap.put("g", 3);
     }
