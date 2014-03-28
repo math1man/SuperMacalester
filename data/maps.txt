@@ -1,53 +1,109 @@
 Map data document.  All maps should be generated here in a very specific form:
-map: [map name]
-width: [width]
-height: [height]
+<map:[map name]>
 [grid of tile codes]
+</map>
 
-The grid of tile codes must have the exact specified dimensions.
-List of current tile codes:
-b = building
-g = grass
-c = cobble
+For buildings, the form should be
+<building:[building name]>
+<floors:[floor count]>
+<first_floor_index:[first floor index]>
+[grid of tile codes for the bottommost floor]
+[grid of tile codes for the next bottommost floor]
+[etc]
+</building>
+
+Tile codes should start with the tile key followed by a hyphen and then the flags.
+An asterisk * means that there are multiple tiles and one should be randomly selected.
+An _ in the tile key simply refers to a building
+
+List of current tile keys:
 n = null tile
+g* = grass
+bh = bush horizontal
+bv = bush vertical
+bfh = flowering bush horizontal
+bfv = flowering bush vertical
+ts = tree small
+tb = tree big *
+c = cobble
+cr = red cobble
+a = asphalt
+ah = asphalt with a horizontal road line
+av = asphalt with a vertical road line
+an = asphalt north edge
+ae = asphalt east edge
+as = asphalt south edge
+aw = asphalt west edge
+ane = asphalt northeast corner
+ase = asphalt southeast corner
+ase = asphalt southwest corner
+anw = asphalt northwest corner
+
+List of building tiles *
+_cc = Campus Center
+_c = Chapel
+_d = Dupre
+_w = Weyerhauser
+
+*These tiles are larger sprites and should be filled in with null tiles
 
 List of current tile flags:
-p = pathable flag
+i = impassable flag
 
-All tiles are rendered by default except null tiles which by definition cannot be rendered and do not have a sprite
+All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
-map: World
-width: 32
-height: 32
-b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	cp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	gp	gp	cp	cp	gp	gp	gp	gp	gp	b
-b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b	b
+<map:World>
+asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i
+as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
+as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
+ase-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ane-i
+</map>
+
+
+Building info:
+    CAMPUS_CENTER   (3, 1, 0, 0),
+    CHAPEL          (2, 1, 0, 0),
+    OLIN_RICE       (4, 0, 0, 0),
+    OLD_MAIN        (5, 1, 0, 0),
+    CARNEGIE        (5, 1, 0, 0),
+    NEILL_HALL      (3, 0, 0, 0),
+    ART_COMMONS     (3, 1, 0, 0),
+    WEYERHAUSER     (0, 0, 0, 0), // TODO: what is the actual layout?
+    LEONARD_CENTER  (2, 0, 0, 0), // TODO: does the LC have only 2 floors?
+    KAGIN           (3, 1, 0, 0),
+    DUPRE           (6, 1, 0, 0),
+    DOTY            (6, 1, 0, 0), // TODO: does Doty have a basement?
+    TURCK           (6, 1, 0, 0), // TODO: does Turck have 5 floors and a basement?
+    BIGELOW         (5, 1, 0, 0), // TODO: does Bigelow have only 4 floors?
+    THIRTY_MAC      (1, 0, 0, 0), // 30 Mac basement will be part of Bigelow/Wallace
+    WALLACE         (5, 1, 0, 0),
+    KIRK            (3, 1, 0, 0); // The different sections of Kirk are unconnected,
+                                  // but it will be easier to just have one building
