@@ -3,30 +3,19 @@ package com.arnopaja.supermac.inventory;
 /**
  * Created by Nolan on 2/16/14.
  */
-public class Armor {
+public class Armor extends AbstractItem {
 
-    private final int universalID;
-    private final String name;
     private final int defenseModifier;
-    private final int value;
     private final int equippableBitMask;
     //TODO: image definition
 
     public Armor(int universalID) {
-        //Generate given its universalID
-        this.universalID = universalID;
-        this.name = null;
+        // Generate given its universalID
+        super(universalID, null, 0);
         this.defenseModifier = 0;
-        this.value = 0;
         this.equippableBitMask = 0;
     }
 
-    public String getName() { return name; }
     public int getDefenseModifier() { return defenseModifier; }
-    public int getValue() { return value; }
 
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

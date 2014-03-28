@@ -76,6 +76,16 @@ public abstract class Interaction {
         }
     }
 
+    public static Interaction chest() {
+        return new Interaction() {
+            @Override
+            public void run(GameScreen screen) {
+                // TODO: DialogueOptions that allows you to remove items from the chest
+                // Items go into inventory from chest
+            }
+        };
+    }
+
     public static Interaction changeGrid(final Entity entity, final Location location) {
         if (entity == null) {
             return NULL;

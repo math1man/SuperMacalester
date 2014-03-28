@@ -17,15 +17,33 @@ public class Inventory {
     private static List<Item> itemInventory = new LinkedList<Item>();
     private static List<SpecialItem> specialItemInventory = new LinkedList<SpecialItem>();
 
-    //get
-    public static Item get(InventoryType t, int index) {
-        switch(t) {
-            case ITEM:
-                return itemInventory.get(index);
-            default:
-                return null;
+    /**
+     * This method has some advanced shit in it.
+     * Basically what it says is "get the item from the inventory that matches
+     * this specified class, and return it as the correct class".  For example,
+     * if you wanted to retrieve the 3rd item (index 2) in the armor inventory,
+     * you would call "get(2, Armor.class)". This would then return an instance
+     * of the Armor class that is the requested armor.  The benefit of this is
+     * that the returned instance will always be of the correct class.
+     *
+     * @param index
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T extends AbstractItem> T get(int index, Class<T> clazz) {
+        if (clazz == Armor.class) {
+            return clazz.cast(armorInventory.get(index));
+        } else if (clazz == Weapon.class) {
+            return clazz.cast(weaponInventory.get(index));
+        } else if (clazz == Item.class) {
+            return clazz.cast(itemInventory.get(index));
+        } else if (clazz == SpecialItem.class) {
+            return clazz.cast(specialItemInventory.get(index));
         }
+        return null;
     }
+
     //adds
     public static void add(Armor a) {
         armorInventory.add(a);
