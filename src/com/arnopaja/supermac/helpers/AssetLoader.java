@@ -167,43 +167,26 @@ public class AssetLoader {
     }
 
     public static SpriteAndAnim loadCharacter(String path) {
-        // as of 3/28/14
+        // as of 3/28/14, using the updated canvas that Jared was working on in class today
         EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
         texture = new Texture(Gdx.files.internal("data/" + path));
 
-        TextureRegion temp = new TextureRegion(texture, 96, 96, 32, 32);
-        person.put(Direction.EAST, temp);
-        temp = new TextureRegion(texture, 0, 32, 32, 32);
-        person.put(Direction.NORTH, temp);
-        temp = new TextureRegion(temp);
-        temp.flip(true, false); // North is just South flipped horizontally
-        person.put(Direction.SOUTH, temp);
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        person.put(Direction.WEST, temp);
-
-        temp = new TextureRegion(texture, 32, 96, 32, 32);
-        stepRight.put(Direction.EAST, temp);
-        temp = new TextureRegion(texture, 64, 96, 32, 32);
-        stepLeft.put(Direction.EAST, temp);
-        temp = new TextureRegion(texture, 32, 32, 32, 32);
-        stepRight.put(Direction.NORTH, temp);
-        stepLeft.put(Direction.NORTH, new TextureRegion(temp));
-        temp = new TextureRegion(temp);
-        temp.flip(true, false); // North is just South flipped horizontally
-        stepRight.put(Direction.SOUTH, temp);
-        stepLeft.put(Direction.SOUTH, new TextureRegion(temp));
-        temp = new TextureRegion(texture, 32, 0, 32, 32);
-        stepRight.put(Direction.WEST, temp);
-        temp = new TextureRegion(texture, 64, 0, 32, 32);
-        stepLeft.put(Direction.WEST, temp);
-
-        for (Direction dir : Direction.values()) {
-            person.get(dir).flip(false, true);
-            stepRight.get(dir).flip(false, true);
-            stepLeft.get(dir).flip(false, true);
+        for (int i=0; i<4; i++) {
+            Direction dir = Direction.values()[i];
+            TextureRegion temp = new TextureRegion(texture, 0, 32 * i, 32, 32);
+            temp.flip(false, true);
+            person.put(dir, temp);
+            temp = new TextureRegion(texture, 32, 32 * i, 32, 32);
+            temp.flip(false, true);
+            stepRight.put(dir, temp);
+            if (i % 2 == 0) {
+                temp = new TextureRegion(texture, 64, 0, 32, 32);
+                temp.flip(false, true);
+            }
+            stepLeft.put(dir, temp);
             TextureRegion[] array = { person.get(dir), stepRight.get(dir),
                     person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
