@@ -23,12 +23,22 @@ public class AssetLoader {
 
     private static Texture texture;
 
-    public static TextureRegion grass0, grass1, grass2, cobble;
+    // Tiles
+    public static TextureRegion grass0, grass1, grass2;
+    public static TextureRegion bushH, bushV, bushFlowersH, bushFlowersV;
+    public static TextureRegion treeSmall, treeBig;
+    public static TextureRegion cobble, cobbleRed;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
     public static TextureRegion asphaltEdgeN, asphaltEdgeE, asphaltEdgeS, asphaltEdgeW;
-    public static TextureRegion campusCenter, chapel;
+    public static TextureRegion asphaltCornerNE, asphaltCornerSE, asphaltCornerSW, asphaltCornerNW;
+    public static TextureRegion campusCenter, chapel, dupre, weyerhauser;
+
+    // Characters
     public static EnumMap<Direction, TextureRegion> steven;
     public static EnumMap<Direction, Animation> stevenStepping;
+
+    // Non-character entities
+    public static TextureRegion chestOpen, chestClosed;
 
     public static FileHandle mapHandle;
 
@@ -49,8 +59,25 @@ public class AssetLoader {
         grass1 = new TextureRegion(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile3.png"));
         grass2 = new TextureRegion(texture, 0, 0, 32, 32);
+
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_bush.png"));
+        bushH = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_bush.png"));
+        bushV = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_flowerbush.png"));
+        bushFlowersH = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_flowerbush.png"));
+        bushFlowersV = new TextureRegion(texture, 0, 0, 32, 32);
+
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/32tree1.png"));
+        treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/64tree1.png"));
+        treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
+
         texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
         cobble = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/redcobblestone.png"));
+        cobbleRed = new TextureRegion(texture, 0, 0, 32, 32);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/asphalt_tile.png"));
         asphalt = new TextureRegion(texture, 0, 0, 32, 32);
@@ -66,14 +93,28 @@ public class AssetLoader {
         asphaltEdgeE = new TextureRegion(texture, 0, 0, 32, 32);
         asphaltEdgeW = new TextureRegion(asphaltEdgeE);
         asphaltEdgeE.flip(false, true);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_upper_right_corner.png"));
+        asphaltCornerNE = new TextureRegion(texture, 0, 0, 32, 32);
+        asphaltCornerSE = new TextureRegion(asphaltCornerNE);
+        asphaltCornerSE.flip(true, false);
+        asphaltCornerSW = new TextureRegion(asphaltCornerSE);
+        asphaltCornerSW.flip(false, true);
+        asphaltCornerNW = new TextureRegion(asphaltCornerNE);
+        asphaltCornerNW.flip(false, true);
 
-        // The buildings don't work at the moment because their canvas dimensions are bad
+        // The CC and chapel don't work at the moment because their canvas dimensions are bad
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
 //        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
 //        campusCenter.flip(false, true);
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/chapel.png"));
 //        chapel = new TextureRegion(texture, 0, 0, 192, 192);
 //        chapel.flip(false, true);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/dupre.png"));
+        dupre = new TextureRegion(texture, 0, 0, 512, 128);
+        dupre.flip(false, true);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/weyerhauser.png"));
+        weyerhauser = new TextureRegion(texture, 0, 0, 448, 128);
+        weyerhauser.flip(false, true);
 
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
 

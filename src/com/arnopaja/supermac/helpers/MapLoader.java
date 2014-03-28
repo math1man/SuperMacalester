@@ -127,7 +127,14 @@ public class MapLoader {
         tileMap.put("g0", AssetLoader.grass0);
         tileMap.put("g1", AssetLoader.grass1);
         tileMap.put("g2", AssetLoader.grass2);
+        tileMap.put("bh", AssetLoader.bushH);
+        tileMap.put("bv", AssetLoader.bushV);
+        tileMap.put("bfh", AssetLoader.bushFlowersH);
+        tileMap.put("bfv", AssetLoader.bushFlowersV);
+        tileMap.put("ts", AssetLoader.treeSmall);
+        tileMap.put("tb", AssetLoader.treeBig);
         tileMap.put("c", AssetLoader.cobble);
+        tileMap.put("cr", AssetLoader.cobbleRed);
         tileMap.put("a", AssetLoader.asphalt);
         tileMap.put("ah", AssetLoader.asphaltLineH);
         tileMap.put("av", AssetLoader.asphaltLineV);
@@ -135,8 +142,14 @@ public class MapLoader {
         tileMap.put("ae", AssetLoader.asphaltEdgeE);
         tileMap.put("as", AssetLoader.asphaltEdgeS);
         tileMap.put("aw", AssetLoader.asphaltEdgeW);
+        tileMap.put("ane", AssetLoader.asphaltCornerNE);
+        tileMap.put("ase", AssetLoader.asphaltCornerSE);
+        tileMap.put("asw", AssetLoader.asphaltCornerSW);
+        tileMap.put("anw", AssetLoader.asphaltCornerNW);
         tileMap.put("bcc", AssetLoader.campusCenter);
-        tileMap.put("bch", AssetLoader.chapel);
+        tileMap.put("bc", AssetLoader.chapel);
+        tileMap.put("bd", AssetLoader.dupre);
+        tileMap.put("bw", AssetLoader.weyerhauser);
 
         randomTileMap.put("g", 3);
     }

@@ -11,26 +11,41 @@ For buildings, the form should be
 [grid of tile codes for the next bottommost floor]
 [etc]
 </building>
-The grid of tile codes must have the exact specified dimensions.
+
 Tile codes should start with the tile key followed by a hyphen and then the flags.
 An asterisk * means that there are multiple tiles and one should be randomly selected.
+An _ in the tile key simply refers to a building
 
 List of current tile keys:
 n = null tile
 g* = grass
+bh = bush horizontal
+bv = bush vertical
+bfh = flowering bush horizontal
+bfv = flowering bush vertical
+ts = tree small
+tb = tree big *
 c = cobble
+cr = red cobble
 a = asphalt
 ah = asphalt with a horizontal road line
 av = asphalt with a vertical road line
-an = asphalt north edge *
-ae = asphalt east edge *
-as = asphalt south edge *
-aw = asphalt west edge *
-bcc = Campus Center **
-bch = Chapel **
+an = asphalt north edge
+ae = asphalt east edge
+as = asphalt south edge
+aw = asphalt west edge
+ane = asphalt northeast corner
+ase = asphalt southeast corner
+ase = asphalt southwest corner
+anw = asphalt northwest corner
 
-*Currently asphalt edge tiles are rotated so that east is up
-**These tiles are larger building sprites and should be filled in with null tiles
+List of building tiles *
+_cc = Campus Center
+_c = Chapel
+_d = Dupre
+_w = Weyerhauser
+
+*These tiles are larger sprites and should be filled in with null tiles
 
 List of current tile flags:
 i = impassable flag
@@ -38,7 +53,7 @@ i = impassable flag
 All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
 <map:World>
-a-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	a-i
+asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i
 as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
@@ -69,7 +84,7 @@ as-i	g*	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g*	an-i
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	g*	g*	c	c	g*	g*	g*	g*	g*	an-i
 as-i	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	g*	an-i
-a-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	a-i
+ase-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ane-i
 </map>
 
 
