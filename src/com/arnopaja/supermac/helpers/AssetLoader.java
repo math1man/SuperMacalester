@@ -133,7 +133,9 @@ public class AssetLoader {
         chestOpen = new TextureRegion(texture, 0, 0, 512, 128);
         chestOpen.flip(false, true);
 
-        loadCharacters();
+        SpriteAndAnim saa = loadCharacter("steven/steven_canvas.png");
+        steven = saa.sprites;
+        stevenStepping = saa.animations;
 
         //--------------------------//
         //          Other           //
@@ -164,62 +166,62 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
-    public static void loadCharacters() {
-        steven = new EnumMap<Direction, TextureRegion>(Direction.class);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
-        TextureRegion temp = new TextureRegion(texture, 0, 0, 32, 32);
-        steven.put(Direction.EAST, temp);
+    public static SpriteAndAnim loadCharacter(String path) {
+        // as of 3/28/14
+        EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
+        texture = new Texture(Gdx.files.internal("data/" + path));
 
-        texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        steven.put(Direction.SOUTH, temp);
-
-        // North is just South flipped horizontally
+        TextureRegion temp = new TextureRegion(texture, 96, 96, 32, 32);
+        person.put(Direction.EAST, temp);
+        temp = new TextureRegion(texture, 0, 32, 32, 32);
+        person.put(Direction.NORTH, temp);
         temp = new TextureRegion(temp);
-        temp.flip(true, false);
-        steven.put(Direction.NORTH, temp);
-
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
+        temp.flip(true, false); // North is just South flipped horizontally
+        person.put(Direction.SOUTH, temp);
         temp = new TextureRegion(texture, 0, 0, 32, 32);
-        steven.put(Direction.WEST, temp);
+        person.put(Direction.WEST, temp);
 
-        EnumMap<Direction, TextureRegion> stevenStepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, TextureRegion> stevenStepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_right.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenStepRight.put(Direction.EAST, temp);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_back_step_left.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenStepLeft.put(Direction.EAST, temp);
-
-        texture = new Texture(Gdx.files.internal("data/steven/steven_right_step.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenStepRight.put(Direction.SOUTH, temp);
-        stevenStepLeft.put(Direction.SOUTH, new TextureRegion(temp));
-
-        // North is just South flipped horizontally
+        temp = new TextureRegion(texture, 32, 96, 32, 32);
+        stepRight.put(Direction.EAST, temp);
+        temp = new TextureRegion(texture, 64, 96, 32, 32);
+        stepLeft.put(Direction.EAST, temp);
+        temp = new TextureRegion(texture, 32, 32, 32, 32);
+        stepRight.put(Direction.NORTH, temp);
+        stepLeft.put(Direction.NORTH, new TextureRegion(temp));
         temp = new TextureRegion(temp);
-        temp.flip(true, false);
-        stevenStepRight.put(Direction.NORTH, temp);
-        stevenStepLeft.put(Direction.NORTH, new TextureRegion(temp));
+        temp.flip(true, false); // North is just South flipped horizontally
+        stepRight.put(Direction.SOUTH, temp);
+        stepLeft.put(Direction.SOUTH, new TextureRegion(temp));
+        temp = new TextureRegion(texture, 32, 0, 32, 32);
+        stepRight.put(Direction.WEST, temp);
+        temp = new TextureRegion(texture, 64, 0, 32, 32);
+        stepLeft.put(Direction.WEST, temp);
 
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_right.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenStepRight.put(Direction.WEST, temp);
-        texture = new Texture(Gdx.files.internal("data/steven/steven_front_step_left.png"));
-        temp = new TextureRegion(texture, 0, 0, 32, 32);
-        stevenStepLeft.put(Direction.WEST, temp);
-
-        stevenStepping = new EnumMap<Direction, Animation>(Direction.class);
         for (Direction dir : Direction.values()) {
-            steven.get(dir).flip(false, true);
-            stevenStepRight.get(dir).flip(false, true);
-            stevenStepLeft.get(dir).flip(false, true);
-            TextureRegion[] array = {steven.get(dir), stevenStepRight.get(dir),
-                    steven.get(dir), stevenStepLeft.get(dir)};
+            person.get(dir).flip(false, true);
+            stepRight.get(dir).flip(false, true);
+            stepLeft.get(dir).flip(false, true);
+            TextureRegion[] array = { person.get(dir), stepRight.get(dir),
+                    person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
             animation.setPlayMode(Animation.LOOP);
-            stevenStepping.put(dir, animation);
+            personAnim.put(dir, animation);
+        }
+
+        return new SpriteAndAnim(person, personAnim);
+    }
+
+    // simple wrapper class used as a return type for loadCharacter()
+    private static class SpriteAndAnim {
+        protected final EnumMap<Direction, TextureRegion> sprites;
+        protected final EnumMap<Direction, Animation> animations;
+
+        private SpriteAndAnim(EnumMap<Direction, TextureRegion> sprites, EnumMap<Direction, Animation> animations) {
+            this.sprites = sprites;
+            this.animations = animations;
         }
     }
 
