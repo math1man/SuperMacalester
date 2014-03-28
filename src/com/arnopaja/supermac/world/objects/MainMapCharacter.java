@@ -11,9 +11,7 @@ import com.arnopaja.supermac.world.grid.Location;
 public class MainMapCharacter extends MapCharacter {
 
     public MainMapCharacter(Location location) {
-        super(location, false);
-        setFacingSprites(AssetLoader.steven);
-        setFacingAnimations(AssetLoader.stevenStepping);
+        super(location, false, AssetLoader.mainChar, AssetLoader.mainCharAnim);
     }
 
     public Interaction interact() {

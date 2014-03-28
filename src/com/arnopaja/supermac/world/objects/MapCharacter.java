@@ -20,11 +20,15 @@ public abstract class MapCharacter extends Entity {
     private Vector2 renderOffset = new Vector2();
     private Vector2 renderOffsetDelta;
 
-    private EnumMap<Direction, Animation> facingAnimations = new EnumMap<Direction, Animation>(Direction.class);
-    private EnumMap<Direction, TextureRegion> facingSprites = new EnumMap<Direction, TextureRegion>(Direction.class);
+    private EnumMap<Direction, TextureRegion> facingSprites;
+    private EnumMap<Direction, Animation> facingAnimations;
 
-    protected MapCharacter(Location location, boolean isInteractable) {
+    protected MapCharacter(Location location, boolean isInteractable,
+                           EnumMap<Direction, TextureRegion> facingSprites,
+                           EnumMap<Direction, Animation> facingAnimations) {
         super(true, location, isInteractable);
+        this.facingSprites = facingSprites;
+        this.facingAnimations = facingAnimations;
     }
 
     @Override
@@ -73,11 +77,11 @@ public abstract class MapCharacter extends Entity {
         }
     }
 
-    public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {
-        this.facingAnimations = facingAnimations;
-    }
-
     public void setFacingSprites(EnumMap<Direction, TextureRegion> facingSprites) {
         this.facingSprites = facingSprites;
+    }
+
+    public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {
+        this.facingAnimations = facingAnimations;
     }
 }

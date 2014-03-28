@@ -42,8 +42,8 @@ public class Plot {
 
     private void initTestQuest() {
         MapNPC character = new MapNPC();
-        character.setFacingSprites(AssetLoader.steven);
-        character.setFacingAnimations(AssetLoader.stevenStepping);
+        character.setFacingSprites(AssetLoader.mainChar);
+        character.setFacingAnimations(AssetLoader.mainCharAnim);
 
         Location location = new Location(world.getWorldGrid(), new Vector2(5, 5), Direction.NORTH);
 

@@ -34,8 +34,11 @@ public class AssetLoader {
     public static TextureRegion campusCenter, chapel, dupre, weyerhauser;
 
     // Characters
-    public static EnumMap<Direction, TextureRegion> steven;
-    public static EnumMap<Direction, Animation> stevenStepping;
+    public static EnumMap<Direction, TextureRegion> mainChar;
+    public static EnumMap<Direction, Animation> mainCharAnim;
+    public static EnumMap<Direction, TextureRegion> beardGuy;
+    public static EnumMap<Direction, Animation> beardGuyAnim;
+
 
     // Non-character entities
     public static TextureRegion chestOpen, chestClosed;
@@ -146,23 +149,23 @@ public class AssetLoader {
     }
 
     public static void loadCharacters(int x, int y) {
-        steven = new EnumMap<Direction, TextureRegion>(Direction.class);
+        mainChar = new EnumMap<Direction, TextureRegion>(Direction.class);
         texture = new Texture(Gdx.files.internal("data/steven/steven_back.png"));
         TextureRegion temp = new TextureRegion(texture, x, y, 32, 32);
-        steven.put(Direction.EAST, temp);
+        mainChar.put(Direction.EAST, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_right.png"));
         temp = new TextureRegion(texture, x, y, 32, 32);
-        steven.put(Direction.SOUTH, temp);
+        mainChar.put(Direction.SOUTH, temp);
 
         // North is just South flipped horizontally
         temp = new TextureRegion(temp);
         temp.flip(true, false);
-        steven.put(Direction.NORTH, temp);
+        mainChar.put(Direction.NORTH, temp);
 
         texture = new Texture(Gdx.files.internal("data/steven/steven_front.png"));
         temp = new TextureRegion(texture, x, y, 32, 32);
-        steven.put(Direction.WEST, temp);
+        mainChar.put(Direction.WEST, temp);
 
         EnumMap<Direction, TextureRegion> stevenStepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stevenStepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
@@ -191,16 +194,16 @@ public class AssetLoader {
         temp = new TextureRegion(texture, x, y, 32, 32);
         stevenStepLeft.put(Direction.WEST, temp);
 
-        stevenStepping = new EnumMap<Direction, Animation>(Direction.class);
+        mainCharAnim = new EnumMap<Direction, Animation>(Direction.class);
         for (Direction dir : Direction.values()) {
-            steven.get(dir).flip(false, true);
+            mainChar.get(dir).flip(false, true);
             stevenStepRight.get(dir).flip(false, true);
             stevenStepLeft.get(dir).flip(false, true);
-            TextureRegion[] array = {steven.get(dir), stevenStepRight.get(dir),
-                    steven.get(dir), stevenStepLeft.get(dir)};
+            TextureRegion[] array = {mainChar.get(dir), stevenStepRight.get(dir),
+                    mainChar.get(dir), stevenStepLeft.get(dir)};
             Animation animation = new Animation(0.1f, array);
             animation.setPlayMode(Animation.LOOP);
-            stevenStepping.put(dir, animation);
+            mainCharAnim.put(dir, animation);
         }
     }
 

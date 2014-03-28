@@ -47,8 +47,8 @@ public class WorldController implements BaseController {
     private void initCharacters() {
         // TODO: add characters here?
         MapNPC character = new MapNPC();
-        character.setFacingSprites(AssetLoader.steven);
-        character.setFacingAnimations(AssetLoader.stevenStepping);
+        character.setFacingSprites(AssetLoader.mainChar);
+        character.setFacingAnimations(AssetLoader.mainCharAnim);
         character.setInteractable(true);
         character.setInteraction(Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
                 "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
