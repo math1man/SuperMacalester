@@ -117,7 +117,7 @@ public class AssetLoader {
         dupre = new TextureRegion(texture, 0, 0, 512, 128);
         dupre.flip(false, true);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/weyerhauser.png"));
-        weyerhauser = new TextureRegion(texture, 0, 0, 448, 128);
+        weyerhauser = new TextureRegion(texture, 0, 0, 480, 128);
         weyerhauser.flip(false, true);
 
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
