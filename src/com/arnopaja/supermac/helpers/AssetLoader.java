@@ -106,6 +106,10 @@ public class AssetLoader {
         asphaltCornerNW = new TextureRegion(asphaltCornerNE);
         asphaltCornerNW.flip(false, true);
 
+        //--------------------------
+        //        Buildings
+        //--------------------------
+
         // The CC and chapel don't work at the moment because their canvas dimensions are bad
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
 //        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
@@ -123,7 +127,7 @@ public class AssetLoader {
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
 
         //--------------------------
-        //         Entities
+        //        Entities
         //--------------------------
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/chest_closed.png"));
