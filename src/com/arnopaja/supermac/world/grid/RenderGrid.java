@@ -19,6 +19,15 @@ public class RenderGrid extends Grid {
         super(grid);
     }
 
+    public void render(SpriteBatch batch, Vector2 offset, float runTime) {
+        batch.begin();
+        batch.disableBlending();
+        renderTiles(batch, offset, runTime);
+        batch.enableBlending();
+        renderEntities(batch, offset, runTime);
+        batch.end();
+    }
+
     /**
      * Renders all elements of this RenderGrid using their appropriate render method.
      * They are rendered at the appropriate position corresponding to their grid space,
@@ -28,7 +37,7 @@ public class RenderGrid extends Grid {
      * @param offset the offset vector
      * @param runTime the current runtime.  Used to properly render animations
      */
-    public void renderTiles(SpriteBatch batch, Vector2 offset, float runTime) {
+    private void renderTiles(SpriteBatch batch, Vector2 offset, float runTime) {
         for (int i=0; i<gridWidth; i++) {
             for (int j=0; j<gridHeight; j++) {
                 Tile tile = tileArray[i][j];
@@ -48,7 +57,7 @@ public class RenderGrid extends Grid {
      * @param offset the offset vector
      * @param runTime the current runtime.  Used to properly render animations
      */
-    public void renderEntities(SpriteBatch batch, Vector2 offset, float runTime) {
+    private void renderEntities(SpriteBatch batch, Vector2 offset, float runTime) {
         for (int i=0; i<gridWidth; i++) {
             for (int j=0; j<gridHeight; j++) {
                 Vector2 position = new Vector2(i, j);

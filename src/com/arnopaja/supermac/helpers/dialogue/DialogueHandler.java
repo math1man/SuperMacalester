@@ -73,22 +73,21 @@ public class DialogueHandler {
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         if (!isNone()) {
-            batch.flush();
-            renderRectangle(shapeRenderer);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(1, 1, 1, 0.8f); // TODO: Why am I not transparent???
+            shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
+                    dialogueSpace.getWidth(), dialogueSpace.getHeight());
+            shapeRenderer.end();
+
+            batch.begin();
+            batch.enableBlending();
             if (isDialogue()) {
                 renderDialogue(batch);
-            } else  {
+            } else {
                 renderOptions(batch);
             }
+            batch.end();
         }
-    }
-
-    private void renderRectangle(ShapeRenderer shapeRenderer) {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(1, 1, 1, 0.8f);
-        shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
-                dialogueSpace.getWidth(), dialogueSpace.getHeight());
-        shapeRenderer.end();
     }
 
     private void renderDialogue(SpriteBatch batch) {

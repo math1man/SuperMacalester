@@ -48,16 +48,9 @@ public class WorldRenderer extends BaseRenderer<WorldController> {
 
         renderBackgroundColor();
 
-        batch.begin();
-        batch.disableBlending();
         Vector2 offset = renderOffset.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
-        renderGrid.renderTiles(batch, offset, runTime);
-        batch.enableBlending();
-        renderGrid.renderEntities(batch, offset, runTime);
-        batch.flush();
+        renderGrid.render(batch, offset, runTime);
 
         dialogueHandler.render(shapeRenderer, batch);
-
-        batch.end();
     }
 }
