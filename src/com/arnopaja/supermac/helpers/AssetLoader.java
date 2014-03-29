@@ -75,8 +75,10 @@ public class AssetLoader {
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/32tree1.png"));
         treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
+        treeSmall.flip(false, true);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/64tree1.png"));
-        treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
+        treeBig = new TextureRegion(texture, 0, 0, 64, 64);
+        treeBig.flip(false, true);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
         cobble = new TextureRegion(texture, 0, 0, 32, 32);
