@@ -20,7 +20,11 @@ public class Dialogue implements DialogueDisplayable {
     private boolean hasNext;
 
     public Dialogue(String rawDialogue) {
-        this(rawDialogue.split("<d>"), null, null);
+        this(rawDialogue.split("<d>"));
+    }
+
+    public Dialogue(String[] dialogue) {
+        this(dialogue, null, null);
     }
 
     public Dialogue(String rawDialogue, Interaction postInteraction) {
@@ -51,7 +55,7 @@ public class Dialogue implements DialogueDisplayable {
     public void next() {
         position++;
         currentDialogue = dialogue[position];
-        hasNext = dialogue.length > 1 + position;
+        hasNext = position + 1 < dialogue.length ;
     }
 
     public String[] getDialogue() {

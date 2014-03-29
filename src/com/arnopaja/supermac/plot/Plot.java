@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.WorldController;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class will handle the plot structure and everything
@@ -23,8 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Ari Weiland
  */
 public class Plot {
-
-    private static final AtomicInteger nextQuestID = new AtomicInteger(0);
 
     private final WorldController world;
     private Map<Integer, Quest> quests;
@@ -55,7 +52,7 @@ public class Plot {
         List<Goal> testGoals = new ArrayList<Goal>();
         testGoals.add(new Goal(character, location, interaction));
 
-        Quest test = new Quest(nextQuestID.getAndIncrement(), testGoals);
+        Quest test = new Quest(testGoals);
         test.activate(null);
         addQuest(test);
     }

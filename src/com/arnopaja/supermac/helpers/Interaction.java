@@ -27,6 +27,8 @@ import java.util.List;
  */
 public abstract class Interaction {
 
+    public abstract void run(GameScreen screen);
+
     /**
      * Default null interaction.  Running this does nothing
      */
@@ -42,8 +44,6 @@ public abstract class Interaction {
             screen.endDialogue();
         }
     };
-
-    public abstract void run(GameScreen screen);
 
     public static Interaction dialogue(final DialogueDisplayable dialogue) {
         if (dialogue == null) {

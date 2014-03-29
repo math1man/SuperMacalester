@@ -65,4 +65,15 @@ public class Goal {
     public boolean isActive() {
         return isActive;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Goal)) return false;
+
+        Goal goal = (Goal) o;
+
+        return entity.equals(goal.entity) && location.equals(goal.location)
+                && mainInteraction.equals(goal.mainInteraction);
+    }
 }

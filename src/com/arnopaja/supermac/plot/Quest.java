@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Ari Weiland
  */
 public class Quest {
+
+    private static final AtomicInteger nextID = new AtomicInteger(0);
 
     public static enum QuestState { INACTIVE, ACTIVE, COMPLETE }
 
@@ -20,6 +23,10 @@ public class Quest {
 
     private QuestState state = QuestState.INACTIVE;
     private int currentGoal;
+
+    public Quest(List<Goal> goals) {
+        this(nextID.getAndIncrement(), goals);
+    }
 
     public Quest(int questID, List<Goal> goals) {
         this.ID = questID;
@@ -33,7 +40,7 @@ public class Quest {
         if (isInactive()) {
             prereqs.remove(quest);
             if (prereqs.isEmpty()) {
-                clearGoals();
+                reset();
                 state = QuestState.ACTIVE;
                 currentGoal = 0;
                 activateCurrentGoal();
@@ -55,7 +62,7 @@ public class Quest {
     }
 
     public void load(int currentGoal) {
-        clearGoals();
+        reset();
         state = QuestState.ACTIVE;
         this.currentGoal = currentGoal;
         activateCurrentGoal();
@@ -73,7 +80,7 @@ public class Quest {
         goals.get(currentGoal).deactivate();
     }
 
-    private void clearGoals() {
+    private void reset() {
         for (Goal goal : goals) {
             if (goal.isActive()) {
                 goal.deactivate();
@@ -119,5 +126,16 @@ public class Quest {
 
     public void setPostreqs(Set<Quest> postreqs) {
         this.postreqs = postreqs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Quest)) return false;
+
+        Quest quest = (Quest) o;
+
+        return ID == quest.ID;
+
     }
 }
