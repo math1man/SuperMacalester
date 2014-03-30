@@ -29,10 +29,10 @@ public class WorldController implements BaseController {
     private MainMapCharacter mainCharacter;
 
     public WorldController() {
-        worldGrid = MapLoader.generateMap("World");
-        mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(1, 1), Direction.WEST));
+        worldGrid = MapLoader.generateMap("Macalester");
+        mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(22, 12), Direction.WEST));
         initBuildings();
-        initCharacters();
+//        initCharacters();
     }
 
     private void initBuildings() {

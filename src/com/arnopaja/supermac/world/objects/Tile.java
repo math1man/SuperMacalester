@@ -34,6 +34,9 @@ public class Tile implements Renderable {
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
         TextureRegion sprite = MapLoader.getTileSprite(tileKey);
+        if (sprite == null) {
+            return NULL;
+        }
 
         boolean isPathable = true;
         if (temp.length > 1) {
@@ -44,7 +47,6 @@ public class Tile implements Renderable {
                 }
             }
         }
-
         return createTile(sprite, isPathable);
     }
 

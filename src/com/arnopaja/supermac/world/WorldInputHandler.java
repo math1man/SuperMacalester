@@ -54,7 +54,7 @@ public class WorldInputHandler extends BaseInputHandler {
     }
 
     @Override
-    public boolean keyUp(int i) {
+    public boolean keyUp(int keycode) {
         return false;
     }
 

@@ -146,10 +146,10 @@ public class MapLoader {
         tileMap.put("ase", AssetLoader.asphaltCornerSE);
         tileMap.put("asw", AssetLoader.asphaltCornerSW);
         tileMap.put("anw", AssetLoader.asphaltCornerNW);
-        tileMap.put("bcc", AssetLoader.campusCenter);
-        tileMap.put("bc", AssetLoader.chapel);
-        tileMap.put("bd", AssetLoader.dupre);
-        tileMap.put("bw", AssetLoader.weyerhauser);
+        tileMap.put("_cc", AssetLoader.campusCenter);
+        tileMap.put("_c", AssetLoader.chapel);
+        tileMap.put("_d", AssetLoader.dupre);
+        tileMap.put("_w", AssetLoader.weyerhauser);
 
         randomTileMap.put("g", 3);
     }
