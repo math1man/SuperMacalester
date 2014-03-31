@@ -68,7 +68,7 @@ public class BattleController implements BaseController {
             if (action == null) {
                 setTurnActions();
             } else {
-                dialogueHandler.displayDialogue(action.runAction());
+                dialogueHandler.displayDialogue(action.run());
             }
         }
     }

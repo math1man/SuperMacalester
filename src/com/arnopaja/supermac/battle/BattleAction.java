@@ -31,10 +31,12 @@ public abstract class BattleAction {
         this.item = item;
     }
 
+    public abstract Dialogue run();
+
     public static BattleAction attack(BattleCharacter source, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null, null) {
             @Override
-            public Dialogue runAction() {
+            public Dialogue run() {
                 float damage = (float) (getSource().getAttack() / getDestination().getDefense()
                         * (2 + Math.abs(RANDOM.nextGaussian())));
                 int damageDone = (int) getDestination().modifyHealth(-damage);
@@ -52,7 +54,7 @@ public abstract class BattleAction {
     public static BattleAction spell(BattleCharacter source, Spell spell, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.SPELL, source.getSpeed(), spell, null) {
             @Override
-            public Dialogue runAction() {
+            public Dialogue run() {
                 return getSpell().use(getSource(), getDestination());
             }
         };
@@ -61,7 +63,7 @@ public abstract class BattleAction {
     public static BattleAction item(BattleCharacter source, Item item, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), null, item) {
             @Override
-            public Dialogue runAction() {
+            public Dialogue run() {
                 return getItem().use(getSource(), getDestination());
             }
         };
@@ -70,7 +72,7 @@ public abstract class BattleAction {
     public static BattleAction defend(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.DEFEND, Integer.MAX_VALUE, null, null) {
             @Override
-            public Dialogue runAction() {
+            public Dialogue run() {
                 // TODO: code for defending
                 String dialogue = getSource() + " is defending!";
                 return new Dialogue(dialogue);
@@ -82,15 +84,13 @@ public abstract class BattleAction {
         // TODO: what is the priority for fleeing?
         return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null, null) {
             @Override
-            public Dialogue runAction() {
+            public Dialogue run() {
                 // TODO: code for fleeing
                 String dialogue = getSource() + " flees!";
                 return new Dialogue(dialogue);
             }
         };
     }
-
-    public abstract Dialogue runAction();
 
     public BattleCharacter getSource() {
         return source;

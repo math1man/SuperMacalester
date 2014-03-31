@@ -46,17 +46,6 @@ public abstract class Interaction<U, V> {
 
     public abstract void run(GameScreen screen);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Interaction)) return false;
-
-        Interaction that = (Interaction) o;
-
-        return (primary == null ? that.primary == null : primary.equals(that.primary))
-                && (secondary == null ? that.secondary == null : secondary.equals(that.secondary));
-    }
-
     /**
      * Default null interaction.  Running this does nothing
      */
@@ -248,5 +237,16 @@ public abstract class Interaction<U, V> {
                 }
             };
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Interaction)) return false;
+
+        Interaction that = (Interaction) o;
+
+        return (primary == null ? that.primary == null : primary.equals(that.primary))
+                && (secondary == null ? that.secondary == null : secondary.equals(that.secondary));
     }
 }
