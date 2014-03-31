@@ -123,32 +123,32 @@ public class MapLoader {
     asterisks are used to represent an arbitrary numeral in the data file
     */
     public static void initTileMap() {
-        tileMap.put("g0", AssetLoader.grass0);
-        tileMap.put("g1", AssetLoader.grass1);
-        tileMap.put("g2", AssetLoader.grass2);
-        tileMap.put("bh", AssetLoader.bushH);
-        tileMap.put("bv", AssetLoader.bushV);
-        tileMap.put("bfh", AssetLoader.bushFlowersH);
-        tileMap.put("bfv", AssetLoader.bushFlowersV);
-        tileMap.put("ts", AssetLoader.treeSmall);
-        tileMap.put("tb", AssetLoader.treeBig);
-        tileMap.put("c", AssetLoader.cobble);
-        tileMap.put("cr", AssetLoader.cobbleRed);
-        tileMap.put("a", AssetLoader.asphalt);
-        tileMap.put("ah", AssetLoader.asphaltLineH);
-        tileMap.put("av", AssetLoader.asphaltLineV);
-        tileMap.put("an", AssetLoader.asphaltEdgeN);
-        tileMap.put("ae", AssetLoader.asphaltEdgeE);
-        tileMap.put("as", AssetLoader.asphaltEdgeS);
-        tileMap.put("aw", AssetLoader.asphaltEdgeW);
-        tileMap.put("ane", AssetLoader.asphaltCornerNE);
-        tileMap.put("ase", AssetLoader.asphaltCornerSE);
-        tileMap.put("asw", AssetLoader.asphaltCornerSW);
-        tileMap.put("anw", AssetLoader.asphaltCornerNW);
-        tileMap.put("_cc", AssetLoader.campusCenter);
-        tileMap.put("_ch", AssetLoader.chapel);
-        tileMap.put("_d", AssetLoader.dupre);
-        tileMap.put("_w", AssetLoader.weyerhauser);
+        tileMap.put("g0",   AssetLoader.grass0);
+        tileMap.put("g1",   AssetLoader.grass1);
+        tileMap.put("g2",   AssetLoader.grass2);
+        tileMap.put("bh",   AssetLoader.bushH);
+        tileMap.put("bv",   AssetLoader.bushV);
+        tileMap.put("bfh",  AssetLoader.bushFlowersH);
+        tileMap.put("bfv",  AssetLoader.bushFlowersV);
+        tileMap.put("ts",   AssetLoader.treeSmall);
+        tileMap.put("tb",   AssetLoader.treeBig);
+        tileMap.put("c",    AssetLoader.cobble);
+        tileMap.put("cr",   AssetLoader.cobbleRed);
+        tileMap.put("a",    AssetLoader.asphalt);
+        tileMap.put("ah",   AssetLoader.asphaltLineH);
+        tileMap.put("av",   AssetLoader.asphaltLineV);
+        tileMap.put("an",   AssetLoader.asphaltEdgeN);
+        tileMap.put("ae",   AssetLoader.asphaltEdgeE);
+        tileMap.put("as",   AssetLoader.asphaltEdgeS);
+        tileMap.put("aw",   AssetLoader.asphaltEdgeW);
+        tileMap.put("ane",  AssetLoader.asphaltCornerNE);
+        tileMap.put("ase",  AssetLoader.asphaltCornerSE);
+        tileMap.put("asw",  AssetLoader.asphaltCornerSW);
+        tileMap.put("anw",  AssetLoader.asphaltCornerNW);
+        tileMap.put("_cc",  AssetLoader.campusCenter);
+        tileMap.put("_ch",  AssetLoader.chapel);
+        tileMap.put("_d",   AssetLoader.dupre);
+        tileMap.put("_w",   AssetLoader.weyerhauser);
 
         randomTileMap.put("g", 3);
     }
