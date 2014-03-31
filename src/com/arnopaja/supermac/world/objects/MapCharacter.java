@@ -47,12 +47,12 @@ public abstract class MapCharacter extends Entity {
         }
     }
 
-    public boolean move(Direction dir) {
-        if (!isMoving) {
-            setFacing(dir);
-            if (getGrid().moveEntity(this, dir)) {
+    public boolean move(Direction direction) {
+        if (!isMoving && direction != null) {
+            setFacing(direction);
+            if (getGrid().moveEntity(this, direction)) {
                 isMoving = true;
-                renderOffset = Direction.getAdjacent(dir).scl(-1);
+                renderOffset = Direction.getAdjacent(direction).scl(-1);
                 renderOffsetDelta = renderOffset.cpy().scl(-MOVE_SPEED);
                 return true;
             }

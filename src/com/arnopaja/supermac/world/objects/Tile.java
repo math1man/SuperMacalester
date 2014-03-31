@@ -38,7 +38,7 @@ public class Tile implements Renderable {
             return NULL;
         }
 
-        boolean isPathable = true;
+        boolean isPathable = !tileKey.startsWith("_");
         if (temp.length > 1) {
             for (char tileFlag : temp[1].toCharArray()) {
                 // add all optional flags here
