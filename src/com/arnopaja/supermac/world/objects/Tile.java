@@ -28,7 +28,7 @@ public class Tile implements Renderable {
     }
 
     public static Tile createTile(String tileCode) {
-        if (tileCode.startsWith("n")) {
+        if (tileCode.isEmpty()) {
             return NULL;
         }
         String[] temp = tileCode.split("-");

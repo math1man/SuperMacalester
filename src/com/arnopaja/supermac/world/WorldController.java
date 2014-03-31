@@ -30,7 +30,7 @@ public class WorldController implements BaseController {
 
     public WorldController() {
         worldGrid = MapLoader.generateMap("Macalester");
-        mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(23, 50), Direction.WEST));
+        mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(36, 36), Direction.WEST));
         initBuildings();
         initCharacters();
     }
@@ -54,7 +54,7 @@ public class WorldController implements BaseController {
                 "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
                 "I spent this past summer here working for Libby Shoop designing a website.",
                 new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS))));
-        character.changeGrid(new Location(worldGrid, new Vector2(27, 53), Direction.NORTH));
+        character.changeGrid(new Location(worldGrid, new Vector2(40, 40), Direction.NORTH));
     }
 
     @Override
