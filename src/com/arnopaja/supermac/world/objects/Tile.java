@@ -33,7 +33,7 @@ public class Tile implements Renderable {
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
-        TextureRegion sprite = MapLoader.getTileSprite(tileKey);
+        TextureRegion sprite = MapLoader.TILE_MAP.get(tileKey);
         if (sprite == null) {
             return NULL;
         }
@@ -65,13 +65,21 @@ public class Tile implements Renderable {
         return isRendered;
     }
 
+    public TextureRegion getSprite() {
+        return sprite;
+    }
+
     @Override
     public TextureRegion getSprite(float runTime) {
-        return sprite;
+        return getSprite();
     }
 
     public boolean isPathable() {
         return isPathable;
+    }
+
+    public boolean isLarge() {
+        return sprite != null && !(sprite.getRegionWidth() == 32 && sprite.getRegionHeight() == 32);
     }
 
     @Override

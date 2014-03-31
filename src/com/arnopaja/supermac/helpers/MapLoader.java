@@ -5,7 +5,7 @@ import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import java.util.*;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
@@ -43,10 +43,7 @@ public class MapLoader {
         }
     }
 
-    private static final Random random = new Random();
-
-    private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
-    private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
+    public static final TileMap TILE_MAP = new TileMap();
 
     public static Grid generateMap(String name) {
         String raw = AssetLoader.mapHandle.readString();
@@ -103,62 +100,86 @@ public class MapLoader {
         return null;
     }
 
-    private static Grid parseGrid(String[] grid) {
-        int height = grid.length;
-        int width = grid[0].split("\t").length;
+    private static Grid parseGrid(String[] lines) {
+        int height = lines.length;
+        int width = lines[0].split("\t").length;
         Tile[][] tileArray = new Tile[width][height];
         for (int i=0; i<height; i++) {
-            String line = grid[i];
-            String[] tileCodes = line.split("\t");
+            String[] tileCodes = lines[i].split("\t");
             for (int j=0; j<width; j++) {
                 tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
             }
         }
+        simplify(tileArray);
         return new Grid(tileArray);
     }
 
-    /* notes:
-    _ is a prefix for buildings
-    numerals should be used only for arbitrary tiles (ie. different grasses)
-    asterisks are used to represent an arbitrary numeral in the data file
-    */
-    public static void initTileMap() {
-        tileMap.put("g0",   AssetLoader.grass0);
-        tileMap.put("g1",   AssetLoader.grass1);
-        tileMap.put("g2",   AssetLoader.grass2);
-        tileMap.put("bh",   AssetLoader.bushH);
-        tileMap.put("bv",   AssetLoader.bushV);
-        tileMap.put("bfh",  AssetLoader.bushFlowersH);
-        tileMap.put("bfv",  AssetLoader.bushFlowersV);
-        tileMap.put("ts",   AssetLoader.treeSmall);
-        tileMap.put("tb",   AssetLoader.treeBig);
-        tileMap.put("c",    AssetLoader.cobble);
-        tileMap.put("cr",   AssetLoader.cobbleRed);
-        tileMap.put("a",    AssetLoader.asphalt);
-        tileMap.put("ah",   AssetLoader.asphaltLineH);
-        tileMap.put("av",   AssetLoader.asphaltLineV);
-        tileMap.put("an",   AssetLoader.asphaltEdgeN);
-        tileMap.put("ae",   AssetLoader.asphaltEdgeE);
-        tileMap.put("as",   AssetLoader.asphaltEdgeS);
-        tileMap.put("aw",   AssetLoader.asphaltEdgeW);
-        tileMap.put("ane",  AssetLoader.asphaltCornerNE);
-        tileMap.put("ase",  AssetLoader.asphaltCornerSE);
-        tileMap.put("asw",  AssetLoader.asphaltCornerSW);
-        tileMap.put("anw",  AssetLoader.asphaltCornerNW);
-        tileMap.put("_cc",  AssetLoader.campusCenter);
-        tileMap.put("_ch",  AssetLoader.chapel);
-        tileMap.put("_d",   AssetLoader.dupre);
-        tileMap.put("_w",   AssetLoader.weyerhauser);
-
-        randomTileMap.put("g", 3);
-    }
-
-    public static TextureRegion getTileSprite(String tileKey) {
-        if (tileKey.contains("*")) {
-            tileKey = tileKey.replace("*", "");
-            int temp = randomTileMap.get(tileKey);
-            tileKey += random.nextInt(temp);
+    private static void simplify(Tile[][] tiles) {
+        for (int i=0; i<tiles.length; i++) {
+            for (int j=0; j<tiles[0].length; j++) {
+                Tile tile = tiles[i][j];
+                if (tile.isLarge()) {
+                    TextureRegion[][] sprites = split(tile.getSprite(), 32, 32);
+                    for (int p=0; p<sprites.length; p++) {
+                        for (int q=0; q<sprites[0].length; q++) {
+                            tiles[i+q][j+p] = Tile.createTile(sprites[p][q], tile.isPathable());
+                        }
+                    }
+                }
+            }
         }
-        return tileMap.get(tileKey);
     }
+
+    private static TextureRegion[][] split(TextureRegion sprite, int tileWidth, int tileHeight) {
+        boolean flipX = sprite.isFlipX();
+        boolean flipY = sprite.isFlipY();
+        sprite.flip(flipX, flipY);
+        int x = sprite.getRegionX();
+        int y = sprite.getRegionY();
+        int width = sprite.getRegionWidth();
+        int height = sprite.getRegionHeight();
+
+        int rows = height / tileHeight;
+        int cols = width / tileWidth;
+
+        int startX = x;
+        TextureRegion[][] tiles = new TextureRegion[rows][cols];
+        for (int row = 0; row < rows; row++, y += tileHeight) {
+            x = startX;
+            for (int col = 0; col < cols; col++, x += tileWidth) {
+                tiles[row][col] = new TextureRegion(sprite.getTexture(), x, y, tileWidth, tileHeight);
+                tiles[row][col].flip(flipX, flipY);
+            }
+        }
+        return tiles;
+//        return TextureRegion.split(sprite.getTexture(), tileWidth, tileHeight);
+    }
+
+    public static void initTileMap() {
+        TILE_MAP.put("g",   AssetLoader.grass0, AssetLoader.grass1, AssetLoader.grass2);
+        TILE_MAP.put("bh",  AssetLoader.bushH);
+        TILE_MAP.put("bv",  AssetLoader.bushV);
+        TILE_MAP.put("bfh", AssetLoader.bushFlowersH);
+        TILE_MAP.put("bfv", AssetLoader.bushFlowersV);
+        TILE_MAP.put("ts",  AssetLoader.treeSmall);
+        TILE_MAP.put("_tb", AssetLoader.treeBig);
+        TILE_MAP.put("c",   AssetLoader.cobble);
+        TILE_MAP.put("cr",  AssetLoader.cobbleRed);
+        TILE_MAP.put("a",   AssetLoader.asphalt);
+        TILE_MAP.put("ah",  AssetLoader.asphaltLineH);
+        TILE_MAP.put("av",  AssetLoader.asphaltLineV);
+        TILE_MAP.put("an",  AssetLoader.asphaltEdgeN);
+        TILE_MAP.put("ae",  AssetLoader.asphaltEdgeE);
+        TILE_MAP.put("as",  AssetLoader.asphaltEdgeS);
+        TILE_MAP.put("aw",  AssetLoader.asphaltEdgeW);
+        TILE_MAP.put("ane", AssetLoader.asphaltCornerNE);
+        TILE_MAP.put("ase", AssetLoader.asphaltCornerSE);
+        TILE_MAP.put("asw", AssetLoader.asphaltCornerSW);
+        TILE_MAP.put("anw", AssetLoader.asphaltCornerNW);
+//        TILE_MAP.put("_cc", AssetLoader.campusCenter);
+//        TILE_MAP.put("_ch", AssetLoader.chapel);
+        TILE_MAP.put("_d",  AssetLoader.dupre);
+        TILE_MAP.put("_w",  AssetLoader.weyerhauser);
+    }
+
 }
