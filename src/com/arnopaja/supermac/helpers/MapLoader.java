@@ -3,7 +3,6 @@ package com.arnopaja.supermac.helpers;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -110,49 +109,8 @@ public class MapLoader {
                 tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
             }
         }
-        simplify(tileArray);
+        SpriteUtils.split(tileArray);
         return new Grid(tileArray);
-    }
-
-    private static void simplify(Tile[][] tiles) {
-        for (int i=0; i<tiles.length; i++) {
-            for (int j=0; j<tiles[0].length; j++) {
-                Tile tile = tiles[i][j];
-                if (tile.isLarge()) {
-                    TextureRegion[][] sprites = split(tile.getSprite(), 32, 32);
-                    for (int p=0; p<sprites.length; p++) {
-                        for (int q=0; q<sprites[0].length; q++) {
-                            tiles[i+q][j+p] = Tile.createTile(sprites[p][q], tile.isPathable());
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private static TextureRegion[][] split(TextureRegion sprite, int tileWidth, int tileHeight) {
-        boolean flipX = sprite.isFlipX();
-        boolean flipY = sprite.isFlipY();
-        sprite.flip(flipX, flipY);
-        int x = sprite.getRegionX();
-        int y = sprite.getRegionY();
-        int width = sprite.getRegionWidth();
-        int height = sprite.getRegionHeight();
-
-        int rows = height / tileHeight;
-        int cols = width / tileWidth;
-
-        int startX = x;
-        TextureRegion[][] tiles = new TextureRegion[rows][cols];
-        for (int row = 0; row < rows; row++, y += tileHeight) {
-            x = startX;
-            for (int col = 0; col < cols; col++, x += tileWidth) {
-                tiles[row][col] = new TextureRegion(sprite.getTexture(), x, y, tileWidth, tileHeight);
-                tiles[row][col].flip(flipX, flipY);
-            }
-        }
-        return tiles;
-//        return TextureRegion.split(sprite.getTexture(), tileWidth, tileHeight);
     }
 
     public static void initTileMap() {

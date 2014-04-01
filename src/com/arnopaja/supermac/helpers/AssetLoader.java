@@ -57,69 +57,58 @@ public class AssetLoader {
 
         // TODO: build a basic texture file and set up tiles
         texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile1.png"));
-        grass0 = new TextureRegion(texture, 0, 0, 32, 32);
+        grass0 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile2.png"));
-        grass1 = new TextureRegion(texture, 0, 0, 32, 32);
+        grass1 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile3.png"));
-        grass2 = new TextureRegion(texture, 0, 0, 32, 32);
+        grass2 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_bush.png"));
-        bushH = new TextureRegion(texture, 0, 0, 32, 32);
+        bushH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_bush.png"));
-        bushV = new TextureRegion(texture, 0, 0, 32, 32);
+        bushV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_flowerbush.png"));
-        bushFlowersH = new TextureRegion(texture, 0, 0, 32, 32);
+        bushFlowersH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_flowerbush.png"));
-        bushFlowersV = new TextureRegion(texture, 0, 0, 32, 32);
+        bushFlowersV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/32tree1.png"));
-        treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
-        treeSmall.flip(false, true);
+        treeSmall = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/64tree1.png"));
-        treeBig = new TextureRegion(texture, 0, 0, 64, 64);
-        treeBig.flip(false, true);
+        treeBig = SpriteUtils.makeSprite(texture, 0, 0, 64, 64);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
-        cobble = new TextureRegion(texture, 0, 0, 32, 32);
+        cobble = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/redcobblestone.png"));
-        cobbleRed = new TextureRegion(texture, 0, 0, 32, 32);
+        cobbleRed = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
         texture = new Texture(Gdx.files.internal("data/landscapetiles/asphalt_tile.png"));
-        asphalt = new TextureRegion(texture, 0, 0, 32, 32);
+        asphalt = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_horizontal.png"));
-        asphaltLineH = new TextureRegion(texture, 0, 0, 32, 32);
+        asphaltLineH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_vertical.png"));
-        asphaltLineV = new TextureRegion(texture, 0, 0, 32, 32);
+        asphaltLineV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_north.png"));
-        asphaltEdgeN = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltEdgeS = new TextureRegion(asphaltEdgeN);
-        asphaltEdgeS.flip(true, false);
+        asphaltEdgeN = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltEdgeS = SpriteUtils.makeFlipped(asphaltEdgeN, true, false);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_east.png"));
-        asphaltEdgeE = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltEdgeW = new TextureRegion(asphaltEdgeE);
-        asphaltEdgeE.flip(false, true);
+        asphaltEdgeE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltEdgeW = SpriteUtils.makeFlipped(asphaltEdgeE, true, false);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_upper_right_corner.png"));
-        asphaltCornerNE = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltCornerSE = new TextureRegion(asphaltCornerNE);
-        asphaltCornerSE.flip(true, false);
-        asphaltCornerSW = new TextureRegion(asphaltCornerSE);
-        asphaltCornerSW.flip(false, true);
-        asphaltCornerNW = new TextureRegion(asphaltCornerNE);
-        asphaltCornerNW.flip(false, true);
+        asphaltCornerNE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltCornerSE = SpriteUtils.makeFlipped(asphaltCornerNE, true, false);
+        asphaltCornerSW = SpriteUtils.makeFlipped(asphaltCornerNE, true, true);
+        asphaltCornerNW = SpriteUtils.makeFlipped(asphaltCornerNE, false, true);
 
         // The CC and chapel don't work at the moment because their canvas dimensions are bad
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
-//        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
-//        campusCenter.flip(false, true);
+//        campusCenter = SpriteUtils.makeSprite(texture, 0, 0, 480, 128);
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/chapel.png"));
-//        chapel = new TextureRegion(texture, 0, 0, 192, 192);
-//        chapel.flip(false, true);
+//        chapel = SpriteUtils.makeSprite(texture, 0, 0, 192, 192);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/dupre.png"));
-        dupre = new TextureRegion(texture, 0, 0, 512, 128);
-        dupre.flip(false, true);
+        dupre = SpriteUtils.makeSprite(texture, 0, 0, 512, 128);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/weyerhauser.png"));
-        weyerhauser = new TextureRegion(texture, 0, 0, 448, 128);
-        weyerhauser.flip(false, true);
+        weyerhauser = SpriteUtils.makeSprite(texture, 0, 0, 448, 128);
 
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
 
