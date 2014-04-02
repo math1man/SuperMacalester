@@ -82,7 +82,7 @@ public class SpriteUtils {
         int yTiles = height / tileHeight;
 
         int startY = y;
-        TextureRegion[][] tiles = new TextureRegion[yTiles][xTiles];
+        TextureRegion[][] tiles = new TextureRegion[xTiles][yTiles];
         for (int tileX = 0; tileX < xTiles; tileX++, x += tileWidth) {
             y = startY;
             for (int tileY = 0; tileY < yTiles; tileY++, y += tileHeight) {
