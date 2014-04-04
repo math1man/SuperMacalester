@@ -11,7 +11,6 @@ public class Inventory {
     public static enum InventoryType { ARMOR, WEAPON, ITEM, SPECIALITEM }
 
     // TODO: Why do these have to be LinkedLists?
-    // TODO: Why not make an interface called Retrievable and just have one List for all of these?
     private static List<Armor> armorInventory = new LinkedList<Armor>();
     private static List<Weapon> weaponInventory = new LinkedList<Weapon>();
     private static List<Item> itemInventory = new LinkedList<Item>();
@@ -42,6 +41,22 @@ public class Inventory {
             return clazz.cast(specialItemInventory.get(index));
         }
         return null;
+    }
+
+    public static List<Armor> getArmorInventory() {
+        return armorInventory;
+    }
+
+    public static List<Weapon> getWeaponInventory() {
+        return weaponInventory;
+    }
+
+    public static List<Item> getItemInventory() {
+        return itemInventory;
+    }
+
+    public static List<SpecialItem> getSpecialItemInventory() {
+        return specialItemInventory;
     }
 
     //adds

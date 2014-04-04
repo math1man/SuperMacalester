@@ -13,12 +13,10 @@ import java.util.List;
  */
 public class Chest extends Entity {
 
-    // TODO: do we maybe want chests facing other directions?
     private static final TextureRegion CLOSED_SPRITE = AssetLoader.chestClosed;
     private static final TextureRegion OPEN_SPRITE = AssetLoader.chestOpen;
     private boolean isOpen = false;
 
-    // TODO: should chests contain money?
     private List<AbstractItem> contents;
 
     public Chest(Location location, List<AbstractItem> contents) {
