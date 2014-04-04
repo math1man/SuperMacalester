@@ -100,7 +100,6 @@ public abstract class Interaction<U, V> {
                     if (primary.isEmpty()) {
                         dialogue = new Dialogue("This chest is empty", Interaction.closeChest(primary));
                     } else {
-                        // TODO: DialogueOptions that allows you to remove items from the chest
                         // Items go into inventory from chest
                         List<AbstractItem> items = primary.getContents();
                         int length = items.size() + 2;

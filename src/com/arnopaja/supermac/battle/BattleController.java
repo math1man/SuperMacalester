@@ -3,13 +3,16 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.InteractionUtils;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -88,7 +91,8 @@ public class BattleController implements BaseController {
 
     private DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
         Spell[] spells = new Spell[0]; // TODO: get these from wherever
-        Item[] items = new Item[0];    // TODO: get these from wherever
+        List<Item> itemList = Inventory.getItemInventory();
+        Item[] items = itemList.toArray(new Item[itemList.size()]);
         return new DialogueOptions("What should " + hero + " do?",
                 DialogueOptions.BATTLE_OPTIONS,
                 InteractionUtils.selectAttack(hero, enemies),
