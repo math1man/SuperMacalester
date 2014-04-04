@@ -230,6 +230,7 @@ g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 </map>
 
 
+
 Building info:
     CAMPUS_CENTER   (3, 1, 0, 0),
     CHAPEL          (2, 1, 0, 0),
