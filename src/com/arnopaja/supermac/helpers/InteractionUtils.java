@@ -202,6 +202,17 @@ public class InteractionUtils {
         return interactions;
     }
 
+    public static Interaction[] makeBattleActions(BattleCharacter hero, BattleCharacter[] enemies,
+                                                  Spell[] spells, Item[] items) {
+        Interaction[] interactions = new Interaction[5];
+        interactions[0] = InteractionUtils.selectAttack(hero, enemies);
+        interactions[1] = InteractionUtils.selectDefend(hero);
+        interactions[2] = InteractionUtils.selectSpell(hero, spells, enemies);
+        interactions[3] = InteractionUtils.selectItem(hero, items, enemies);
+        interactions[4] = InteractionUtils.selectFlee(hero);
+        return interactions;
+    }
+
     //----------------------------------------
     //  BattleAction Array Methods (private)
     //----------------------------------------

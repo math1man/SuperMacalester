@@ -93,13 +93,8 @@ public class BattleController implements BaseController {
         Spell[] spells = new Spell[0]; // TODO: get these from wherever
         List<Item> itemList = Inventory.getItemInventory();
         Item[] items = itemList.toArray(new Item[itemList.size()]);
-        return new DialogueOptions("What should " + hero + " do?",
-                DialogueOptions.BATTLE_OPTIONS,
-                InteractionUtils.selectAttack(hero, enemies),
-                InteractionUtils.selectDefend(hero),
-                InteractionUtils.selectSpell(hero, spells, enemies),
-                InteractionUtils.selectItem(hero, items, enemies),
-                InteractionUtils.selectFlee(hero));
+        return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
+                InteractionUtils.makeBattleActions(hero, enemies, spells, items));
     }
 
     public void addAction(BattleAction action) {
