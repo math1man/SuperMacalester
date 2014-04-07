@@ -90,15 +90,15 @@ public class AssetLoader {
         asphaltLineV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_north.png"));
         asphaltEdgeN = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        asphaltEdgeS = SpriteUtils.makeFlipped(asphaltEdgeN, true, false);
+        asphaltEdgeS = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, false);
         texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_east.png"));
         asphaltEdgeE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        asphaltEdgeW = SpriteUtils.makeFlipped(asphaltEdgeE, true, false);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_upper_right_corner.png"));
+        asphaltEdgeW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, false, true);
+        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_lower_right_corner.png"));
         asphaltCornerNE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        asphaltCornerSE = SpriteUtils.makeFlipped(asphaltCornerNE, true, false);
-        asphaltCornerSW = SpriteUtils.makeFlipped(asphaltCornerNE, true, true);
-        asphaltCornerNW = SpriteUtils.makeFlipped(asphaltCornerNE, false, true);
+        asphaltCornerSE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, false);
+        asphaltCornerSW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, true);
+        asphaltCornerNW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, false, true);
 
         // The CC and chapel don't work at the moment because their canvas dimensions are bad
 //        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));

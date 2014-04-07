@@ -20,7 +20,7 @@ public class SpriteUtils {
      * @return
      */
     public static TextureRegion makeSprite(Texture texture, int x, int y, int width, int height) {
-        return makeSprite(texture, x, y, width, height, false, true);
+        return makeSprite(texture, x, y, width, height, false, false);
     }
 
     /**
@@ -38,22 +38,8 @@ public class SpriteUtils {
     public static TextureRegion makeSprite(Texture texture, int x, int y,
                                            int width, int height, boolean flipX, boolean flipY) {
         TextureRegion sprite = new TextureRegion(texture, x, y, width, height);
-        sprite.flip(flipX, flipY);
+        sprite.flip(flipX, !flipY);
         return sprite;
-    }
-
-    /**
-     * Creates a copy of the specified TextureRegion that is flipped
-     * according to the flipX and flipY parameters.
-     * @param sprite
-     * @param flipX
-     * @param flipY
-     * @return
-     */
-    public static TextureRegion makeFlipped(TextureRegion sprite, boolean flipX, boolean flipY) {
-        TextureRegion flipped = new TextureRegion(sprite);
-        sprite.flip(flipX, flipY);
-        return flipped;
     }
 
     /**

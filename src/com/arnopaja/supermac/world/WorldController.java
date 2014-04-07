@@ -25,7 +25,6 @@ public class WorldController implements BaseController {
 
     private Grid worldGrid;
     private Map<String, Building> buildings = new HashMap<String, Building>();
-
     private MainMapCharacter mainCharacter;
 
     public WorldController() {

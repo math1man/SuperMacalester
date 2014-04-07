@@ -1,16 +1,9 @@
 Map data document.  All maps should be generated here in a very specific form:
 <map:[map name]>
-[grid of tile codes]
-</map>
-
-For buildings, the form should be
-<building:[building name]>
-<floors:[floor count]>
-<first_floor_index:[first floor index]>
-[grid of tile codes for the bottommost floor]
-[grid of tile codes for the next bottommost floor]
-[etc]
-</building>
+<floors:[floor count]>                  # optional, used for buildings, default to 1
+<first_floor_index:[first floor index]> # optional, used for buildings, default to 0
+[grid of tile codes]                    # for multiple floors, each floor should be
+</map>                                  # on the next line after the previous one
 
 Tile codes should start with the tile key followed by a hyphen and then the flags.
 An asterisk * means that there are multiple tiles and one should be randomly selected.
@@ -113,7 +106,7 @@ g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
-g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	z	g	g	g	g	c	c	g	_k																																g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	as	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	z	g	g	g	g	c	c	g	_k																																g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	_cc																				g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g	_lc																																																				g	g	g	g	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ane	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g

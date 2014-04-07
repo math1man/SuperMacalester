@@ -12,88 +12,53 @@ import java.util.regex.Pattern;
  */
 public class MapLoader {
 
-    private static enum Leaders {
-        MAP_NAME("map"),
-        BUILDING_NAME("building"),
-        FLOOR_COUNT("floors"),
-        FIRST_FLOOR_INDEX("first_floor_index");
-
-        public final String leader;
-        public final int length;
-
-        Leaders(String leader) {
-            this.leader = leader;
-            this.length = leader.length();
-        }
-
-        public boolean matches(String string) {
-            return Pattern.matches("<" + leader + ":.*" + ">", string);
-        }
-
-        public String getParam(String string) {
-            if (matches(string)) {
-                return string.substring(length+2, string.length()-1).trim();
-            }
-            return null;
-        }
-
-        public String getEnd() {
-            return "</" + leader + ">";
-        }
-    }
-
-    public static final TileMap TILE_MAP = new TileMap();
-
     public static Grid generateMap(String name) {
         String raw = AssetLoader.mapHandle.readString();
         String[] lines = raw.split("\n");
-        int[] indexes = getIndexes(name, lines);
-        if (indexes == null) {
+        Params params = getIndexes(name, lines);
+        if (params == null) {
             return null;
         }
-        return parseGrid(Arrays.copyOfRange(
-                lines, indexes[0], indexes[1]));
+        return parseGrid(Arrays.copyOfRange(lines, params.getStart(), params.getEnd()));
     }
 
     public static Building generateBuilding(String name) {
         String raw = AssetLoader.mapHandle.readString();
         String[] lines = raw.split("\n");
-        int[] indexes = getIndexes(name, lines);
-        if (indexes == null) {
+        Params params = getIndexes(name, lines);
+        if (params == null) {
             return null;
         }
-        int floorCount = new Integer(Leaders.FLOOR_COUNT.getParam(lines[indexes[2]]));
-        int height = (indexes[1] - indexes[0]) / floorCount;
+        int floorCount = params.getFloorCount();
+        int height = params.getHeight();
         Grid[] floors = new Grid[floorCount];
         for (int i=0; i<floorCount; i++) {
             floors[i] = parseGrid(Arrays.copyOfRange(lines, i * height, i + (height+1)));
         }
-        int firstFloorIndex = new Integer(Leaders.FIRST_FLOOR_INDEX.getParam(lines[indexes[3]]));
-        return new Building(floors, firstFloorIndex);
+        return new Building(floors, params.getFirstFloorIndex());
     }
 
-    private static int[] getIndexes(String name, String[] lines) {
-        boolean foundMap = false;
-        boolean foundBuilding = false;
-        int[] indexes = new int[4];
+    private static Params getIndexes(String name, String[] lines) {
+        Params params = new Params();
+        int start = -1;
         for (int i=0; i < lines.length; i++) {
-            if (name.equals(Leaders.MAP_NAME.getParam(lines[i]))) {
-                foundMap = true;
-                indexes[0] = i + 1;
-                indexes[2] = -1;
-                indexes[3] = -1;
-            } else if (name.equals(Leaders.BUILDING_NAME.getParam(lines[i]))
-                    && Leaders.FLOOR_COUNT.matches(lines[i+1])
-                    && Leaders.FIRST_FLOOR_INDEX.matches(lines[i+2])) {
-                foundBuilding = true;
-                indexes[0] = i + 1;
-                indexes[2] = i + 2;
-                indexes[3] = i + 3;
-            }
-            if ((foundMap && lines[i].trim().equals(Leaders.MAP_NAME.getEnd())) ||
-                    (foundBuilding && lines[i].trim().equals(Leaders.BUILDING_NAME.getEnd()))) {
-                indexes[1] = i;
-                return indexes;
+            String line = lines[i].trim();
+            if (start == -1) {
+                if (Leaders.MAP_NAME.isParam(line, name)) {
+                    start = i + 1;
+                }
+            } else {
+                if (Leaders.FLOOR_COUNT.matches(line)) {
+                    params.setFloorCount(Leaders.FLOOR_COUNT.getParam(line));
+                    start++;
+                } else if (Leaders.FIRST_FLOOR_INDEX.matches(line)) {
+                    params.setFirstFloorIndex(Leaders.FIRST_FLOOR_INDEX.getParam(line));
+                    start++;
+                } else if (Leaders.MAP_NAME.isEnd(line)) {
+                    params.setStart(start);
+                    params.setEnd(i);
+                    return params;
+                }
             }
         }
         return null;
@@ -112,6 +77,60 @@ public class MapLoader {
         SpriteUtils.split(tileArray);
         return new Grid(tileArray);
     }
+
+    private static enum Leaders {
+        MAP_NAME("map"),
+        FLOOR_COUNT("floors"),
+        FIRST_FLOOR_INDEX("first_floor_index");
+
+        public final String leader;
+
+        Leaders(String leader) {
+            this.leader = leader;
+        }
+
+        public boolean matches(String line) {
+            return Pattern.matches("<" + leader + ":.*" + ">", line);
+        }
+
+        public String getParam(String line) {
+            if (matches(line)) {
+                return line.substring(leader.length()+2, line.length()-1).trim();
+            }
+            return null;
+        }
+
+        public boolean isParam(String line, String param) {
+            return param.equals(getParam(line));
+        }
+
+        public String getEnd() {
+            return "</" + leader + ">";
+        }
+
+        public boolean isEnd(String line) {
+            return line.equals(getEnd());
+        }
+    }
+
+    private static class Params {
+        private int start = 0; // inclusive
+        private int end = 0;   // exclusive
+        private int floorCount = 1;
+        private int firstFloorIndex = 0;
+
+        public int getStart() { return start; }
+        public void setStart(int start) { this.start = start; }
+        public int getEnd() { return end; }
+        public void setEnd(int end) { this.end = end; }
+        public int getFloorCount() { return floorCount; }
+        public void setFloorCount(String floorCount) { this.floorCount = Integer.parseInt(floorCount); }
+        public int getHeight() { return (end - start) / floorCount; }
+        public int getFirstFloorIndex() { return firstFloorIndex; }
+        public void setFirstFloorIndex(String firstFloorIndex) { this.firstFloorIndex = Integer.parseInt(firstFloorIndex); }
+    }
+
+    public static final TileMap TILE_MAP = new TileMap();
 
     public static void initTileMap() {
         TILE_MAP.put("g",   AssetLoader.grass0, AssetLoader.grass1, AssetLoader.grass2);

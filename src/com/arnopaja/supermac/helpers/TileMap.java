@@ -15,33 +15,6 @@ public class TileMap {
     private final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
     private final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
-    public TileMap() {
-        put("g",   AssetLoader.grass0, AssetLoader.grass1, AssetLoader.grass2);
-        put("bh",  AssetLoader.bushH);
-        put("bv",  AssetLoader.bushV);
-        put("bfh", AssetLoader.bushFlowersH);
-        put("bfv", AssetLoader.bushFlowersV);
-        put("ts",  AssetLoader.treeSmall);
-        put("_tb", AssetLoader.treeBig);
-        put("c",   AssetLoader.cobble);
-        put("cr",  AssetLoader.cobbleRed);
-        put("a",   AssetLoader.asphalt);
-        put("ah",  AssetLoader.asphaltLineH);
-        put("av",  AssetLoader.asphaltLineV);
-        put("an",  AssetLoader.asphaltEdgeN);
-        put("ae",  AssetLoader.asphaltEdgeE);
-        put("as",  AssetLoader.asphaltEdgeS);
-        put("aw",  AssetLoader.asphaltEdgeW);
-        put("ane", AssetLoader.asphaltCornerNE);
-        put("ase", AssetLoader.asphaltCornerSE);
-        put("asw", AssetLoader.asphaltCornerSW);
-        put("anw", AssetLoader.asphaltCornerNW);
-//        put("_cc", AssetLoader.campusCenter);
-//        put("_ch", AssetLoader.chapel);
-        put("_d",  AssetLoader.dupre);
-        put("_w",  AssetLoader.weyerhauser);
-    }
-
     /**
      * Notes:
      * _ is a prefix for large tiles
