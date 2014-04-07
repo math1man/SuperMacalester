@@ -14,7 +14,7 @@ import java.util.EnumMap;
  */
 public abstract class MapCharacter extends Entity {
 
-    public static final float MOVE_SPEED = 3f; // grid spaces per second
+    public static final float MOVE_SPEED = 6f; // grid spaces per second TODO: revert to 3
 
     private boolean isMoving = false;
     private Vector2 renderOffset = new Vector2();
