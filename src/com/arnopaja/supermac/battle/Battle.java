@@ -3,7 +3,7 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.InteractionUtils;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
@@ -22,9 +22,9 @@ import java.util.concurrent.PriorityBlockingQueue;
  *
  * @author Ari Weiland
  */
-public class BattleController implements BaseController {
+public class Battle implements Controller {
 
-    private static Random battleRandomGen = new Random();
+    private static final Random battleRandomGen = new Random();
 
     private final DialogueHandler dialogueHandler;
 
@@ -34,16 +34,44 @@ public class BattleController implements BaseController {
     private final TextureRegion background;
     private final Queue<BattleAction> actionQueue;
 
-
-    public BattleController(MainParty mainParty, EnemyParty enemyParty) {
-        this(null, mainParty, enemyParty);
+    /**
+     * Constructs a battle that is identical to the specified battle.
+     * @param battle
+     */
+    public Battle(Battle battle) {
+        this(battle.mainParty, battle.enemyParty, battle.dialogueHandler);
     }
 
-    public BattleController(DialogueHandler dialogueHandler, BattleController battle) {
-        this(dialogueHandler, battle.getMainParty(), battle.getEnemyParty());
+    /**
+     * Constructs a battle that is identical to the specified battle,
+     * except instead with the specified dialogue handler.
+     * @param battle
+     * @param dialogueHandler
+     */
+    public Battle(Battle battle, DialogueHandler dialogueHandler) {
+        this(battle.mainParty, battle.enemyParty, dialogueHandler);
     }
 
-    public BattleController(DialogueHandler dialogueHandler, MainParty mainParty, EnemyParty enemyParty) {
+    /**
+     * Constructs a battle with no associated dialogue handler.
+     * WARNING: Calling the update method on battles with no associated
+     * dialogue handler will throw null pointer exceptions.  Instead,
+     * attach a dialogue handler should be attached by instantiating
+     * new Battle(Battle, DialogueHandler).
+     * @param mainParty
+     * @param enemyParty
+     */
+    public Battle(MainParty mainParty, EnemyParty enemyParty) {
+        this(mainParty, enemyParty, null);
+    }
+
+    /**
+     * The base Battle constructor.
+     * @param mainParty
+     * @param enemyParty
+     * @param dialogueHandler
+     */
+    public Battle(MainParty mainParty, EnemyParty enemyParty, DialogueHandler dialogueHandler) {
         this.dialogueHandler = dialogueHandler;
         this.mainParty = mainParty;
         this.enemyParty = enemyParty;
@@ -62,16 +90,18 @@ public class BattleController implements BaseController {
 
     @Override
     public void update(float delta) {
-        if (mainParty.isDefeated()) {
-            // run code for if the main party is defeated
-        } else if (enemyParty.isDefeated()) {
-            // run code for if the enemy party is defeated
-        } else {
-            BattleAction action = actionQueue.poll();
-            if (action == null) {
-                setTurnActions();
+        if (canUpdate()) {
+            if (mainParty.isDefeated()) {
+                // run code for if the main party is defeated
+            } else if (enemyParty.isDefeated()) {
+                // run code for if the enemy party is defeated
             } else {
-                dialogueHandler.displayDialogue(action.run());
+                BattleAction action = actionQueue.poll();
+                if (action == null) {
+                    setTurnActions();
+                } else {
+                    dialogueHandler.displayDialogue(action.run(delta));
+                }
             }
         }
     }
@@ -89,7 +119,7 @@ public class BattleController implements BaseController {
         }
     }
 
-    private DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
+    private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
         Spell[] spells = new Spell[0]; // TODO: get these from wherever
         List<Item> itemList = Inventory.getItemInventory();
         Item[] items = itemList.toArray(new Item[itemList.size()]);
@@ -99,6 +129,10 @@ public class BattleController implements BaseController {
 
     public void addAction(BattleAction action) {
         actionQueue.add(action);
+    }
+
+    public boolean canUpdate() {
+        return dialogueHandler != null;
     }
 
     public MainParty getMainParty() {

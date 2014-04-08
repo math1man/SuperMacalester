@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleAction;
-import com.arnopaja.supermac.battle.BattleController;
 import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
@@ -61,8 +61,8 @@ public class InteractionUtils {
             } else {
                 if (primary instanceof DialogueDisplayable) {
                     return Interaction.dialogue((DialogueDisplayable) primary);
-                } else if (primary instanceof BattleController) {
-                    return Interaction.battle((BattleController) primary);
+                } else if (primary instanceof Battle) {
+                    return Interaction.battle((Battle) primary);
                 } else if (primary instanceof BattleAction) {
                     return Interaction.battleAction((BattleAction) primary);
                 } else if (primary instanceof Chest) {
@@ -182,7 +182,7 @@ public class InteractionUtils {
      * @param size
      * @return
      */
-    public static Interaction[] yesNoGoToBattle(BattleController battle, int size) {
+    public static Interaction[] yesNoGoToBattle(Battle battle, int size) {
         Interaction[] interactions = getNulls(size);
         interactions[0] = Interaction.battle(battle);
         return interactions;

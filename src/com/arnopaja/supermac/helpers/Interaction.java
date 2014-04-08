@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleAction;
-import com.arnopaja.supermac.battle.BattleController;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
@@ -76,11 +76,11 @@ public abstract class Interaction<U, V> {
         }
     }
 
-    public static Interaction battle(BattleController battle) {
+    public static Interaction battle(Battle battle) {
         if (battle == null) {
             return NULL;
         } else {
-            return new Interaction<BattleController, Object>(battle) {
+            return new Interaction<Battle, Object>(battle) {
                 @Override
                 public void run(GameScreen screen) {
                     screen.goToBattle(primary);

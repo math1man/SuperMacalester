@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL10;
 /**
  * @author Ari Weiland
  */
-public class BattleRenderer extends BaseRenderer<BattleController> {
+public class BattleRenderer extends BaseRenderer<Battle> {
 
     public BattleRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         super(dialogueHandler, gameWidth, gameHeight);

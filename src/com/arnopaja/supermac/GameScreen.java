@@ -1,15 +1,15 @@
 package com.arnopaja.supermac;
 
-import com.arnopaja.supermac.battle.BattleController;
+import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
-import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.BaseInputHandler;
 import com.arnopaja.supermac.helpers.BaseRenderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
-import com.arnopaja.supermac.world.WorldController;
+import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
 import com.badlogic.gdx.Gdx;
@@ -30,17 +30,17 @@ public class GameScreen implements Screen {
     private final DialogueHandler dialogueHandler;
     private final Plot plot;
 
-    private final WorldController world;
+    private final World world;
     private final WorldRenderer worldRenderer;
     private final WorldInputHandler worldInputHandler;
 
-    private BattleController battle;
+    private Battle battle;
     private final BattleRenderer battleRenderer;
     private final BattleInputHandler battleInputHandler;
 
     private BaseRenderer currentRenderer;
     private BaseInputHandler currentInputHandler;
-    private BaseController currentController;
+    private Controller currentController;
 
     private GameMode mode;
     private GameState state;
@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
 
         dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
 
-        world = new WorldController();
+        world = new World();
 
         plot = new Plot(world);
 
@@ -151,7 +151,7 @@ public class GameScreen implements Screen {
         battleRenderer.dispose();
     }
 
-    public void goToBattle(BattleController battle) {
+    public void goToBattle(Battle battle) {
         setBattle(battle);
         changeMode(GameMode.BATTLE);
     }
@@ -184,7 +184,7 @@ public class GameScreen implements Screen {
         return dialogueHandler;
     }
 
-    public WorldController getWorld() {
+    public World getWorld() {
         return world;
     }
 
@@ -196,12 +196,12 @@ public class GameScreen implements Screen {
         return worldInputHandler;
     }
 
-    public BattleController getBattle() {
+    public Battle getBattle() {
         return battle;
     }
 
-    public void setBattle(BattleController battle) {
-        this.battle = new BattleController(dialogueHandler, battle);
+    public void setBattle(Battle battle) {
+        this.battle = new Battle(battle, dialogueHandler);
     }
 
     public BattleRenderer getBattleRenderer() {
@@ -220,7 +220,7 @@ public class GameScreen implements Screen {
         return currentInputHandler;
     }
 
-    public BaseController getCurrentController() {
+    public Controller getCurrentController() {
         return currentController;
     }
 }

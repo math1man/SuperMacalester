@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 /**
  * @author Ari Weiland
  */
-public abstract class BaseRenderer<T extends BaseController> {
+public abstract class BaseRenderer<T extends Controller> {
 
     protected final DialogueHandler dialogueHandler;
     protected final ShapeRenderer shapeRenderer;

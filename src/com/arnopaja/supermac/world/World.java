@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.BaseController;
+import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.MapLoader;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
@@ -21,13 +21,13 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class WorldController implements BaseController {
+public class World implements Controller {
 
     private Grid worldGrid;
     private Map<String, Building> buildings = new HashMap<String, Building>();
     private MainMapCharacter mainCharacter;
 
-    public WorldController() {
+    public World() {
         worldGrid = MapLoader.generateMap("Macalester");
         mainCharacter = new MainMapCharacter(new Location(worldGrid, new Vector2(36, 36), Direction.WEST));
         initBuildings();

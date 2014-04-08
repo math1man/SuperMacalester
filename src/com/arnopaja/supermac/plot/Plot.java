@@ -4,7 +4,7 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
-import com.arnopaja.supermac.world.WorldController;
+import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.MapNPC;
@@ -23,10 +23,10 @@ import java.util.Map;
  */
 public class Plot {
 
-    private final WorldController world;
+    private final World world;
     private Map<Integer, Quest> quests;
 
-    public Plot(WorldController world) {
+    public Plot(World world) {
         this.world = world;
         this.quests = new HashMap<Integer, Quest>();
         // TODO: create Quests and everything that goes into them
