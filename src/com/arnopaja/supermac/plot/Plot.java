@@ -8,7 +8,6 @@ import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.MapNPC;
-import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class Plot {
         character.setFacingSprites(AssetLoader.mainChar);
         character.setFacingAnimations(AssetLoader.mainCharAnim);
 
-        Location location = new Location(world.getWorldGrid(), new Vector2(5, 5), Direction.NORTH);
+        Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
 
         Interaction interaction = Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
                 "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +

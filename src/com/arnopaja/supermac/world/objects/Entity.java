@@ -146,10 +146,11 @@ public abstract class Entity implements Renderable {
     }
 
     private void putInGrid(Location location) {
-        this.location = location;
-        if (isInGrid()) {
-            // TODO: what about collisions?
-            getGrid().putEntity(this);
+        if (location != null) {
+            this.location = location.getNearestValidLocation();
+            if (isInGrid()) {
+                getGrid().putEntity(this);
+            }
         }
     }
 
