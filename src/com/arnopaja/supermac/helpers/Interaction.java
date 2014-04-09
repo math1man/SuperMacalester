@@ -31,15 +31,15 @@ public abstract class Interaction<U, V> {
     protected final U primary;
     protected final V secondary;
 
-    protected Interaction() {
+    public Interaction() {
         this(null);
     }
 
-    protected Interaction(U primary) {
+    public Interaction(U primary) {
         this(primary, null);
     }
 
-    protected Interaction(U primary, V secondary) {
+    public Interaction(U primary, V secondary) {
         this.primary = primary;
         this.secondary = secondary;
     }
