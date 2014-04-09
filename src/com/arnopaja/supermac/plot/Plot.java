@@ -2,8 +2,7 @@ package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.parser.Parser;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
@@ -43,10 +42,7 @@ public class Plot {
 
         Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
 
-        Interaction interaction = Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
-                "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
-                "I spent this past summer here working for Libby Shoop designing a website.",
-                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS)));
+        Interaction interaction = Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle));
 
         List<Goal> testGoals = new ArrayList<Goal>();
         testGoals.add(new Goal(character, location, interaction));

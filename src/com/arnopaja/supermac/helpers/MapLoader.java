@@ -1,11 +1,13 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.helpers.parser.Leader;
+import com.arnopaja.supermac.helpers.parser.ParsedObject;
+import com.arnopaja.supermac.helpers.parser.Parser;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
 
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 /**
  * @author Ari Weiland
@@ -13,55 +15,30 @@ import java.util.regex.Pattern;
 public class MapLoader {
 
     public static Grid generateMap(String name) {
-        String raw = AssetLoader.mapHandle.readString();
-        String[] lines = raw.split("\n");
-        Params params = getIndexes(name, lines);
-        if (params == null) {
+        ParsedObject object = getParsed(name);
+        if (object == null) {
             return null;
         }
-        return parseGrid(Arrays.copyOfRange(lines, params.getStart(), params.getEnd()));
+        return parseGrid(object.getData());
     }
 
     public static Building generateBuilding(String name) {
-        String raw = AssetLoader.mapHandle.readString();
-        String[] lines = raw.split("\n");
-        Params params = getIndexes(name, lines);
-        if (params == null) {
+        ParsedObject object = getParsed(name);
+        if (object == null) {
             return null;
         }
-        int floorCount = params.getFloorCount();
-        int height = params.getHeight();
+        int floorCount = object.getInt(Leader.FLOOR_COUNT);
+        String[] data = object.getData();
+        int height = data.length / floorCount;
         Grid[] floors = new Grid[floorCount];
         for (int i=0; i<floorCount; i++) {
-            floors[i] = parseGrid(Arrays.copyOfRange(lines, i * height, i + (height+1)));
+            floors[i] = parseGrid(Arrays.copyOfRange(data, i * height, (i + 1) * height));
         }
-        return new Building(floors, params.getFirstFloorIndex());
+        return new Building(floors, object.getInt(Leader.FIRST_FLOOR_INDEX));
     }
 
-    private static Params getIndexes(String name, String[] lines) {
-        Params params = new Params();
-        int start = -1;
-        for (int i=0; i < lines.length; i++) {
-            String line = lines[i].trim();
-            if (start == -1) {
-                if (Leaders.MAP_NAME.isParam(line, name)) {
-                    start = i + 1;
-                }
-            } else {
-                if (Leaders.FLOOR_COUNT.matches(line)) {
-                    params.setFloorCount(Leaders.FLOOR_COUNT.getParam(line));
-                    start++;
-                } else if (Leaders.FIRST_FLOOR_INDEX.matches(line)) {
-                    params.setFirstFloorIndex(Leaders.FIRST_FLOOR_INDEX.getParam(line));
-                    start++;
-                } else if (Leaders.MAP_NAME.isEnd(line)) {
-                    params.setStart(start);
-                    params.setEnd(i);
-                    return params;
-                }
-            }
-        }
-        return null;
+    private static ParsedObject getParsed(String name) {
+        return Parser.parse(name, Leader.MAP, AssetLoader.mapHandle);
     }
 
     private static Grid parseGrid(String[] lines) {
@@ -76,58 +53,6 @@ public class MapLoader {
         }
         SpriteUtils.split(tileArray);
         return new Grid(tileArray);
-    }
-
-    private static enum Leaders {
-        MAP_NAME("map"),
-        FLOOR_COUNT("floors"),
-        FIRST_FLOOR_INDEX("first_floor_index");
-
-        public final String leader;
-
-        Leaders(String leader) {
-            this.leader = leader;
-        }
-
-        public boolean matches(String line) {
-            return Pattern.matches("<" + leader + ":.*" + ">", line);
-        }
-
-        public String getParam(String line) {
-            if (matches(line)) {
-                return line.substring(leader.length()+2, line.length()-1).trim();
-            }
-            return null;
-        }
-
-        public boolean isParam(String line, String param) {
-            return param.equals(getParam(line));
-        }
-
-        public String getEnd() {
-            return "</" + leader + ">";
-        }
-
-        public boolean isEnd(String line) {
-            return line.equals(getEnd());
-        }
-    }
-
-    private static class Params {
-        private int start = 0; // inclusive
-        private int end = 0;   // exclusive
-        private int floorCount = 1;
-        private int firstFloorIndex = 0;
-
-        public int getStart() { return start; }
-        public void setStart(int start) { this.start = start; }
-        public int getEnd() { return end; }
-        public void setEnd(int end) { this.end = end; }
-        public int getFloorCount() { return floorCount; }
-        public void setFloorCount(String floorCount) { this.floorCount = Integer.parseInt(floorCount); }
-        public int getHeight() { return (end - start) / floorCount; }
-        public int getFirstFloorIndex() { return firstFloorIndex; }
-        public void setFirstFloorIndex(String firstFloorIndex) { this.firstFloorIndex = Integer.parseInt(firstFloorIndex); }
     }
 
     public static final TileMap TILE_MAP = new TileMap();

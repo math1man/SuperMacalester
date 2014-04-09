@@ -23,23 +23,23 @@ public class Dialogue implements DialogueDisplayable {
         this(rawDialogue.split("<d>"));
     }
 
-    public Dialogue(String[] dialogue) {
+    public Dialogue(String... dialogue) {
         this(dialogue, null, null);
     }
 
     public Dialogue(String rawDialogue, Interaction postInteraction) {
-        this(rawDialogue.split("<d>"), postInteraction);
+        this(postInteraction, rawDialogue.split("<d>"));
     }
 
-    public Dialogue(String[] dialogue, Interaction postInteraction) {
+    public Dialogue(Interaction postInteraction, String... dialogue) {
         this(dialogue, null, postInteraction);
     }
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
-        this(rawDialogue.split("<d>"), options);
+        this(options, rawDialogue.split("<d>"));
     }
 
-    public Dialogue(String[] dialogue, DialogueOptions options) {
+    public Dialogue(DialogueOptions options, String... dialogue) {
         this(dialogue, options, null);
     }
 

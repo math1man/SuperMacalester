@@ -4,8 +4,7 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.MapLoader;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.parser.Parser;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -48,10 +47,7 @@ public class World implements Controller {
         character.setFacingSprites(AssetLoader.mainChar);
         character.setFacingAnimations(AssetLoader.mainCharAnim);
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
-                "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
-                "I spent this past summer here working for Libby Shoop designing a website.",
-                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS))));
+        character.setInteraction(Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
     }
 

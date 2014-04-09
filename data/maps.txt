@@ -1,59 +1,55 @@
-Map data document.  All maps should be generated here in a very specific form:
-<map:[map name]>
-<floors:[floor count]>                  # optional, used for buildings, default to 1
-<first_floor_index:[first floor index]> # optional, used for buildings, default to 0
-[grid of tile codes]                    # for multiple floors, each floor should be
-</map>                                  # on the next line after the previous one
-
-Tile codes should start with the tile key followed by a hyphen and then the flags.
-An asterisk * means that there are multiple tiles and one should be randomly selected.
-An _ in the tile key simply refers to a building
-
-List of current tile keys:
-null tiles are blank
-g = grass
-bh = bush horizontal
-bv = bush vertical
-bfh = flowering bush horizontal
-bfv = flowering bush vertical
-ts = tree small
-_tb = tree big
-c = cobble
-cr = red cobble
-a = asphalt
-ah = asphalt with a horizontal road line
-av = asphalt with a vertical road line
-an = asphalt north edge
-ae = asphalt east edge
-as = asphalt south edge
-aw = asphalt west edge
-ane = asphalt northeast corner
-ase = asphalt southeast corner
-ase = asphalt southwest corner
-anw = asphalt northwest corner
-
-List of building tiles
-_cc = Campus Center
-_c = Chapel
-_d = Dupre
-_w = Weyerhauser
-(Still need sprites:)
-_lc = Leonard Center
-_o = Olin
-_r = Rice
-_h = Humanities
-_ac = Art Commons
-_t = Theatre Building
-_a = Art Buiding
-_m = Music Building
-_om = Old Main
-
-_ is a prefix for tiles that are larger sprites and should be filled in with null tiles
-
-List of current tile flags:
-i = impassable flag
-
-All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
+# Map data document.  All maps should be generated here in a very specific form:
+# <map:[map name]>
+# <floors:[floor count]>                  # optional, used for buildings, default to 1
+# <first_floor_index:[first floor index]> # optional, used for buildings, default to 0
+# [grid of tile codes]                    # for multiple floors, each floor should be
+# </map>                                  # on the next line after the previous one
+#
+# Tile codes should start with the tile key followed by a hyphen and then any flags.
+# An underscore is a prefix for tiles that are larger sprites and should be filled in with null tiles.
+#
+# List of current tile keys:
+#       = null tile
+#   g   = grass
+#   bh  = bush horizontal
+#   bv  = bush vertical
+#   bfh = flowering bush horizontal
+#   bfv = flowering bush vertical
+#   ts  = tree small
+#   _tb = tree big
+#   c   = cobble
+#   cr  = red cobble
+#   a   = asphalt
+#   ah  = asphalt with a horizontal road line
+#   av  = asphalt with a vertical road line
+#   an  = asphalt north edge
+#   ae  = asphalt east edge
+#   as  = asphalt south edge
+#   aw  = asphalt west edge
+#   ane = asphalt northeast corner
+#   ase = asphalt southeast corner
+#   ase = asphalt southwest corner
+#   anw = asphalt northwest corner
+#
+# List of building tiles
+#   _cc = Campus Center
+#   _c  = Chapel
+#   _d  = Dupre
+#   _w  = Weyerhauser
+#   _lc = Leonard Center
+#   _o  = Olin
+#   _r  = Rice
+#   _h  = Humanities
+#   _ac = Art Commons
+#   _t  = Theatre Building
+#   _a  = Art Buiding
+#   _m  = Music Building
+#   _om = Old Main
+#
+# List of current tile flags:
+# i = impassable flag
+#
+# All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
 <map:World>
 asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i

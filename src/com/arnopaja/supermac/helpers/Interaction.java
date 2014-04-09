@@ -98,7 +98,7 @@ public abstract class Interaction<U, V> {
                     primary.open();
                     DialogueDisplayable dialogue;
                     if (primary.isEmpty()) {
-                        dialogue = new Dialogue("This chest is empty", Interaction.closeChest(primary));
+                        dialogue = new Dialogue(Interaction.closeChest(primary), "This chest is empty");
                     } else {
                         // Items go into inventory from chest
                         List<AbstractItem> items = primary.getContents();
