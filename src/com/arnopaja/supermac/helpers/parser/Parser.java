@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.EnumMap;
 
 /**
+ * TODO: Parse Entities
+ * TODO: Parse Locations
+ * TODO: Parse Interactions
+ * TODO: Parse Goals and Quests
  * @author Ari Weiland
  */
 public class Parser {

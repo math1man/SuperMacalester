@@ -10,6 +10,7 @@ import com.arnopaja.supermac.world.objects.Tile;
 import java.util.Arrays;
 
 /**
+ * TODO: add non-quest entities to the maps
  * @author Ari Weiland
  */
 public class MapLoader {
