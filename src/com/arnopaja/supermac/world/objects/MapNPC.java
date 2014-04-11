@@ -2,6 +2,10 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.util.EnumMap;
 
 /**
  * @author Ari Weiland
@@ -25,7 +29,13 @@ public class MapNPC extends MapCharacter {
     }
 
     public MapNPC(Location location, boolean isInteractable, boolean canMove) {
-        super(location, isInteractable);
+        this(location, isInteractable, canMove, null, null);
+    }
+
+    public MapNPC(Location location, boolean isInteractable, boolean canMove,
+                  EnumMap<Direction, TextureRegion> facingSprites,
+                  EnumMap<Direction, Animation> facingAnimations) {
+        super(location, isInteractable, facingSprites, facingAnimations);
         this.canMove = canMove;
     }
 

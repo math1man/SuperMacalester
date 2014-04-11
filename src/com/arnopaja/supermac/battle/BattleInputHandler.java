@@ -8,7 +8,6 @@ import com.arnopaja.supermac.GameScreen;
  */
 public class BattleInputHandler extends BaseInputHandler {
 
-
     public BattleInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                               float scaleFactorX, float scaleFactorY) {
         super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);

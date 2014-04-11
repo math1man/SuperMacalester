@@ -14,16 +14,21 @@ import java.util.EnumMap;
  */
 public abstract class MapCharacter extends Entity {
 
-    public static final float MOVE_SPEED = 3f; // grid spaces per second
+    public static final float MOVE_SPEED = 6f; // grid spaces per second TODO: revert to 3
 
     private boolean isMoving = false;
     private Vector2 renderOffset = new Vector2();
     private Vector2 renderOffsetDelta;
 
-    private EnumMap<Direction, Animation> facingAnimations = new EnumMap<Direction, Animation>(Direction.class);
+    private EnumMap<Direction, TextureRegion> facingSprites;
+    private EnumMap<Direction, Animation> facingAnimations;
 
-    protected MapCharacter(Location location, boolean isInteractable) {
+    protected MapCharacter(Location location, boolean isInteractable,
+                           EnumMap<Direction, TextureRegion> facingSprites,
+                           EnumMap<Direction, Animation> facingAnimations) {
         super(true, location, isInteractable);
+        this.facingSprites = facingSprites;
+        this.facingAnimations = facingAnimations;
     }
 
     @Override
@@ -42,12 +47,12 @@ public abstract class MapCharacter extends Entity {
         }
     }
 
-    public boolean move(Direction dir) {
-        if (!isMoving) {
-            setFacing(dir);
-            if (getGrid().moveEntity(this, dir)) {
+    public boolean move(Direction direction) {
+        if (!isMoving && direction != null) {
+            setFacing(direction);
+            if (getGrid().moveEntity(this, direction)) {
                 isMoving = true;
-                renderOffset = Direction.getAdjacent(dir).scl(-1);
+                renderOffset = Direction.getAdjacent(direction).scl(-1);
                 renderOffsetDelta = renderOffset.cpy().scl(-MOVE_SPEED);
                 return true;
             }
@@ -66,14 +71,14 @@ public abstract class MapCharacter extends Entity {
     @Override
     public TextureRegion getSprite(float runTime) {
         if (isMoving()) {
-            return getAnimation().getKeyFrame(runTime);
+            return facingAnimations.get(getFacing()).getKeyFrame(runTime);
         } else {
-            return getSprite();
+            return facingSprites.get(getFacing());
         }
     }
 
-    public Animation getAnimation() {
-        return facingAnimations.get(getFacing());
+    public void setFacingSprites(EnumMap<Direction, TextureRegion> facingSprites) {
+        this.facingSprites = facingSprites;
     }
 
     public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {

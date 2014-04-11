@@ -34,13 +34,15 @@ public class AssetLoader {
     public static TextureRegion campusCenter, chapel, dupre, weyerhauser;
 
     // Characters
-    public static EnumMap<Direction, TextureRegion> steven;
-    public static EnumMap<Direction, Animation> stevenStepping;
+    public static EnumMap<Direction, TextureRegion> mainChar;
+    public static EnumMap<Direction, Animation> mainCharAnim;
+    public static EnumMap<Direction, TextureRegion> beardGuy;
+    public static EnumMap<Direction, Animation> beardGuyAnim;
 
     // Non-character entities
     public static TextureRegion chestOpen, chestClosed;
 
-    public static FileHandle mapHandle;
+    public static FileHandle mapHandle, dialogueHandle;
 
     // Used for Battle
     public static TextureRegion battleBackground;
@@ -49,7 +51,7 @@ public class AssetLoader {
 
     public static void load() {
 
-//        texture = new Texture(Gdx.files.internal("data/texture.png"));
+//        texture = new Texture(getHandle("texture.png"));
 //        texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         //--------------------------
@@ -57,74 +59,63 @@ public class AssetLoader {
         //--------------------------
 
         // TODO: build a basic texture file and set up tiles
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile1.png"));
-        grass0 = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile2.png"));
-        grass1 = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/darkgrasstile3.png"));
-        grass2 = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/darkgrasstile1.png"));
+        grass0 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/darkgrasstile2.png"));
+        grass1 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/darkgrasstile3.png"));
+        grass2 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_bush.png"));
-        bushH = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_bush.png"));
-        bushV = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_horizontal_flowerbush.png"));
-        bushFlowersH = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grass_vertical_flowerbush.png"));
-        bushFlowersV = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/grass_horizontal_bush.png"));
+        bushH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/grass_vertical_bush.png"));
+        bushV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/grass_horizontal_flowerbush.png"));
+        bushFlowersH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/grass_vertical_flowerbush.png"));
+        bushFlowersV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/32tree1.png"));
-        treeSmall = new TextureRegion(texture, 0, 0, 32, 32);
-        treeSmall.flip(false, true);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/64tree1.png"));
-        treeBig = new TextureRegion(texture, 0, 0, 64, 64);
-        treeBig.flip(false, true);
+        texture = new Texture(getHandle("landscapetiles/32tree1.png"));
+        treeSmall = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/64tree1.png"));
+        treeBig = SpriteUtils.makeSprite(texture, 0, 0, 64, 64);
 
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/cobblestone1.png"));
-        cobble = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/redcobblestone.png"));
-        cobbleRed = new TextureRegion(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/cobblestone1.png"));
+        cobble = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/redcobblestone.png"));
+        cobbleRed = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
 
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/asphalt_tile.png"));
-        asphalt = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_horizontal.png"));
-        asphaltLineH = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/roadline_tile_vertical.png"));
-        asphaltLineV = new TextureRegion(texture, 0, 0, 32, 32);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_north.png"));
-        asphaltEdgeN = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltEdgeS = new TextureRegion(asphaltEdgeN);
-        asphaltEdgeS.flip(true, false);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_east.png"));
-        asphaltEdgeE = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltEdgeW = new TextureRegion(asphaltEdgeE);
-        asphaltEdgeE.flip(false, true);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/grasstoroad_upper_right_corner.png"));
-        asphaltCornerNE = new TextureRegion(texture, 0, 0, 32, 32);
-        asphaltCornerSE = new TextureRegion(asphaltCornerNE);
-        asphaltCornerSE.flip(true, false);
-        asphaltCornerSW = new TextureRegion(asphaltCornerSE);
-        asphaltCornerSW.flip(false, true);
-        asphaltCornerNW = new TextureRegion(asphaltCornerNE);
-        asphaltCornerNW.flip(false, true);
+        texture = new Texture(getHandle("landscapetiles/asphalt_tile.png"));
+        asphalt = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/roadline_tile_horizontal.png"));
+        asphaltLineH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/roadline_tile_vertical.png"));
+        asphaltLineV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        texture = new Texture(getHandle("landscapetiles/grasstoroad_north.png"));
+        asphaltEdgeN = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltEdgeS = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, false);
+        texture = new Texture(getHandle("landscapetiles/grasstoroad_east.png"));
+        asphaltEdgeE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltEdgeW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, false, true);
+        texture = new Texture(getHandle("landscapetiles/grasstoroad_lower_right_corner.png"));
+        asphaltCornerNE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+        asphaltCornerSE = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, false);
+        asphaltCornerSW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, true, true);
+        asphaltCornerNW = SpriteUtils.makeSprite(texture, 0, 0, 32, 32, false, true);
 
         //--------------------------
         //        Buildings
         //--------------------------
 
         // The CC and chapel don't work at the moment because their canvas dimensions are bad
-//        texture = new Texture(Gdx.files.internal("data/landscapetiles/campuscenter.png"));
-//        campusCenter = new TextureRegion(texture, 0, 0, 480, 128);
-//        campusCenter.flip(false, true);
-//        texture = new Texture(Gdx.files.internal("data/landscapetiles/chapel.png"));
-//        chapel = new TextureRegion(texture, 0, 0, 192, 192);
-//        chapel.flip(false, true);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/dupre.png"));
-        dupre = new TextureRegion(texture, 0, 0, 512, 128);
-        dupre.flip(false, true);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/weyerhauser.png"));
-        weyerhauser = new TextureRegion(texture, 0, 0, 480, 128);
-        weyerhauser.flip(false, true);
+//        texture = new Texture(getHandle("landscapetiles/campuscenter.png"));
+//        campusCenter = SpriteUtils.makeSprite(texture, 0, 0, 480, 128);
+//        texture = new Texture(getHandle("landscapetiles/chapel.png"));
+//        chapel = SpriteUtils.makeSprite(texture, 0, 0, 192, 192);
+        texture = new Texture(getHandle("landscapetiles/dupre.png"));
+        dupre = SpriteUtils.makeSprite(texture, 0, 0, 512, 128);
+        texture = new Texture(getHandle("landscapetiles/weyerhauser.png"));
+        weyerhauser = SpriteUtils.makeSprite(texture, 0, 0, 448, 128);
 
         MapLoader.initTileMap(); // Must be called after all tiles are loaded
 
@@ -132,6 +123,8 @@ public class AssetLoader {
         //        Entities
         //--------------------------
 
+        font = new BitmapFont(getHandle("text.fnt"));
+        shadow = new BitmapFont(getHandle("shadow.fnt"));
         texture = new Texture(Gdx.files.internal("data/landscapetiles/chest_closed.png"));
         chestClosed = new TextureRegion(texture, 0, 0, 512, 128);
         chestClosed.flip(false, true);
@@ -150,9 +143,14 @@ public class AssetLoader {
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
 
-        mapHandle = Gdx.files.internal("data/maps.txt");
+        mapHandle = getHandle("maps.txt");
+        dialogueHandle = getHandle("dialogues.txt");
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
+    }
+
+    private static FileHandle getHandle(String path) {
+        return Gdx.files.internal("data/" + path);
     }
 
     public static void scaleFont(float scale) {

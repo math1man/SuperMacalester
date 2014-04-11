@@ -25,25 +25,7 @@ public class WorldInputHandler extends BaseInputHandler {
     @Override
     public boolean keyDown(int keycode) {
         if (screen.isRunning()) {
-            switch (keycode) {
-                case Keys.UP:
-                    east();
-                    break;
-                case Keys.RIGHT:
-                    south();
-                    break;
-                case Keys.DOWN:
-                    west();
-                    break;
-                case Keys.LEFT:
-                    north();
-                    break;
-                case Keys.SPACE:
-                    interact();
-                    break;
-                default:
-                    return false;
-            }
+            move(getTouchDirection(keycode));
         } else if (screen.isDialogue()) {
             // TODO: figure out how to select options with keyboard?
             dialogueInput(0, 0);
@@ -54,8 +36,8 @@ public class WorldInputHandler extends BaseInputHandler {
     }
 
     @Override
-    public boolean keyUp(int i) {
-        return false;
+    public boolean keyUp(int keycode) {
+        return stop(getTouchDirection(keycode));
     }
 
     @Override
@@ -68,17 +50,7 @@ public class WorldInputHandler extends BaseInputHandler {
         int gameX = scaleX(screenX);
         int gameY = scaleY(screenY);
         if (screen.isRunning()) {
-            if (gameX < SIDE_BUTTON_WIDTH) {
-                north();
-            } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-                south();
-            } else if (gameY < SIDE_BUTTON_WIDTH) {
-                east();
-            } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
-                west();
-            } else {
-                interact();
-            }
+            move(getTouchDirection(gameX, gameY));
         } else if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {
@@ -89,7 +61,9 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        int gameX = scaleX(screenX);
+        int gameY = scaleY(screenY);
+        return stop(getTouchDirection(gameX, gameY));
     }
 
     @Override
@@ -107,31 +81,46 @@ public class WorldInputHandler extends BaseInputHandler {
         return false;
     }
 
-    private void north() {
-        if (!character.move(Direction.NORTH)) {
-            interact();
+    private void move(Direction direction) {
+        if (!character.move(direction)) {
+            character.interact().run(screen);
         }
     }
 
-    private void east() {
-        if (!character.move(Direction.EAST)) {
-            interact();
+    private boolean stop(Direction direction) {
+        if (character.continueMoving() && character.getMovingDirection() == direction) {
+            character.stop();
+            return true;
+        }
+        return false;
+    }
+
+    private Direction getTouchDirection(int gameX, int gameY) {
+        if (gameX < SIDE_BUTTON_WIDTH) {
+            return Direction.NORTH;
+        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+            return Direction.SOUTH;
+        } else if (gameY < SIDE_BUTTON_WIDTH) {
+            return Direction.EAST;
+        } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
+            return Direction.WEST;
+        } else {
+            return null;
         }
     }
 
-    private void south() {
-        if (!character.move(Direction.SOUTH)) {
-            interact();
+    private Direction getTouchDirection(int keycode) {
+        switch (keycode) {
+            case Keys.UP:
+                return Direction.EAST;
+            case Keys.RIGHT:
+                return Direction.SOUTH;
+            case Keys.DOWN:
+                return Direction.WEST;
+            case Keys.LEFT:
+                return Direction.NORTH;
+            default:
+                return null;
         }
-    }
-
-    private void west() {
-        if (!character.move(Direction.WEST)) {
-            interact();
-        }
-    }
-
-    private void interact() {
-        character.interact().run(screen);
     }
 }
