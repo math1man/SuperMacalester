@@ -21,7 +21,7 @@ public class AssetLoader {
 
     public static Preferences prefs;
 
-    private static Texture texture;
+    private static Texture tilesTexture, entitiesTexture, characterTexture;
 
     // Tiles
     public static TextureRegion grass0, grass1, grass2;
@@ -31,7 +31,16 @@ public class AssetLoader {
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
     public static TextureRegion asphaltEdgeN, asphaltEdgeE, asphaltEdgeS, asphaltEdgeW;
     public static TextureRegion asphaltCornerNE, asphaltCornerSE, asphaltCornerSW, asphaltCornerNW;
-    public static TextureRegion campusCenter, chapel, dupre, weyerhauser;
+
+    // Buildings
+    public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
+    public static TextureRegion humanities, kagin, kirk, leonardCenter, library, markim, music, oldMain;
+    public static TextureRegion olin, rice, theatre, thirtyMac, turk, wallace, weyerhauser;
+
+    // Non-character entities
+    public static TextureRegion chestBrownOpen, chestBrownClosed;
+    public static TextureRegion chestRedOpen, chestRedClosed;
+    public static TextureRegion chestGreenOpen, chestGreenClosed;
 
     // Characters
     public static EnumMap<Direction, TextureRegion> mainChar;
@@ -39,84 +48,81 @@ public class AssetLoader {
     public static EnumMap<Direction, TextureRegion> beardGuy;
     public static EnumMap<Direction, Animation> beardGuyAnim;
 
-    // Non-character entities
-    public static TextureRegion chestOpen, chestClosed;
-
-    public static FileHandle mapHandle, dialogueHandle;
-
-    // Used for Battle
+    // Battle Backgrounds
     public static TextureRegion battleBackground;
 
+    // Data file handles
+    public static FileHandle mapHandle, dialogueHandle;
+
+    // Font
     public static BitmapFont font, shadow;
 
     public static void load() {
 
-        texture = new Texture(getHandle("landscapetiles/big_tile_canvas.png"));
-        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        tilesTexture = new Texture(getHandle("landscapetiles/tile_canvas.png"));
+        tilesTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         //--------------------------
         //          Tiles
         //--------------------------
 
-        treeBig = SpriteUtils.makeSprite(texture, 0, 0, 2, 2);
-        treeSmall = SpriteUtils.makeSprite(texture, 2, 0);
-        grass0 = SpriteUtils.makeSprite(texture, 3, 0);
-        grass1 = SpriteUtils.makeSprite(texture, 4, 0);
-        grass2 = SpriteUtils.makeSprite(texture, 5, 0);
-        bush = SpriteUtils.makeSprite(texture, 6, 0);
-        bushH = SpriteUtils.makeSprite(texture, 7, 0);
-        bushFlowersH = SpriteUtils.makeSprite(texture, 8, 0);
-        bushV = SpriteUtils.makeSprite(texture, 9, 0);
-        bushFlowersV = SpriteUtils.makeSprite(texture, 10, 0);
+        treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
+        treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
+        grass0 = SpriteUtils.makeSprite(tilesTexture, 3, 0);
+        grass1 = SpriteUtils.makeSprite(tilesTexture, 4, 0);
+        grass2 = SpriteUtils.makeSprite(tilesTexture, 5, 0);
+        bush = SpriteUtils.makeSprite(tilesTexture, 6, 0);
+        bushH = SpriteUtils.makeSprite(tilesTexture, 7, 0);
+        bushFlowersH = SpriteUtils.makeSprite(tilesTexture, 8, 0);
+        bushV = SpriteUtils.makeSprite(tilesTexture, 9, 0);
+        bushFlowersV = SpriteUtils.makeSprite(tilesTexture, 10, 0);
 
-        cobbleRed = SpriteUtils.makeSprite(texture, 0, 2);
-        cobble = SpriteUtils.makeSprite(texture, 1, 2);
+        cobbleRed = SpriteUtils.makeSprite(tilesTexture, 0, 2);
+        cobble = SpriteUtils.makeSprite(tilesTexture, 1, 2);
 
-        asphaltEdgeE = SpriteUtils.makeSprite(texture, 0, 3);
-        asphaltEdgeW = SpriteUtils.makeSprite(texture, 0, 3, false, true);
-        asphaltEdgeN = SpriteUtils.makeSprite(texture, 0, 4);
-        asphaltEdgeS = SpriteUtils.makeSprite(texture, 0, 4, true, false);
-        asphaltCornerNE = SpriteUtils.makeSprite(texture, 2, 3);
-        asphaltCornerSE = SpriteUtils.makeSprite(texture, 2, 3, true, false);
-        asphaltCornerSW = SpriteUtils.makeSprite(texture, 2, 3, true, true);
-        asphaltCornerNW = SpriteUtils.makeSprite(texture, 2, 3, false, true);
-        asphaltLineH = SpriteUtils.makeSprite(texture, 4, 3);
-        asphaltLineV = SpriteUtils.makeSprite(texture, 4, 4);
-
-
-        texture = new Texture(getHandle("landscapetiles/asphalt_tile.png"));
-        asphalt = SpriteUtils.makeSprite(texture, 0, 0, 1, 1);
+        asphaltEdgeE = SpriteUtils.makeSprite(tilesTexture, 0, 3);
+        asphaltEdgeW = SpriteUtils.makeSprite(tilesTexture, 0, 3, false, true);
+        asphaltEdgeN = SpriteUtils.makeSprite(tilesTexture, 0, 4);
+        asphaltEdgeS = SpriteUtils.makeSprite(tilesTexture, 0, 4, true, false);
+        asphaltCornerNE = SpriteUtils.makeSprite(tilesTexture, 2, 3);
+        asphaltCornerSE = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, false);
+        asphaltCornerSW = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, true);
+        asphaltCornerNW = SpriteUtils.makeSprite(tilesTexture, 2, 3, false, true);
+        asphaltLineH = SpriteUtils.makeSprite(tilesTexture, 4, 3);
+        asphaltLineV = SpriteUtils.makeSprite(tilesTexture, 4, 4);
 
         //--------------------------
         //        Buildings
         //--------------------------
 
-        // The CC and chapel don't work at the moment because their canvas dimensions are bad
-//        texture = new Texture(getHandle("landscapetiles/campuscenter.png"));
-//        campusCenter = SpriteUtils.makeSprite(texture, 0, 0, 480, 128);
-//        texture = new Texture(getHandle("landscapetiles/chapel.png"));
-//        chapel = SpriteUtils.makeSprite(texture, 0, 0, 192, 192);
-//        texture = new Texture(getHandle("landscapetiles/dupre.png"));
-//        dupre = SpriteUtils.makeSprite(texture, 0, 0, 512, 128);
-//        texture = new Texture(getHandle("landscapetiles/weyerhauser.png"));
-//        weyerhauser = SpriteUtils.makeSprite(texture, 0, 0, 448, 128);
+        weyerhauser = SpriteUtils.makeSprite(tilesTexture, 5, 0, 24, 12);
+        campusCenter = SpriteUtils.makeSprite(tilesTexture, 0, 0, 480, 128);
+        chapel = SpriteUtils.makeSprite(tilesTexture, 0, 0, 192, 192);
+        dupre = SpriteUtils.makeSprite(tilesTexture, 0, 0, 512, 128);
 
-        MapLoader.initTileMap(); // Must be called after all tiles are loaded
+
+        tilesTexture = new Texture(getHandle("landscapetiles/asphalt_tile.png"));
+        asphalt = SpriteUtils.makeSprite(tilesTexture, 0, 0, 1, 1);
+
+        MapLoader.initTileMap(); // Must be called after all tiles and buildings are loaded
 
         //--------------------------
         //        Entities
         //--------------------------
 
-        font = new BitmapFont(getHandle("text.fnt"));
-        shadow = new BitmapFont(getHandle("shadow.fnt"));
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/chest_closed.png"));
-        chestClosed = new TextureRegion(texture, 0, 0, 512, 128);
-        chestClosed.flip(false, true);
-        texture = new Texture(Gdx.files.internal("data/landscapetiles/chest_open.png"));
-        chestOpen = new TextureRegion(texture, 0, 0, 512, 128);
-        chestOpen.flip(false, true);
+        entitiesTexture = new Texture(getHandle("entities/entities_canvas.png"));
+        chestBrownClosed = SpriteUtils.makeSprite(tilesTexture, 0, 0);
+        chestBrownOpen = SpriteUtils.makeSprite(tilesTexture, 0, 1);
+        chestRedClosed = SpriteUtils.makeSprite(tilesTexture, 1, 0);
+        chestRedOpen = SpriteUtils.makeSprite(tilesTexture, 1, 1);
+        chestGreenClosed = SpriteUtils.makeSprite(tilesTexture, 2, 0);
+        chestGreenOpen = SpriteUtils.makeSprite(tilesTexture, 2, 1);
 
-        SpriteAndAnim saa = loadCharacter("steven/steven_canvas.png");
+        //--------------------------
+        //       Characters
+        //--------------------------
+
+        SpriteAndAnim saa = loadCharacter("entities/steven/steven_canvas.png");
         mainChar = saa.sprites;
         mainCharAnim = saa.animations;
 
@@ -131,6 +137,34 @@ public class AssetLoader {
         dialogueHandle = getHandle("dialogues.txt");
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
+    }
+
+    public static SpriteAndAnim loadCharacter(String path) {
+        // as of 3/28/14, using the updated canvas that Jared was working on in class today
+        EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
+        EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
+        characterTexture = new Texture(getHandle(path));
+
+        TextureRegion[][] regions = SpriteUtils.split(characterTexture);
+        for (int i=0; i<4; i++) {
+            Direction dir = Direction.values()[i];
+            person.put(dir, regions[0][i]);
+            stepRight.put(dir, regions[1][i]);
+            if (i % 2 == 0) {
+                stepLeft.put(dir, regions[2][i]);
+            } else {
+                stepLeft.put(dir, regions[1][i]);
+            }
+            TextureRegion[] array = { person.get(dir), stepRight.get(dir),
+                    person.get(dir), stepLeft.get(dir) };
+            Animation animation = new Animation(0.1f, array);
+            animation.setPlayMode(Animation.LOOP);
+            personAnim.put(dir, animation);
+        }
+
+        return new SpriteAndAnim(person, personAnim);
     }
 
     private static FileHandle getHandle(String path) {
@@ -154,32 +188,12 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
-    public static SpriteAndAnim loadCharacter(String path) {
-        // as of 3/28/14, using the updated canvas that Jared was working on in class today
-        EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
-        texture = new Texture(getHandle(path));
-
-        TextureRegion[][] regions = SpriteUtils.split(texture);
-        for (int i=0; i<4; i++) {
-            Direction dir = Direction.values()[i];
-            person.put(dir, regions[0][i]);
-            stepRight.put(dir, regions[1][i]);
-            if (i % 2 == 0) {
-                stepLeft.put(dir, regions[2][i]);
-            } else {
-                stepLeft.put(dir, regions[1][i]);
-            }
-            TextureRegion[] array = { person.get(dir), stepRight.get(dir),
-                    person.get(dir), stepLeft.get(dir) };
-            Animation animation = new Animation(0.1f, array);
-            animation.setPlayMode(Animation.LOOP);
-            personAnim.put(dir, animation);
-        }
-
-        return new SpriteAndAnim(person, personAnim);
+    public static void dispose() {
+        tilesTexture.dispose();
+        entitiesTexture.dispose();
+        characterTexture.dispose();
+        font.dispose();
+        shadow.dispose();
     }
 
     // simple wrapper class used as a return type for loadCharacter()
@@ -191,11 +205,5 @@ public class AssetLoader {
             this.sprites = sprites;
             this.animations = animations;
         }
-    }
-
-    public static void dispose() {
-        texture.dispose();
-        font.dispose();
-        shadow.dispose();
     }
 }
