@@ -25,7 +25,7 @@ public class AssetLoader {
 
     // Tiles
     public static TextureRegion grass0, grass1, grass2;
-    public static TextureRegion bushH, bushV, bushFlowersH, bushFlowersV;
+    public static TextureRegion bush, bushH, bushV, bushFlowersH, bushFlowersV;
     public static TextureRegion treeSmall, treeBig;
     public static TextureRegion cobble, cobbleRed;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
@@ -51,34 +51,46 @@ public class AssetLoader {
 
     public static void load() {
 
-//        texture = new Texture(getHandle("texture.png"));
-//        texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        texture = new Texture(getHandle("big_tile_canvas.png"));
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         //--------------------------
         //          Tiles
         //--------------------------
 
-        // TODO: build a basic texture file and set up tiles
-        texture = new Texture(getHandle("landscapetiles/darkgrasstile1.png"));
-        grass0 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/darkgrasstile2.png"));
-        grass1 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/darkgrasstile3.png"));
-        grass2 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-
-        texture = new Texture(getHandle("landscapetiles/grass_horizontal_bush.png"));
-        bushH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/grass_vertical_bush.png"));
-        bushV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/grass_horizontal_flowerbush.png"));
-        bushFlowersH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/grass_vertical_flowerbush.png"));
-        bushFlowersV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-
-        texture = new Texture(getHandle("landscapetiles/32tree1.png"));
-        treeSmall = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
-        texture = new Texture(getHandle("landscapetiles/64tree1.png"));
         treeBig = SpriteUtils.makeSprite(texture, 0, 0, 64, 64);
+        treeSmall = SpriteUtils.makeSprite(texture, 64, 0);
+        grass0 = SpriteUtils.makeSprite(texture, 96, 0);
+        grass1 = SpriteUtils.makeSprite(texture, 128, 0);
+        grass2 = SpriteUtils.makeSprite(texture, 160, 0);
+        bush = SpriteUtils.makeSprite(texture, 192, 0);
+        bushH = SpriteUtils.makeSprite(texture, 224, 0);
+        bushFlowersH = SpriteUtils.makeSprite(texture, 256, 0);
+        bushV = SpriteUtils.makeSprite(texture, 288, 0);
+        bushFlowersV = SpriteUtils.makeSprite(texture, 320, 0);
+
+
+
+//        texture = new Texture(getHandle("landscapetiles/darkgrasstile1.png"));
+//        grass0 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/darkgrasstile2.png"));
+//        grass1 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/darkgrasstile3.png"));
+//        grass2 = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+
+//        texture = new Texture(getHandle("landscapetiles/grass_horizontal_bush.png"));
+//        bushH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/grass_vertical_bush.png"));
+//        bushV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/grass_horizontal_flowerbush.png"));
+//        bushFlowersH = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/grass_vertical_flowerbush.png"));
+//        bushFlowersV = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+
+//        texture = new Texture(getHandle("landscapetiles/32tree1.png"));
+//        treeSmall = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
+//        texture = new Texture(getHandle("landscapetiles/64tree1.png"));
+//        treeBig = SpriteUtils.makeSprite(texture, 0, 0, 64, 64);
 
         texture = new Texture(getHandle("landscapetiles/cobblestone1.png"));
         cobble = SpriteUtils.makeSprite(texture, 0, 0, 32, 32);
@@ -133,8 +145,8 @@ public class AssetLoader {
         chestOpen.flip(false, true);
 
         SpriteAndAnim saa = loadCharacter("steven/steven_canvas.png");
-        steven = saa.sprites;
-        stevenStepping = saa.animations;
+        mainChar = saa.sprites;
+        mainCharAnim = saa.animations;
 
         //--------------------------
         //          Other

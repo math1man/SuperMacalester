@@ -60,6 +60,7 @@ public class MapLoader {
 
     public static void initTileMap() {
         TILE_MAP.put("g",   AssetLoader.grass0, AssetLoader.grass1, AssetLoader.grass2);
+        TILE_MAP.put("b",   AssetLoader.bush);
         TILE_MAP.put("bh",  AssetLoader.bushH);
         TILE_MAP.put("bv",  AssetLoader.bushV);
         TILE_MAP.put("bfh", AssetLoader.bushFlowersH);

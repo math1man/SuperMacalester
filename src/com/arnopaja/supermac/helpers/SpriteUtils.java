@@ -10,8 +10,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class SpriteUtils {
 
     /**
+     * Creates a TextureRegion from the texture, x, and y with default width and
+     * height of 32 x 32, using the no flip orientation
+     * @param texture
+     * @param x
+     * @param y
+     * @return
+     */
+    public static TextureRegion makeSprite(Texture texture, int x, int y) {
+        return makeSprite(texture, x, y, 32, 32);
+    }
+
+    /**
      * Creates a TextureRegion from the texture, x, y, width, and height parameters
-     * using the default flip orientation of (false, true).
+     * using the no flip orientation.
      * @param texture
      * @param x
      * @param y
