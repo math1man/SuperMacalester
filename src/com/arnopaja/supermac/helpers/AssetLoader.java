@@ -95,10 +95,11 @@ public class AssetLoader {
         //        Buildings
         //--------------------------
 
-        weyerhauser = SpriteUtils.makeSprite(tilesTexture, 5, 0, 24, 12);
-        campusCenter = SpriteUtils.makeSprite(tilesTexture, 0, 0, 480, 128);
-        chapel = SpriteUtils.makeSprite(tilesTexture, 0, 0, 192, 192);
-        dupre = SpriteUtils.makeSprite(tilesTexture, 0, 0, 512, 128);
+        weyerhauser = SpriteUtils.makeSprite(tilesTexture, 0, 5, 24, 12);
+        campusCenter = SpriteUtils.makeSprite(tilesTexture, 24, 5, 20, 16);
+        chapel = SpriteUtils.makeSprite(tilesTexture, 44, 5, 14, 16);
+        library = SpriteUtils.makeSprite(tilesTexture, 0, 17, 16, 12);
+        oldMain = SpriteUtils.makeSprite(tilesTexture, 16, 17, 6, 12);
 
 
         tilesTexture = new Texture(getHandle("landscapetiles/asphalt_tile.png"));
