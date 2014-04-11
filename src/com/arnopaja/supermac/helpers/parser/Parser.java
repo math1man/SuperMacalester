@@ -18,6 +18,16 @@ import java.util.EnumMap;
  */
 public class Parser {
 
+    /**
+     * Parses an object of the specified name and type specified by leader in
+     * the specified file. If no object of the given name and leader is found,
+     * this method returns null.
+     *
+     * @param name
+     * @param leader
+     * @param handle
+     * @return
+     */
     public static ParsedObject parse(String name, Leader leader, FileHandle handle) {
         String raw = handle.readString();
         String[] lines = raw.split("\n");
@@ -44,6 +54,19 @@ public class Parser {
         return parseDialogue(name, handle, new Interaction[0]);
     }
 
+    /**
+     * Parses a dialogue instance of the specified name from the specified file.
+     * It will parse either a dialogue, or dialogue options, and if both exist,
+     * it will parse the dialogue with the options at the end. For only dialogue,
+     * the first interaction (if any) will be given as a the post interaction.
+     * Otherwise, the interactions will be applied to the dialogue options.
+     * If the method does not find any dialogue or options, it returns null.
+     *
+     * @param name
+     * @param handle
+     * @param interactions
+     * @return
+     */
     public static DialogueDisplayable parseDialogue(String name, FileHandle handle, Interaction... interactions) {
         ParsedObject dialogue = parse(name, Leader.DIALOGUE, handle);
         ParsedObject options = parse(name, Leader.DIALOGUE_OPTIONS, handle);
