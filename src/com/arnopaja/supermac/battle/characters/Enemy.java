@@ -1,4 +1,6 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.battle.characters;
+
+import com.arnopaja.supermac.inventory.Item;
 
 /**
  * Created by Envy on 2/28/14.

@@ -12,6 +12,10 @@ public class Location {
     private Vector2 position;
     private Direction facing;
 
+    public Location(Grid grid, int x, int y, Direction facing) {
+        this(grid, new Vector2(x, y), facing);
+    }
+
     public Location(Grid grid, Vector2 position, Direction facing) {
         this.grid = grid;
         this.position = position;
@@ -20,6 +24,10 @@ public class Location {
 
     public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
         return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
+    }
+
+    public Location getNearestValidLocation() {
+        return grid.getNearestValidLocation(this);
     }
 
     /**

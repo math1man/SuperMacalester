@@ -19,11 +19,19 @@ public class DialogueOptions implements DialogueDisplayable {
     private final int count;
 
     public DialogueOptions(String rawOptions) {
-        this(parseDialogueOptions(rawOptions));
+        this(rawOptions.split("\n"));
+    }
+
+    public DialogueOptions(String[] lines) {
+        this(lines, new Interaction[0]);
     }
 
     public DialogueOptions(String rawOptions, Interaction... interactions) {
-        this(parseDialogueOptions(rawOptions), interactions);
+        this(rawOptions.split("\n"), interactions);
+    }
+
+    public DialogueOptions(String[] lines, Interaction... interactions) {
+        this(lines[0], Arrays.copyOfRange(lines, 1, lines.length), interactions);
     }
 
     /**
@@ -34,33 +42,30 @@ public class DialogueOptions implements DialogueDisplayable {
      * @param header the option header
      * @param options the list of options to select from
      */
-    public DialogueOptions(String header, Object... options) {
-        this(header, options, InteractionUtils.getNulls(options.length));
-    }
-
-    public DialogueOptions(PreDialogueOptions preOptions) {
-        this(preOptions.getHeader(), preOptions.getOptions());
+    public <T> DialogueOptions(String header, T... options) {
+        this(header, options, new Interaction[0]);
     }
 
     /**
      * Constructs a DialogueOptions with the specified header, options, and
-     * interactions.  The first option with cause the first interaction, etc.
-     * There must be as many interactions as options. If options are not strings,
-     * the displayed text will call the toString method on the object.
+     * interactions. The first option with cause the first interaction, etc.
+     * There must be as many interactions as options, or the interactions
+     * will be set to null. If options are not strings, the displayed text
+     * will call the toString method on the object.
      *
      * @param header the option header
      * @param options the list of options to select from
      * @param interactions the list of interactions resulting from each option
      */
-    public DialogueOptions(String header, Object[] options, Interaction... interactions) {
+    public <T> DialogueOptions(String header, T[] options, Interaction... interactions) {
         this.header = header;
-        this.options = options;
-        this.interactions = interactions;
+        this.options = Arrays.copyOf(options, options.length, Object[].class);
+        if (interactions.length != options.length) {
+            this.interactions = InteractionUtils.getNulls(options.length);
+        } else {
+            this.interactions = interactions;
+        }
         this.count = options.length;
-    }
-
-    public DialogueOptions(PreDialogueOptions preOptions, Interaction[] interactions) {
-        this(preOptions.getHeader(), preOptions.getOptions(), interactions);
     }
 
     public String getHeader() {
@@ -85,32 +90,5 @@ public class DialogueOptions implements DialogueDisplayable {
 
     public int getCount() {
         return count;
-    }
-
-    public static PreDialogueOptions parseDialogueOptions(String rawOptions) {
-        String[] lines = rawOptions.split("\n");
-        String header = lines[0];
-        String[] options = Arrays.copyOfRange(lines, 1, lines.length);
-        return new PreDialogueOptions(header, options);
-    }
-
-
-    // Intermediary class used to hold both a header and a list of options
-    public static class PreDialogueOptions {
-        private final String header;
-        private final String[] options;
-
-        public PreDialogueOptions(String header, String[] options) {
-            this.header = header;
-            this.options = options;
-        }
-
-        public String[] getOptions() {
-            return options;
-        }
-
-        public String getHeader() {
-            return header;
-        }
     }
 }

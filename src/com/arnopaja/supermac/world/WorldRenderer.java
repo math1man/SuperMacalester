@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class WorldRenderer extends BaseRenderer<WorldController> {
+public class WorldRenderer extends BaseRenderer<World> {
 
     private final int renderGridWidth, renderGridHeight;
     private final Vector2 renderOffset;

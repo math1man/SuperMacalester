@@ -43,34 +43,6 @@ public class Grid {
         this(grid.getTileGrid(), grid.getEntityMap());
     }
 
-    public int getGridWidth() {
-        return gridWidth;
-    }
-
-    public int getGridHeight() {
-        return gridHeight;
-    }
-
-    public Tile[][] getTileGrid() {
-        return tileArray;
-    }
-
-    public Map<Vector2, Entity> getEntityMap() {
-        return entityMap;
-    }
-
-    public Collection<Entity> getEntities() {
-        return entityMap.values();
-    }
-
-    public Tile getTile(Vector2 position) {
-        return tileArray[cast(position.x)][cast(position.y)];
-    }
-
-    public void setTile(Vector2 position, Tile element) {
-        tileArray[cast(position.x)][cast(position.y)] = element;
-    }
-
     /**
      * Returns the entity at the specified position,
      * or null if no entity exists there.
@@ -98,17 +70,6 @@ public class Grid {
     }
 
     /**
-     * Moves the entity at the specified coordinates in the specified direction.
-     *
-     * @param position the position of the entity
-     * @param dir the direction in which to move
-     * @return true if an entity was moved, else false
-     */
-    public boolean moveEntity(Vector2 position, Direction dir) {
-        return moveEntity(getEntity(position), dir);
-    }
-
-    /**
      * Moves the specified entity in the specified direction.
      *
      * @param entity the entity to be moved
@@ -119,9 +80,7 @@ public class Grid {
         if (entity != null) {
             Vector2 position = entity.getPosition();
             Vector2 destination = Direction.getAdjacent(position, dir);
-            if (isInBounds(destination)
-                    && (getEntity(destination) == null)
-                    && getTile(destination).isPathable()) {
+            if (isPathable(destination)) {
                 removeEntity(position);
                 entity.setPosition(destination);
                 putEntity(entity);
@@ -142,6 +101,42 @@ public class Grid {
         return entityMap.remove(position);
     }
 
+    public Location getNearestValidLocation(Location location) {
+        return getNearestValidLocation(location.getPosition(), location.getFacing());
+    }
+
+    /**
+     * Returns the nearest valid location to the specified position.
+     * If the position is off the grid, it tests the nearest position in the grid.
+     * If the position in the grid is blocked, it tests the next position
+     * @param position
+     * @param direction
+     * @return
+     */
+    public Location getNearestValidLocation(Vector2 position, Direction direction) {
+        if (isPathable(position)) {
+            // The current position is valid and pathable
+            return new Location(this, position, direction);
+        } else if (position.x < 0) {
+            // These next four cases handle the position being invalid
+            return getNearestValidLocation(new Vector2(0, position.y), direction);
+        } else if (position.x >= gridWidth) {
+            return getNearestValidLocation(new Vector2(gridWidth - 1, position.y), direction);
+        } else if (position.y < 0) {
+            return getNearestValidLocation(new Vector2(position.x, 0), direction);
+        } else if (position.y >= gridHeight) {
+            return getNearestValidLocation(new Vector2(position.x, gridHeight - 1), direction);
+        } else {
+            // The current position is valid but not pathable
+            Vector2 newPosition = Direction.getAdjacent(position, direction);
+            if (!isInBounds(newPosition)) {
+                // This is the case that it has found no pathable position in the direction
+                return null; // TODO: is there a better way to handle this case?
+            }
+            return getNearestValidLocation(newPosition, direction);
+        }
+    }
+
     /**
      * Returns a RenderGrid of the calling grid centered at the given position.
      * If the RenderGrid covers spaces not in the calling grid, those spaces will be
@@ -159,85 +154,46 @@ public class Grid {
     }
 
     /**
-     * Returns a Grid object whose tile grid is determined by the getSubTileGrid method,
-     * and whose entity map is determined by the getSubEntityMap method. The subgrid has
-     * its upper left hand corner at the specified position, and its width and height
-     * specified by those parameters.
+     * Returns a grid that represents a portion of the current grid, with the upper
+     * left hand corner specified by corner. Space outside of the initial grid will
+     * be filled in by null tiles.
      *
-     * @param corner the coordinates of upper left hand corner of the subgrid.  Can be negative
+     * @param corner the upper left hand corner of the subgrid
      * @param width the width of the subgrid
      * @param height the height of the subgrid
-     * @return the subgrid
+     * @return
      */
-    protected Grid getSubGrid(Vector2 corner, int width, int height) {
+    public Grid getSubGrid(Vector2 corner, int width, int height) {
         return new Grid(getSubTileGrid(corner, width, height),
                 getSubEntityMap(corner, width, height));
     }
 
-    /**
-     * Duplicate of the other getSubTileGrid method using a Vector2 instead of x and y coords.
-     *
-     * @param corner the coordinates of upper left hand corner of the sub tile array.
-     *                 can have negative values
-     * @param width the width of the sub tile array
-     * @param height the height of the sub tile array
-     * @return the sub tile array
-     */
-    protected Tile[][] getSubTileGrid(Vector2 corner, int width, int height) {
-        Tile[][] subTileArray = new Tile[width][height];
-        for (int i=0; i<width; i++) {
-            for (int j=0; j<height; j++) {
-                Vector2 position = new Vector2(i, j).add(corner);
-                if (isInBounds(position)) {
-                    subTileArray[i][j] = tileArray[cast(position.x)][cast(position.y)];
-                } else {
-                    subTileArray[i][j] = Tile.NULL;
-                }
-            }
-        }
-        return subTileArray;
+    public int getGridWidth() {
+        return gridWidth;
     }
 
-    /**
-     * Returns a map of Entities that corresponds to the described subgrid.
-     *
-     * @param corner the coordinates of upper left hand corner of the sub entity map.
-     *                 can have negative values
-     * @param width the width of the sub entity map
-     * @param height the height of the sub entity map
-     * @return the sub entity map
-     */
-    protected Map<Vector2, Entity> getSubEntityMap(Vector2 corner, int width, int height) {
-        Map<Vector2, Entity> subEntityMap = new Hashtable<Vector2, Entity>();
-        for (int i=0; i<width; i++) {
-            for (int j=0; j<height; j++) {
-                Vector2 newKey = new Vector2(i, j);
-                Vector2 key = corner.cpy().add(newKey);
-                if (entityMap.containsKey(key)) {
-                    subEntityMap.put(newKey, getEntity(key));
-                }
-            }
-        }
-        return subEntityMap;
+    public int getGridHeight() {
+        return gridHeight;
     }
 
-    protected static int cast(float f) {
-        return (int) f;
+    public Tile getTile(Vector2 position) {
+        return tileArray[cast(position.x)][cast(position.y)];
     }
 
-    protected boolean isInBounds(int x, int y) {
-        return ((x < gridWidth)
-                && (x >= 0)
-                && (y < gridHeight)
-                && (y >= 0));
-    }
-
-    protected boolean isInBounds(Vector2 position) {
-        return isInBounds(cast(position.x), cast(position.y));
+    public Tile[][] getTileGrid() {
+        return tileArray;
     }
 
     public void clearTiles() {
         tileArray = new Tile[gridWidth][gridHeight];
+    }
+
+    public Map<Vector2, Entity> getEntityMap() {
+        return entityMap;
+    }
+
+    public Collection<Entity> getEntities() {
+        return entityMap.values();
     }
 
     public void clearEntities() {
@@ -257,5 +213,55 @@ public class Grid {
         Grid grid = (Grid) o;
 
         return Arrays.equals(this.getTileGrid(), grid.getTileGrid());
+    }
+
+    protected Tile[][] getSubTileGrid(Vector2 corner, int width, int height) {
+        Tile[][] subTileArray = new Tile[width][height];
+        for (int i=0; i<width; i++) {
+            for (int j=0; j<height; j++) {
+                Vector2 position = new Vector2(i, j).add(corner);
+                if (isInBounds(position)) {
+                    subTileArray[i][j] = tileArray[cast(position.x)][cast(position.y)];
+                } else {
+                    subTileArray[i][j] = Tile.NULL;
+                }
+            }
+        }
+        return subTileArray;
+    }
+
+    protected Map<Vector2, Entity> getSubEntityMap(Vector2 corner, int width, int height) {
+        Map<Vector2, Entity> subEntityMap = new Hashtable<Vector2, Entity>();
+        for (int i=0; i<width; i++) {
+            for (int j=0; j<height; j++) {
+                Vector2 newKey = new Vector2(i, j);
+                Vector2 key = corner.cpy().add(newKey);
+                if (entityMap.containsKey(key)) {
+                    subEntityMap.put(newKey, getEntity(key));
+                }
+            }
+        }
+        return subEntityMap;
+    }
+
+    protected boolean isInBounds(int x, int y) {
+        return ((x < gridWidth)
+                && (x >= 0)
+                && (y < gridHeight)
+                && (y >= 0));
+    }
+
+    protected boolean isInBounds(Vector2 position) {
+        return isInBounds(cast(position.x), cast(position.y));
+    }
+
+    protected boolean isPathable(Vector2 position) {
+        return (isInBounds(position)
+                && (getEntity(position) == null)
+                && getTile(position).isPathable());
+    }
+
+    protected static int cast(float f) {
+        return (int) f;
     }
 }

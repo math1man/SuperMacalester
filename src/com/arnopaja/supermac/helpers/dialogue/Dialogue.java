@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
+import com.arnopaja.supermac.helpers.Interaction;
+
 import java.util.Arrays;
 
 /**
@@ -10,30 +12,50 @@ public class Dialogue implements DialogueDisplayable {
     private final String[] dialogue;
     private final boolean hasOptions;
     private final DialogueOptions options;
+    private final boolean hasPostInteraction;
+    private final Interaction postInteraction;
 
     private int position;
     private String currentDialogue;
     private boolean hasNext;
 
     public Dialogue(String rawDialogue) {
-        this(rawDialogue, null);
+        this(rawDialogue.split("<d>"));
+    }
+
+    public Dialogue(String... dialogue) {
+        this(dialogue, null, null);
+    }
+
+    public Dialogue(String rawDialogue, Interaction postInteraction) {
+        this(postInteraction, rawDialogue.split("<d>"));
+    }
+
+    public Dialogue(Interaction postInteraction, String... dialogue) {
+        this(dialogue, null, postInteraction);
     }
 
     public Dialogue(String rawDialogue, DialogueOptions options) {
-        this(rawDialogue.split("<d>"), options);
+        this(options, rawDialogue.split("<d>"));
     }
 
-    public Dialogue(String[] dialogue, DialogueOptions options) {
+    public Dialogue(DialogueOptions options, String... dialogue) {
+        this(dialogue, options, null);
+    }
+
+    private Dialogue(String[] dialogue, DialogueOptions options, Interaction postInteraction) {
         this.dialogue = dialogue;
         this.hasOptions = (options != null);
         this.options = options;
+        this.hasPostInteraction = (postInteraction != null);
+        this.postInteraction = postInteraction;
         reset();
     }
 
     public void next() {
         position++;
         currentDialogue = dialogue[position];
-        hasNext = dialogue.length > 1 + position;
+        hasNext = position + 1 < dialogue.length ;
     }
 
     public String[] getDialogue() {
@@ -46,6 +68,15 @@ public class Dialogue implements DialogueDisplayable {
 
     public DialogueOptions getOptions() {
         return options;
+    }
+
+
+    public boolean hasPostInteraction() {
+        return hasPostInteraction;
+    }
+
+    public Interaction getPostInteraction() {
+        return postInteraction;
     }
 
     public String getCurrentDialogue() {

@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.battle.characters;
 
 import java.util.List;
 

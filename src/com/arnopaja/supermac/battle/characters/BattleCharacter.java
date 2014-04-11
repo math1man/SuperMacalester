@@ -1,4 +1,9 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.battle.characters;
+
+import com.arnopaja.supermac.battle.Spell;
+import com.arnopaja.supermac.inventory.Armor;
+import com.arnopaja.supermac.inventory.Inventory;
+import com.arnopaja.supermac.inventory.Weapon;
 
 import java.util.List;
 

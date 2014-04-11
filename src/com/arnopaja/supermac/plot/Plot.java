@@ -1,20 +1,17 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.world.WorldController;
+import com.arnopaja.supermac.helpers.parser.Parser;
+import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.MapNPC;
-import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class will handle the plot structure and everything
@@ -24,12 +21,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Plot {
 
-    private static final AtomicInteger nextQuestID = new AtomicInteger(0);
-
-    private final WorldController world;
+    private final World world;
     private Map<Integer, Quest> quests;
 
-    public Plot(WorldController world) {
+    public Plot(World world) {
         this.world = world;
         this.quests = new HashMap<Integer, Quest>();
         // TODO: create Quests and everything that goes into them
@@ -42,20 +37,17 @@ public class Plot {
 
     private void initTestQuest() {
         MapNPC character = new MapNPC();
-        character.setFacingSprites(AssetLoader.steven);
-        character.setFacingAnimations(AssetLoader.stevenStepping);
+        character.setFacingSprites(AssetLoader.mainChar);
+        character.setFacingAnimations(AssetLoader.mainCharAnim);
 
-        Location location = new Location(world.getWorldGrid(), new Vector2(5, 5), Direction.NORTH);
+        Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
 
-        Interaction interaction = Interaction.dialogue(new Dialogue("Hi! My name is Paul and I like to code things. " +
-                "I have decided I am going to work at a startup in Minneapolis this summer.<d>" +
-                "I spent this past summer here working for Libby Shoop designing a website.",
-                new DialogueOptions("Do you like to code?", DialogueOptions.YES_NO_OPTIONS)));
+        Interaction interaction = Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle));
 
         List<Goal> testGoals = new ArrayList<Goal>();
         testGoals.add(new Goal(character, location, interaction));
 
-        Quest test = new Quest(nextQuestID.getAndIncrement(), testGoals);
+        Quest test = new Quest(testGoals);
         test.activate(null);
         addQuest(test);
     }

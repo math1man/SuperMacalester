@@ -28,14 +28,17 @@ public class Tile implements Renderable {
     }
 
     public static Tile createTile(String tileCode) {
-        if (tileCode.startsWith("n")) {
+        if (tileCode.isEmpty()) {
             return NULL;
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
-        TextureRegion sprite = MapLoader.getTileSprite(tileKey);
+        TextureRegion sprite = MapLoader.TILE_MAP.get(tileKey);
+        if (sprite == null) {
+            return NULL;
+        }
 
-        boolean isPathable = true;
+        boolean isPathable = !tileKey.startsWith("_");
         if (temp.length > 1) {
             for (char tileFlag : temp[1].toCharArray()) {
                 // add all optional flags here
@@ -44,7 +47,6 @@ public class Tile implements Renderable {
                 }
             }
         }
-
         return createTile(sprite, isPathable);
     }
 
@@ -63,7 +65,6 @@ public class Tile implements Renderable {
         return isRendered;
     }
 
-    @Override
     public TextureRegion getSprite() {
         return sprite;
     }
@@ -75,6 +76,10 @@ public class Tile implements Renderable {
 
     public boolean isPathable() {
         return isPathable;
+    }
+
+    public boolean isLarge() {
+        return sprite != null && !(sprite.getRegionWidth() == 32 && sprite.getRegionHeight() == 32);
     }
 
     @Override
