@@ -136,7 +136,7 @@ public class SpriteUtils {
                     TextureRegion[][] sprites = split(tile);
                     for (int p=0; p< sprites.length; p++) {
                         for (int q=0; q< sprites[0].length; q++) {
-                            tiles[i+p][j+q] = Tile.createTile("_", sprites[p][q], tile.isPathable());
+                            tiles[i+p][j+q] = Tile.createTile("", sprites[p][q], tile.isPathable());
                         }
                     }
                 }

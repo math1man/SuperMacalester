@@ -185,7 +185,7 @@ public class AssetLoader {
     }
 
     public static String getMap(String name) {
-        return getHandle("maps/" + name + ".txt").readString();
+        return getHandle("maps/" + name.toLowerCase() + ".txt").readString();
     }
 
     public static void dispose() {

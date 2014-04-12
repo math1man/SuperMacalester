@@ -4,8 +4,10 @@ composed of one or more grids separated by a <floor> command. For grids with
 multiple floors, the first floor index should be specified as <first floor:#>
 as the first line of the document. Grids are tab-separated values, where each
 value is a tile code. Tile codes should start with the tile key followed by a
-hyphen and then any flags. An underscore is a prefix for tiles that are larger
-sprites and should be filled in with null tiles.
+hyphen and then any flags. Tiles with sprites that take up multiple grid spaces
+should be coded in the upper left corner of the area, with the rest of the area
+filled with null tiles. An underscore is a prefix for buildings, which are
+necessarily impassable and do not need to be flagged as such.
 
 List of terrain tile keys:
       = null tile
@@ -15,7 +17,7 @@ List of terrain tile keys:
   bfh = flowering bush horizontal
   bfv = flowering bush vertical
   ts  = tree small
-  _tb = tree big
+  tb = tree big
   c   = cobble
   cr  = red cobble
   a   = asphalt
