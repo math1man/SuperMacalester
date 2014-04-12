@@ -1,67 +1,215 @@
-Map data document.  All maps should be generated here in a very specific form:
-map: [map name]
-width: [width]
-height: [height]
-[grid of tile codes]
+# Map data document.  All maps should be generated here in a very specific form:
+# <map:[map name]>
+# <floors:[floor count]>                  # optional, used for buildings, default to 1
+# <first_floor_index:[first floor index]> # optional, used for buildings, default to 0
+# [grid of tile codes]                    # for multiple floors, each floor should be
+# </map>                                  # on the next line after the previous one
+#
+# Tile codes should start with the tile key followed by a hyphen and then any flags.
+# An underscore is a prefix for tiles that are larger sprites and should be filled in with null tiles.
+#
+# List of current tile keys:
+#       = null tile
+#   g   = grass
+#   bh  = bush horizontal
+#   bv  = bush vertical
+#   bfh = flowering bush horizontal
+#   bfv = flowering bush vertical
+#   ts  = tree small
+#   _tb = tree big
+#   c   = cobble
+#   cr  = red cobble
+#   a   = asphalt
+#   ah  = asphalt with a horizontal road line
+#   av  = asphalt with a vertical road line
+#   an  = asphalt north edge
+#   ae  = asphalt east edge
+#   as  = asphalt south edge
+#   aw  = asphalt west edge
+#   ane = asphalt northeast corner
+#   ase = asphalt southeast corner
+#   ase = asphalt southwest corner
+#   anw = asphalt northwest corner
+#
+# List of building tiles
+#   _ar = Art Buiding
+#   _ac = Art Commons
+#   _bi = Bigelow
+#   _cc = Campus Center
+#   _ca = Carnegie
+#   _ch = Chapel
+#   _do = Doty
+#   _du = Dupre
+#   _hu = Humanities
+#   _ka = Kagin
+#   _ki = Kirk
+#   _lc = Leonard Center
+#   _li = Library
+#   _ma = Markim Hall
+#   _mu = Music Building
+#   _om = Old Main
+#   _ol = Olin
+#   _ri = Rice
+#   _th = Theatre Building
+#   _tm = 30 Mac (Thirty Mac)
+#   _tu = Turk
+#   _wa = Wallace
+#   _we = Weyerhauser
+#
+# List of current tile flags:
+# i = impassable flag
+#
+# All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
 
-The grid of tile codes must have the exact specified dimensions.
-Tile codes should start with the tile key followed by a hyphen and then the flags.
-An asterisk * means that there are multiple tiles and one should be randomly selected.
+<map:Macalester>
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+ae	ae	ae	ae	ae	ae	ae	ae	ane	a	a	a	ase	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+ah	ah	ah	ah	ah	ah	ah	ah	a	a	a	a	a	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i	a-i	a-i	a-i	asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i	a-i	a-i	a-i	asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i
+g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	_ki																																g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	_cc																				g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g	_lc																																																				g	g	g	g	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ane	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	c	c	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	c	c	c	g	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	c	c	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	c	c	c	g	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	c	c	c	g	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	c	c	c	g	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	c	c	c	g	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	c	c	c	g	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	c	c	c	g	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					c	c	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	c	c	c	g	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g																																	g	g	c	c	g	g																																																					c	c	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	c	c	c	g	g																					g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																																																					c	c	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	c	g	g	g	g	g	g	g	g	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																																																					c	c	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	_li																g	g	g	g	g	g	g	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g																																																					g	g	c	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	g	g	g	c	c	c	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g																																																					g	g	c	g	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	c	c	c	c	c	c	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	cr	cr	cr	cr	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	cr	cr	cr	cr	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	c	c	c	c	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	c	c	c	c	g	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	c	c	c	c	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	c	c	c	c	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	c	c	c	c	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	_ol																g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	c	a	as-i	c	c	c	c	c	c	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g																	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	c	a	as-i	c	c	c	c	c	g	g	g	_ch														g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	c	c	c	c	c	c	c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	_om						c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g							c	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g							g	g	cr	cr	cr	cr	cr	cr	cr	cr	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c							g	g	cr	cr	cr	cr	cr	cr	cr	cr	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c							g	g	g	c	cr	cr	cr	cr	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g															g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g							g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	c	a	as-i	c	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	c	c	c	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	c	c	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	c	a	as-i	c	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	c	c	c	g	g	c	c	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	c	c	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	c	c	c	g	g	g	c	c	g	g	g	g	g	c	cr	cr	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	cr	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	c	c	c	g	g	g	c	c	c	c	g	g	g	g	c	cr	cr	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c																	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c																	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	g	c	c	c	_we																								g	c	g	g	g	g	g	g	g	c	g	g	_ca														g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	g	c	c	c	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	g	c	c	c	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	g	_hu																c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	g	c	c	c	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	cr	c	c	g																	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	g	c	c	c	g	g	g	g																									c	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	_ar												cr	cr	cr	cr	cr	c	c	g																	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	g	c	c	c	g	g	g	g	g																									c	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	g																	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	g	c	c	c	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	g																	c	c	g	g	g	g	cr	cr	cr	cr	cr	cr	cr	cr																	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	g	c	c	c	g	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	g																	c	c	c	c	c	c	_ri																								g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	g	c	c	c	g	g	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	c	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	c	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	g																	c	c	c	c	c	c																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	g	c	c	c	g	g	g	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	g																	c	c	c	c	c	c																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	c																	c	c	c	c	c	c																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	g	an	a	av	a	as-i	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g																									g	c	g	g	g	g	g	g	g	c	g	g															g	g	g	g	g	g	g	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													cr	cr	cr	cr	cr	c	c	c																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	an	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ane-i	a-i	a-i	a-i	ase-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ane	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a-i	a	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a-i	a	a	a	a	a	a	a	a	a	a	a	as	c	g	g	g	g	g	g													g	g	g	g	g	c	c	g																	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a-i	a	a	a	a	a	a	a	a	a	a	a	as	c	c	c	c	c	c	c													_ac												g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+aw	aw	aw	aw	aw	aw	aw	aw	anw	a	a	a	asw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw-i	anw	a	a	a	asw	aw	aw	aw	aw	aw	aw	c	c	c	c	c	c	c	c																									g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an-i	a-i	a-i	a-i	as-i	g	g	g	g	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g													g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g													g	g	g	g	g	cr	cr	g	g	g	g	g	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c													g	g	g	g	g	cr	cr	g	g	g	g	g	g	c	c	g	g	g																									g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c													g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c													g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c													c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c													c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c													g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g													_th																g	c	c	g	g	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	g	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g																													g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	_mu																								g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g																	g	c	c	g	g	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	anw	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g																									g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	g	g	g	g	g	g	g	g	g	g	g	g	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	g	g	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	as-i	g	g	g	g	g	g	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	c	c	c	c	g	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	ase-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ane-i	a-i	a-i	a-i	ase-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i	ae-i
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+																																																																														g	g	g	g	g	g	g	g	g	g	an	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
+																																																																														g	g	g	g	g	g	g	g	g	g	g	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw
+																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
+</map>
 
-List of current tile keys:
-n = null tile
-g* = grass
-c = cobble
-a = asphalt
-ah = asphalt with a horizontal road line
-av = asphalt with a vertical road line
-an = asphalt north edge *
-ae = asphalt east edge *
-as = asphalt south edge *
-aw = asphalt west edge *
-bcc = Campus Center **
-bch = Chapel **
 
-*Currently asphalt edge tiles are rotated so that east is up
-**These tiles are larger building sprites and should be filled in with null tiles
 
-List of current tile flags:
-p = pathable flag
-
-All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
-
-map: World
-width: 32
-height: 32
-a	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	aw	a
-as	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	c-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	c-p	c-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-as	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	g*-p	an
-a	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	a
+Building info:
+    CAMPUS_CENTER   (3, 1, 0, 0),
+    CHAPEL          (2, 1, 0, 0),
+    OLIN_RICE       (4, 0, 0, 0),
+    OLD_MAIN        (5, 1, 0, 0),
+    CARNEGIE        (5, 1, 0, 0),
+    NEILL_HALL      (3, 0, 0, 0),
+    ART_COMMONS     (3, 1, 0, 0),
+    WEYERHAUSER     (0, 0, 0, 0), // TODO: what is the actual layout?
+    LEONARD_CENTER  (2, 0, 0, 0), // TODO: does the LC have only 2 floors?
+    KAGIN           (3, 1, 0, 0),
+    DUPRE           (6, 1, 0, 0),
+    DOTY            (6, 1, 0, 0), // TODO: does Doty have a basement?
+    TURCK           (6, 1, 0, 0), // TODO: does Turck have 5 floors and a basement?
+    BIGELOW         (5, 1, 0, 0), // TODO: does Bigelow have only 4 floors?
+    THIRTY_MAC      (1, 0, 0, 0), // 30 Mac basement will be part of Bigelow/Wallace
+    WALLACE         (5, 1, 0, 0),
+    KIRK            (3, 1, 0, 0); // The different sections of Kirk are unconnected,
+                                  // but it will be easier to just have one building
