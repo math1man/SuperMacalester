@@ -1,0 +1,73 @@
+Data for this project is parsed using JSON, but with specific structures.
+In the following examples, items in angle brackets <> are variable.
+Anything not in angle brackets must be written exactly as is.
+
+A sample entity:
+
+"<Entity Name>" : {
+    TODO: figure out how to parse Entities
+}
+
+A sample location:
+
+"<Location Name>" : {
+    "grid" : "<world for world map, or building name and floor number, separated by a non-word character>",
+    "x" : <x coordinate>,
+    "y" : <y coordinate>,
+    "direction" : <north, east, south, or west>
+}
+
+A sample interaction:
+
+"<Interaction Name>" : {
+    TODO: figure out how to parse Interactions
+}
+
+A sample goal:
+
+"<Goal Name>" : {
+    "entity" : { <the entity> },
+    "location" : { <the location> },
+    "interaction" : { <the interaction> }
+}
+
+A sample quest:
+
+"<Quest Name>" : {
+    "id" : <unique identifier (int)>
+    "goals" : [ <array of goals> ],
+}
+
+A sample dialogue:
+
+"<Dialogue Name>" : {
+    "dialogue" : "<string of dialogue goes here>",
+    "interaction" : {
+        <interaction>
+    },
+    "options" : {
+        "header" : "<option header goes here>",
+        "options" : [
+            "<option 1>",
+            "<option 2>",
+            <etc>
+        ],
+        "interactions" : [
+            { <first interaction> },
+            { <second interaction> },
+            <etc>
+        ]
+    }
+}
+
+Dialogue may be specified in 4 ways:
+  - dialogue string only
+  - dialogue string plus interaction
+  - dialogue options only
+  - dialogue string plus options
+Additionally, the dialogue options interactions are optional, though if present,
+they must match the amount of options given. Dialogue windows should be separated
+by <d>, as the newline "\n" character is usable in dialogue windows.
+
+TODO: Parse items, etc.
+TODO: Parse battles, etc?

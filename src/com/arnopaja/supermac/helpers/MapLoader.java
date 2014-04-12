@@ -1,13 +1,10 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.helpers.parser.Leader;
-import com.arnopaja.supermac.helpers.parser.ParsedObject;
-import com.arnopaja.supermac.helpers.parser.Parser;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
 
-import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * TODO: add non-quest entities to the maps
@@ -15,41 +12,40 @@ import java.util.Arrays;
  */
 public class MapLoader {
 
-    public static Grid generateMap(String name) {
-        ParsedObject object = getParsed(name);
-        if (object == null) {
-            return null;
-        }
-        return parseGrid(object.getData());
+    public static Grid generateGrid(String name) {
+        return parseGrid(AssetLoader.getMap(name));
     }
 
     public static Building generateBuilding(String name) {
-        ParsedObject object = getParsed(name);
-        if (object == null) {
-            return null;
-        }
-        int floorCount = object.getInt(Leader.FLOOR_COUNT);
-        String[] data = object.getData();
-        int height = data.length / floorCount;
+        String raw = AssetLoader.getMap(name);
+        String[] floorStrings = raw.split("<floor>");
+        int firstFloorIndex = 0;
+
+        int floorCount = floorStrings.length;
         Grid[] floors = new Grid[floorCount];
         for (int i=0; i<floorCount; i++) {
-            floors[i] = parseGrid(Arrays.copyOfRange(data, i * height, (i + 1) * height));
+            if (i == 0) {
+                String[] temp = floorStrings[i].split("\n", 2);
+                String first = temp[0].trim();
+                if (Pattern.matches("<first floor:\\d*>", first)) {
+                    floorStrings[i] = temp[1];
+                    firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
+                }
+            }
+            floors[i] = parseGrid(floorStrings[i]);
         }
-        return new Building(floors, object.getInt(Leader.FIRST_FLOOR_INDEX));
+        return new Building(floors, firstFloorIndex);
     }
 
-    private static ParsedObject getParsed(String name) {
-        return Parser.parse(name, Leader.MAP, AssetLoader.mapHandle);
-    }
-
-    private static Grid parseGrid(String[] lines) {
+    private static Grid parseGrid(String string) {
+        String[] lines = string.split("\n");
         int height = lines.length;
         int width = lines[0].split("\t").length;
         Tile[][] tileArray = new Tile[width][height];
-        for (int i=0; i<height; i++) {
-            String[] tileCodes = lines[i].split("\t");
-            for (int j=0; j<width; j++) {
-                tileArray[j][i] = Tile.createTile(tileCodes[j].trim());
+        for (int j=0; j<height; j++) {
+            String[] tileCodes = lines[j].split("\t");
+            for (int i=0; i<width; i++) {
+                tileArray[i][j] = Tile.createTile(tileCodes[i].trim());
             }
         }
         SpriteUtils.split(tileArray);

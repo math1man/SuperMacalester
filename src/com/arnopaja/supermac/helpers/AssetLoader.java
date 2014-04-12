@@ -52,7 +52,7 @@ public class AssetLoader {
     public static TextureRegion battleBackground;
 
     // Data file handles
-    public static FileHandle mapHandle, dialogueHandle;
+    public static FileHandle dialogueHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -134,7 +134,6 @@ public class AssetLoader {
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
 
-        mapHandle = getHandle("maps.txt");
         dialogueHandle = getHandle("dialogues.txt");
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
@@ -168,10 +167,6 @@ public class AssetLoader {
         return new SpriteAndAnim(person, personAnim);
     }
 
-    private static FileHandle getHandle(String path) {
-        return Gdx.files.internal("data/" + path);
-    }
-
     public static void scaleFont(float scale) {
         font.setScale(scale, -scale);
         shadow.setScale(scale, -scale);
@@ -189,12 +184,20 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
+    public static String getMap(String name) {
+        return getHandle("maps/" + name + ".txt").readString();
+    }
+
     public static void dispose() {
         tilesTexture.dispose();
         entitiesTexture.dispose();
         characterTexture.dispose();
         font.dispose();
         shadow.dispose();
+    }
+
+    private static FileHandle getHandle(String path) {
+        return Gdx.files.internal("data/" + path);
     }
 
     // simple wrapper class used as a return type for loadCharacter()

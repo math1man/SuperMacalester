@@ -2,7 +2,7 @@ package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.parser.Parser;
+import com.arnopaja.supermac.helpers.parser.DialogueParser;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
@@ -36,24 +36,26 @@ public class Plot {
     }
 
     private void initTestQuest() {
+        DialogueParser parser = new DialogueParser();
+
         MapNPC character = new MapNPC();
         character.setFacingSprites(AssetLoader.mainChar);
         character.setFacingAnimations(AssetLoader.mainCharAnim);
 
         Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
 
-        Interaction interaction = Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle));
+        Interaction interaction = Interaction.dialogue(parser.parse("Paul", AssetLoader.dialogueHandle));
 
         List<Goal> testGoals = new ArrayList<Goal>();
         testGoals.add(new Goal(character, location, interaction));
 
-        Quest test = new Quest(testGoals);
+        Quest test = new Quest(0, testGoals);
         test.activate(null);
         addQuest(test);
     }
 
     public void addQuest(Quest quest) {
-        quests.put(quest.ID, quest);
+        quests.put(quest.getId(), quest);
     }
 
     public void save() {
@@ -61,7 +63,7 @@ public class Plot {
         for (Quest quest : quests.values()) {
             if (!quest.isInactive()) {
                 // All active and complete quests are saved with their ID
-                sb.append(quest.ID);
+                sb.append(quest.getId());
                 if (quest.isComplete()) {
                     // All active quests have their current goal appended
                     sb.append("-").append(quest.getCurrentGoal());

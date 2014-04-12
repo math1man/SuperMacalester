@@ -1,34 +1,11 @@
-# This file should contain a bunch of short, random dialogues and options
-# usable with random NPCs throughout the world.
-#
-# Dialogues should be formatted as follows:
-# <dialogue:[Name]>
-# [Content]
-# </dialogue>
-#
-# In order to break apart separate windows of dialogue, use the <d> symbol.
-# Newline characters can be used in dialogue, but keep in mind that currently
-# only three lines are allowed in a dialogue window, so after three lines use
-# a <d> to denote a new window.
-#
-# Options should be formatted as follows:
-#
-# <options:[Name]>
-# [Content]
-# </options>
-#
-# The options header and each option should be separated by a new line.
-# No more than 10 options can be displayed in the dialogue window.
-#
-# Dialogue and options that share the same name will be parsed together.
-
-<dialogue:Paul>
-Hi! My name is Paul and I like to code things. I have decided I am going to work at a startup in Minneapolis this summer.
-<d>
-I spent this past summer here working for Libby Shoop designing a website.
-</dialogue>
-<options:Paul>
-Do you like to code?
-Yes
-No
-</options>
+{
+    "Paul" : {
+        "dialogue" : "Hi! My name is Paul and I like to code things. I have decided I am going to work at a startup in Minneapolis this summer.
+        <d>
+        I spent this past summer here working for Libby Shoop designing a website.",
+        "options" : {
+            "header" : "Do you like to code?",
+            "options" : [ "Yes", "No" ]
+        }
+    }
+}

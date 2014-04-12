@@ -13,15 +13,31 @@ import java.util.List;
  */
 public class Chest extends Entity {
 
-    private static final TextureRegion CLOSED_SPRITE = AssetLoader.chestBrownClosed;
-    private static final TextureRegion OPEN_SPRITE = AssetLoader.chestBrownOpen;
+    public static enum ChestColor {
+        BROWN(AssetLoader.chestBrownClosed, AssetLoader.chestBrownOpen),
+        RED(AssetLoader.chestRedClosed, AssetLoader.chestRedOpen),
+        GREEN(AssetLoader.chestGreenClosed, AssetLoader.chestGreenOpen);
+
+        public transient final TextureRegion closed;
+        public transient final TextureRegion open;
+
+        ChestColor(TextureRegion closed, TextureRegion open) {
+            this.closed = closed;
+            this.open = open;
+        }
+    }
+
+    private final TextureRegion closedSprite;
+    private final TextureRegion openSprite;
     private boolean isOpen = false;
 
     private List<AbstractItem> contents;
 
-    public Chest(Location location, List<AbstractItem> contents) {
+    public Chest(Location location, ChestColor color, List<AbstractItem> contents) {
         super(true, location, true);
         this.contents = contents;
+        closedSprite = color.closed;
+        openSprite = color.open;
         setInteraction(Interaction.openChest(this));
     }
 
@@ -58,8 +74,12 @@ public class Chest extends Entity {
         this.contents = contents;
     }
 
+    public TextureRegion getSprite() {
+        return isOpen ? openSprite : closedSprite;
+    }
+
     @Override
     public TextureRegion getSprite(float runTime) {
-        return isOpen ? OPEN_SPRITE : CLOSED_SPRITE;
+        return getSprite();
     }
 }
