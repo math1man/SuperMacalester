@@ -21,11 +21,12 @@ public class LocationParser extends Parser<Location> {
     public Location parse(JsonObject location) {
         String gridName = location.getAsJsonPrimitive("grid").getAsString();
         Grid grid;
-        if (gridName.equals("world")) {
+        if (gridName.trim().equalsIgnoreCase("world")) {
             grid = world.getWorldGrid();
         } else {
-            String[] temp = gridName.split("\\w");
-            grid = world.getBuilding(temp[0]).getFloorByNumber(Integer.parseInt(temp[1]));
+            String name = gridName.replaceAll("\\p{Alpha}", "").toLowerCase();
+            int floor = Integer.parseInt(gridName.replaceAll("\\D", ""));
+            grid = world.getBuilding(name).getFloorByNumber(floor);
         }
         int x = location.getAsJsonPrimitive("x").getAsInt();
         int y = location.getAsJsonPrimitive("y").getAsInt();

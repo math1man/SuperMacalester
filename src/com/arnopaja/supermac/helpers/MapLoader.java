@@ -36,7 +36,7 @@ public class MapLoader {
             if (i == 0) {
                 String[] temp = floorStrings[i].split("\n", 2);
                 String first = temp[0].trim();
-                if (Pattern.matches("<first floor:\\d*>", first)) {
+                if (Pattern.matches("first floor:\\d*", first)) {
                     floorStrings[i] = temp[1];
                     firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
                 }

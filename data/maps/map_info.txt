@@ -1,7 +1,7 @@
 Map info:
 Each map should be in its own text file, named exactly after the map. A map is
 composed of one or more grids separated by a <floor> command. For grids with
-multiple floors, the first floor index should be specified as <first floor:#>
+multiple floors, the first floor index should be specified as first floor:#
 as the first line of the document. Grids are tab-separated values, where each
 value is a tile code. Tile codes should start with the tile key followed by a
 hyphen and then any flags. Tiles with sprites that take up multiple grid spaces
