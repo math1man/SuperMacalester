@@ -4,18 +4,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Ari Weiland
  */
 public class Quest {
 
-    private static final AtomicInteger nextID = new AtomicInteger(0);
-
     public static enum QuestState { INACTIVE, ACTIVE, COMPLETE }
 
-    public final int ID;
+    private final int id;
     private final List<Goal> goals;
 
     private Set<Quest> prereqs  = new HashSet<Quest>();
@@ -24,12 +21,8 @@ public class Quest {
     private QuestState state = QuestState.INACTIVE;
     private int currentGoal;
 
-    public Quest(List<Goal> goals) {
-        this(nextID.getAndIncrement(), goals);
-    }
-
-    public Quest(int questID, List<Goal> goals) {
-        this.ID = questID;
+    public Quest(int questId, List<Goal> goals) {
+        this.id = questId;
         this.goals = goals;
         for (Goal goal : goals) {
             goal.setQuest(this);
@@ -128,6 +121,10 @@ public class Quest {
         this.postreqs = postreqs;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,7 +132,7 @@ public class Quest {
 
         Quest quest = (Quest) o;
 
-        return ID == quest.ID;
+        return id == quest.id;
 
     }
 }

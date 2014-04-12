@@ -4,7 +4,7 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.MapLoader;
-import com.arnopaja.supermac.helpers.parser.Parser;
+import com.arnopaja.supermac.helpers.parser.DialogueParser;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -26,7 +26,7 @@ public class World implements Controller {
     private MainMapCharacter mainCharacter;
 
     public World() {
-        worldGrid = MapLoader.generateMap("Macalester");
+        worldGrid = MapLoader.generateGrid("Macalester");
         mainCharacter = new MainMapCharacter(new Location(worldGrid, 36, 36, Direction.WEST));
         initBuildings();
         initCharacters();
@@ -42,12 +42,13 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
+        DialogueParser parser = new DialogueParser();
         // TODO: add characters here?
         MapNPC character = new MapNPC();
         character.setFacingSprites(AssetLoader.mainChar);
         character.setFacingAnimations(AssetLoader.mainCharAnim);
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle)));
+        character.setInteraction(Interaction.dialogue(parser.parse("Paul", AssetLoader.dialogueHandle)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
     }
 
