@@ -60,6 +60,7 @@ public class MapLoader {
 
     public static void initTileMap() {
         TILE_MAP.put("g",   AssetLoader.grass0, AssetLoader.grass1, AssetLoader.grass2);
+        TILE_MAP.put("b",   AssetLoader.bush);
         TILE_MAP.put("bh",  AssetLoader.bushH);
         TILE_MAP.put("bv",  AssetLoader.bushV);
         TILE_MAP.put("bfh", AssetLoader.bushFlowersH);
@@ -79,10 +80,29 @@ public class MapLoader {
         TILE_MAP.put("ase", AssetLoader.asphaltCornerSE);
         TILE_MAP.put("asw", AssetLoader.asphaltCornerSW);
         TILE_MAP.put("anw", AssetLoader.asphaltCornerNW);
-//        TILE_MAP.put("_cc", AssetLoader.campusCenter);
-//        TILE_MAP.put("_ch", AssetLoader.chapel);
-        TILE_MAP.put("_d",  AssetLoader.dupre);
-        TILE_MAP.put("_w",  AssetLoader.weyerhauser);
-    }
 
+        TILE_MAP.put("_ar", AssetLoader.art);
+        TILE_MAP.put("_ac", AssetLoader.artCommons);
+        TILE_MAP.put("_bi", AssetLoader.bigelow);
+        TILE_MAP.put("_cc", AssetLoader.campusCenter);
+        TILE_MAP.put("_ca", AssetLoader.carnegie);
+        TILE_MAP.put("_ch", AssetLoader.chapel);
+        TILE_MAP.put("_do", AssetLoader.doty);
+        TILE_MAP.put("_du", AssetLoader.dupre);
+        TILE_MAP.put("_hu", AssetLoader.humanities);
+        TILE_MAP.put("_ka", AssetLoader.kagin);
+        TILE_MAP.put("_ki", AssetLoader.kirk);
+        TILE_MAP.put("_lc", AssetLoader.leonardCenter);
+        TILE_MAP.put("_li", AssetLoader.library);
+        TILE_MAP.put("_ma", AssetLoader.markim);
+        TILE_MAP.put("_mu", AssetLoader.music);
+        TILE_MAP.put("_om", AssetLoader.oldMain);
+        TILE_MAP.put("_ol", AssetLoader.olin);
+        TILE_MAP.put("_ri", AssetLoader.rice);
+        TILE_MAP.put("_th", AssetLoader.theatre);
+        TILE_MAP.put("_tm", AssetLoader.thirtyMac);
+        TILE_MAP.put("_tu", AssetLoader.turk);
+        TILE_MAP.put("_wa", AssetLoader.wallace);
+        TILE_MAP.put("_we", AssetLoader.weyerhauser);
+    }
 }

@@ -11,20 +11,22 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Tile implements Renderable {
 
-    public static final Tile NULL = new Tile(false, null, false);
+    public static final Tile NULL = new Tile("", false, null, false);
 
+    private final String tileKey; // primarily for debugging
     private final boolean isRendered;
     private final TextureRegion sprite;
     private final boolean isPathable;
 
-    private Tile(boolean isRendered, TextureRegion sprite, boolean isPathable) {
+    private Tile(String tileKey, boolean isRendered, TextureRegion sprite, boolean isPathable) {
+        this.tileKey = tileKey;
         this.isRendered = isRendered;
         this.sprite = sprite;
         this.isPathable = isPathable;
     }
 
-    public static Tile createTile(TextureRegion sprite, boolean isPathable) {
-        return new Tile(true, sprite, isPathable);
+    public static Tile createTile(String tileCode, TextureRegion sprite, boolean isPathable) {
+        return new Tile(tileCode, true, sprite, isPathable);
     }
 
     public static Tile createTile(String tileCode) {
@@ -47,7 +49,7 @@ public class Tile implements Renderable {
                 }
             }
         }
-        return createTile(sprite, isPathable);
+        return createTile(tileKey, sprite, isPathable);
     }
 
     @Override
@@ -79,7 +81,12 @@ public class Tile implements Renderable {
     }
 
     public boolean isLarge() {
-        return sprite != null && !(sprite.getRegionWidth() == 32 && sprite.getRegionHeight() == 32);
+        return sprite != null && !(sprite.getRegionWidth() == Grid.GRID_PIXEL_DIMENSION
+                && sprite.getRegionHeight() == Grid.GRID_PIXEL_DIMENSION);
+    }
+
+    public String getTileKey() {
+        return tileKey;
     }
 
     @Override

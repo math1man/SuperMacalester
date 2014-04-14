@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Chest extends Entity {
 
-    private static final TextureRegion CLOSED_SPRITE = AssetLoader.chestClosed;
-    private static final TextureRegion OPEN_SPRITE = AssetLoader.chestOpen;
+    private static final TextureRegion CLOSED_SPRITE = AssetLoader.chestBrownClosed;
+    private static final TextureRegion OPEN_SPRITE = AssetLoader.chestBrownOpen;
     private boolean isOpen = false;
 
     private List<AbstractItem> contents;
