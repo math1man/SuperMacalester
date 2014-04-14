@@ -1,22 +1,30 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Ari Weiland
  */
 public abstract class AbstractItem {
 
-    private final int universalID;
+    private final int id;
     private final String name;
     private final int value;
 
-    protected AbstractItem(int universalID, String name, int value) {
-        this.universalID = universalID;
+    protected AbstractItem(int id, String name, int value) {
+        this.id = id;
         this.name = name;
         this.value = value;
+        cache.put(id, this);
     }
 
-    public int getUniversalID() {
-        return universalID;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -30,5 +38,50 @@ public abstract class AbstractItem {
     @Override
     public String toString() {
         return getName();
+    }
+
+    // Cache of all AbstractItems parsed
+    private static final Map<Integer, AbstractItem> cache = new HashMap<Integer, AbstractItem>();
+
+    public static boolean isCached(int id) {
+        return cache.containsKey(id);
+    }
+
+    public static AbstractItem getCached(int id) {
+        return cache.get(id);
+    }
+
+    public static <T> T getCached(int id, Class<T> clazz) {
+        AbstractItem item = getCached(id);
+        if (item.getClass() == clazz) {
+            return clazz.cast(item);
+        }
+        return null;
+    }
+
+    public static class Parser<T extends AbstractItem> extends SuperParser<T> {
+
+        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
+
+        static {
+            parsers.put("Armor", new Armor.Parser());
+            parsers.put("Item", new Item.Parser());
+            parsers.put("SpecialItem", new SpecialItem.Parser());
+            parsers.put("Weapon", new Weapon.Parser());
+        }
+
+
+        @Override
+        public T convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            int id = object.getAsJsonPrimitive("id").getAsInt();
+            if (isCached(id)) {
+                return (T) getCached(id);
+            } else {
+                String className = object.getAsJsonPrimitive("class").getAsString();
+                Parser<T> parser = parsers.get(className);
+                return parser.convert(element);
+            }
+        }
     }
 }

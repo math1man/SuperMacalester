@@ -1,6 +1,6 @@
 {
     "Paul" : {
-        "dialogue" : "Hi! My name is Paul and I like to code things. I have decided I am going to work at a startup in Minneapolis this summer.
+        "text" : "Hi! My name is Paul and I like to code things. I have decided I am going to work at a startup in Minneapolis this summer.
         <d>
         I spent this past summer here working for Libby Shoop designing a website.",
         "options" : {

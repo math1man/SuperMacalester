@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Ari Weiland
@@ -49,10 +51,11 @@ public class AssetLoader {
     public static EnumMap<Direction, Animation> beardGuyAnim;
 
     // Battle Backgrounds
-    public static TextureRegion battleBackground;
+    public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
 
     // Data file handles
     public static FileHandle dialogueHandle;
+    public static FileHandle questHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -131,10 +134,13 @@ public class AssetLoader {
         //          Other
         //--------------------------
 
-        font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-        shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        // TODO: battle backgrounds
 
         dialogueHandle = getHandle("dialogues.txt");
+        questHandle = getHandle("quests.txt");
+
+        font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
+        shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }
@@ -186,6 +192,10 @@ public class AssetLoader {
 
     public static String getMap(String name) {
         return getHandle("maps/" + name.toLowerCase() + ".txt").readString();
+    }
+
+    public static TextureRegion getBackground(String name) {
+        return battleBackgrounds.get(name);
     }
 
     public static void dispose() {

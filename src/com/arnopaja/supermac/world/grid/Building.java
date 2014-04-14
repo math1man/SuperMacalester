@@ -35,7 +35,15 @@ public class Building {
      * @return the Grid representing the specificed floor
      */
     public Grid getFloorByNumber(int floorNumber) {
-        return floors[floorNumber - 1 + firstFloorIndex];
+        return getFloorByIndex(getIndex(floorNumber, firstFloorIndex));
+    }
+
+    public static int getIndex(int floorNumber, int firstFloorIndex) {
+        return floorNumber - 1 + firstFloorIndex;
+    }
+
+    public static int getFloorNumber(int floorIndex, int firstFloorIndex) {
+        return floorIndex + 1 - firstFloorIndex;
     }
 
     public int getFloorCount() {

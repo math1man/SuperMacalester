@@ -22,7 +22,7 @@ public class MapLoader {
     private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
     public static Grid generateGrid(String name) {
-        return parseGrid(AssetLoader.getMap(name));
+        return parseGrid(name, AssetLoader.getMap(name));
     }
 
     public static Building generateBuilding(String name) {
@@ -41,13 +41,13 @@ public class MapLoader {
                     firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
                 }
             }
-            floors[i] = parseGrid(floorStrings[i]);
+            floors[i] = parseGrid(name + " " + Building.getFloorNumber(i, firstFloorIndex), floorStrings[i]);
         }
         return new Building(floors, firstFloorIndex);
     }
 
-    private static Grid parseGrid(String string) {
-        String[] lines = string.split("\n");
+    private static Grid parseGrid(String name, String raw) {
+        String[] lines = raw.split("\n");
         int height = lines.length;
         int width = lines[0].split("\t").length;
         Tile[][] tileArray = new Tile[width][height];
@@ -58,7 +58,7 @@ public class MapLoader {
             }
         }
         SpriteUtils.split(tileArray);
-        return new Grid(tileArray);
+        return new Grid(name, tileArray);
     }
 
     public static void initTileMap() {

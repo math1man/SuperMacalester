@@ -41,7 +41,7 @@ A sample quest:
 A sample dialogue:
 
 "<Dialogue Name>" : {
-    "dialogue" : "<string of dialogue goes here>",
+    "text" : "<string of dialogue goes here>",
     "interaction" : {
         <interaction>
     },
@@ -61,10 +61,10 @@ A sample dialogue:
 }
 
 Dialogue may be specified in 4 ways:
-  - dialogue string only
-  - dialogue string plus interaction
-  - dialogue options only
-  - dialogue string plus options
+  - text string only
+  - text string plus interaction
+  - options only
+  - text string plus options
 Additionally, the dialogue options interactions are optional, though if present,
 they must match the amount of options given. Dialogue windows should be separated
 by <d>, as the newline "\n" character is usable in dialogue windows.

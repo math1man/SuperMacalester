@@ -1,17 +1,18 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.MapLoader;
-import com.arnopaja.supermac.helpers.parser.DialogueParser;
+import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.world.objects.MapNPC;
+import com.arnopaja.supermac.world.objects.MapNpc;
+import com.badlogic.gdx.math.Vector2;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +20,16 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class World implements Controller {
+public class World implements Controller, Savable {
+
+    private static final String MAP_NAME = "Macalester";
 
     private Grid worldGrid;
     private Map<String, Building> buildings = new HashMap<String, Building>();
     private MainMapCharacter mainCharacter;
 
     public World() {
-        worldGrid = MapLoader.generateGrid("Macalester");
+        worldGrid = MapLoader.generateGrid(MAP_NAME);
         mainCharacter = new MainMapCharacter(new Location(worldGrid, 36, 36, Direction.WEST));
         initBuildings();
         initCharacters();
@@ -42,13 +45,12 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        DialogueParser parser = new DialogueParser();
         // TODO: add characters here?
-        MapNPC character = new MapNPC();
+        MapNpc character = new MapNpc();
         character.setFacingSprites(AssetLoader.mainChar);
         character.setFacingAnimations(AssetLoader.mainCharAnim);
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(parser.parse("Paul", AssetLoader.dialogueHandle)));
+        character.setInteraction(Interaction.dialogue(SuperParser.parse("Paul", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
     }
 
@@ -59,6 +61,47 @@ public class World implements Controller {
         Object[] entities = currentGrid.getEntities().toArray();
         for (Object entity : entities) {
             ((Entity) entity).update(delta);
+        }
+    }
+
+    @Override
+    public JsonElement toJson() {
+        Location mainLoc = mainCharacter.getLocation();
+        JsonObject me = new JsonObject();
+        me.addProperty("grid", mainLoc.getGrid().getName());
+        me.addProperty("x", mainLoc.getPosition().x);
+        me.addProperty("y", mainLoc.getPosition().y);
+        me.addProperty("direction", mainLoc.getFacing().name());
+        return me;
+    }
+
+    @Override
+    public void fromJson(JsonElement element) {
+        JsonObject object = element.getAsJsonObject();
+        Grid grid = getGrid(object.getAsJsonPrimitive("grid").getAsString());
+        float x = object.getAsJsonPrimitive("x").getAsFloat();
+        float y = object.getAsJsonPrimitive("y").getAsFloat();
+        String direction = object.getAsJsonPrimitive("direction").getAsString();
+        mainCharacter.changeGrid(new Location(grid, new Vector2(x, y), Direction.valueOf(direction)), true);
+    }
+
+    public Grid getGrid(String name) {
+        String gridName = name.replaceAll("[^\\p{Alpha}]*", ""); // get the text portion
+        String number = name.replaceAll("[\\D]*", "");           // get the numeric portion
+        int floor;
+        if (number.isEmpty()) {
+            floor = 1;
+        } else {
+            floor = Integer.parseInt(number);
+        }
+        return getGrid(gridName, floor);
+    }
+
+    public Grid getGrid(String name, int floor) {
+        if (name.equalsIgnoreCase(MAP_NAME)) {
+            return getWorldGrid();
+        } else {
+            return getBuilding(name).getFloorByNumber(floor);
         }
     }
 

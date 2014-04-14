@@ -4,14 +4,16 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.AbstractItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Chest;
 import com.arnopaja.supermac.world.objects.Entity;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,23 +27,20 @@ import java.util.List;
  *
  * @author Ari Weiland
  */
-public abstract class Interaction<U, V> {
+public abstract class Interaction {
 
-    // Interaction parameters
-    protected final U primary;
-    protected final V secondary;
+    private final EqualityParameters parameters;
 
     public Interaction() {
         this(null);
     }
 
-    public Interaction(U primary) {
+    public <U> Interaction(U primary) {
         this(primary, null);
     }
 
-    public Interaction(U primary, V secondary) {
-        this.primary = primary;
-        this.secondary = secondary;
+    public <U, V> Interaction(U primary, V secondary) {
+        parameters = new EqualityParameters<U, V>(primary, secondary);
     }
 
     public abstract void run(GameScreen screen);
@@ -62,46 +61,46 @@ public abstract class Interaction<U, V> {
         }
     };
 
-    public static Interaction dialogue(DialogueDisplayable dialogue) {
+    public static Interaction dialogue(final Dialogue dialogue) {
         if (dialogue == null) {
             return NULL;
         } else {
-            return new Interaction<DialogueDisplayable, Object>(dialogue) {
+            return new Interaction(dialogue) {
                 @Override
                 public void run(GameScreen screen) {
                     screen.dialogue();
-                    screen.getDialogueHandler().displayDialogue(primary);
+                    screen.getDialogueHandler().displayDialogue(dialogue);
                 }
             };
         }
     }
 
-    public static Interaction battle(Battle battle) {
+    public static Interaction battle(final Battle battle) {
         if (battle == null) {
             return NULL;
         } else {
-            return new Interaction<Battle, Object>(battle) {
+            return new Interaction(battle) {
                 @Override
                 public void run(GameScreen screen) {
-                    screen.goToBattle(primary);
+                    screen.goToBattle(battle);
                 }
             };
         }
     }
 
-    public static Interaction openChest(Chest chest) {
+    public static Interaction openChest(final Chest chest) {
         if (chest == null) {
             return NULL;
         } else {
-            return new Interaction<Chest, Object>(chest) {
+            return new Interaction(chest) {
                 public void run(GameScreen screen) {
-                    primary.open();
-                    DialogueDisplayable dialogue;
-                    if (primary.isEmpty()) {
-                        dialogue = new Dialogue(Interaction.closeChest(primary), "This chest is empty");
+                    chest.open();
+                    Dialogue dialogue;
+                    if (chest.isEmpty()) {
+                        dialogue = new DialogueText(Interaction.closeChest(chest), "This chest is empty");
                     } else {
                         // Items go into inventory from chest
-                        List<AbstractItem> items = primary.getContents();
+                        List<AbstractItem> items = chest.getContents();
                         int length = items.size() + 2;
 
                         Object[] objects = Arrays.copyOf(items.toArray(), length);
@@ -110,10 +109,10 @@ public abstract class Interaction<U, V> {
 
                         Interaction[] interactions = new Interaction[length];
                         for (int i=0; i<length-2; i++) {
-                            interactions[i] = takeItem(items.get(i), primary);
+                            interactions[i] = takeItem(items.get(i), chest);
                         }
                         interactions[length - 2] = Interaction.combine(Arrays.copyOf(interactions, length-2));
-                        interactions[length - 1] = Interaction.closeChest(primary);
+                        interactions[length - 1] = Interaction.closeChest(chest);
 
                         dialogue = new DialogueOptions("Take items?", objects, interactions);
                     }
@@ -123,78 +122,78 @@ public abstract class Interaction<U, V> {
         }
     }
 
-    public static Interaction closeChest(Chest chest) {
+    public static Interaction closeChest(final Chest chest) {
         if (chest == null) {
             return NULL;
         } else {
-            return new Interaction<Chest, Object>(chest) {
+            return new Interaction(chest) {
                 public void run(GameScreen screen) {
                     Interaction.CLEAR_DIALOGUE.run(screen);
-                    primary.close();
+                    chest.close();
                 }
             };
         }
     }
 
-    public static Interaction takeItem(AbstractItem item, Chest chest) {
+    public static Interaction takeItem(final AbstractItem item, final Chest chest) {
         if (item == null || chest == null) {
             return NULL;
         } else {
-            return new Interaction<AbstractItem, Chest>(item, chest) {
+            return new Interaction(item, chest) {
 
                 @Override
                 public void run(GameScreen screen) {
-                    secondary.removeItem(primary);          // remove item from chest
-                    Inventory.add(primary);                 // place in inventory
-                    if (secondary.isEmpty()) {              // if chest is empty,
-                        Interaction.closeChest(secondary);  // close it, otherwise
-                    } else {                                // return to chest UI
-                        Interaction.openChest(secondary).run(screen);
+                    chest.removeItem(item);             // remove item from chest
+                    Inventory.add(item);                // place in inventory
+                    if (chest.isEmpty()) {              // if chest is empty,
+                        Interaction.closeChest(chest);  // close it, otherwise
+                    } else {                            // return to chest UI
+                        Interaction.openChest(chest).run(screen);
                     }
                 }
             };
         }
     }
 
-    public static Interaction changeGrid(Entity entity, Location location) {
+    public static Interaction changeGrid(final Entity entity, final Location location) {
         if (entity == null) {
             return NULL;
         } else {
-            return new Interaction<Entity, Location>(entity, location) {
+            return new Interaction(entity, location) {
                 @Override
                 public void run(GameScreen screen) {
-                    for (Entity e : primary.getGrid().getEntities()) {
+                    for (Entity e : entity.getGrid().getEntities()) {
                         if (e.isDelayed()) {
                             e.changeGrid();
                         }
                     }
-                    primary.changeGrid(secondary);
+                    entity.changeGrid(location);
                 }
             };
         }
     }
 
-    public static Interaction battleAction(BattleAction action) {
+    public static Interaction battleAction(final BattleAction action) {
         if (action == null) {
             return NULL;
         } else {
-            return new Interaction<BattleAction, Object>(action) {
+            return new Interaction(action) {
                 @Override
                 public void run(GameScreen screen) {
-                    screen.getBattle().addAction(primary);
+                    screen.getBattle().addAction(action);
                 }
             };
         }
     }
 
-    public static Interaction nextGoal(Quest quest) {
+    public static Interaction nextGoal(final Quest quest) {
         if (quest == null) {
             return NULL;
         } else {
-            return new Interaction<Quest, Object>(quest) {
+            return new Interaction(quest) {
                 @Override
                 public void run(GameScreen screen) {
-                    primary.nextGoal();
+                    quest.nextGoal();
                 }
             };
         }
@@ -209,30 +208,16 @@ public abstract class Interaction<U, V> {
      * @param interactions the interactions to be combined
      * @return
      */
-    public static Interaction combine(Interaction... interactions) {
+    public static Interaction combine(final Interaction... interactions) {
         if (interactions == null) {
             return NULL;
         } else {
-            return new Interaction<Interaction[], Object>(interactions) {
+            return new Interaction(interactions) {
                 @Override
                 public void run(GameScreen screen) {
-                    for (Interaction interaction : primary) {
+                    for (Interaction interaction : interactions) {
                         interaction.run(screen);
                     }
-                }
-
-                @Override
-                public boolean equals(Object o) {
-                    if (this == o) return true;
-                    if (!(o instanceof Interaction)) return false;
-
-                    Interaction that = (Interaction) o;
-
-                    return (primary == null ? that.primary == null :
-                            (that.primary instanceof Interaction[]
-                                    && Arrays.equals(primary, (Interaction[]) that.primary)))
-                            && (secondary == null ? that.secondary == null : secondary.equals(that.secondary));
-
                 }
             };
         }
@@ -245,7 +230,54 @@ public abstract class Interaction<U, V> {
 
         Interaction that = (Interaction) o;
 
-        return (primary == null ? that.primary == null : primary.equals(that.primary))
-                && (secondary == null ? that.secondary == null : secondary.equals(that.secondary));
+        return (parameters.equals(that.parameters));
+    }
+
+    private static class EqualityParameters<U, V> {
+        protected final U primary;
+        protected final V secondary;
+
+        private EqualityParameters(U primary, V secondary) {
+            this.primary = primary;
+            this.secondary = secondary;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof EqualityParameters)) return false;
+
+            EqualityParameters that = (EqualityParameters) o;
+
+            if (primary == null) {
+                if (that.primary != null) return false;
+            } else {
+                if (primary instanceof Interaction[]) {
+                    if (!Arrays.equals((Interaction[]) primary, (Interaction[]) that.primary)) return false;
+                } else {
+                    if (!primary.equals(that.primary)) return false;
+                }
+            }
+            if (secondary == null) {
+                return that.secondary == null;
+            } else {
+                return secondary.equals(that.secondary);
+            }
+        }
+    }
+
+    public static class Parser extends SuperParser<Interaction> {
+        @Override
+        public Interaction convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            if (object.has("dialogue")) {
+                Dialogue dialogue = convert(object.get("dialogue"), Dialogue.class);
+                return Interaction.dialogue(dialogue);
+            } else if (object.has("battle")) {
+                Battle battle = convert(object.get("battle"), Battle.class);
+                return Interaction.battle(battle);
+            }
+            return Interaction.NULL;
+        }
     }
 }

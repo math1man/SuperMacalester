@@ -1,11 +1,41 @@
 package com.arnopaja.supermac.plot;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.objects.Entity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.*;
 
 /**
+ * Example Quest JSON:
+ * {
+ *     "dependencies" : [
+ *         {
+ *             "pre" : 0,
+ *             "posts" : [
+ *                 1,
+ *                 2
+ *             ]
+ *         }
+ *     ],
+ *     "quests" : {
+ *         "myQuest" : {
+ *             "id" : 0,
+ *             "goals" : [
+ *                 {
+ *                     "entity" : { [entity JSON object] }
+ *                     "location" : { [location JSON object] }
+ *                     "interaction" : { [interaction JSON object] }
+ *                 }
+ *             ]
+ *         }
+ *     }
+ * }
+ *
  * @author Ari Weiland
  */
 public class Quest {
@@ -134,5 +164,109 @@ public class Quest {
 
         return id == quest.id;
 
+    }
+
+    /**
+     * Parses quests from a JSON file.  The file must be formatted in a
+     * very specific way.  It must contain two primary members: an array
+     * labeled dependencies and an object called quests. Each object in
+     * the dependencies array has 2 members, the ID of a quest and an
+     * array of IDs of quests that the initial quest unlocks. The quests
+     * object contains quests, which are identified by a unique name. A
+     * quest contains its unique ID labeled id and an array of goals.
+     * Each goal is composed of an Entity, a Location, and an Interaction,
+     * which are parsed based on their respective parsers. In the following
+     * example, all names must be exactly as show except for the quest name
+     * (myQuest). All values can be set appropriately.
+     *
+     * Example Quest JSON:
+     * {
+     *     "dependencies" : [
+     *         {
+     *             "pre" : 0,
+     *             "posts" : [
+     *                 1,
+     *                 2
+     *             ]
+     *         }
+     *     ],
+     *     "quests" : {
+     *         "myQuest" : {
+     *             "id" : 0,
+     *             "goals" : [
+     *                 {
+     *                     "entity" : { [entity JSON object] }
+     *                     "location" : { [location JSON object] }
+     *                     "interaction" : { [interaction JSON object] }
+     *                 }
+     *             ]
+     *         }
+     *     }
+     * }
+     */
+    public static class Parser extends SuperParser<Quest> {
+        @Override
+        public Quest convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            int questId = object.getAsJsonPrimitive("id").getAsInt();
+            JsonArray goalsJson = object.getAsJsonArray("goals");
+            List<Goal> goals = new ArrayList<Goal>(goalsJson.size());
+            for (JsonElement e : goalsJson) {
+                goals.add(parseGoal(e.getAsJsonObject()));
+            }
+            return new Quest(questId, goals);
+        }
+
+        @Override
+        public JsonElement getJsonHead(String json) {
+            return super.getJsonHead(json).getAsJsonObject().get("quests");
+        }
+
+        public void addDependencies(Map<Integer, Quest> quests, Map<Integer, Integer[]> dependencies) {
+            for (int preId : dependencies.keySet()) {
+                Quest pre = quests.get(preId);
+                Integer[] postIds = dependencies.get(preId);
+                Quest[] posts = new Quest[postIds.length];
+                for (int i=0; i<postIds.length; i++) {
+                    Quest post = quests.get(postIds[i]);
+                    post.addPrereqs(pre);
+                    posts[i] = post;
+                }
+                pre.addPostreqs(posts);
+            }
+        }
+
+        public Map<Integer, Quest> parseMap(String json) {
+            List<Quest> quests = parseAll(json);
+            Map<Integer, Quest> questMap = new HashMap<Integer, Quest>();
+            for (Quest quest : quests) {
+                questMap.put(quest.getId(), quest);
+            }
+            JsonArray array = super.getJsonHead(json).getAsJsonObject().getAsJsonArray("dependencies");
+            addDependencies(questMap, parseDependencies(array));
+            return questMap;
+        }
+
+        private Map<Integer, Integer[]> parseDependencies(JsonArray array) {
+            Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
+            for (JsonElement e : array) {
+                JsonObject object = e.getAsJsonObject();
+                int pre = object.getAsJsonPrimitive("pre").getAsInt();
+                JsonArray a = object.getAsJsonArray("posts");
+                Integer[] posts = new Integer[a.size()];
+                for (int i=0; i<a.size(); i++) {
+                    posts[i] = a.get(i).getAsInt();
+                }
+                map.put(pre, posts);
+            }
+            return map;
+        }
+
+        private Goal parseGoal(JsonObject object) {
+            Entity entity = convert(object.getAsJsonObject("entity"), Entity.class);
+            Location location = convert(object.getAsJsonObject("location"), Location.class);
+            Interaction interaction = convert(object.get("interaction"), Interaction.class);
+            return new Goal(entity, location, interaction);
+        }
     }
 }

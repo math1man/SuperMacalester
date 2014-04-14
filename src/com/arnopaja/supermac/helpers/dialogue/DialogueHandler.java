@@ -32,10 +32,10 @@ public class DialogueHandler {
     private final Rectangle fontSpace;
     private final Rectangle[][] optionSpaces;
 
-    private final Queue<DialogueDisplayable> dialogueQueue = new ConcurrentLinkedQueue<DialogueDisplayable>();
+    private final Queue<Dialogue> dialogueQueue = new ConcurrentLinkedQueue<Dialogue>();
 
     private DisplayMode mode = DisplayMode.NONE;
-    private Dialogue dialogue;
+    private DialogueText dialogueText;
     private DialogueOptions options;
 
     public DialogueHandler(float gameWidth, float gameHeight) {
@@ -81,7 +81,7 @@ public class DialogueHandler {
 
             batch.begin();
             batch.enableBlending();
-            if (isDialogue()) {
+            if (getDialogueText()) {
                 renderDialogue(batch);
             } else {
                 renderOptions(batch);
@@ -91,7 +91,7 @@ public class DialogueHandler {
     }
 
     private void renderDialogue(SpriteBatch batch) {
-        AssetLoader.drawWrappedFont(batch, dialogue.getCurrentDialogue(),
+        AssetLoader.drawWrappedFont(batch, dialogueText.getCurrentDialogue(),
                 fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
     }
 
@@ -104,7 +104,7 @@ public class DialogueHandler {
         }
     }
 
-    public void displayDialogue(DialogueDisplayable displayable) {
+    public void displayDialogue(Dialogue displayable) {
         dialogueQueue.add(displayable);
         if (isNone()) {
             pollQueue();
@@ -120,15 +120,15 @@ public class DialogueHandler {
      * @return null if the dialogue is to continue, or the resulting interaction
      */
     public Interaction onClick(int x, int y) {
-        if (isDialogue()) {
-            if (dialogue.hasNext()) {
-                dialogue.next();
-            } else if (dialogue.hasOptions()) {
-                display(dialogue.getOptions());
+        if (getDialogueText()) {
+            if (dialogueText.hasNext()) {
+                dialogueText.next();
+            } else if (dialogueText.hasOptions()) {
+                display(dialogueText.getOptions());
             } else {
                 pollQueue();
-                if (dialogue.hasPostInteraction()) {
-                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, dialogue.getPostInteraction());
+                if (dialogueText.hasPostInteraction()) {
+                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, dialogueText.getPostInteraction());
                 }
             }
         } else if (isOptions()) {
@@ -147,9 +147,9 @@ public class DialogueHandler {
         if (dialogueQueue.isEmpty()) {
             clear();
         } else {
-            DialogueDisplayable displayable = dialogueQueue.poll();
-            if (displayable instanceof Dialogue) {
-               display((Dialogue) displayable);
+            Dialogue displayable = dialogueQueue.poll();
+            if (displayable instanceof DialogueText) {
+               display((DialogueText) displayable);
             } else if (displayable instanceof DialogueOptions) {
                 display((DialogueOptions) displayable);
             } else {
@@ -158,9 +158,9 @@ public class DialogueHandler {
         }
     }
 
-    private void display(Dialogue dialogue) {
-        this.dialogue = dialogue;
-        this.dialogue.reset();
+    private void display(DialogueText dialogueText) {
+        this.dialogueText = dialogueText;
+        this.dialogueText.reset();
         mode = DisplayMode.DIALOGUE;
     }
 
@@ -183,7 +183,7 @@ public class DialogueHandler {
         return mode == DisplayMode.NONE;
     }
 
-    public boolean isDialogue() {
+    public boolean getDialogueText() {
         return mode == DisplayMode.DIALOGUE;
     }
 
@@ -191,7 +191,7 @@ public class DialogueHandler {
         return mode == DisplayMode.OPTIONS;
     }
 
-    public Dialogue getDialogue() {
-        return dialogue;
+    public DialogueText getDialogue() {
+        return dialogueText;
     }
 }
