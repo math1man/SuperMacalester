@@ -59,10 +59,10 @@ public class MainMapCharacter extends MapCharacter {
 
     public static class Parser extends Entity.Parser<MainMapCharacter> {
         @Override
-        public MainMapCharacter convert(JsonElement element) {
+        public MainMapCharacter fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            JsonObject location = object.getAsJsonObject("location");
-            return new MainMapCharacter(convert(location, Location.class));
+            Location location = getObject(object, Location.class);
+            return new MainMapCharacter(location);
         }
     }
 }

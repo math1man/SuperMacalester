@@ -5,11 +5,9 @@ import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.inventory.AbstractItem;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +29,7 @@ public class Chest extends Entity {
         }
 
         public static ChestColor getColor(String name) {
-            switch (name.charAt(0)) {
+            switch (name.toLowerCase().charAt(0)) {
                 case 'g':
                     return GREEN;
                 case 'r':
@@ -43,8 +41,7 @@ public class Chest extends Entity {
         }
     }
 
-    private final TextureRegion closedSprite;
-    private final TextureRegion openSprite;
+    private final ChestColor color;
     private boolean isOpen = false;
 
     private List<AbstractItem> contents;
@@ -52,8 +49,7 @@ public class Chest extends Entity {
     public Chest(Location location, ChestColor color, List<AbstractItem> contents) {
         super(true, location, true);
         this.contents = contents;
-        closedSprite = color.closed;
-        openSprite = color.open;
+        this.color = color;
         setInteraction(Interaction.openChest(this));
     }
 
@@ -91,7 +87,7 @@ public class Chest extends Entity {
     }
 
     public TextureRegion getSprite() {
-        return isOpen ? openSprite : closedSprite;
+        return isOpen ? color.open : color.closed;
     }
 
     @Override
@@ -101,16 +97,20 @@ public class Chest extends Entity {
 
     public static class Parser extends Entity.Parser<Chest> {
         @Override
-        public Chest convert(JsonElement element) {
+        public Chest fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            Location location = convert(object.getAsJsonObject("location"), Location.class);
-            String color = object.getAsJsonPrimitive("color").getAsString();
-            JsonArray array = object.getAsJsonArray("contents");
-            List<AbstractItem> contents = new ArrayList<AbstractItem>();
-            for (JsonElement e : array) {
-                contents.add(convert(e, AbstractItem.class));
-            }
+            Location location = getObject(object, Location.class);
+            String color = getString(object, "color");
+            List<AbstractItem> contents = getList(object, "contents", AbstractItem.class);
             return new Chest(location, Chest.ChestColor.getColor(color), contents);
+        }
+
+        @Override
+        public JsonElement toJson(Chest object) {
+            JsonObject json = toBaseJson(object);
+            addString(json, "color", object.color.name());
+            addList(json, "contents", object.contents, AbstractItem.class);
+            return json;
         }
     }
 }

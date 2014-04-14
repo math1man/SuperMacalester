@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.*;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
@@ -10,9 +9,6 @@ import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.arnopaja.supermac.world.objects.MapNpc;
-import com.badlogic.gdx.math.Vector2;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +16,7 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class World implements Controller, Savable {
+public class World implements Controller {
 
     private static final String MAP_NAME = "Macalester";
 
@@ -62,27 +58,6 @@ public class World implements Controller, Savable {
         for (Object entity : entities) {
             ((Entity) entity).update(delta);
         }
-    }
-
-    @Override
-    public JsonElement toJson() {
-        Location mainLoc = mainCharacter.getLocation();
-        JsonObject me = new JsonObject();
-        me.addProperty("grid", mainLoc.getGrid().getName());
-        me.addProperty("x", mainLoc.getPosition().x);
-        me.addProperty("y", mainLoc.getPosition().y);
-        me.addProperty("direction", mainLoc.getFacing().name());
-        return me;
-    }
-
-    @Override
-    public void fromJson(JsonElement element) {
-        JsonObject object = element.getAsJsonObject();
-        Grid grid = getGrid(object.getAsJsonPrimitive("grid").getAsString());
-        float x = object.getAsJsonPrimitive("x").getAsFloat();
-        float y = object.getAsJsonPrimitive("y").getAsFloat();
-        String direction = object.getAsJsonPrimitive("direction").getAsString();
-        mainCharacter.changeGrid(new Location(grid, new Vector2(x, y), Direction.valueOf(direction)), true);
     }
 
     public Grid getGrid(String name) {

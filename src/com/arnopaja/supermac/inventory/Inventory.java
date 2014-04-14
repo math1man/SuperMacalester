@@ -1,10 +1,14 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.google.gson.JsonElement;
+
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Nolan on 2/16/14.
+ * TODO: I want to make this class non static so it can be saved and loaded
+ * @author Nolan Varani
  */
 public class Inventory {
 
@@ -120,5 +124,17 @@ public class Inventory {
 
     public static void remove(SpecialItem s) {
         specialItemInventory.remove(s);
+    }
+
+    public static class Parser extends SuperParser<Inventory> {
+        @Override
+        public Inventory fromJson(JsonElement element) {
+            return null;
+        }
+
+        @Override
+        public JsonElement toJson(Inventory object) {
+            return null;
+        }
     }
 }

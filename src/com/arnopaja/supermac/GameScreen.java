@@ -5,7 +5,6 @@ import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
@@ -27,7 +26,7 @@ public class GameScreen implements Screen {
     public static enum GameMode { WORLD, BATTLE, MENU }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    public static final Settings SETTINGS = new Settings();
+    public static final Settings SETTINGS = new Settings(); // SaverLoader.load(Settings.class);
 
     private final DialogueHandler dialogueHandler;
     private final Plot plot;
@@ -54,8 +53,9 @@ public class GameScreen implements Screen {
         world = new World();
 
         SuperParser.initParsers(world);
+        SuperParser.initItems(AssetLoader.itemHandle.readString());
 
-        plot = new Plot(SuperParser.parseQuestMap(AssetLoader.questHandle.readString()));
+        plot = new Plot(AssetLoader.questHandle.readString());
 
         float scaleFactorX = GAME_WIDTH /Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT /Gdx.graphics.getHeight();
@@ -146,9 +146,16 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        SaverLoader.save(SETTINGS);
+//        save(); // TODO: should we save here automatically?
+//        SaverLoader.save(SETTINGS, Settings.class);
+//        SaverLoader.flush();
         worldRenderer.dispose();
         battleRenderer.dispose();
+    }
+
+    public void save() {
+        SaverLoader.save(plot, Plot.class);
+        SaverLoader.flush();
     }
 
     public void goToBattle(Battle battle) {
@@ -178,16 +185,6 @@ public class GameScreen implements Screen {
 
     public boolean isDialogue() {
         return state == GameState.DIALOGUE;
-    }
-
-    public void save() {
-        SaverLoader.save(plot);
-        SaverLoader.save(world);
-    }
-
-    public void load() {
-        SaverLoader.load(plot);
-        SaverLoader.save(world);
     }
 
     public DialogueHandler getDialogueHandler() {

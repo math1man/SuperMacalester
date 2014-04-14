@@ -28,13 +28,20 @@ public class Item extends AbstractItem {
 
     public static class Parser extends AbstractItem.Parser<Item> {
         @Override
-        public Item convert(JsonElement element) {
+        public Item fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            int id = object.getAsJsonPrimitive("id").getAsInt();
-            String name = object.getAsJsonPrimitive("name").getAsString();
-            int value = object.getAsJsonPrimitive("value").getAsInt();
-            int bitmask = object.getAsJsonPrimitive("bitmask").getAsInt();
+            int id = getInt(object, "id");
+            String name = getString(object, "name");
+            int value = getInt(object, "value");
+            int bitmask = getInt(object, "bitmask");
             return new Item(id, name, value, bitmask);
+        }
+
+        @Override
+        public JsonElement toJson(Item object) {
+            JsonObject json = toBaseJson(object);
+            addInt(json, "bitmask", object.equippableBitMask);
+            return json;
         }
     }
 }

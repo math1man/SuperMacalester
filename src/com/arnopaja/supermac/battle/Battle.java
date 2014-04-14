@@ -6,17 +6,15 @@ import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.InteractionUtils;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -32,16 +30,18 @@ public class Battle implements Controller {
 
     private final EnemyParty enemyParty;
     private final boolean isBossFight;
+    private final String backgroundName;
     private final TextureRegion background;
     private final Queue<BattleAction> actionQueue;
 
     private DialogueHandler dialogueHandler;
     private MainParty mainParty;
 
-    public Battle(EnemyParty enemyParty, TextureRegion background) {
+    public Battle(EnemyParty enemyParty, String backgroundName) {
         this.enemyParty = enemyParty;
         this.isBossFight = enemyParty.containsBoss();
-        this.background = background;
+        this.backgroundName = backgroundName;
+        this.background = AssetLoader.getBackground(backgroundName);
         actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
@@ -90,8 +90,7 @@ public class Battle implements Controller {
 
     private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
         Spell[] spells = new Spell[0]; // TODO: get these from wherever
-        List<Item> itemList = Inventory.getItemInventory();
-        Item[] items = itemList.toArray(new Item[itemList.size()]);
+        Item[] items = new Item[0];    // TODO: how do we get these from inventory?
         return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
                 InteractionUtils.makeBattleActions(hero, enemies, spells, items));
     }
@@ -122,16 +121,30 @@ public class Battle implements Controller {
 
     public static class Parser extends SuperParser<Battle> {
         @Override
-        public Battle convert(JsonElement element) {
+        public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            EnemyParty enemy = parseEnemy(object.get("enemy"));
-            TextureRegion background = AssetLoader.getBackground(object.getAsJsonPrimitive("background").getAsString());
+            EnemyParty enemy = enemyFromJson(object.get("enemy"));
+            String background = object.getAsJsonPrimitive("background").getAsString();
             return new Battle(enemy, background);
         }
 
-        public EnemyParty parseEnemy(JsonElement element) {
+        @Override
+        public JsonElement toJson(Battle object) {
+            JsonObject json = new JsonObject();
+            json.add("enemy", enemyToJson(object.enemyParty));
+            json.addProperty("background", object.backgroundName);
+            return json;
+        }
+
+        public EnemyParty enemyFromJson(JsonElement element) {
             // TODO: finish me!
             return new EnemyParty();
+        }
+
+        public JsonObject enemyToJson(EnemyParty enemy) {
+            JsonObject object = new JsonObject();
+            // TODO: finish me!
+            return object;
         }
     }
 }

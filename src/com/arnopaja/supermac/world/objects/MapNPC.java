@@ -66,25 +66,35 @@ public class MapNpc extends MapCharacter {
 
     public static class Parser extends Entity.Parser<MapNpc> {
         @Override
-        public MapNpc convert(JsonElement element) {
+        public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = null;
             if (object.has("location")) {
-                location = convert(object.getAsJsonObject("location"), Location.class);
+                location = getObject(object, Location.class);
             }
             boolean isInteractable = MapNpc.DEFAULT_INTERACTABLE;
             if (object.has("interactable")) {
-                isInteractable = object.getAsJsonPrimitive("interactable").getAsBoolean();
+                isInteractable = getBoolean(object, "interactable");
             }
             boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
             if (object.has("canMove")) {
-                canMove = object.getAsJsonPrimitive("canMove").getAsBoolean();
+                canMove = getBoolean(object, "canMove");
             }
             MapNpc npc = new MapNpc(location, isInteractable, canMove);
             if (object.has("interaction")) {
-                npc.setInteraction(convert(object.getAsJsonObject("interaction"), Interaction.class));
+                npc.setInteraction(getObject(object, Interaction.class));
             }
             return npc;
+        }
+
+        @Override
+        public JsonElement toJson(MapNpc object) {
+            JsonObject json = toBaseJson(object);
+            addBoolean(json, "canMove", object.canMove);
+            if (object.getInteraction() != null) {
+                addObject(json, object.getInteraction(), Interaction.class);
+            }
+            return json;
         }
     }
 }

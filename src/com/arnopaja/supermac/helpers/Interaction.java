@@ -181,6 +181,11 @@ public abstract class Interaction {
                 @Override
                 public void run(GameScreen screen) {
                     screen.getBattle().addAction(action);
+                    if (action.getType() == BattleAction.ActionType.ITEM) {
+                        // Removes the item from Inventory when the battle
+                        // action is put into the action queue
+                        Inventory.remove(action.getItem());
+                    }
                 }
             };
         }
@@ -242,6 +247,8 @@ public abstract class Interaction {
             this.secondary = secondary;
         }
 
+
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -268,16 +275,28 @@ public abstract class Interaction {
 
     public static class Parser extends SuperParser<Interaction> {
         @Override
-        public Interaction convert(JsonElement element) {
+        public Interaction fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             if (object.has("dialogue")) {
-                Dialogue dialogue = convert(object.get("dialogue"), Dialogue.class);
+                Dialogue dialogue = getObject(object, Dialogue.class);
                 return Interaction.dialogue(dialogue);
             } else if (object.has("battle")) {
-                Battle battle = convert(object.get("battle"), Battle.class);
+                Battle battle = fromJson(object.get("battle"), Battle.class);
                 return Interaction.battle(battle);
             }
             return Interaction.NULL;
+        }
+
+        @Override
+        public JsonElement toJson(Interaction object) {
+            JsonObject json = new JsonObject();
+            Object param = object.parameters.primary;
+            if (param instanceof Dialogue) {
+                addObject(json, (Dialogue) param, Dialogue.class);
+            } else if (param instanceof Battle) {
+                addObject(json, (Battle) param, Battle.class);
+            }
+            return json;
         }
     }
 }

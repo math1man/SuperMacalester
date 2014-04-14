@@ -101,14 +101,14 @@ public class InteractionUtils {
 
     // TODO: can items be used on friends? On self?
     public static Interaction selectItem(BattleCharacter hero, Item[] items, BattleCharacter[] enemies) {
-        Interaction[] spellInteractions = new Interaction[items.length];
+        Interaction[] itemInteractions = new Interaction[items.length];
         for (int i=0; i<items.length; i++) {
-            spellInteractions[i] = Interaction.dialogue(
+            itemInteractions[i] = Interaction.dialogue(
                     new DialogueOptions("Who do you want to use " + items[i] + " on?", enemies,
                             convertActions(items(hero, items[i], enemies))));
         }
         return Interaction.dialogue(new DialogueOptions("What item do you want to use?",
-                items, spellInteractions));
+                items, itemInteractions));
     }
 
     public static Interaction selectFlee(BattleCharacter hero) {
