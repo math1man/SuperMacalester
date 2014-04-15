@@ -28,6 +28,8 @@ public abstract class Dialogue {
                 } else if (object.has("interaction")) {
                     Interaction interaction = fromJson(object.get("interaction"), Interaction.class);
                     return new DialogueText(dialogue, interaction);
+                } else {
+                    return new DialogueText(dialogue);
                 }
             } else if (hasOptions) {
                 return optionsFromJson(object.getAsJsonObject("options"));

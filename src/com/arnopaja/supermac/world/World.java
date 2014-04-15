@@ -45,7 +45,7 @@ public class World implements Controller {
         MapNpcFixingMyName character = new MapNpcFixingMyName();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(SuperParser.parse("Paul", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
+        character.setInteraction(Interaction.dialogue(SuperParser.parse("Betsy", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
     }
 

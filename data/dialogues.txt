@@ -7,5 +7,10 @@
             "header" : "Do you like to code?",
             "options" : [ "Yes", "No" ]
         }
+    },
+    "Betsy" : {
+        "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own evil profit!
+        <d>
+        I like animals, and I don't want to see animals tortured!"
     }
 }
