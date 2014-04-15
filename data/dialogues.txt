@@ -11,6 +11,22 @@
     "Betsy" : {
         "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own evil profit!
         <d>
-        I like animals, and I don't want to see animals tortured!"
+        I like animals, and I don't want to see animals tortured!",
+        "options" : {
+            "header" : "Do you like animals?",
+            "options" : [ "Yes", "No" ],
+            "interactions" : [
+                {
+                    "dialogue" : {
+                        "text" : "Yay!"
+                    }
+                },
+                {
+                    "dialogue" : {
+                        "text" : "Well fuck you, asshole"
+                    }
+                }
+            ]
+        }
     }
 }
