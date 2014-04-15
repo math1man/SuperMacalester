@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     public static enum GameMode { WORLD, BATTLE, MENU }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    public static final Settings SETTINGS = new Settings(); // SaverLoader.load(Settings.class);
+    public static final Settings SETTINGS = SaverLoader.load(Settings.class);
 
     private final DialogueHandler dialogueHandler;
     private final Plot plot;
@@ -147,8 +147,8 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 //        save(); // TODO: should we save here automatically?
-//        SaverLoader.save(SETTINGS, Settings.class);
-//        SaverLoader.flush();
+        SaverLoader.save(SETTINGS, Settings.class);
+        SaverLoader.flush();
         worldRenderer.dispose();
         battleRenderer.dispose();
     }

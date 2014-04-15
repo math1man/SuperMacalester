@@ -2,7 +2,7 @@ package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 
 /**
  * This will be a static class that handles game settings
@@ -20,7 +20,7 @@ public class Settings {
 
         @Override
         public JsonElement toJson(Settings object) {
-            return JsonNull.INSTANCE;
+            return new JsonObject();
         }
     }
 }

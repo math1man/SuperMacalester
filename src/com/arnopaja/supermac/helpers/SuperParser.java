@@ -5,6 +5,7 @@ import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;
 import com.arnopaja.supermac.plot.Quest;
+import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.*;
@@ -40,6 +41,7 @@ public abstract class SuperParser<T> {
         addParser(MainMapCharacter.class, new MainMapCharacter.Parser());
         addParser(MapNpc.class,           new MapNpc.Parser());
         addParser(Quest.class,            new Quest.Parser());
+        addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
         addParser(Weapon.class,           new Weapon.Parser());
         // TODO: we probably need battle character and party parsers
