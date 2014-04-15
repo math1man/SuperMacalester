@@ -1,11 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.CharacterAsset;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
