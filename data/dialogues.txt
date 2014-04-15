@@ -23,7 +23,7 @@
                 },
                 {
                     "dialogue" : {
-                        "text" : "Well fuck you, asshole"
+                        "text" : "Asshole..."
                     }
                 }
             ]
