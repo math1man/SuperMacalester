@@ -8,7 +8,7 @@ import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.world.objects.MapNpc;
+import com.arnopaja.supermac.world.objects.MapNpcFixingMyName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class World implements Controller {
 
     private void initCharacters() {
         // TODO: add characters here?
-        MapNpc character = new MapNpc();
+        MapNpcFixingMyName character = new MapNpcFixingMyName();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
         character.setInteraction(Interaction.dialogue(SuperParser.parse("Paul", AssetLoader.dialogueHandle.readString(), Dialogue.class)));

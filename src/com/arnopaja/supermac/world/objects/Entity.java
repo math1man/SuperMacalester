@@ -214,7 +214,7 @@ public abstract class Entity implements Renderable {
 
         static {
             parsers.put(MainMapCharacter.class.getSimpleName(), new MainMapCharacter.Parser());
-            parsers.put(MapNpc.class.getSimpleName(), new MapNpc.Parser());
+            parsers.put(MapNpcFixingMyName.class.getSimpleName(), new MapNpcFixingMyName.Parser());
             parsers.put(Door.class.getSimpleName(), new Door.Parser());
             parsers.put(Chest.class.getSimpleName(), new Chest.Parser());
         }
