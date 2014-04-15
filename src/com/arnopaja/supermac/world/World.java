@@ -43,8 +43,7 @@ public class World implements Controller {
     private void initCharacters() {
         // TODO: add characters here?
         MapNpc character = new MapNpc();
-        character.setFacingSprites(AssetLoader.mainChar);
-        character.setFacingAnimations(AssetLoader.mainCharAnim);
+        character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
         character.setInteraction(Interaction.dialogue(SuperParser.parse("Paul", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));

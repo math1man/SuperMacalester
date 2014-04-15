@@ -45,10 +45,11 @@ public class AssetLoader {
     public static TextureRegion chestGreenOpen, chestGreenClosed;
 
     // Characters
+    public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
     public static EnumMap<Direction, TextureRegion> mainChar;
     public static EnumMap<Direction, Animation> mainCharAnim;
-    public static EnumMap<Direction, TextureRegion> beardGuy;
-    public static EnumMap<Direction, Animation> beardGuyAnim;
+    public static EnumMap<Direction, TextureRegion> betsy;
+    public static EnumMap<Direction, Animation> betsyAnim;
 
     // Battle Backgrounds
     public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
@@ -127,9 +128,8 @@ public class AssetLoader {
         //       Characters
         //--------------------------
 
-        SpriteAndAnim saa = loadCharacter("entities/steven/steven_canvas.png");
-        mainChar = saa.sprites;
-        mainCharAnim = saa.animations;
+        loadCharacter("Steven", "entities/steven.png");
+        loadCharacter("Betsy", "entities/betsy.png");
 
         //--------------------------
         //          Other
@@ -147,7 +147,7 @@ public class AssetLoader {
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }
 
-    public static SpriteAndAnim loadCharacter(String path) {
+    public static void loadCharacter(String name, String path) {
         // as of 3/28/14, using the updated canvas that Jared was working on in class today
         EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
@@ -171,8 +171,7 @@ public class AssetLoader {
             animation.setPlayMode(Animation.LOOP);
             personAnim.put(dir, animation);
         }
-
-        return new SpriteAndAnim(person, personAnim);
+        characterAssetMap.put(name, new CharacterAsset(person, personAnim));
     }
 
     public static void scaleFont(float scale) {
@@ -200,26 +199,19 @@ public class AssetLoader {
         return battleBackgrounds.get(name);
     }
 
-    public static void dispose() {
-        tilesTexture.dispose();
-        entitiesTexture.dispose();
-        characterTexture.dispose();
-        font.dispose();
-        shadow.dispose();
+    public static CharacterAsset getAsset(String name) {
+        return characterAssetMap.get(name);
     }
 
     private static FileHandle getHandle(String path) {
         return Gdx.files.internal("data/" + path);
     }
 
-    // simple wrapper class used as a return type for loadCharacter()
-    private static class SpriteAndAnim {
-        protected final EnumMap<Direction, TextureRegion> sprites;
-        protected final EnumMap<Direction, Animation> animations;
-
-        private SpriteAndAnim(EnumMap<Direction, TextureRegion> sprites, EnumMap<Direction, Animation> animations) {
-            this.sprites = sprites;
-            this.animations = animations;
-        }
+    public static void dispose() {
+        tilesTexture.dispose();
+        entitiesTexture.dispose();
+        characterTexture.dispose();
+        font.dispose();
+        shadow.dispose();
     }
 }

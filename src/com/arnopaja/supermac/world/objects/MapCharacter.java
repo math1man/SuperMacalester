@@ -1,13 +1,11 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.helpers.CharacterAsset;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.EnumMap;
 
 /**
  * @author Ari Weiland
@@ -20,15 +18,11 @@ public abstract class MapCharacter extends Entity {
     private Vector2 renderOffset = new Vector2();
     private Vector2 renderOffsetDelta;
 
-    private EnumMap<Direction, TextureRegion> facingSprites;
-    private EnumMap<Direction, Animation> facingAnimations;
+    private CharacterAsset asset;
 
-    protected MapCharacter(Location location, boolean isInteractable,
-                           EnumMap<Direction, TextureRegion> facingSprites,
-                           EnumMap<Direction, Animation> facingAnimations) {
+    protected MapCharacter(Location location, boolean isInteractable, CharacterAsset asset) {
         super(true, location, isInteractable);
-        this.facingSprites = facingSprites;
-        this.facingAnimations = facingAnimations;
+        this.asset = asset;
     }
 
     @Override
@@ -71,17 +65,13 @@ public abstract class MapCharacter extends Entity {
     @Override
     public TextureRegion getSprite(float runTime) {
         if (isMoving()) {
-            return facingAnimations.get(getFacing()).getKeyFrame(runTime);
+            return asset.getAnimation(getFacing()).getKeyFrame(runTime);
         } else {
-            return facingSprites.get(getFacing());
+            return asset.getSprite(getFacing());
         }
     }
 
-    public void setFacingSprites(EnumMap<Direction, TextureRegion> facingSprites) {
-        this.facingSprites = facingSprites;
-    }
-
-    public void setFacingAnimations(EnumMap<Direction, Animation> facingAnimations) {
-        this.facingAnimations = facingAnimations;
+    public void setAsset(CharacterAsset asset) {
+        this.asset = asset;
     }
 }

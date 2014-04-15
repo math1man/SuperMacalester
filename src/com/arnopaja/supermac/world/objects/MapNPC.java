@@ -1,14 +1,13 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.CharacterAsset;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import java.util.EnumMap;
 
 /**
  * @author Ari Weiland
@@ -34,13 +33,12 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(Location location, boolean isInteractable, boolean canMove) {
-        this(location, isInteractable, canMove, null, null);
+        this(location, isInteractable, canMove, null);
     }
 
     public MapNpc(Location location, boolean isInteractable, boolean canMove,
-                  EnumMap<Direction, TextureRegion> facingSprites,
-                  EnumMap<Direction, Animation> facingAnimations) {
-        super(location, isInteractable, facingSprites, facingAnimations);
+                  CharacterAsset asset) {
+        super(location, isInteractable, asset);
         this.canMove = canMove;
     }
 

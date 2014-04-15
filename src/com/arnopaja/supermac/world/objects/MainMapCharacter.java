@@ -15,7 +15,7 @@ public class MainMapCharacter extends MapCharacter {
     private Direction movingDirection = null;
 
     public MainMapCharacter(Location location) {
-        super(location, false, AssetLoader.mainChar, AssetLoader.mainCharAnim);
+        super(location, false, AssetLoader.getAsset("Steven"));
     }
 
     @Override

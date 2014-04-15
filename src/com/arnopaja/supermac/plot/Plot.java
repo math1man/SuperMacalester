@@ -5,6 +5,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.parser.Parser;
+import com.arnopaja.supermac.world.World;
+import com.arnopaja.supermac.world.grid.Direction;
+import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.objects.MapNpc;
 
 import java.util.HashMap;
 import java.util.List;
