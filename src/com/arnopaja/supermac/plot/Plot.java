@@ -6,7 +6,7 @@ import com.arnopaja.supermac.helpers.parser.Parser;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.MapNPC;
+import com.arnopaja.supermac.world.objects.MapNpc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +36,8 @@ public class Plot {
     }
 
     private void initTestQuest() {
-        MapNPC character = new MapNPC();
-        character.setFacingSprites(AssetLoader.mainChar);
-        character.setFacingAnimations(AssetLoader.mainCharAnim);
+        MapNpc character = new MapNpc();
+        character.setAsset(AssetLoader.getAsset("Betsy"));
 
         Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
 

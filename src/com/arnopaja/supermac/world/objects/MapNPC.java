@@ -1,41 +1,37 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.helpers.CharacterAsset;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import java.util.EnumMap;
 
 /**
  * @author Ari Weiland
  */
-public class MapNPC extends MapCharacter {
+public class MapNpc extends MapCharacter {
 
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private boolean canMove = true;
 
-    public MapNPC() {
+    public MapNpc() {
         this(null);
     }
 
-    public MapNPC(Location location) {
+    public MapNpc(Location location) {
         this(location, false);
     }
 
-    public MapNPC(Location location, boolean isInteractable) {
+    public MapNpc(Location location, boolean isInteractable) {
         this(location, isInteractable, true);
     }
 
-    public MapNPC(Location location, boolean isInteractable, boolean canMove) {
-        this(location, isInteractable, canMove, null, null);
+    public MapNpc(Location location, boolean isInteractable, boolean canMove) {
+        this(location, isInteractable, canMove, null);
     }
 
-    public MapNPC(Location location, boolean isInteractable, boolean canMove,
-                  EnumMap<Direction, TextureRegion> facingSprites,
-                  EnumMap<Direction, Animation> facingAnimations) {
-        super(location, isInteractable, facingSprites, facingAnimations);
+    public MapNpc(Location location, boolean isInteractable, boolean canMove,
+                  CharacterAsset asset) {
+        super(location, isInteractable, asset);
         this.canMove = canMove;
     }
 

@@ -11,7 +11,7 @@ import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.world.objects.MapNPC;
+import com.arnopaja.supermac.world.objects.MapNpc;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +43,8 @@ public class World implements Controller {
 
     private void initCharacters() {
         // TODO: add characters here?
-        MapNPC character = new MapNPC();
-        character.setFacingSprites(AssetLoader.mainChar);
-        character.setFacingAnimations(AssetLoader.mainCharAnim);
+        MapNpc character = new MapNpc();
+        character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
         character.setInteraction(Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
