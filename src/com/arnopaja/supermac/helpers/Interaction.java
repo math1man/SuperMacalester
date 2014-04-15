@@ -6,7 +6,7 @@ import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
-import com.arnopaja.supermac.inventory.AbstractItem;
+import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.world.grid.Location;
@@ -100,7 +100,7 @@ public abstract class Interaction {
                         dialogue = new DialogueText(Interaction.closeChest(chest), "This chest is empty");
                     } else {
                         // Items go into inventory from chest
-                        List<AbstractItem> items = chest.getContents();
+                        List<GenericItem> items = chest.getContents().getAll();
                         int length = items.size() + 2;
 
                         Object[] objects = Arrays.copyOf(items.toArray(), length);
@@ -135,7 +135,7 @@ public abstract class Interaction {
         }
     }
 
-    public static Interaction takeItem(final AbstractItem item, final Chest chest) {
+    public static Interaction takeItem(final GenericItem item, final Chest chest) {
         if (item == null || chest == null) {
             return NULL;
         } else {
@@ -143,8 +143,8 @@ public abstract class Interaction {
 
                 @Override
                 public void run(GameScreen screen) {
-                    chest.removeItem(item);             // remove item from chest
-                    Inventory.add(item);                // place in inventory
+                    chest.removeItem(item);             // take item from chest
+                    Inventory.getMain().store(item);    // place in inventory
                     if (chest.isEmpty()) {              // if chest is empty,
                         Interaction.closeChest(chest);  // close it, otherwise
                     } else {                            // return to chest UI
@@ -184,7 +184,7 @@ public abstract class Interaction {
                     if (action.getType() == BattleAction.ActionType.ITEM) {
                         // Removes the item from Inventory when the battle
                         // action is put into the action queue
-                        Inventory.remove(action.getItem());
+                        Inventory.getMain().take(action.getItem());
                     }
                 }
             };

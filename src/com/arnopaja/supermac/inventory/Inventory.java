@@ -1,140 +1,253 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.SaverLoader;
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
- * TODO: I want to make this class non static so it can be saved and loaded
+ * I compromised on the static nature of this class:
+ * The class is inherently non static.  However, the class also
+ * maintains a static instance of itself, and provides appropriate
+ * static methods for accessing that instance. Thus, we can use
+ * inventories wherever, while still maintaining a main static
+ * instance for the main party usable throughout the game.
+ *
+ * For saving and loading the static instance, the specific
+ * Inventory.save() and Inventory.load() methods must be used.
+ *
  * @author Nolan Varani
  */
 public class Inventory {
 
-    public static enum InventoryType { ARMOR, WEAPON, ITEM, SPECIALITEM }
+    private Map<Integer, Integer> idMap = new LinkedHashMap<Integer, Integer>();
 
-    // TODO: Why do these have to be LinkedLists?
-    private static List<Armor> armorInventory = new LinkedList<Armor>();
-    private static List<Weapon> weaponInventory = new LinkedList<Weapon>();
-    private static List<Item> itemInventory = new LinkedList<Item>();
-    private static List<SpecialItem> specialItemInventory = new LinkedList<SpecialItem>();
+    public void store(int id) {
+        store(id, 1);
+    }
+
+    public void store(GenericItem item) {
+        store(item.getId());
+    }
+
+    public void store(int id, int amount) {
+        int count = amount;
+        if (idMap.containsKey(id)) {
+            count += idMap.get(id);
+        }
+        idMap.put(id, count);
+    }
+
+    public void store(GenericItem item, int amount) {
+        store(item.getId(), amount);
+    }
 
     /**
-     * This method has some advanced shit in it.
-     * Basically what it says is "get the item from the inventory that matches
-     * this specified class, and return it as the correct class".  For example,
-     * if you wanted to retrieve the 3rd item (index 2) in the armor inventory,
-     * you would call "get(2, Armor.class)". This would then return an instance
-     * of the Armor class that is the requested armor.  The benefit of this is
-     * that the returned instance will always be of the correct class.
-     *
-     * @param index
-     * @param clazz
-     * @param <T>
-     * @return
+     * Removes one of the item with the given ID
+     * @param id
+     * @return true only if an item was removed, else false
      */
-    public static <T extends AbstractItem> T get(int index, Class<T> clazz) {
-        if (clazz == Armor.class) {
-            return clazz.cast(armorInventory.get(index));
-        } else if (clazz == Weapon.class) {
-            return clazz.cast(weaponInventory.get(index));
-        } else if (clazz == Item.class) {
-            return clazz.cast(itemInventory.get(index));
-        } else if (clazz == SpecialItem.class) {
-            return clazz.cast(specialItemInventory.get(index));
+    public boolean take(int id) {
+        return take(id, 1) == 1;
+    }
+
+    /**
+     * Removes one of the specified item
+     * @param item
+     * @return true only if an item was removed, else false
+     */
+    public boolean take(GenericItem item) {
+        return take(item.getId());
+    }
+
+    /**
+     * Removes the specified amount of the item with the given ID.
+     * If there are fewer of the item in the inventory, it removes all of them.
+     * @param id
+     * @param amount
+     * @return the amount removed
+     */
+    public int take(int id, int amount) {
+        for (int i : idMap.keySet()) {
+            if (i == id) {
+                int count = idMap.get(id);
+                if (count < amount) {
+                    idMap.remove(id);
+                    return count;
+                } else {
+                    idMap.remove(id);
+                    idMap.put(id, count - amount);
+                    return amount;
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Removes the specified amount of the specified item.
+     * If there are fewer of the item in the inventory, it removes all of them.
+     * @param item
+     * @param amount
+     * @return the amount removed
+     */
+    public int take(GenericItem item, int amount) {
+        return take(item.getId(), amount);
+    }
+
+    public int takeAll(int id) {
+        for (int i : idMap.keySet()) {
+            if (i == id) {
+                int count = idMap.get(id);
+                idMap.remove(id);
+                return count;
+            }
+        }
+        return 0;
+    }
+
+    public int takeAll(GenericItem item) {
+        return takeAll(item.getId());
+    }
+
+    /**
+     * Removes an item of the specified ID and class.
+     * Returns an instance of the item specified, or null if the item
+     * either was not in the inventory or the ID and class do not match
+     * @param id
+     * @param clazz
+     * @return an instance of the item specified, or null
+     */
+    public <T extends GenericItem> T take(int id, Class<T> clazz) {
+        if (GenericItem.isCached(id, clazz) && take(id)) { // make sure the ID matches the class and
+            return GenericItem.getCached(id, clazz);         // make sure the ID is in the inventory
         }
         return null;
     }
 
-    public static List<Armor> getArmorInventory() {
-        return armorInventory;
+    /**
+     * Removes the specified item. Returns an instance of the item
+     * specified, or null if the item either was not in the inventory.
+     * @param item
+     * @param clazz
+     * @return an instance of the item specified, or null
+     */
+    public <T extends GenericItem> T take(T item, Class<T> clazz) {
+        return take(item.getId(), clazz);
     }
 
-    public static List<Weapon> getWeaponInventory() {
-        return weaponInventory;
+    /**
+     * Returns a list of all items in the inventory that match the class.
+     * Note that this method does NOT remove items from the inventory.
+     * @param clazz
+     * @return
+     */
+    public <T extends GenericItem> List<T> getAll(Class<T> clazz) {
+        List<T> items = new ArrayList<T>();
+        for (int id : idMap.keySet()) {
+            if (GenericItem.isCached(id, clazz)) {
+                items.add(GenericItem.getCached(id, clazz));
+            }
+        }
+        return items;
     }
 
-    public static List<Item> getItemInventory() {
-        return itemInventory;
+    public List<GenericItem> getAll() {
+        List<GenericItem> items = new ArrayList<GenericItem>();
+        for (int id : idMap.keySet()) {
+            if (GenericItem.isCached(id)) {
+                items.add(GenericItem.getCached(id));
+            }
+        }
+        return items;
     }
 
-    public static List<SpecialItem> getSpecialItemInventory() {
-        return specialItemInventory;
+    public boolean contains(int id) {
+        return amount(id) != 0;
     }
 
-    //adds
-    public static void add(AbstractItem item) {
-        if (item instanceof Armor) {
-            add((Armor) item);
-        } else if (item instanceof Weapon) {
-            add((Weapon) item);
-        } else if (item instanceof Item) {
-            add((Item) item);
-        } else if (item instanceof SpecialItem) {
-            add((SpecialItem) item);
+    public boolean contains(GenericItem item) {
+        return contains(item.getId());
+    }
+
+    public int amount(int id) {
+        if (idMap.containsKey(id)) {
+            return idMap.get(id);
+        } else {
+            return 0;
         }
     }
 
-    public static void add(Armor a) {
-        armorInventory.add(a);
+    public int amount(GenericItem item) {
+        return amount(item.getId());
     }
 
-    public static void add(Weapon w) {
-        weaponInventory.add(w);
+    public int amount() {
+        int count = 0;
+        for (int i : idMap.values()) {
+            count += i;
+        }
+        return count;
     }
 
-    public static void add(Item i) {
-        itemInventory.add(i);
+    public int size() {
+        return idMap.size();
     }
 
-    public static void add(SpecialItem s) {
-        specialItemInventory.add(s);
+    public boolean isEmpty() {
+        return idMap.isEmpty();
     }
 
-    //contains
-    public static boolean contains(Armor a) {
-        return armorInventory.contains(a);
+    //-------------------------
+    //    Static accessors
+    //-------------------------
+
+    private static Inventory main = new Inventory();
+
+    public static Inventory getMain() {
+        return main;
     }
 
-    public static boolean contains(Weapon w) {
-        return weaponInventory.contains(w);
+    public static void save() {
+        save(false);
     }
 
-    public static boolean contains(Item i) {
-        return itemInventory.contains(i);
+    public static void save(boolean flush) {
+        SaverLoader.save(main, Inventory.class);
+        if (flush) {
+            SaverLoader.flush();
+        }
     }
 
-    public static boolean contains(SpecialItem s) {
-        return specialItemInventory.contains(s);
-    }
-
-    //removes
-    public static void remove(Armor a) {
-        armorInventory.remove(a);
-    }
-
-    public static void remove(Weapon w) {
-        weaponInventory.remove(w);
-    }
-
-    public static void remove(Item i) {
-        itemInventory.remove(i);
-    }
-
-    public static void remove(SpecialItem s) {
-        specialItemInventory.remove(s);
+    public static void load() {
+        main = SaverLoader.load(Inventory.class);
     }
 
     public static class Parser extends SuperParser<Inventory> {
         @Override
         public Inventory fromJson(JsonElement element) {
-            return null;
+            JsonArray array = element.getAsJsonArray();
+            Inventory inventory = new Inventory();
+            for (JsonElement e : array) {
+                JsonObject o = e.getAsJsonObject();
+                inventory.store(getInt(o, "id"), getInt(o, "amount"));
+            }
+            return inventory;
         }
 
         @Override
         public JsonElement toJson(Inventory object) {
-            return null;
+            JsonArray json = new JsonArray();
+            for (Map.Entry<Integer, Integer> entry : object.idMap.entrySet()) {
+                JsonObject o = new JsonObject();
+                addInt(o, "id", entry.getKey());
+                addInt(o, "amount", entry.getValue());
+                json.add(o);
+            }
+            return json;
         }
     }
 }

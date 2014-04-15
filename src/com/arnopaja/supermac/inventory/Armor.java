@@ -4,15 +4,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Nolan on 2/16/14.
+ * @author Nolan Varani
  */
-public class Armor extends AbstractItem {
+public class Armor extends GenericItem {
 
     private final int defenseModifier;
     private final int equippableBitMask;
     //TODO: image definition
 
-    public Armor(int id, String name, int value, int defenseModifier, int equippableBitMask) {
+    protected Armor(int id, String name, int value, int defenseModifier, int equippableBitMask) {
         super(id, name, value);
         this.defenseModifier = defenseModifier;
         this.equippableBitMask = equippableBitMask;
@@ -21,7 +21,7 @@ public class Armor extends AbstractItem {
     public int getDefenseModifier() { return defenseModifier; }
     public int getEquippableBitMask() { return equippableBitMask; }
 
-    public static class Parser extends AbstractItem.Parser<Armor> {
+    public static class Parser extends GenericItem.Parser<Armor> {
         @Override
         public Armor fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();

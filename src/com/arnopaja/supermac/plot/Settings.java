@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.helpers.SaverLoader;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,6 +12,23 @@ import com.google.gson.JsonObject;
  * @author Ari Weiland
  */
 public class Settings {
+
+    private static Settings settings = new Settings();
+
+    public static void save() {
+        save(false);
+    }
+
+    public static void save(boolean flush) {
+        SaverLoader.save(settings, Settings.class);
+        if (flush) {
+            SaverLoader.flush();
+        }
+    }
+
+    public static void load() {
+        settings = SaverLoader.load(Settings.class);
+    }
 
     public static class Parser extends SuperParser<Settings> {
         @Override

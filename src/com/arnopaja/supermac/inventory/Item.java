@@ -6,14 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Nolan on 2/16/14.
+ * @author Nolan Varani
  */
-public class Item extends AbstractItem {
+public class Item extends GenericItem {
 
     private final int equippableBitMask;
     // TODO: image definition
 
-    private Item(int id, String name, int value, int equippableBitMask) {
+    protected Item(int id, String name, int value, int equippableBitMask) {
         super(id, name, value);
         this.equippableBitMask = equippableBitMask;
     }
@@ -26,7 +26,7 @@ public class Item extends AbstractItem {
 
     public int getEquippableBitMask() { return equippableBitMask; }
 
-    public static class Parser extends AbstractItem.Parser<Item> {
+    public static class Parser extends GenericItem.Parser<Item> {
         @Override
         public Item fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();

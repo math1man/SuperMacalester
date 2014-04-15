@@ -32,6 +32,14 @@ public class SaverLoader {
         return null;
     }
 
+    public static boolean isSaved(Class clazz) {
+        return isSaved(clazz.getName());
+    }
+
+    public static boolean isSaved(String name) {
+        return AssetLoader.prefs.contains(name);
+    }
+
     public static void flush() {
         AssetLoader.prefs.flush();
     }

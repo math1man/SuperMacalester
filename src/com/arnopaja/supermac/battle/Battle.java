@@ -9,12 +9,14 @@ import com.arnopaja.supermac.helpers.InteractionUtils;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -90,7 +92,8 @@ public class Battle implements Controller {
 
     private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
         Spell[] spells = new Spell[0]; // TODO: get these from wherever
-        Item[] items = new Item[0];    // TODO: how do we get these from inventory?
+        List<Item> itemList = Inventory.getMain().getAll(Item.class);
+        Item[] items = itemList.toArray(new Item[itemList.size()]);
         return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
                 InteractionUtils.makeBattleActions(hero, enemies, spells, items));
     }

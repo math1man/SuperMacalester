@@ -2,13 +2,12 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.inventory.AbstractItem;
+import com.arnopaja.supermac.inventory.GenericItem;
+import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 /**
  * @author Ari Weiland
@@ -44,9 +43,9 @@ public class Chest extends Entity {
     private final ChestColor color;
     private boolean isOpen = false;
 
-    private List<AbstractItem> contents;
+    private Inventory contents;
 
-    public Chest(Location location, ChestColor color, List<AbstractItem> contents) {
+    public Chest(Location location, ChestColor color, Inventory contents) {
         super(true, location, true);
         this.contents = contents;
         this.color = color;
@@ -58,12 +57,16 @@ public class Chest extends Entity {
         // does nothing
     }
 
-    public void removeItem(AbstractItem item) {
-        contents.remove(item);
+    public void removeItem(GenericItem item) {
+        contents.take(item);
     }
 
     public boolean isEmpty() {
         return contents.isEmpty();
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 
     public void open() {
@@ -74,15 +77,11 @@ public class Chest extends Entity {
         isOpen = false;
     }
 
-    public boolean isOpen() {
-        return isOpen;
-    }
-
-    public List<AbstractItem> getContents() {
+    public Inventory getContents() {
         return contents;
     }
 
-    public void setContents(List<AbstractItem> contents) {
+    public void setContents(Inventory contents) {
         this.contents = contents;
     }
 
@@ -101,7 +100,7 @@ public class Chest extends Entity {
             JsonObject object = element.getAsJsonObject();
             Location location = getObject(object, Location.class);
             String color = getString(object, "color");
-            List<AbstractItem> contents = getList(object, "contents", AbstractItem.class);
+            Inventory contents = getObject(object, "contents", Inventory.class);
             return new Chest(location, Chest.ChestColor.getColor(color), contents);
         }
 
@@ -109,7 +108,7 @@ public class Chest extends Entity {
         public JsonElement toJson(Chest object) {
             JsonObject json = toBaseJson(object);
             addString(json, "color", object.color.name());
-            addList(json, "contents", object.contents, AbstractItem.class);
+            addObject(json, "contents", object.contents, Inventory.class);
             return json;
         }
     }

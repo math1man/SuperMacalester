@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public abstract class AbstractItem {
+public class GenericItem {
 
     private final int id;
     private final String name;
     private final int value;
 
-    protected AbstractItem(int id, String name, int value) {
+    protected GenericItem(int id, String name, int value) {
         this.id = id;
         this.name = name;
         this.value = value;
@@ -41,25 +41,54 @@ public abstract class AbstractItem {
     }
 
     // Cache of all AbstractItems
-    private static final Map<Integer, AbstractItem> cache = new HashMap<Integer, AbstractItem>();
+    private static final Map<Integer, GenericItem> cache = new HashMap<Integer, GenericItem>();
 
+    /**
+     * Returns whether the specified ID is in the cache
+     * @param id
+     * @return
+     */
     public static boolean isCached(int id) {
         return cache.containsKey(id);
     }
 
-    public static AbstractItem getCached(int id) {
+    /**
+     * Returns true only if the specified ID is in the cache and is of class clazz
+     * @param id
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T extends GenericItem> boolean isCached(int id, Class<T> clazz) {
+        return isCached(id) && getCached(id).getClass() == clazz;
+    }
+
+    /**
+     * Retrieves the AbstractItem of the specified ID from the cache
+     * @param id
+     * @return
+     */
+    public static GenericItem getCached(int id) {
         return cache.get(id);
     }
 
-    public static <T extends AbstractItem> T getCached(int id, Class<T> clazz) {
-        AbstractItem item = getCached(id);
+    /**
+     * Retrives the item of the specified ID from the cache as an
+     * instance of clazz, but only if it is of class clazz.
+     * @param id
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T extends GenericItem> T getCached(int id, Class<T> clazz) {
+        GenericItem item = getCached(id);
         if (item.getClass() == clazz) {
             return clazz.cast(item);
         }
         return null;
     }
 
-    public static class Parser<T extends AbstractItem> extends SuperParser<T> {
+    public static class Parser<T extends GenericItem> extends SuperParser<T> {
 
         private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
 

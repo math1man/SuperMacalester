@@ -80,19 +80,19 @@ public abstract class BattleCharacter {
     //SET
     public void setEquippedArmor(Armor a) {
         if (equippedArmor != null) {
-            Inventory.add(equippedArmor);
+            Inventory.getMain().store(equippedArmor);
             equippedArmor = a;
         }
         equippedArmor = a;
-        Inventory.remove(a);
+        Inventory.getMain().take(a);
     }
 
     public void setEquippedWeapon(Weapon w) {
         if (equippedWeapon != null) {
-            Inventory.add(equippedWeapon);
+            Inventory.getMain().store(equippedWeapon);
         }
         equippedWeapon = w;
-        Inventory.remove(w);
+        Inventory.getMain().take(w);
     }
 
     @Override

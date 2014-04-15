@@ -26,7 +26,7 @@ public abstract class SuperParser<T> {
     private static final JsonParser parser = new JsonParser();
     private static final Map<Class, SuperParser> parsers = new HashMap<Class, SuperParser>();
     static {
-        addParser(AbstractItem.class,     new AbstractItem.Parser());
+        addParser(GenericItem.class,     new GenericItem.Parser());
         addParser(Armor.class,            new Armor.Parser());
         addParser(Battle.class,           new Battle.Parser());
         addParser(Chest.class,            new Chest.Parser());
@@ -58,7 +58,7 @@ public abstract class SuperParser<T> {
     }
 
     public static void initItems(String itemsJson) {
-        parseAll(itemsJson, AbstractItem.class);
+        parseAll(itemsJson, GenericItem.class);
     }
 
     /**
