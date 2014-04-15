@@ -2,7 +2,9 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.grid.MapSet;
 import com.arnopaja.supermac.world.objects.Tile;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.HashMap;
@@ -21,15 +23,29 @@ public class MapLoader {
     private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
     private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
-    public static Grid generateGrid(String name) {
-        return parseGrid(name, AssetLoader.getMap(name));
+    public static MapSet generateMapSet(FileHandle folder) {
+        FileHandle[] handles = folder.list("txt");
+        Grid world = null;
+        Map<String, Building> buildings = new HashMap<String, Building>();
+        for (FileHandle handle : handles) {
+            String name = handle.nameWithoutExtension();
+            String data = handle.readString();
+            if (name.equalsIgnoreCase("world")) {
+                world = generateGrid(name, data);
+            } else {
+                buildings.put(name, generateBuilding(name, data));
+            }
+        }
+        return new MapSet(world, buildings);
     }
 
-    public static Building generateBuilding(String name) {
-        String raw = AssetLoader.getMap(name);
+    public static Grid generateGrid(String name, String raw) {
+        return parseGrid(name, raw);
+    }
+
+    public static Building generateBuilding(String name, String raw) {
         String[] floorStrings = raw.split("<floor>");
         int firstFloorIndex = 0;
-
         int floorCount = floorStrings.length;
         Grid[] floors = new Grid[floorCount];
         for (int i=0; i<floorCount; i++) {

@@ -85,7 +85,7 @@ public class Location {
         public Location fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             String gridName = getString(object, "grid");
-            Grid grid = world.getGrid(gridName);
+            Grid grid = maps.getGrid(gridName);
             int x = getInt(object, "x");
             int y = getInt(object, "y");
             String dir = getString(object, "direction").toLowerCase().trim();

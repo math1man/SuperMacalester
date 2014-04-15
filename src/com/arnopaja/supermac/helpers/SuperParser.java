@@ -6,8 +6,8 @@ import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.plot.Settings;
-import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Location;
+import com.arnopaja.supermac.world.grid.MapSet;
 import com.arnopaja.supermac.world.objects.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -51,10 +51,10 @@ public abstract class SuperParser<T> {
         parsers.put(clazz, parser);
     }
 
-    protected static World world;
+    protected static MapSet maps;
 
-    public static void initParsers(World w) {
-        world = w;
+    public static void initParsers(MapSet m) {
+        maps = m;
     }
 
     public static void initItems(String itemsJson) {

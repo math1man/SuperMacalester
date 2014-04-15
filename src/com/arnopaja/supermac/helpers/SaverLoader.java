@@ -21,15 +21,25 @@ public class SaverLoader {
     }
 
     public static <T> T load(Class<T> clazz) {
-        return load(clazz.getName(), clazz);
+        return load(clazz, null);
+    }
+
+    public static <T> T load(Class<T> clazz, T defVal) {
+        return load(clazz.getName(), clazz, defVal);
     }
 
     public static <T> T load(String name, Class<T> clazz) {
-        if (AssetLoader.prefs.contains(name)) {
+        return load(name, clazz, null);
+    }
+
+    public static <T> T load(String name, Class<T> clazz, T defVal) {
+        if (isSaved(name)) {
             JsonElement me = parser.parse(AssetLoader.prefs.getString(name));
             return SuperParser.fromJson(me, clazz);
+        } else if (defVal != null) {
+            save(defVal, name, clazz);
         }
-        return null;
+        return defVal;
     }
 
     public static boolean isSaved(Class clazz) {

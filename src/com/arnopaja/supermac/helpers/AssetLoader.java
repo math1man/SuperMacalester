@@ -49,9 +49,10 @@ public class AssetLoader {
     public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
 
     // Data file handles
+    public static FileHandle itemHandle;
     public static FileHandle dialogueHandle;
     public static FileHandle plotHandle;
-    public static FileHandle itemHandle;
+    public static FileHandle mapHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -134,9 +135,10 @@ public class AssetLoader {
 
         // TODO: battle backgrounds
 
-        dialogueHandle = getHandle("dialogues.txt");
-        plotHandle = getHandle("plot.txt");
         itemHandle = getHandle("items.txt");
+        dialogueHandle = getHandle("macalester/dialogues.txt");
+        plotHandle = getHandle("macalester/plot.txt");
+        mapHandle = getHandle("macalester/maps");
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
@@ -188,7 +190,7 @@ public class AssetLoader {
     }
 
     public static String getMap(String name) {
-        return getHandle("maps/" + name.toLowerCase() + ".txt").readString();
+        return mapHandle.child(name + ".txt").readString();
     }
 
     public static TextureRegion getBackground(String name) {

@@ -202,7 +202,7 @@ public class Inventory {
     }
 
     //-------------------------
-    //    Static accessors
+    //    Static members
     //-------------------------
 
     private static Inventory main = new Inventory();
@@ -223,7 +223,7 @@ public class Inventory {
     }
 
     public static void load() {
-        main = SaverLoader.load(Inventory.class);
+        main = SaverLoader.load(Inventory.class, new Inventory());
     }
 
     public static class Parser extends SuperParser<Inventory> {

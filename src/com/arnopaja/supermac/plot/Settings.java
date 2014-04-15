@@ -27,7 +27,7 @@ public class Settings {
     }
 
     public static void load() {
-        settings = SaverLoader.load(Settings.class);
+        settings = SaverLoader.load(Settings.class, new Settings());
     }
 
     public static class Parser extends SuperParser<Settings> {

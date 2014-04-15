@@ -11,6 +11,7 @@ import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
+import com.arnopaja.supermac.world.grid.MapSet;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
@@ -51,12 +52,13 @@ public class GameScreen implements Screen {
 
         dialogueHandler = new DialogueHandler(GAME_WIDTH, GAME_HEIGHT);
 
-        world = new World();
-
-        SuperParser.initParsers(world);
+        MapSet maps = MapLoader.generateMapSet(AssetLoader.mapHandle);
+        SuperParser.initParsers(maps);
         SuperParser.initItems(AssetLoader.itemHandle.readString());
 
+        // TODO: do we want to load automatically?
         plot = new Plot(AssetLoader.plotHandle.readString());
+        world = new World(maps);
 
         float scaleFactorX = GAME_WIDTH / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
@@ -160,7 +162,7 @@ public class GameScreen implements Screen {
     }
 
     public void load() {
-        plot = SaverLoader.load(Plot.class);
+        plot = SaverLoader.load(Plot.class, new Plot(AssetLoader.plotHandle.readString()));
         Inventory.load();
     }
 
