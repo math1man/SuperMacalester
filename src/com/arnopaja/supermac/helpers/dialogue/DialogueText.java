@@ -93,6 +93,15 @@ public class DialogueText extends Dialogue {
         hasNext = dialogue.length > 1;
     }
 
+    public String getRaw() {
+        StringBuilder sb = new StringBuilder();
+        for (String line : dialogue) {
+            sb.append(line);
+            sb.append("<d>");
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return Arrays.toString(dialogue);

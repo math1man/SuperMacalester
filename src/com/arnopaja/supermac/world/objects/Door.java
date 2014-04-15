@@ -40,11 +40,18 @@ public class Door extends Entity {
 
     public static class Parser extends Entity.Parser<Door> {
         @Override
-        public Door convert(JsonElement element) {
+        public Door fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            Location location = convert(object.getAsJsonObject("location"), Location.class);
-            Location destination = convert(object.getAsJsonObject("destination"), Location.class);
+            Location location = getObject(object, Location.class);
+            Location destination = getObject(object, "destination", Location.class);
             return new Door(location, destination);
+        }
+
+        @Override
+        public JsonElement toJson(Door object) {
+            JsonObject json = toBaseJson(object);
+            addObject(json, "destination", object.destination, Location.class);
+            return json;
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.arnopaja.supermac.plot;
 
-import com.arnopaja.supermac.helpers.Savable;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * This will be a static class that handles game settings
@@ -9,15 +10,17 @@ import com.google.gson.JsonElement;
  *
  * @author Ari Weiland
  */
-public class Settings implements Savable {
+public class Settings {
 
-    @Override
-    public JsonElement toJson() {
-        return null;
-    }
+    public static class Parser extends SuperParser<Settings> {
+        @Override
+        public Settings fromJson(JsonElement element) {
+            return new Settings();
+        }
 
-    @Override
-    public void fromJson(JsonElement element) {
-
+        @Override
+        public JsonElement toJson(Settings object) {
+            return new JsonObject();
+        }
     }
 }

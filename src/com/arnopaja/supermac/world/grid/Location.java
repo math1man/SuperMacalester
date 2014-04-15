@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -14,20 +13,20 @@ public class Location {
 
     private final Grid grid;
     private Vector2 position;
-    private Direction facing;
+    private Direction direction;
 
     public Location(Grid grid) {
         this(grid, 0, 0, Direction.WEST);
     }
 
-    public Location(Grid grid, int x, int y, Direction facing) {
-        this(grid, new Vector2(x, y), facing);
+    public Location(Grid grid, int x, int y, Direction direction) {
+        this(grid, new Vector2(x, y), direction);
     }
 
-    public Location(Grid grid, Vector2 position, Direction facing) {
+    public Location(Grid grid, Vector2 position, Direction direction) {
         this.grid = grid;
         this.position = position;
-        this.facing = facing;
+        this.direction = direction;
     }
 
     public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
@@ -48,21 +47,6 @@ public class Location {
         return grid.getEntity(position);
     }
 
-    public void save(String key) {
-        AssetLoader.prefs.putFloat(key + "_x", position.x);
-        AssetLoader.prefs.putFloat(key + "_y", position.y);
-        AssetLoader.prefs.putString(key + "_direction", facing.name());
-        AssetLoader.prefs.flush();
-    }
-
-    public void load(String key) {
-        float x = AssetLoader.prefs.getFloat(key + "_x");
-        float y = AssetLoader.prefs.getFloat(key + "_y");
-        String direction = AssetLoader.prefs.getString(key + "_direction");
-        setPosition(new Vector2(x, y));
-        setFacing(Direction.valueOf(direction));
-    }
-
     public Grid getGrid() {
         return grid;
     }
@@ -75,12 +59,12 @@ public class Location {
         this.position = position;
     }
 
-    public Direction getFacing() {
-        return facing;
+    public Direction getDirection() {
+        return direction;
     }
 
-    public void setFacing(Direction facing) {
-        this.facing = facing;
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     @Override
@@ -98,20 +82,13 @@ public class Location {
 
     public static class Parser extends SuperParser<Location> {
         @Override
-        public Location convert(JsonElement element) {
-            JsonObject location = element.getAsJsonObject();
-            String gridName = location.getAsJsonPrimitive("grid").getAsString();
-            Grid grid;
-            if (gridName.trim().equalsIgnoreCase("world")) {
-                grid = world.getWorldGrid();
-            } else {
-                String name = gridName.replaceAll("\\p{Alpha}", "").toLowerCase();
-                int floor = Integer.parseInt(gridName.replaceAll("\\D", ""));
-                grid = world.getBuilding(name).getFloorByNumber(floor);
-            }
-            int x = location.getAsJsonPrimitive("x").getAsInt();
-            int y = location.getAsJsonPrimitive("y").getAsInt();
-            String dir = location.getAsJsonPrimitive("direction").getAsString().trim();
+        public Location fromJson(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            String gridName = getString(object, "grid");
+            Grid grid = world.getGrid(gridName);
+            int x = getInt(object, "x");
+            int y = getInt(object, "y");
+            String dir = getString(object, "direction").toLowerCase().trim();
             Direction direction;
             switch (dir.charAt(0)) {
                 case 'n':
@@ -129,6 +106,16 @@ public class Location {
                     break;
             }
             return new Location(grid, x, y, direction);
+        }
+
+        @Override
+        public JsonElement toJson(Location object) {
+            JsonObject json = new JsonObject();
+            addString(json, "grid", object.grid.getName());
+            addInt(json, "x", (int) object.position.x);
+            addInt(json, "y", (int) object.position.y);
+            addString(json, "direction", object.direction.name());
+            return json;
         }
     }
 }

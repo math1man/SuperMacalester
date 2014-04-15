@@ -1,8 +1,11 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * A goal is a single plot interaction.
@@ -75,5 +78,25 @@ public class Goal {
 
         return entity.equals(goal.entity) && location.equals(goal.location)
                 && mainInteraction.equals(goal.mainInteraction);
+    }
+
+    public static class Parser extends SuperParser<Goal> {
+        @Override
+        public Goal fromJson(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            Entity entity = getObject(object, Entity.class);
+            Location location = getObject(object, Location.class);
+            Interaction interaction = getObject(object, Interaction.class);
+            return new Goal(entity, location, interaction);
+        }
+
+        @Override
+        public JsonElement toJson(Goal object) {
+            JsonObject json = new JsonObject();
+            addObject(json, object.getEntity(), Entity.class);
+            addObject(json, object.getLocation(), Location.class);
+            addObject(json, object.getMainInteraction(), Interaction.class);
+            return json;
+        }
     }
 }

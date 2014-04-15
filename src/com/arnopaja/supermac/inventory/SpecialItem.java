@@ -16,11 +16,16 @@ public class SpecialItem extends AbstractItem {
 
     public static class Parser extends AbstractItem.Parser<SpecialItem> {
         @Override
-        public SpecialItem convert(JsonElement element) {
+        public SpecialItem fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            int id = object.getAsJsonPrimitive("id").getAsInt();
-            String name = object.getAsJsonPrimitive("name").getAsString();
+            int id = getInt(object, "id");
+            String name = getString(object, "name");
             return new SpecialItem(id, name);
+        }
+
+        @Override
+        public JsonElement toJson(SpecialItem object) {
+            return toBaseJson(object);
         }
     }
 }

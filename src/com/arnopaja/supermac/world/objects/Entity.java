@@ -180,7 +180,7 @@ public abstract class Entity implements Renderable {
     }
 
     public Direction getFacing() {
-        return location.getFacing();
+        return location.getDirection();
     }
 
     public void setPosition(Vector2 position) {
@@ -188,7 +188,7 @@ public abstract class Entity implements Renderable {
     }
 
     public void setFacing(Direction direction) {
-        location.setFacing(direction);
+        location.setDirection(direction);
     }
 
     public boolean isInteractable() {
@@ -208,23 +208,39 @@ public abstract class Entity implements Renderable {
         setInteractable(interaction != Interaction.NULL);
     }
 
-    public static class Parser<T extends Entity> extends SuperParser {
+    public static class Parser<T extends Entity> extends SuperParser<T> {
 
         private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
 
         static {
-            parsers.put("MainMapCharacter", new MainMapCharacter.Parser());
-            parsers.put("MapNpc", new MapNpc.Parser());
-            parsers.put("Door", new Door.Parser());
-            parsers.put("Chest", new Chest.Parser());
+            parsers.put(MainMapCharacter.class.getSimpleName(), new MainMapCharacter.Parser());
+            parsers.put(MapNpcFixingMyName.class.getSimpleName(), new MapNpcFixingMyName.Parser());
+            parsers.put(Door.class.getSimpleName(), new Door.Parser());
+            parsers.put(Chest.class.getSimpleName(), new Chest.Parser());
         }
 
         @Override
-        public T convert(JsonElement element) {
+        public T fromJson(JsonElement element) {
             JsonObject entity = element.getAsJsonObject();
-            String className = entity.getAsJsonPrimitive("class").getAsString();
+            String className = getClass(entity);
             Parser<T> parser = parsers.get(className);
-            return parser.convert(element);
+            return parser.fromJson(element);
+        }
+
+        @Override
+        public JsonElement toJson(T object) {
+            Parser parser = parsers.get(object.getClass().getSimpleName());
+            return parser.toJson(object);
+        }
+
+        protected JsonObject toBaseJson(T object) {
+            JsonObject json = new JsonObject();
+            if (object.getLocation() != null) {
+                addObject(json, object.getLocation(), Location.class);
+            }
+            addBoolean(json, "interactable", object.isInteractable());
+            addClass(json, object);
+            return json;
         }
     }
 }

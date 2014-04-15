@@ -57,6 +57,7 @@ public class AssetLoader {
     // Data file handles
     public static FileHandle dialogueHandle;
     public static FileHandle questHandle;
+    public static FileHandle itemHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -138,6 +139,7 @@ public class AssetLoader {
 
         dialogueHandle = getHandle("dialogues.txt");
         questHandle = getHandle("quests.txt");
+        itemHandle = getHandle("items.txt");
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));

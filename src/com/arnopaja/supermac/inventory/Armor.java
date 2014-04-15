@@ -23,14 +23,22 @@ public class Armor extends AbstractItem {
 
     public static class Parser extends AbstractItem.Parser<Armor> {
         @Override
-        public Armor convert(JsonElement element) {
+        public Armor fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            int id = object.getAsJsonPrimitive("id").getAsInt();
-            String name = object.getAsJsonPrimitive("name").getAsString();
-            int value = object.getAsJsonPrimitive("value").getAsInt();
-            int modifier = object.getAsJsonPrimitive("modifier").getAsInt();
-            int bitmask = object.getAsJsonPrimitive("bitmask").getAsInt();
+            int id = getInt(object, "id");
+            String name = getString(object, "name");
+            int value = getInt(object, "value");
+            int modifier = getInt(object, "modifier");
+            int bitmask = getInt(object, "bitmask");
             return new Armor(id, name, value, modifier, bitmask);
+        }
+
+        @Override
+        public JsonElement toJson(Armor object) {
+            JsonObject json = toBaseJson(object);
+            addInt(json, "modifier", object.defenseModifier);
+            addInt(json, "bitmask", object.equippableBitMask);
+            return json;
         }
     }
 }

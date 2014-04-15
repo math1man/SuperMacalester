@@ -1,9 +1,6 @@
 package com.arnopaja.supermac.plot;
 
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.Entity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,31 +8,6 @@ import com.google.gson.JsonObject;
 import java.util.*;
 
 /**
- * Example Quest JSON:
- * {
- *     "dependencies" : [
- *         {
- *             "pre" : 0,
- *             "posts" : [
- *                 1,
- *                 2
- *             ]
- *         }
- *     ],
- *     "quests" : {
- *         "myQuest" : {
- *             "id" : 0,
- *             "goals" : [
- *                 {
- *                     "entity" : { [entity JSON object] }
- *                     "location" : { [location JSON object] }
- *                     "interaction" : { [interaction JSON object] }
- *                 }
- *             ]
- *         }
- *     }
- * }
- *
  * @author Ari Weiland
  */
 public class Quest {
@@ -206,20 +178,50 @@ public class Quest {
      */
     public static class Parser extends SuperParser<Quest> {
         @Override
-        public Quest convert(JsonElement element) {
+        public Quest fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            int questId = object.getAsJsonPrimitive("id").getAsInt();
-            JsonArray goalsJson = object.getAsJsonArray("goals");
-            List<Goal> goals = new ArrayList<Goal>(goalsJson.size());
-            for (JsonElement e : goalsJson) {
-                goals.add(parseGoal(e.getAsJsonObject()));
+            int questId = getInt(object, "id");
+            List<Goal> goals = getList(object, "goals", Goal.class);
+            Quest quest = new Quest(questId, goals);
+            if (object.has("currentGoal")) {
+                quest.load(getInt(object, "currentGoal"));
+            } else if (object.has("complete") && getBoolean(object, "complete")) {
+                quest.complete();
             }
-            return new Quest(questId, goals);
+            return quest;
+        }
+
+        @Override
+        public JsonElement toJson(Quest object) {
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.getId());
+            addList(json, "goals", object.goals, Goal.class);
+            if (object.isActive()) {
+                addInt(json, "currentGoal", object.currentGoal);
+            } else if (object.isComplete()) {
+                addBoolean(json, "complete", true);
+            }
+            return json;
         }
 
         @Override
         public JsonElement getJsonHead(String json) {
             return super.getJsonHead(json).getAsJsonObject().get("quests");
+        }
+
+        public JsonArray getDependenciesJsonHead(String json)  {
+            return super.getJsonHead(json).getAsJsonObject().getAsJsonArray("dependencies");
+        }
+
+        public Map<Integer, Quest> parseMap(String json) {
+            List<Quest> quests = parseAll(json);
+            Map<Integer, Quest> questMap = new HashMap<Integer, Quest>();
+            for (Quest quest : quests) {
+                questMap.put(quest.getId(), quest);
+            }
+            JsonArray array = getDependenciesJsonHead(json);
+            addDependencies(questMap, dependenciesFromJson(array));
+            return questMap;
         }
 
         public void addDependencies(Map<Integer, Quest> quests, Map<Integer, Integer[]> dependencies) {
@@ -229,29 +231,20 @@ public class Quest {
                 Quest[] posts = new Quest[postIds.length];
                 for (int i=0; i<postIds.length; i++) {
                     Quest post = quests.get(postIds[i]);
-                    post.addPrereqs(pre);
+                    if (!pre.isComplete()) {
+                        post.addPrereqs(pre);
+                    }
                     posts[i] = post;
                 }
                 pre.addPostreqs(posts);
             }
         }
 
-        public Map<Integer, Quest> parseMap(String json) {
-            List<Quest> quests = parseAll(json);
-            Map<Integer, Quest> questMap = new HashMap<Integer, Quest>();
-            for (Quest quest : quests) {
-                questMap.put(quest.getId(), quest);
-            }
-            JsonArray array = super.getJsonHead(json).getAsJsonObject().getAsJsonArray("dependencies");
-            addDependencies(questMap, parseDependencies(array));
-            return questMap;
-        }
-
-        private Map<Integer, Integer[]> parseDependencies(JsonArray array) {
+        private Map<Integer, Integer[]> dependenciesFromJson(JsonArray array) {
             Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
             for (JsonElement e : array) {
                 JsonObject object = e.getAsJsonObject();
-                int pre = object.getAsJsonPrimitive("pre").getAsInt();
+                int pre = getInt(object, "pre");
                 JsonArray a = object.getAsJsonArray("posts");
                 Integer[] posts = new Integer[a.size()];
                 for (int i=0; i<a.size(); i++) {
@@ -260,13 +253,6 @@ public class Quest {
                 map.put(pre, posts);
             }
             return map;
-        }
-
-        private Goal parseGoal(JsonObject object) {
-            Entity entity = convert(object.getAsJsonObject("entity"), Entity.class);
-            Location location = convert(object.getAsJsonObject("location"), Location.class);
-            Interaction interaction = convert(object.get("interaction"), Interaction.class);
-            return new Goal(entity, location, interaction);
         }
     }
 }

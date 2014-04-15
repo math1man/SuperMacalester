@@ -40,7 +40,7 @@ public abstract class AbstractItem {
         return getName();
     }
 
-    // Cache of all AbstractItems parsed
+    // Cache of all AbstractItems
     private static final Map<Integer, AbstractItem> cache = new HashMap<Integer, AbstractItem>();
 
     public static boolean isCached(int id) {
@@ -51,7 +51,7 @@ public abstract class AbstractItem {
         return cache.get(id);
     }
 
-    public static <T> T getCached(int id, Class<T> clazz) {
+    public static <T extends AbstractItem> T getCached(int id, Class<T> clazz) {
         AbstractItem item = getCached(id);
         if (item.getClass() == clazz) {
             return clazz.cast(item);
@@ -64,24 +64,39 @@ public abstract class AbstractItem {
         private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
 
         static {
-            parsers.put("Armor", new Armor.Parser());
-            parsers.put("Item", new Item.Parser());
-            parsers.put("SpecialItem", new SpecialItem.Parser());
-            parsers.put("Weapon", new Weapon.Parser());
+            parsers.put(Armor.class.getSimpleName(), new Armor.Parser());
+            parsers.put(Item.class.getSimpleName(), new Item.Parser());
+            parsers.put(SpecialItem.class.getSimpleName(), new SpecialItem.Parser());
+            parsers.put(Weapon.class.getSimpleName(), new Weapon.Parser());
         }
 
 
         @Override
-        public T convert(JsonElement element) {
+        public T fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             int id = object.getAsJsonPrimitive("id").getAsInt();
             if (isCached(id)) {
                 return (T) getCached(id);
             } else {
-                String className = object.getAsJsonPrimitive("class").getAsString();
+                String className = getClass(object);
                 Parser<T> parser = parsers.get(className);
-                return parser.convert(element);
+                return parser.fromJson(element);
             }
+        }
+
+        @Override
+        public JsonElement toJson(T object) {
+            Parser<T> parser = parsers.get(object.getClass().getSimpleName());
+            return parser.toJson(object);
+        }
+
+        protected JsonObject toBaseJson(T object) {
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.getId());
+            addString(json, "name", object.getName());
+            addInt(json, "value", object.getValue());
+            addClass(json, object);
+            return json;
         }
     }
 }

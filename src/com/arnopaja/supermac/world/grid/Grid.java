@@ -104,7 +104,7 @@ public class Grid {
     }
 
     public Location getNearestValidLocation(Location location) {
-        return getNearestValidLocation(location.getPosition(), location.getFacing());
+        return getNearestValidLocation(location.getPosition(), location.getDirection());
     }
 
     /**
