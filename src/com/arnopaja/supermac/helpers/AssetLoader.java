@@ -21,8 +21,6 @@ public class AssetLoader {
 
     public static final float FONT_SHADOW_OFFSET = 0.06f;
 
-    public static Preferences prefs;
-
     private static Texture tilesTexture, entitiesTexture, characterTexture;
 
     // Tiles
@@ -46,21 +44,20 @@ public class AssetLoader {
 
     // Characters
     public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
-    public static EnumMap<Direction, TextureRegion> mainChar;
-    public static EnumMap<Direction, Animation> mainCharAnim;
-    public static EnumMap<Direction, TextureRegion> betsy;
-    public static EnumMap<Direction, Animation> betsyAnim;
 
     // Battle Backgrounds
     public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
 
     // Data file handles
     public static FileHandle dialogueHandle;
-    public static FileHandle questHandle;
+    public static FileHandle plotHandle;
     public static FileHandle itemHandle;
 
     // Font
     public static BitmapFont font, shadow;
+
+    // Preferences
+    public static Preferences prefs;
 
     public static void load() {
 
@@ -138,7 +135,7 @@ public class AssetLoader {
         // TODO: battle backgrounds
 
         dialogueHandle = getHandle("dialogues.txt");
-        questHandle = getHandle("quests.txt");
+        plotHandle = getHandle("plot.txt");
         itemHandle = getHandle("items.txt");
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
@@ -148,7 +145,6 @@ public class AssetLoader {
     }
 
     public static void loadCharacter(String name, String path) {
-        // as of 3/28/14, using the updated canvas that Jared was working on in class today
         EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);

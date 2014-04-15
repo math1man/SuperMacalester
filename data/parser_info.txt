@@ -4,14 +4,17 @@ Anything not in angle brackets must be written exactly as is.
 
 A sample entity:
 
-"<Entity Name>" : {
-    TODO: figure out how to parse Entities
+"entity" : {
+    "class" : "<the class of the entity, properly capitalized, ie. Door>",
+    "location" : { <a location instance> },
+    "interactable" : <true/false (optional)>,
+    <other parameters that are class specific>
 }
 
 A sample location:
 
-"<Location Name>" : {
-    "grid" : "<world for world map, or building name and floor number, separated by a non-word character>",
+"location" : {
+    "grid" : "<world for world map, or building name and floor number>",
     "x" : <x coordinate>,
     "y" : <y coordinate>,
     "direction" : <north, east, south, or west>
@@ -19,13 +22,18 @@ A sample location:
 
 A sample interaction:
 
-"<Interaction Name>" : {
-    TODO: figure out how to parse Interactions
+"interaction" : {
+    "dialogue" : { <a dialogue instance> }
+    "battle" : { <a battle instance> }
 }
+
+An interaction may have either a dialogue or a battle, but not both.
+In order to add a battle to the end of a dialogue, create a dialogue
+with an interaction in it.
 
 A sample goal:
 
-"<Goal Name>" : {
+"goal" : {
     "entity" : { <the entity> },
     "location" : { <the location> },
     "interaction" : { <the interaction> }
@@ -33,23 +41,34 @@ A sample goal:
 
 A sample quest:
 
-"<Quest Name>" : {
-    "id" : <unique identifier (int)>
-    "goals" : [ <array of goals> ],
+"quest" : {
+    "id" : <unique identifier (int)>,
+    "goals" : [ <array of goal instances> ]
+}
+
+A sample plot:
+
+"plot" : {
+    "dependencies" : [
+        {
+            "quest" : <ID of a quest (int)>
+            "unlocks" : [ <array of IDs of all quests 'pre' unlocks> ]
+        },
+        <etc for each quest>
+    ],
+    "quests" : [ <array of quest instances> ]
 }
 
 A sample dialogue:
 
-"<Dialogue Name>" : {
+"dialogue" : {
     "text" : "<string of dialogue goes here>",
-    "interaction" : {
-        <interaction>
-    },
+    "interaction" : { <an interaction instance> },
     "options" : {
         "header" : "<option header goes here>",
         "options" : [
-            "<option 1>",
-            "<option 2>",
+            "<first option>",
+            "<second option>",
             <etc>
         ],
         "interactions" : [
@@ -69,5 +88,19 @@ Additionally, the dialogue options interactions are optional, though if present,
 they must match the amount of options given. Dialogue windows should be separated
 by <d>, as the newline "\n" character is usable in dialogue windows.
 
-TODO: Parse items, etc.
-TODO: Parse battles, etc?
+A sample item:
+
+"item" : {
+    "class" : "<the class name, ie. Weapon>"
+    "id" : <unique identifier (int)>,
+    "name" : "<the name of the item>",
+    "value" : <the value of the item (int)>,
+    "modifier" : <the attack/defense modifier of weapons/armor (int)>,
+    "bitmask" : <... not for SpecialItems (int)>
+}
+
+A sample battle:
+
+{
+    TODO: Parse battles
+}

@@ -74,8 +74,8 @@ public class Plot {
                 for (int i : entry.getValue()) {
                     array.add(new JsonPrimitive(i));
                 }
-                addInt(object, "pre", entry.getKey());
-                object.add("posts", array);
+                addInt(object, "quest", entry.getKey());
+                object.add("unlocks", array);
                 json.add(object);
             }
             return json;
@@ -101,8 +101,8 @@ public class Plot {
             Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
             for (JsonElement e : array) {
                 JsonObject object = e.getAsJsonObject();
-                int pre = getInt(object, "pre");
-                JsonArray a = object.getAsJsonArray("posts");
+                int pre = getInt(object, "quest");
+                JsonArray a = object.getAsJsonArray("unlocks");
                 Integer[] posts = new Integer[a.size()];
                 for (int i=0; i<a.size(); i++) {
                     posts[i] = a.get(i).getAsInt();

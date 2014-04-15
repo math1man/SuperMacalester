@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
         SuperParser.initParsers(world);
         SuperParser.initItems(AssetLoader.itemHandle.readString());
 
-        plot = new Plot(AssetLoader.questHandle.readString());
+        plot = new Plot(AssetLoader.plotHandle.readString());
 
         float scaleFactorX = GAME_WIDTH /Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT /Gdx.graphics.getHeight();
