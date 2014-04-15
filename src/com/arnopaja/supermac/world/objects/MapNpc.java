@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Ari Weiland
  */
-public class MapNpcFixingMyName extends MapCharacter {
+public class MapNpc extends MapCharacter {
 
     public static final boolean DEFAULT_INTERACTABLE = false;
     public static final boolean DEFAULT_CAN_MOVE = true;
@@ -18,24 +18,24 @@ public class MapNpcFixingMyName extends MapCharacter {
 
     private boolean canMove = true;
 
-    public MapNpcFixingMyName() {
+    public MapNpc() {
         this(null);
     }
 
-    public MapNpcFixingMyName(Location location) {
+    public MapNpc(Location location) {
         this(location, DEFAULT_INTERACTABLE);
     }
 
-    public MapNpcFixingMyName(Location location, boolean isInteractable) {
+    public MapNpc(Location location, boolean isInteractable) {
         this(location, isInteractable, DEFAULT_CAN_MOVE);
     }
 
-    public MapNpcFixingMyName(Location location, boolean isInteractable, boolean canMove) {
+    public MapNpc(Location location, boolean isInteractable, boolean canMove) {
         this(location, isInteractable, canMove, null);
     }
 
-    public MapNpcFixingMyName(Location location, boolean isInteractable, boolean canMove,
-                              CharacterAsset asset) {
+    public MapNpc(Location location, boolean isInteractable, boolean canMove,
+                  CharacterAsset asset) {
         super(location, isInteractable, asset);
         this.canMove = canMove;
     }
@@ -60,23 +60,23 @@ public class MapNpcFixingMyName extends MapCharacter {
         this.canMove = canMove;
     }
 
-    public static class Parser extends Entity.Parser<MapNpcFixingMyName> {
+    public static class Parser extends Entity.Parser<MapNpc> {
         @Override
-        public MapNpcFixingMyName fromJson(JsonElement element) {
+        public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = null;
             if (object.has("location")) {
                 location = getObject(object, Location.class);
             }
-            boolean isInteractable = MapNpcFixingMyName.DEFAULT_INTERACTABLE;
+            boolean isInteractable = MapNpc.DEFAULT_INTERACTABLE;
             if (object.has("interactable")) {
                 isInteractable = getBoolean(object, "interactable");
             }
-            boolean canMove = MapNpcFixingMyName.DEFAULT_CAN_MOVE;
+            boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
             }
-            MapNpcFixingMyName npc = new MapNpcFixingMyName(location, isInteractable, canMove);
+            MapNpc npc = new MapNpc(location, isInteractable, canMove);
             if (object.has("interaction")) {
                 npc.setInteraction(getObject(object, Interaction.class));
             }
@@ -84,7 +84,7 @@ public class MapNpcFixingMyName extends MapCharacter {
         }
 
         @Override
-        public JsonElement toJson(MapNpcFixingMyName object) {
+        public JsonElement toJson(MapNpc object) {
             JsonObject json = toBaseJson(object);
             addBoolean(json, "canMove", object.canMove);
             if (object.getInteraction() != null) {

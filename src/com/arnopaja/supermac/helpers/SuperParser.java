@@ -39,7 +39,7 @@ public abstract class SuperParser<T> {
         addParser(Item.class,             new Item.Parser());
         addParser(Location.class,         new Location.Parser());
         addParser(MainMapCharacter.class, new MainMapCharacter.Parser());
-        addParser(MapNpcFixingMyName.class,           new MapNpcFixingMyName.Parser());
+        addParser(MapNpc.class,           new MapNpc.Parser());
         addParser(Quest.class,            new Quest.Parser());
         addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
