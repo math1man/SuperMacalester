@@ -1,0 +1,83 @@
+Map info:
+Each map should be in its own text file, named exactly after the map. A map is
+composed of one or more grids separated by a <floor> command. For grids with
+multiple floors, the first floor index should be specified as first floor:#
+as the first line of the document. Grids are tab-separated values, where each
+value is a tile code. Tile codes should start with the tile key followed by a
+hyphen and then any flags. Tiles with sprites that take up multiple grid spaces
+should be coded in the upper left corner of the area, with the rest of the area
+filled with null tiles. An underscore is a prefix for buildings, which are
+necessarily impassable and do not need to be flagged as such.
+
+List of terrain tile keys:
+      = null tile
+  g   = grass
+  bh  = bush horizontal
+  bv  = bush vertical
+  bfh = flowering bush horizontal
+  bfv = flowering bush vertical
+  ts  = tree small
+  tb = tree big
+  c   = cobble
+  cr  = red cobble
+  a   = asphalt
+  ah  = asphalt with a horizontal road line
+  av  = asphalt with a vertical road line
+  an  = asphalt north edge
+  ae  = asphalt east edge
+  as  = asphalt south edge
+  aw  = asphalt west edge
+  ane = asphalt northeast corner
+  ase = asphalt southeast corner
+  ase = asphalt southwest corner
+  anw = asphalt northwest corner
+
+List of building tiles
+  _ar = Art Buiding
+  _ac = Art Commons
+  _bi = Bigelow
+  _cc = Campus Center
+  _ca = Carnegie
+  _ch = Chapel
+  _do = Doty
+  _du = Dupre
+  _hu = Humanities
+  _ka = Kagin
+  _ki = Kirk
+  _lc = Leonard Center
+  _li = Library
+  _ma = Markim Hall
+  _mu = Music Building
+  _om = Old Main
+  _ol = Olin
+  _ri = Rice
+  _th = Theatre Building
+  _tm = 30 Mac (Thirty Mac)
+  _tu = Turk
+  _wa = Wallace
+  _we = Weyerhauser
+
+List of current tile flags:
+i = impassable flag
+
+All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
+
+Building info:
+    CAMPUS_CENTER   (3, 1, 0, 0),
+    CHAPEL          (2, 1, 0, 0),
+    OLIN_RICE       (4, 0, 0, 0),
+    OLD_MAIN        (5, 1, 0, 0),
+    CARNEGIE        (5, 1, 0, 0),
+    NEILL_HALL      (3, 0, 0, 0),
+    ART_COMMONS     (3, 1, 0, 0),
+    WEYERHAUSER     (0, 0, 0, 0), // TODO: what is the actual layout?
+    LEONARD_CENTER  (2, 0, 0, 0), // TODO: does the LC have only 2 floors?
+    KAGIN           (3, 1, 0, 0),
+    DUPRE           (6, 1, 0, 0),
+    DOTY            (6, 1, 0, 0), // TODO: does Doty have a basement?
+    TURCK           (6, 1, 0, 0), // TODO: does Turck have 5 floors and a basement?
+    BIGELOW         (5, 1, 0, 0), // TODO: does Bigelow have only 4 floors?
+    THIRTY_MAC      (1, 0, 0, 0), // 30 Mac basement will be part of Bigelow/Wallace
+    WALLACE         (5, 1, 0, 0),
+    KIRK            (3, 1, 0, 0); // The different sections of Kirk are unconnected,
+                                  // but it will be easier to just have one building

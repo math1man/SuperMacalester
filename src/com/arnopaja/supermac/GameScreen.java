@@ -3,10 +3,9 @@ package com.arnopaja.supermac;
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.BaseInputHandler;
-import com.arnopaja.supermac.helpers.BaseRenderer;
+import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
@@ -22,10 +21,13 @@ public class GameScreen implements Screen {
 
     // TODO: allow for variable aspect ratios (i.e. below)
     public static final float ASPECT_RATIO = 5.0f / 3; //Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-    public static final int GAME_HEIGHT = 480;
+    public static final float GAME_HEIGHT = 480;
+    public static final float GAME_WIDTH = GAME_HEIGHT * ASPECT_RATIO;
 
     public static enum GameMode { WORLD, BATTLE, MENU }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
+
+    public static final Settings SETTINGS = new Settings();
 
     private final DialogueHandler dialogueHandler;
     private final Plot plot;
@@ -47,26 +49,23 @@ public class GameScreen implements Screen {
     private float runTime;
 
     public GameScreen() {
-        Settings.gameHeight = GAME_HEIGHT;
-        Settings.gameWidth = GAME_HEIGHT * ASPECT_RATIO;
-        Settings.load();
-
-        dialogueHandler = new DialogueHandler(Settings.gameWidth, Settings.gameHeight);
+        dialogueHandler = new DialogueHandler(GAME_WIDTH, GAME_HEIGHT);
 
         world = new World();
 
-        plot = new Plot(world);
+        SuperParser.initParsers(world);
 
-        float scaleFactorX = Settings.gameWidth/Gdx.graphics.getWidth();
-        float scaleFactorY = Settings.gameHeight/Gdx.graphics.getHeight();
+        plot = new Plot(SuperParser.parseQuestMap(AssetLoader.questHandle.readString()));
 
-        worldRenderer = new WorldRenderer(dialogueHandler, Settings.gameWidth, Settings.gameHeight);
+        float scaleFactorX = GAME_WIDTH /Gdx.graphics.getWidth();
+        float scaleFactorY = GAME_HEIGHT /Gdx.graphics.getHeight();
+
+        worldRenderer = new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
         worldRenderer.setController(world);
-        worldInputHandler = new WorldInputHandler(this, Settings.gameWidth, Settings.gameHeight,
-                scaleFactorX, scaleFactorY);
+        worldInputHandler = new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
 
-        battleRenderer = new BattleRenderer(dialogueHandler, Settings.gameWidth, Settings.gameHeight);
-        battleInputHandler = new BattleInputHandler(this, Settings.gameWidth, Settings.gameHeight,
+        battleRenderer = new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
+        battleInputHandler = new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT,
                 scaleFactorX, scaleFactorY);
 
         changeMode(GameMode.WORLD);
@@ -147,6 +146,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        SaverLoader.save(SETTINGS);
         worldRenderer.dispose();
         battleRenderer.dispose();
     }
@@ -180,6 +180,16 @@ public class GameScreen implements Screen {
         return state == GameState.DIALOGUE;
     }
 
+    public void save() {
+        SaverLoader.save(plot);
+        SaverLoader.save(world);
+    }
+
+    public void load() {
+        SaverLoader.load(plot);
+        SaverLoader.save(world);
+    }
+
     public DialogueHandler getDialogueHandler() {
         return dialogueHandler;
     }
@@ -201,7 +211,9 @@ public class GameScreen implements Screen {
     }
 
     public void setBattle(Battle battle) {
-        this.battle = new Battle(battle, dialogueHandler);
+        this.battle = battle;
+        // TODO: set up main party
+        this.battle.readyBattle(null, dialogueHandler);
     }
 
     public BattleRenderer getBattleRenderer() {

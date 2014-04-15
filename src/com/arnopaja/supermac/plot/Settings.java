@@ -1,21 +1,23 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.helpers.Savable;
+import com.google.gson.JsonElement;
+
 /**
  * This will be a static class that handles game settings
  * It maybe also should handle game resolution
  *
  * @author Ari Weiland
  */
-public class Settings {
+public class Settings implements Savable {
 
-    public static float gameHeight;
-    public static float gameWidth;
-
-    public static void save() {
-
+    @Override
+    public JsonElement toJson() {
+        return null;
     }
 
-    public static void load() {
+    @Override
+    public void fromJson(JsonElement element) {
 
     }
 }

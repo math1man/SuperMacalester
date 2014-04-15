@@ -3,13 +3,17 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.MainParty;
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.InteractionUtils;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Comparator;
 import java.util.List;
@@ -26,66 +30,31 @@ public class Battle implements Controller {
 
     private static final Random battleRandomGen = new Random();
 
-    private final DialogueHandler dialogueHandler;
-
-    private final MainParty mainParty;
     private final EnemyParty enemyParty;
     private final boolean isBossFight;
     private final TextureRegion background;
     private final Queue<BattleAction> actionQueue;
 
-    /**
-     * Constructs a battle that is identical to the specified battle.
-     * @param battle
-     */
-    public Battle(Battle battle) {
-        this(battle.mainParty, battle.enemyParty, battle.dialogueHandler);
-    }
+    private DialogueHandler dialogueHandler;
+    private MainParty mainParty;
 
-    /**
-     * Constructs a battle that is identical to the specified battle,
-     * except instead with the specified dialogue handler.
-     * @param battle
-     * @param dialogueHandler
-     */
-    public Battle(Battle battle, DialogueHandler dialogueHandler) {
-        this(battle.mainParty, battle.enemyParty, dialogueHandler);
-    }
-
-    /**
-     * Constructs a battle with no associated dialogue handler.
-     * WARNING: Calling the update method on battles with no associated
-     * dialogue handler will throw null pointer exceptions.  Instead,
-     * attach a dialogue handler should be attached by instantiating
-     * new Battle(Battle, DialogueHandler).
-     * @param mainParty
-     * @param enemyParty
-     */
-    public Battle(MainParty mainParty, EnemyParty enemyParty) {
-        this(mainParty, enemyParty, null);
-    }
-
-    /**
-     * The base Battle constructor.
-     * @param mainParty
-     * @param enemyParty
-     * @param dialogueHandler
-     */
-    public Battle(MainParty mainParty, EnemyParty enemyParty, DialogueHandler dialogueHandler) {
-        this.dialogueHandler = dialogueHandler;
-        this.mainParty = mainParty;
+    public Battle(EnemyParty enemyParty, TextureRegion background) {
         this.enemyParty = enemyParty;
         this.isBossFight = enemyParty.containsBoss();
-        // TODO: set up background
-        this.background = null;
+        this.background = background;
         actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
-                        return a.getPriority() < b.getPriority() ? -1 : a.getPriority() == b.getPriority() ? 0 : 1;
+                        return a.getPriority() - b.getPriority();
                     }
                 }
         );
+    }
+
+    public void readyBattle(MainParty mainParty, DialogueHandler dialogueHandler) {
+        this.mainParty = mainParty;
+        this.dialogueHandler = dialogueHandler;
     }
 
     @Override
@@ -149,5 +118,20 @@ public class Battle implements Controller {
 
     public TextureRegion getBackground() {
         return background;
+    }
+
+    public static class Parser extends SuperParser<Battle> {
+        @Override
+        public Battle convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            EnemyParty enemy = parseEnemy(object.get("enemy"));
+            TextureRegion background = AssetLoader.getBackground(object.getAsJsonPrimitive("background").getAsString());
+            return new Battle(enemy, background);
+        }
+
+        public EnemyParty parseEnemy(JsonElement element) {
+            // TODO: finish me!
+            return new EnemyParty();
+        }
     }
 }

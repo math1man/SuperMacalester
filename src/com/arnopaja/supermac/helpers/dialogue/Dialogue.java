@@ -1,100 +1,55 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.helpers.Interaction;
-
-import java.util.Arrays;
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
+ * Superclass for DialogueText and DialogueOptions
+ *
  * @author Ari Weiland
  */
-public class Dialogue implements DialogueDisplayable {
+public abstract class Dialogue {
 
-    private final String[] dialogue;
-    private final boolean hasOptions;
-    private final DialogueOptions options;
-    private final boolean hasPostInteraction;
-    private final Interaction postInteraction;
+    public static class Parser extends SuperParser<Dialogue> {
+        @Override
+        public Dialogue convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            boolean hasDialogue = object.has("text");
+            boolean hasOptions = object.has("options");
+            if (hasDialogue) {
+                String dialogue = object.getAsJsonPrimitive("text").getAsString();
+                if (hasOptions) {
+                    DialogueOptions options = parseOptions(object.getAsJsonObject("options"));
+                    return new DialogueText(dialogue, options);
+                } else if (object.has("interaction")) {
+                    Interaction interaction = convert(object.get("interaction"), Interaction.class);
+                    return new DialogueText(dialogue, interaction);
+                }
+            } else if (hasOptions) {
+                return parseOptions(object.getAsJsonObject("options"));
+            }
+            return null;
+        }
 
-    private int position;
-    private String currentDialogue;
-    private boolean hasNext;
-
-    public Dialogue(String rawDialogue) {
-        this(rawDialogue.split("<d>"));
-    }
-
-    public Dialogue(String... dialogue) {
-        this(dialogue, null, null);
-    }
-
-    public Dialogue(String rawDialogue, Interaction postInteraction) {
-        this(postInteraction, rawDialogue.split("<d>"));
-    }
-
-    public Dialogue(Interaction postInteraction, String... dialogue) {
-        this(dialogue, null, postInteraction);
-    }
-
-    public Dialogue(String rawDialogue, DialogueOptions options) {
-        this(options, rawDialogue.split("<d>"));
-    }
-
-    public Dialogue(DialogueOptions options, String... dialogue) {
-        this(dialogue, options, null);
-    }
-
-    private Dialogue(String[] dialogue, DialogueOptions options, Interaction postInteraction) {
-        this.dialogue = dialogue;
-        this.hasOptions = (options != null);
-        this.options = options;
-        this.hasPostInteraction = (postInteraction != null);
-        this.postInteraction = postInteraction;
-        reset();
-    }
-
-    public void next() {
-        position++;
-        currentDialogue = dialogue[position];
-        hasNext = position + 1 < dialogue.length ;
-    }
-
-    public String[] getDialogue() {
-        return dialogue;
-    }
-
-    public boolean hasOptions() {
-        return hasOptions;
-    }
-
-    public DialogueOptions getOptions() {
-        return options;
-    }
-
-
-    public boolean hasPostInteraction() {
-        return hasPostInteraction;
-    }
-
-    public Interaction getPostInteraction() {
-        return postInteraction;
-    }
-
-    public String getCurrentDialogue() {
-        return currentDialogue.trim();
-    }
-
-    public boolean hasNext() {
-        return hasNext;
-    }
-
-    public void reset() {
-        position = 0;
-        currentDialogue = dialogue[0];
-        hasNext = dialogue.length > 1;
-    }
-
-    @Override
-    public String toString() {
-        return Arrays.toString(dialogue);
+        public DialogueOptions parseOptions(JsonObject object) {
+            String header = object.getAsJsonPrimitive("header").getAsString();
+            JsonArray optionsJson = object.getAsJsonArray("options");
+            String[] options = new String[optionsJson.size()];
+            for (int i=0; i<optionsJson.size(); i++) {
+                options[i] = optionsJson.get(i).getAsString();
+            }
+            Interaction[] interactions = new Interaction[0];
+            if (object.has("interactions")) {
+                JsonArray interactionsJson = object.getAsJsonArray("interactions");
+                interactions = new Interaction[interactionsJson.size()];
+                for (int i=0; i<interactionsJson.size(); i++) {
+                    interactions[i] = convert(interactionsJson.get(i).getAsJsonObject(), Interaction.class);
+                }
+            }
+            return new DialogueOptions(header, options, interactions);
+        }
     }
 }

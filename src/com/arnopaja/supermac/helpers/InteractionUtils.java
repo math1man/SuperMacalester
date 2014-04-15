@@ -4,7 +4,7 @@ import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleAction;
 import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.dialogue.DialogueDisplayable;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.plot.Quest;
@@ -59,8 +59,8 @@ public class InteractionUtils {
                     return Interaction.changeGrid((Entity) primary, (Location) secondary);
                 }
             } else {
-                if (primary instanceof DialogueDisplayable) {
-                    return Interaction.dialogue((DialogueDisplayable) primary);
+                if (primary instanceof Dialogue) {
+                    return Interaction.dialogue((Dialogue) primary);
                 } else if (primary instanceof Battle) {
                     return Interaction.battle((Battle) primary);
                 } else if (primary instanceof BattleAction) {
@@ -152,7 +152,7 @@ public class InteractionUtils {
      * @param dialogues the list of dialogues to be converted
      * @return
      */
-    public static Interaction[] convertDialogues(DialogueDisplayable... dialogues) {
+    public static Interaction[] convertDialogues(Dialogue... dialogues) {
         Interaction[] interactions = new Interaction[dialogues.length];
         for (int i=0; i<dialogues.length; i++) {
             interactions[i] = Interaction.dialogue(dialogues[i]);
@@ -167,8 +167,8 @@ public class InteractionUtils {
      * @param dialogue the dialogue to initiate
      * @return
      */
-    public static Interaction[] convertDialogues(DialogueDisplayable dialogue, int size) {
-        DialogueDisplayable[] dialogues = new DialogueDisplayable[size];
+    public static Interaction[] convertDialogues(Dialogue dialogue, int size) {
+        Dialogue[] dialogues = new Dialogue[size];
         Arrays.fill(dialogues, dialogue);
         return convertDialogues(dialogues);
     }

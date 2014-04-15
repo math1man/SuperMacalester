@@ -1,16 +1,10 @@
 package com.arnopaja.supermac.plot;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.parser.Parser;
-import com.arnopaja.supermac.world.World;
-import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.MapNpc;
+import com.arnopaja.supermac.helpers.Savable;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,74 +13,40 @@ import java.util.Map;
  *
  * @author Ari Weiland
  */
-public class Plot {
+public class Plot implements Savable {
 
-    private final World world;
     private Map<Integer, Quest> quests;
 
-    public Plot(World world) {
-        this.world = world;
-        this.quests = new HashMap<Integer, Quest>();
-        // TODO: create Quests and everything that goes into them
-        // this will be a very long method if it is hard-coded
-
-        // TODO: make some way to parse quests from an external doc?
-
-//        initTestQuest();
+    public Plot(Map<Integer, Quest> quests) {
+        this.quests = quests;
     }
 
-    private void initTestQuest() {
-        MapNpc character = new MapNpc();
-        character.setAsset(AssetLoader.getAsset("Betsy"));
-
-        Location location = new Location(world.getWorldGrid(), 40, 40, Direction.NORTH);
-
-        Interaction interaction = Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle));
-
-        List<Goal> testGoals = new ArrayList<Goal>();
-        testGoals.add(new Goal(character, location, interaction));
-
-        Quest test = new Quest(testGoals);
-        test.activate(null);
-        addQuest(test);
-    }
-
-    public void addQuest(Quest quest) {
-        quests.put(quest.ID, quest);
-    }
-
-    public void save() {
-        StringBuilder sb = new StringBuilder();
+    @Override
+    public JsonElement toJson() {
+        JsonArray me = new JsonArray();
         for (Quest quest : quests.values()) {
             if (!quest.isInactive()) {
-                // All active and complete quests are saved with their ID
-                sb.append(quest.ID);
-                if (quest.isComplete()) {
-                    // All active quests have their current goal appended
-                    sb.append("-").append(quest.getCurrentGoal());
+                JsonObject questJson = new JsonObject();
+                questJson.addProperty("id", quest.getId());
+                if (quest.isActive()) {
+                    questJson.addProperty("active", true);
+                    questJson.addProperty("goal", quest.getCurrentGoal());
                 }
-                sb.append("\n");
+                me.add(questJson);
             }
         }
-        AssetLoader.prefs.putString("Quests", sb.toString());
-        AssetLoader.prefs.flush();
+        return me;
     }
 
-    public void load() {
-        // this method will first read which quests are complete and complete them
-        // it then needs to set active quests to the proper current goal
-        String load = AssetLoader.prefs.getString("Quests");
-        String[] questIDs = load.split("\n");
-        for (String questID : questIDs) {
-            if (questID.contains("-")) {
-                // loads all active quests to the proper goal
-                String[] split = questID.split("-");
-                int id = new Integer(split[0]);
-                int currentGoal = new Integer(split[1]);
-                quests.get(id).load(currentGoal);
+    @Override
+    public void fromJson(JsonElement element) {
+        JsonArray array = element.getAsJsonArray();
+        for (JsonElement e : array) {
+            JsonObject quest = e.getAsJsonObject();
+            int id = quest.getAsJsonPrimitive("id").getAsInt();
+            if (quest.has("active")) {
+                quests.get(id).load(quest.getAsJsonPrimitive("goal").getAsInt());
             } else {
-                // completes all quests that were previously completed
-                int id = new Integer(questID);
                 quests.get(id).complete();
             }
         }

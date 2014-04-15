@@ -2,6 +2,7 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Item;
 
 import java.util.Random;
@@ -46,7 +47,7 @@ public abstract class BattleAction {
                     dialogue += "\n" + getDestination() + " fell!";
                 }
                 System.out.println(dialogue);
-                return new Dialogue(dialogue);
+                return new DialogueText(dialogue);
             }
         };
     }
@@ -75,7 +76,7 @@ public abstract class BattleAction {
             public Dialogue run(float delta) {
                 // TODO: code for defending
                 String dialogue = getSource() + " is defending!";
-                return new Dialogue(dialogue);
+                return new DialogueText(dialogue);
             }
         };
     }
@@ -87,7 +88,7 @@ public abstract class BattleAction {
             public Dialogue run(float delta) {
                 // TODO: code for fleeing
                 String dialogue = getSource() + " flees!";
-                return new Dialogue(dialogue);
+                return new DialogueText(dialogue);
             }
         };
     }

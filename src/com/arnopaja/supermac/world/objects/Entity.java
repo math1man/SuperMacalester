@@ -1,12 +1,17 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -201,5 +206,25 @@ public abstract class Entity implements Renderable {
     public void setInteraction(Interaction interaction) {
         this.interaction = interaction;
         setInteractable(interaction != Interaction.NULL);
+    }
+
+    public static class Parser<T extends Entity> extends SuperParser {
+
+        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
+
+        static {
+            parsers.put("MainMapCharacter", new MainMapCharacter.Parser());
+            parsers.put("MapNpc", new MapNpc.Parser());
+            parsers.put("Door", new Door.Parser());
+            parsers.put("Chest", new Chest.Parser());
+        }
+
+        @Override
+        public T convert(JsonElement element) {
+            JsonObject entity = element.getAsJsonObject();
+            String className = entity.getAsJsonPrimitive("class").getAsString();
+            Parser<T> parser = parsers.get(className);
+            return parser.convert(element);
+        }
     }
 }

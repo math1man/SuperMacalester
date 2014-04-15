@@ -1,67 +1,3 @@
-# Map data document.  All maps should be generated here in a very specific form:
-# <map:[map name]>
-# <floors:[floor count]>                  # optional, used for buildings, default to 1
-# <first_floor_index:[first floor index]> # optional, used for buildings, default to 0
-# [grid of tile codes]                    # for multiple floors, each floor should be
-# </map>                                  # on the next line after the previous one
-#
-# Tile codes should start with the tile key followed by a hyphen and then any flags.
-# An underscore is a prefix for tiles that are larger sprites and should be filled in with null tiles.
-#
-# List of current tile keys:
-#       = null tile
-#   g   = grass
-#   bh  = bush horizontal
-#   bv  = bush vertical
-#   bfh = flowering bush horizontal
-#   bfv = flowering bush vertical
-#   ts  = tree small
-#   _tb = tree big
-#   c   = cobble
-#   cr  = red cobble
-#   a   = asphalt
-#   ah  = asphalt with a horizontal road line
-#   av  = asphalt with a vertical road line
-#   an  = asphalt north edge
-#   ae  = asphalt east edge
-#   as  = asphalt south edge
-#   aw  = asphalt west edge
-#   ane = asphalt northeast corner
-#   ase = asphalt southeast corner
-#   ase = asphalt southwest corner
-#   anw = asphalt northwest corner
-#
-# List of building tiles
-#   _ar = Art Buiding
-#   _ac = Art Commons
-#   _bi = Bigelow
-#   _cc = Campus Center
-#   _ca = Carnegie
-#   _ch = Chapel
-#   _do = Doty
-#   _du = Dupre
-#   _hu = Humanities
-#   _ka = Kagin
-#   _ki = Kirk
-#   _lc = Leonard Center
-#   _li = Library
-#   _ma = Markim Hall
-#   _mu = Music Building
-#   _om = Old Main
-#   _ol = Olin
-#   _ri = Rice
-#   _th = Theatre Building
-#   _tm = 30 Mac (Thirty Mac)
-#   _tu = Turk
-#   _wa = Wallace
-#   _we = Weyerhauser
-#
-# List of current tile flags:
-# i = impassable flag
-#
-# All tiles are rendered automatically except null tiles which by definition cannot be rendered and do not have a sprite
-
-<map:Macalester>
 g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 ae	ae	ae	ae	ae	ae	ae	ae	ane	a	a	a	ase	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae	ae
@@ -70,7 +6,7 @@ a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	
 ah	ah	ah	ah	ah	ah	ah	ah	a	a	a	a	a	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah	ah
 a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
 a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a	a
-aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i	a-i	a-i	a-i	asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i	a-i	a-i	a-i	asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i
+aw	aw	aw	aw	aw	aw	aw	aw	anw	a	a	a	asw	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	anw-i	a-i	a-i	a-i	asw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i	aw-i
 g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 g	g	g	g	g	c	c	c	an	a	av	a	as-i	c	c	c	c	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
 c	c	c	c	c	c	c	c	an	a	av	a	as-i	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	c	an	a	a	a	as	bv-i	g	g	g	g	g	g	g	g	g	g	g	g	g
@@ -190,26 +126,3 @@ g	g	g	g	g	g	g	g	an	a	av	a	as	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
 																																																																														g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g	g
-</map>
-
-
-
-Building info:
-    CAMPUS_CENTER   (3, 1, 0, 0),
-    CHAPEL          (2, 1, 0, 0),
-    OLIN_RICE       (4, 0, 0, 0),
-    OLD_MAIN        (5, 1, 0, 0),
-    CARNEGIE        (5, 1, 0, 0),
-    NEILL_HALL      (3, 0, 0, 0),
-    ART_COMMONS     (3, 1, 0, 0),
-    WEYERHAUSER     (0, 0, 0, 0), // TODO: what is the actual layout?
-    LEONARD_CENTER  (2, 0, 0, 0), // TODO: does the LC have only 2 floors?
-    KAGIN           (3, 1, 0, 0),
-    DUPRE           (6, 1, 0, 0),
-    DOTY            (6, 1, 0, 0), // TODO: does Doty have a basement?
-    TURCK           (6, 1, 0, 0), // TODO: does Turck have 5 floors and a basement?
-    BIGELOW         (5, 1, 0, 0), // TODO: does Bigelow have only 4 floors?
-    THIRTY_MAC      (1, 0, 0, 0), // 30 Mac basement will be part of Bigelow/Wallace
-    WALLACE         (5, 1, 0, 0),
-    KIRK            (3, 1, 0, 0); // The different sections of Kirk are unconnected,
-                                  // but it will be easier to just have one building

@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * @author Ari Weiland
  */
-public class DialogueOptions implements DialogueDisplayable {
+public class DialogueOptions extends Dialogue {
 
     public static final String[] YES_NO_OPTIONS = {"Yes", "No"};
     public static final String[] BATTLE_OPTIONS = {"Attack", "Defend", "Spell", "Item", "Flee"};

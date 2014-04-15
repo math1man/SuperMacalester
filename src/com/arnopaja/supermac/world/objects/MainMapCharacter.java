@@ -4,6 +4,8 @@ import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * @author Ari Weiland
@@ -53,5 +55,14 @@ public class MainMapCharacter extends MapCharacter {
             return entity.interact(this);
         }
         return Interaction.NULL;
+    }
+
+    public static class Parser extends Entity.Parser<MainMapCharacter> {
+        @Override
+        public MainMapCharacter convert(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            JsonObject location = object.getAsJsonObject("location");
+            return new MainMapCharacter(convert(location, Location.class));
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 
 /**
  * Created by Envy on 2/28/14.
@@ -19,7 +19,7 @@ public class Spell {
         this.damageModifier = 0;
     }
 
-    public Dialogue use(BattleCharacter source, BattleCharacter destination) {
+    public DialogueText use(BattleCharacter source, BattleCharacter destination) {
         float damage = getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
         int damageDone = (int) destination.modifyHealth(-damage);
         String dialogue = source + " casts " + this + "!\n" +
@@ -31,7 +31,7 @@ public class Spell {
         if (source.isOutOfMana()) {
             dialogue += "<d>" + source + " is out of mana...";
         }
-        return new Dialogue(dialogue);
+        return new DialogueText(dialogue);
     }
 
     public String getName() { return name; }

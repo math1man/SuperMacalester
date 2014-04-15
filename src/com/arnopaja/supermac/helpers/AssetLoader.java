@@ -52,10 +52,11 @@ public class AssetLoader {
     public static EnumMap<Direction, Animation> betsyAnim;
 
     // Battle Backgrounds
-    public static TextureRegion battleBackground;
+    public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
 
     // Data file handles
-    public static FileHandle mapHandle, dialogueHandle;
+    public static FileHandle dialogueHandle;
+    public static FileHandle questHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -133,11 +134,13 @@ public class AssetLoader {
         //          Other
         //--------------------------
 
+        // TODO: battle backgrounds
+
+        dialogueHandle = getHandle("dialogues.txt");
+        questHandle = getHandle("quests.txt");
+
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
-
-        mapHandle = getHandle("maps.txt");
-        dialogueHandle = getHandle("dialogues.txt");
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }
@@ -169,10 +172,6 @@ public class AssetLoader {
         characterAssetMap.put(name, new CharacterAsset(person, personAnim));
     }
 
-    private static FileHandle getHandle(String path) {
-        return Gdx.files.internal("data/" + path);
-    }
-
     public static void scaleFont(float scale) {
         font.setScale(scale, -scale);
         shadow.setScale(scale, -scale);
@@ -190,8 +189,20 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
+    public static String getMap(String name) {
+        return getHandle("maps/" + name.toLowerCase() + ".txt").readString();
+    }
+
+    public static TextureRegion getBackground(String name) {
+        return battleBackgrounds.get(name);
+    }
+
     public static CharacterAsset getAsset(String name) {
         return characterAssetMap.get(name);
+    }
+
+    private static FileHandle getHandle(String path) {
+        return Gdx.files.internal("data/" + path);
     }
 
     public static void dispose() {

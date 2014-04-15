@@ -19,20 +19,22 @@ public class Grid {
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
 
+    private final String name;
     protected final int gridWidth, gridHeight;
 
     protected Tile[][] tileArray;
     protected Map<Vector2, Entity> entityMap;
 
-    public Grid(int gridWidth, int gridHeight) {
-        this(new Tile[gridWidth][gridHeight]);
+    public Grid(String name, int gridWidth, int gridHeight) {
+        this(name, new Tile[gridWidth][gridHeight]);
     }
 
-    public Grid(Tile[][] tileArray) {
-        this(tileArray, new Hashtable<Vector2, Entity>());
+    public Grid(String name, Tile[][] tileArray) {
+        this(name, tileArray, new Hashtable<Vector2, Entity>());
     }
 
-    public Grid(Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
+    public Grid(String gridName, Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
+        this.name = gridName;
         this.tileArray = tileArray;
         this.entityMap = entityMap;
         gridWidth = tileArray.length;
@@ -40,7 +42,7 @@ public class Grid {
     }
 
     public Grid(Grid grid) {
-        this(grid.getTileGrid(), grid.getEntityMap());
+        this(grid.getName(), grid.getTileGrid(), grid.getEntityMap());
     }
 
     /**
@@ -164,8 +166,8 @@ public class Grid {
      * @return
      */
     public Grid getSubGrid(Vector2 corner, int width, int height) {
-        return new Grid(getSubTileGrid(corner, width, height),
-                getSubEntityMap(corner, width, height));
+        return new Grid(name + " " + corner + " " + width + " " + height,
+                getSubTileGrid(corner, width, height), getSubEntityMap(corner, width, height));
     }
 
     public int getGridWidth() {
@@ -203,6 +205,10 @@ public class Grid {
     public void clearAll() {
         clearTiles();
         clearEntities();
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

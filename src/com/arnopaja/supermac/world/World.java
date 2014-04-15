@@ -1,10 +1,8 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.MapLoader;
-import com.arnopaja.supermac.helpers.parser.Parser;
+import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.world.grid.Building;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -21,12 +19,14 @@ import java.util.Map;
  */
 public class World implements Controller {
 
+    private static final String MAP_NAME = "Macalester";
+
     private Grid worldGrid;
     private Map<String, Building> buildings = new HashMap<String, Building>();
     private MainMapCharacter mainCharacter;
 
     public World() {
-        worldGrid = MapLoader.generateMap("Macalester");
+        worldGrid = MapLoader.generateGrid(MAP_NAME);
         mainCharacter = new MainMapCharacter(new Location(worldGrid, 36, 36, Direction.WEST));
         initBuildings();
         initCharacters();
@@ -46,7 +46,7 @@ public class World implements Controller {
         MapNpc character = new MapNpc();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(Parser.parseDialogue("Paul", AssetLoader.dialogueHandle)));
+        character.setInteraction(Interaction.dialogue(SuperParser.parse("Paul", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
         character.changeGrid(new Location(worldGrid, 40, 40, Direction.NORTH));
     }
 
@@ -57,6 +57,26 @@ public class World implements Controller {
         Object[] entities = currentGrid.getEntities().toArray();
         for (Object entity : entities) {
             ((Entity) entity).update(delta);
+        }
+    }
+
+    public Grid getGrid(String name) {
+        String gridName = name.replaceAll("[^\\p{Alpha}]*", ""); // get the text portion
+        String number = name.replaceAll("[\\D]*", "");           // get the numeric portion
+        int floor;
+        if (number.isEmpty()) {
+            floor = 1;
+        } else {
+            floor = Integer.parseInt(number);
+        }
+        return getGrid(gridName, floor);
+    }
+
+    public Grid getGrid(String name, int floor) {
+        if (name.equalsIgnoreCase(MAP_NAME)) {
+            return getWorldGrid();
+        } else {
+            return getBuilding(name).getFloorByNumber(floor);
         }
     }
 
