@@ -1,8 +1,13 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.world.grid.*;
+import com.arnopaja.supermac.world.grid.GameMap;
+import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.arnopaja.supermac.world.objects.MapNpc;
@@ -27,7 +32,7 @@ public class World implements Controller {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
         this.maps = maps;
-        mainCharacter = new MainMapCharacter(new Location(getWorld(), 36, 36, Direction.WEST));
+        mainCharacter = new MainMapCharacter(new Location(getWorld(), 36, 36));
         initCharacters();
     }
 
@@ -41,7 +46,7 @@ public class World implements Controller {
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
         character.setInteraction(Interaction.dialogue(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class)));
-        character.changeGrid(new Location(getWorld(), 40, 40, Direction.NORTH));
+        character.changeGrid(new Location(getWorld(), 40, 40));
     }
 
     @Override

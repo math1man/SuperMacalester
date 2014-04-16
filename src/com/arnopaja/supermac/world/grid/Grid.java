@@ -102,8 +102,8 @@ public class Grid extends GameMap {
         return entityMap.remove(position);
     }
 
-    public Location getNearestValidLocation(Location location) {
-        return getNearestValidLocation(location.getPosition(), location.getDirection());
+    public Location getNearestValidLocation(Location location, Direction direction) {
+        return getNearestValidLocation(location.getPosition(), direction);
     }
 
     /**
@@ -117,7 +117,7 @@ public class Grid extends GameMap {
     public Location getNearestValidLocation(Vector2 position, Direction direction) {
         if (isPathable(position)) {
             // The current position is valid and pathable
-            return new Location(this, position, direction);
+            return new Location(this, position);
         } else if (position.x < 0) {
             // These next four cases handle the position being invalid
             return getNearestValidLocation(new Vector2(0, position.y), direction);
@@ -251,18 +251,18 @@ public class Grid extends GameMap {
         return subEntityMap;
     }
 
-    protected boolean isInBounds(int x, int y) {
+    public boolean isInBounds(int x, int y) {
         return ((x < gridWidth)
                 && (x >= 0)
                 && (y < gridHeight)
                 && (y >= 0));
     }
 
-    protected boolean isInBounds(Vector2 position) {
+    public boolean isInBounds(Vector2 position) {
         return isInBounds(cast(position.x), cast(position.y));
     }
 
-    protected boolean isPathable(Vector2 position) {
+    public boolean isPathable(Vector2 position) {
         return (isInBounds(position)
                 && (getEntity(position) == null)
                 && getTile(position).isPathable());

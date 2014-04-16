@@ -24,8 +24,8 @@ public class Door extends Entity {
     }
 
     @Override
-    public Interaction interact(final MainMapCharacter character) {
-        setInteraction(Interaction.changeGrid(character, destination));
+    public Interaction interact(MainMapCharacter character) {
+        interaction = Interaction.changeGrid(character, destination);
         return super.interact(character);
     }
 

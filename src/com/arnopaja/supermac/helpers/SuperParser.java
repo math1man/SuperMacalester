@@ -8,6 +8,7 @@ import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
+import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.*;
 import com.badlogic.gdx.files.FileHandle;
@@ -33,6 +34,7 @@ public abstract class SuperParser<T> {
         addParser(Battle.class,           new Battle.Parser());
         addParser(Chest.class,            new Chest.Parser());
         addParser(Dialogue.class,         new Dialogue.Parser());
+        addParser(Direction.class,        new Direction.Parser());
         addParser(Door.class,             new Door.Parser());
         addParser(Entity.class,           new Entity.Parser());
         addParser(Goal.class,             new Goal.Parser());
@@ -230,11 +232,19 @@ public abstract class SuperParser<T> {
         json.add(name, array);
     }
 
+    protected static boolean has(JsonObject json, Class clazz) {
+        return json.has(clazz.getSimpleName().toLowerCase());
+    }
+
     protected static String getClass(JsonObject json) {
         return json.getAsJsonPrimitive("class").getAsString();
     }
 
     protected static void addClass(JsonObject json, Class clazz) {
         json.addProperty("class", clazz.getSimpleName());
+    }
+
+    protected static boolean hasClass(JsonObject json) {
+        return json.has("class");
     }
 }

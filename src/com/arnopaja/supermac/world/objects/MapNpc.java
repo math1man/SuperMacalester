@@ -23,20 +23,24 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(Location location) {
-        this(location, DEFAULT_INTERACTABLE);
+        this(location, Direction.WEST);
     }
 
-    public MapNpc(Location location, boolean isInteractable) {
-        this(location, isInteractable, DEFAULT_CAN_MOVE);
+    public MapNpc(Location location, Direction direction) {
+        this(location, direction, DEFAULT_INTERACTABLE);
     }
 
-    public MapNpc(Location location, boolean isInteractable, boolean canMove) {
-        this(location, isInteractable, canMove, null);
+    public MapNpc(Location location, Direction direction, boolean isInteractable) {
+        this(location, direction, isInteractable, DEFAULT_CAN_MOVE);
     }
 
-    public MapNpc(Location location, boolean isInteractable, boolean canMove,
+    public MapNpc(Location location, Direction direction, boolean isInteractable, boolean canMove) {
+        this(location, direction, isInteractable, canMove, null);
+    }
+
+    public MapNpc(Location location, Direction direction, boolean isInteractable, boolean canMove,
                   CharacterAsset asset) {
-        super(location, isInteractable, asset);
+        super(location, direction, isInteractable, asset);
         this.canMove = canMove;
     }
 
@@ -52,6 +56,14 @@ public class MapNpc extends MapCharacter {
         }
     }
 
+    public void setInteraction(Interaction interaction) {
+        this.interaction = interaction;
+    }
+
+    public void makeQuestNpc() {
+        isQuestEntity = true;
+    }
+
     public boolean canMove() {
         return canMove;
     }
@@ -65,8 +77,12 @@ public class MapNpc extends MapCharacter {
         public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = null;
-            if (object.has("location")) {
+            if (has(object, Location.class)) {
                 location = getObject(object, Location.class);
+            }
+            Direction direction = Direction.WEST;
+            if (has(object, Direction.class)) {
+                direction = getObject(object, Direction.class);
             }
             boolean isInteractable = MapNpc.DEFAULT_INTERACTABLE;
             if (object.has("interactable")) {
@@ -76,8 +92,8 @@ public class MapNpc extends MapCharacter {
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
             }
-            MapNpc npc = new MapNpc(location, isInteractable, canMove);
-            if (object.has("interaction")) {
+            MapNpc npc = new MapNpc(location, direction, isInteractable, canMove);
+            if (has(object, Interaction.class)) {
                 npc.setInteraction(getObject(object, Interaction.class));
             }
             return npc;
@@ -86,9 +102,10 @@ public class MapNpc extends MapCharacter {
         @Override
         public JsonElement toJson(MapNpc object) {
             JsonObject json = toBaseJson(object);
+            addObject(json, object.getDirection(), Direction.class);
             addBoolean(json, "canMove", object.canMove);
-            if (object.getInteraction() != null) {
-                addObject(json, object.getInteraction(), Interaction.class);
+            if (object.interaction != null) {
+                addObject(json, object.interaction, Interaction.class);
             }
             return json;
         }

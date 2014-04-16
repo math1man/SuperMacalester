@@ -1,6 +1,9 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.badlogic.gdx.math.Vector2;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 
 /**
  * Note that East is up and North is left
@@ -55,6 +58,29 @@ public enum Direction {
             return Direction.NORTH;
         } else {
             return Direction.EAST;
+        }
+    }
+
+    public static class Parser extends SuperParser<Direction> {
+        @Override
+        public Direction fromJson(JsonElement element) {
+            String direction = element.getAsString().toLowerCase().trim();
+            switch (direction.charAt(0)) {
+                case 'n':
+                    return Direction.NORTH;
+                case 'e':
+                    return Direction.EAST;
+                case 's':
+                    return Direction.SOUTH;
+                case 'w':
+                default:
+                    return Direction.WEST;
+            }
+        }
+
+        @Override
+        public JsonElement toJson(Direction object) {
+            return new JsonPrimitive(object.name());
         }
     }
 }

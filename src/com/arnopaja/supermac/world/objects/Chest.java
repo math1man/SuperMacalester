@@ -49,7 +49,7 @@ public class Chest extends Entity {
         super(true, location, true);
         this.contents = contents;
         this.color = color;
-        setInteraction(Interaction.openChest(this));
+        this.interaction = Interaction.openChest(this);
     }
 
     @Override

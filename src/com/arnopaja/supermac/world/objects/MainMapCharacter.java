@@ -15,7 +15,11 @@ public class MainMapCharacter extends MapCharacter {
     private Direction movingDirection = null;
 
     public MainMapCharacter(Location location) {
-        super(location, false, AssetLoader.getAsset("Steven"));
+        this(location, Direction.WEST);
+    }
+
+    public MainMapCharacter(Location location, Direction direction) {
+        super(location, direction, false, AssetLoader.getAsset("Steven"));
     }
 
     @Override
@@ -45,12 +49,7 @@ public class MainMapCharacter extends MapCharacter {
     }
 
     public Interaction interact() {
-        return interact(this);
-    }
-
-    @Override
-    public Interaction interact(MainMapCharacter character) {
-        Entity entity = getGrid().getEntity(Direction.getAdjacent(getPosition(), getFacing()));
+        Entity entity = getGrid().getEntity(Direction.getAdjacent(getPosition(), getDirection()));
         if (entity != null) {
             return entity.interact(this);
         }
@@ -62,7 +61,18 @@ public class MainMapCharacter extends MapCharacter {
         public MainMapCharacter fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = getObject(object, Location.class);
-            return new MainMapCharacter(location);
+            Direction direction = Direction.WEST;
+            if (has(object, Direction.class)) {
+                direction = getObject(object, Direction.class);
+            }
+            return new MainMapCharacter(location, direction);
+        }
+
+        @Override
+        public JsonElement toJson(MainMapCharacter object) {
+            JsonObject json = toBaseJson(object);
+            addObject(json, object.getDirection(), Direction.class);
+            return json;
         }
     }
 }

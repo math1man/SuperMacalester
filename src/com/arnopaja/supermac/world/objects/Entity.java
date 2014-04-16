@@ -2,7 +2,6 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,27 +22,13 @@ public abstract class Entity implements Renderable {
 
     private final boolean isRendered;
 
-    private boolean isQuestEntity = false;
     private Location location;
-    private boolean isInteractable;
-
-    private Interaction interaction = Interaction.NULL;
-
-    /*
-     This boolean determines whether to delay moving the entity to a new grid.
-     This parameter only applies to changeGrid and removeGrid methods.
-     Calling delay, delayedRemoveFromGrid, or delayedChangeGrid will set this
-     parameter to true.  Any further calls to these methods, removeFromGrid,
-     or changeGrid will update the destination, but the entity will not be
-     moved until either changeGrid() is called, or a grid change is forced by
-     calling changeGrid(destination, true).
-
-     Whenever the main character walks through a door, changeGrid will be
-     called on all delayed characters. This way, the user does not see the
-     entity disappear when it changes grids.
-      */
-    private boolean isDelayed = false;
     private Location destination = null;
+    private boolean isDelayed = false;
+
+    private boolean isInteractable;
+    protected Interaction interaction = Interaction.NULL;
+    protected boolean isQuestEntity = false;
 
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
@@ -69,19 +54,7 @@ public abstract class Entity implements Renderable {
     public abstract void update(float delta);
 
     public Interaction interact(MainMapCharacter character) {
-        if (isInteractable()) {
-            setFacing(Direction.getDirectionToward(getPosition(), character.getPosition()));
-            return getInteraction();
-        }
-        return Interaction.NULL;
-    }
-
-    public boolean isQuestEntity() {
-        return isQuestEntity;
-    }
-
-    public void makeQuestEntity() {
-        this.isQuestEntity = true;
+        return interaction;
     }
 
     /**
@@ -162,7 +135,7 @@ public abstract class Entity implements Renderable {
 
     private void putInGrid(Location location) {
         if (location != null) {
-            this.location = location.getNearestValidLocation();
+            this.location = location; // TODO: getNearestValidLocation()?
             if (isInGrid()) {
                 getGrid().putEntity(this);
             }
@@ -189,16 +162,8 @@ public abstract class Entity implements Renderable {
         return location.getPosition();
     }
 
-    public Direction getFacing() {
-        return location.getDirection();
-    }
-
     public void setPosition(Vector2 position) {
         location.setPosition(position);
-    }
-
-    public void setFacing(Direction direction) {
-        location.setDirection(direction);
     }
 
     public boolean isInteractable() {
@@ -209,13 +174,8 @@ public abstract class Entity implements Renderable {
         this.isInteractable = isInteractable;
     }
 
-    public Interaction getInteraction() {
-        return interaction;
-    }
-
-    public void setInteraction(Interaction interaction) {
-        this.interaction = interaction;
-        setInteractable(interaction != Interaction.NULL);
+    public boolean isQuestEntity() {
+        return isQuestEntity;
     }
 
     public static class Parser<T extends Entity> extends SuperParser<T> {

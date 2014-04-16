@@ -13,28 +13,26 @@ public class Location {
 
     private final Grid grid;
     private Vector2 position;
-    private Direction direction;
 
     public Location(Grid grid) {
-        this(grid, 0, 0, Direction.WEST);
+        this(grid, 0, 0);
     }
 
-    public Location(Grid grid, int x, int y, Direction direction) {
-        this(grid, new Vector2(x, y), direction);
+    public Location(Grid grid, int x, int y) {
+        this(grid, new Vector2(x, y));
     }
 
-    public Location(Grid grid, Vector2 position, Direction direction) {
+    public Location(Grid grid, Vector2 position) {
         this.grid = grid;
         this.position = position;
-        this.direction = direction;
     }
 
     public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
         return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
     }
 
-    public Location getNearestValidLocation() {
-        return grid.getNearestValidLocation(this);
+    public Location getNearestValidLocation(Direction direction) {
+        return grid.getNearestValidLocation(this, direction);
     }
 
     /**
@@ -47,6 +45,10 @@ public class Location {
         return grid.getEntity(position);
     }
 
+    public Location getAdjacent(Direction direction) {
+        return new Location(grid, Direction.getAdjacent(position, direction));
+    }
+
     public Grid getGrid() {
         return grid;
     }
@@ -57,14 +59,6 @@ public class Location {
 
     public void setPosition(Vector2 position) {
         this.position = position;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
     }
 
     @Override
@@ -88,24 +82,7 @@ public class Location {
             Grid grid = world.getGrid(gridName);
             int x = getInt(object, "x");
             int y = getInt(object, "y");
-            String dir = getString(object, "direction").toLowerCase().trim();
-            Direction direction;
-            switch (dir.charAt(0)) {
-                case 'n':
-                    direction = Direction.NORTH;
-                    break;
-                case 'e':
-                    direction = Direction.EAST;
-                    break;
-                case 's':
-                    direction = Direction.SOUTH;
-                    break;
-                case 'w':
-                default:
-                    direction = Direction.WEST;
-                    break;
-            }
-            return new Location(grid, x, y, direction);
+            return new Location(grid, x, y);
         }
 
         @Override
@@ -114,7 +91,6 @@ public class Location {
             addString(json, "grid", object.grid.getName());
             addInt(json, "x", (int) object.position.x);
             addInt(json, "y", (int) object.position.y);
-            addString(json, "direction", object.direction.name());
             return json;
         }
     }

@@ -19,9 +19,11 @@ public abstract class MapCharacter extends Entity {
     private Vector2 renderOffsetDelta;
 
     private CharacterAsset asset;
+    private Direction direction;
 
-    protected MapCharacter(Location location, boolean isInteractable, CharacterAsset asset) {
+    protected MapCharacter(Location location, Direction direction, boolean isInteractable, CharacterAsset asset) {
         super(true, location, isInteractable);
+        this.direction = direction;
         this.asset = asset;
     }
 
@@ -43,7 +45,7 @@ public abstract class MapCharacter extends Entity {
 
     public boolean move(Direction direction) {
         if (!isMoving && direction != null) {
-            setFacing(direction);
+            this.direction = direction;
             if (getGrid().moveEntity(this, direction)) {
                 isMoving = true;
                 renderOffset = Direction.getAdjacent(direction).scl(-1);
@@ -62,12 +64,20 @@ public abstract class MapCharacter extends Entity {
         return renderOffset;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     @Override
     public TextureRegion getSprite(float runTime) {
         if (isMoving()) {
-            return asset.getAnimation(getFacing()).getKeyFrame(runTime);
+            return asset.getAnimation(direction).getKeyFrame(runTime);
         } else {
-            return asset.getSprite(getFacing());
+            return asset.getSprite(direction);
         }
     }
 
