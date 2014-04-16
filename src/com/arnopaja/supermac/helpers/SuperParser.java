@@ -4,6 +4,7 @@ import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;
+import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.grid.Location;
@@ -40,6 +41,7 @@ public abstract class SuperParser<T> {
         addParser(Location.class,         new Location.Parser());
         addParser(MainMapCharacter.class, new MainMapCharacter.Parser());
         addParser(MapNpc.class,           new MapNpc.Parser());
+        addParser(Plot.class,             new Plot.Parser());
         addParser(Quest.class,            new Quest.Parser());
         addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
@@ -82,11 +84,11 @@ public abstract class SuperParser<T> {
         if (element == null) {
             return null;
         }
-        JsonElement e = element.getAsJsonObject().get(name);
-        if (e == null) {
-            return null;
+        JsonObject object = element.getAsJsonObject();
+        if (object.has(name)) {
+            return fromJson(object.get(name));
         }
-        return fromJson(e);
+        return null;
     }
 
     /**
@@ -107,7 +109,19 @@ public abstract class SuperParser<T> {
      * @return
      */
     public T parse(String name, String json) {
-        return parse(name, getJsonHead(json));
+        JsonElement element = getJsonHead(json);
+        if (element == null || !element.isJsonObject()) {
+            return null;
+        }
+        JsonObject object = element.getAsJsonObject();
+        if (object.has(name)) {
+            return fromJson(object.get(name));
+        }
+        return null;
+    }
+
+    public T parse(String json) {
+        return fromJson(getJsonHead(json));
     }
 
     /**
@@ -138,12 +152,15 @@ public abstract class SuperParser<T> {
         return clazz.cast(parsers.get(clazz).parse(name, json));
     }
 
-    public static <U> List<U> parseAll(String json, Class<U> clazz) {
-        return parsers.get(clazz).parseAll(json);
+    public static <U> U parse(String json, Class<U> clazz) {
+//        SuperParser parser1 = parsers.get(clazz);
+//        Object parsed = parser1.parse(json);
+//        return clazz.cast(parsed);
+        return clazz.cast(parsers.get(clazz).parse(json));
     }
 
-    public static Map<Integer, Quest> parseQuestMap(String json) {
-        return ((Quest.Parser) parsers.get(Quest.class)).parseMap(json);
+    public static <U> List<U> parseAll(String json, Class<U> clazz) {
+        return parsers.get(clazz).parseAll(json);
     }
 
     protected static boolean getBoolean(JsonObject json, String name) {

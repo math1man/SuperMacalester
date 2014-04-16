@@ -2,7 +2,7 @@
     "dependencies" : [
 
     ],
-    "quests" : {
+    "quests" : [
 
-    }
+    ]
 }

@@ -57,7 +57,7 @@ public class GameScreen implements Screen {
         SuperParser.initItems(AssetLoader.itemHandle.readString());
 
         // TODO: do we want to load automatically?
-        plot = new Plot(AssetLoader.plotHandle.readString());
+        plot = SuperParser.parse(AssetLoader.plotHandle.readString(), Plot.class);
         world = new World(maps);
 
         float scaleFactorX = GAME_WIDTH / Gdx.graphics.getWidth();
@@ -162,7 +162,7 @@ public class GameScreen implements Screen {
     }
 
     public void load() {
-        plot = SaverLoader.load(Plot.class, new Plot(AssetLoader.plotHandle.readString()));
+        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle.readString(), Plot.class));
         Inventory.load();
     }
 

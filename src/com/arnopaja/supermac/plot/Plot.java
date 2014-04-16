@@ -21,10 +21,6 @@ public class Plot {
 
     private Map<Integer, Quest> quests;
 
-    public Plot(String questsJson) {
-        this(SuperParser.parseQuestMap(questsJson));
-    }
-
     public Plot(Map<Integer, Quest> quests) {
         this.quests = quests;
     }
