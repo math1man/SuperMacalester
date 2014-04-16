@@ -7,8 +7,8 @@ import com.arnopaja.supermac.plot.Goal;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.plot.Settings;
+import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.grid.MapSet;
 import com.arnopaja.supermac.world.objects.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -53,10 +53,10 @@ public abstract class SuperParser<T> {
         parsers.put(clazz, parser);
     }
 
-    protected static MapSet maps;
+    protected static World world;
 
-    public static void initParsers(MapSet m) {
-        maps = m;
+    public static void initParsers(World w) {
+        world = w;
     }
 
     public static void initItems(String itemsJson) {
@@ -191,8 +191,8 @@ public abstract class SuperParser<T> {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz);
     }
 
-    protected static <U> U getObject(JsonObject object, String name, Class<U> clazz) {
-        return fromJson(object.getAsJsonObject(name), clazz);
+    protected static <U> U getObject(JsonObject json, String name, Class<U> clazz) {
+        return fromJson(json.getAsJsonObject(name), clazz);
     }
 
     protected static <U> void addObject(JsonObject json, U object, Class<U> clazz) {
@@ -224,7 +224,7 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive("class").getAsString();
     }
 
-    protected static void addClass(JsonObject json, Object object) {
-        json.addProperty("class", object.getClass().getSimpleName());
+    protected static void addClass(JsonObject json, Class clazz) {
+        json.addProperty("class", clazz.getSimpleName());
     }
 }

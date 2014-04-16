@@ -1,65 +1,56 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Building;
+import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.world.grid.MapSet;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
- * TODO: add non-quest entities to the maps
+ * TODO: add non-quest entities to the world
  * @author Ari Weiland
  */
 public class MapLoader {
 
-    private static final Random random = new Random();
-
-    private static final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
-    private static final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
-
-    public static MapSet generateMapSet(FileHandle folder) {
+    public static World generateWorld(FileHandle folder) {
         FileHandle[] handles = folder.list("txt");
-        Grid world = null;
-        Map<String, Building> buildings = new HashMap<String, Building>();
+        Map<String, GameMap> maps = new HashMap<String, GameMap>();
         for (FileHandle handle : handles) {
             String name = handle.nameWithoutExtension();
             String data = handle.readString();
-            if (name.equalsIgnoreCase("world")) {
-                world = generateGrid(name, data);
-            } else {
-                buildings.put(name, generateBuilding(name, data));
-            }
+            maps.put(name, generateMap(name, data));
         }
-        return new MapSet(world, buildings);
+        return new World(maps);
     }
 
-    public static Grid generateGrid(String name, String raw) {
-        return parseGrid(name, raw);
-    }
-
-    public static Building generateBuilding(String name, String raw) {
-        String[] floorStrings = raw.split("<floor>");
-        int firstFloorIndex = 0;
-        int floorCount = floorStrings.length;
-        Grid[] floors = new Grid[floorCount];
-        for (int i=0; i<floorCount; i++) {
-            if (i == 0) {
-                String[] temp = floorStrings[i].split("\n", 2);
-                String first = temp[0].trim();
-                if (Pattern.matches("first floor:\\d*", first)) {
-                    floorStrings[i] = temp[1];
-                    firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
+    public static GameMap generateMap(String name, String raw) {
+        String[] grids = raw.split("<floor>");
+        if (grids.length == 0) {
+            return null;
+        } else if (grids.length == 1){
+            return parseGrid(name, grids[0]);
+        } else {
+            int firstFloorIndex = 0;
+            int floorCount = grids.length;
+            Grid[] floors = new Grid[floorCount];
+            for (int i=0; i<floorCount; i++) {
+                if (i == 0) {
+                    String[] temp = grids[i].split("\n", 2);
+                    String first = temp[0].trim();
+                    if (Pattern.matches("first floor:\\d*", first)) {
+                        grids[i] = temp[1];
+                        firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
+                    }
                 }
+                floors[i] = parseGrid(name + " " + (i + 1 - firstFloorIndex), grids[i]);
             }
-            floors[i] = parseGrid(name + " " + Building.getFloorNumber(i, firstFloorIndex), floorStrings[i]);
+            return new Building(name, floors, firstFloorIndex);
         }
-        return new Building(floors, firstFloorIndex);
     }
 
     private static Grid parseGrid(String name, String raw) {

@@ -39,7 +39,8 @@ public class Goal {
 
     public void activate() {
         entity.setInteraction(netInteraction);
-        entity.changeGrid(location);
+        entity.changeGrid(location, true);
+        entity.makeQuestEntity();
         isActive = true;
     }
 

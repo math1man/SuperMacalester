@@ -124,7 +124,7 @@ public class GenericItem {
             addInt(json, "id", object.getId());
             addString(json, "name", object.getName());
             addInt(json, "value", object.getValue());
-            addClass(json, object);
+            addClass(json, object.getClass());
             return json;
         }
     }

@@ -23,6 +23,7 @@ public abstract class Entity implements Renderable {
 
     private final boolean isRendered;
 
+    private boolean isQuestEntity = false;
     private Location location;
     private boolean isInteractable;
 
@@ -73,6 +74,14 @@ public abstract class Entity implements Renderable {
             return getInteraction();
         }
         return Interaction.NULL;
+    }
+
+    public boolean isQuestEntity() {
+        return isQuestEntity;
+    }
+
+    public void makeQuestEntity() {
+        this.isQuestEntity = true;
     }
 
     /**
@@ -141,6 +150,7 @@ public abstract class Entity implements Renderable {
      * This method concludes any delay placed on the entity.
      */
     public void changeGrid() {
+        isQuestEntity = false;
         isDelayed = false;
         if (location == null || !location.equals(destination)) {
             if (isInGrid()) {
@@ -239,7 +249,7 @@ public abstract class Entity implements Renderable {
                 addObject(json, object.getLocation(), Location.class);
             }
             addBoolean(json, "interactable", object.isInteractable());
-            addClass(json, object);
+            addClass(json, object.getClass());
             return json;
         }
     }

@@ -14,12 +14,11 @@ import java.util.Map;
  *
  * @author Ari Weiland
  */
-public class Grid {
+public class Grid extends GameMap {
 
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
 
-    private final String name;
     protected final int gridWidth, gridHeight;
 
     protected Tile[][] tileArray;
@@ -33,8 +32,8 @@ public class Grid {
         this(name, tileArray, new Hashtable<Vector2, Entity>());
     }
 
-    public Grid(String gridName, Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
-        this.name = gridName;
+    public Grid(String name, Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
+        super(name, true);
         this.tileArray = tileArray;
         this.entityMap = entityMap;
         gridWidth = tileArray.length;
@@ -166,7 +165,7 @@ public class Grid {
      * @return
      */
     public Grid getSubGrid(Vector2 corner, int width, int height) {
-        return new Grid(name + " " + corner + " " + width + " " + height,
+        return new Grid(getName() + " " + corner + " " + width + " " + height,
                 getSubTileGrid(corner, width, height), getSubEntityMap(corner, width, height));
     }
 
@@ -194,6 +193,7 @@ public class Grid {
         return entityMap;
     }
 
+    @Override
     public Collection<Entity> getEntities() {
         return entityMap.values();
     }
@@ -207,8 +207,9 @@ public class Grid {
         clearEntities();
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public Grid getGrid(int index) {
+        return this;
     }
 
     @Override
