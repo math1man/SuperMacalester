@@ -53,6 +53,7 @@ public class AssetLoader {
     public static FileHandle dialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
+    public static FileHandle entitiesHandle;
 
     // Font
     public static BitmapFont font, shadow;
@@ -139,6 +140,7 @@ public class AssetLoader {
         dialogueHandle = getHandle("macalester/dialogues.txt");
         plotHandle = getHandle("macalester/plot.txt");
         mapHandle = getHandle("macalester/maps");
+        mapHandle = getHandle("macalester/entities.txt");
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));

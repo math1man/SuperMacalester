@@ -10,6 +10,7 @@ import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.*;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -59,8 +60,8 @@ public abstract class SuperParser<T> {
         world = w;
     }
 
-    public static void initItems(String itemsJson) {
-        parseAll(itemsJson, GenericItem.class);
+    public static void initItems(FileHandle handle) {
+        parseAll(handle, GenericItem.class);
     }
 
     /**
@@ -126,7 +127,7 @@ public abstract class SuperParser<T> {
 
     /**
      * Parses all members in the specified JSON string as if they were of type T.
-     * Will probably fail catastrophically if any member is incorrectly formatted.
+     * Will fail catastrophically if any member is incorrectly formatted.
      * @param json
      * @return
      */
@@ -152,15 +153,24 @@ public abstract class SuperParser<T> {
         return clazz.cast(parsers.get(clazz).parse(name, json));
     }
 
+    public static <U> U parse(String name, FileHandle handle, Class<U> clazz) {
+        return parse(name, handle.readString(), clazz);
+    }
+
     public static <U> U parse(String json, Class<U> clazz) {
-//        SuperParser parser1 = parsers.get(clazz);
-//        Object parsed = parser1.parse(json);
-//        return clazz.cast(parsed);
         return clazz.cast(parsers.get(clazz).parse(json));
+    }
+
+    public static <U> U parse(FileHandle handle, Class<U> clazz) {
+        return parse(handle.readString(), clazz);
     }
 
     public static <U> List<U> parseAll(String json, Class<U> clazz) {
         return parsers.get(clazz).parseAll(json);
+    }
+
+    public static <U> List<U> parseAll(FileHandle handle, Class<U> clazz) {
+        return parseAll(handle.readString(), clazz);
     }
 
     protected static boolean getBoolean(JsonObject json, String name) {

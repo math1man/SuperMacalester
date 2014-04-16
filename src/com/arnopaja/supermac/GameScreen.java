@@ -53,12 +53,12 @@ public class GameScreen implements Screen {
 
         world = MapLoader.generateWorld(AssetLoader.mapHandle);
         SuperParser.initParsers(world);
-        SuperParser.initItems(AssetLoader.itemHandle.readString());
+        SuperParser.initItems(AssetLoader.itemHandle);
 
         // TODO: do we want to load automatically?
-        plot = SuperParser.parse(AssetLoader.plotHandle.readString(), Plot.class);
+        plot = SuperParser.parse(AssetLoader.plotHandle, Plot.class);
 
-        float scaleFactorX = GAME_WIDTH / Gdx.graphics.getWidth();
+        float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
 
         worldRenderer = new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
@@ -155,12 +155,14 @@ public class GameScreen implements Screen {
 
     public void save() {
         SaverLoader.save(plot, Plot.class);
+        SaverLoader.save(world, World.class);
         Inventory.save();
         SaverLoader.flush();
     }
 
     public void load() {
-        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle.readString(), Plot.class));
+        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
+        SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
         Inventory.load();
     }
 

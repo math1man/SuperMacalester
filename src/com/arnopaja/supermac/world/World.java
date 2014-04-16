@@ -40,7 +40,7 @@ public class World implements Controller {
         MapNpc character = new MapNpc();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(SuperParser.parse("Betsy", AssetLoader.dialogueHandle.readString(), Dialogue.class)));
+        character.setInteraction(Interaction.dialogue(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class)));
         character.changeGrid(new Location(getWorld(), 40, 40, Direction.NORTH));
     }
 
@@ -82,6 +82,12 @@ public class World implements Controller {
         return mainCharacter;
     }
 
+    /**
+     * Because a single instance of world is statically maintained in
+     * the SuperParser, and is the same instance as GameScreen's world,
+     * the return value will always be that same reference, so any
+     * methods that return a World can generally be ignored.
+     */
     public static class Parser extends SuperParser<World> {
         @Override
         public World fromJson(JsonElement element) {
