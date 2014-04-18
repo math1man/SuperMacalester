@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.ToInteraction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * @author Ari Weiland
  */
-public abstract class Entity implements Renderable, ToInteraction {
+public abstract class Entity implements Renderable, InteractionBuilder {
 
     public static final Random RANDOM = new Random();
 

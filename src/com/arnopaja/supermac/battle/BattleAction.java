@@ -2,7 +2,7 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.ToInteraction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * @author Nolan Varani
  */
-public abstract class BattleAction implements ToInteraction {
+public abstract class BattleAction implements InteractionBuilder {
 
     private static final Random random = new Random();
     public static final int DEFEND_PRIORITY = 255; // TODO: should this be higher?

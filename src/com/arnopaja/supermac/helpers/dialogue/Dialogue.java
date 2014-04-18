@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.ToInteraction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonArray;
@@ -14,7 +14,7 @@ import com.google.gson.JsonPrimitive;
  *
  * @author Ari Weiland
  */
-public abstract class Dialogue implements ToInteraction {
+public abstract class Dialogue implements InteractionBuilder {
 
     public static final Interaction CLEAR_DIALOGUE = new Interaction() {
         @Override

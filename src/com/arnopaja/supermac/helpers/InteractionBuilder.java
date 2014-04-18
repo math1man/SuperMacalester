@@ -9,6 +9,6 @@ package com.arnopaja.supermac.helpers;
  *
  * @author Ari Weiland
  */
-public interface ToInteraction {
+public interface InteractionBuilder {
     Interaction toInteraction();
 }

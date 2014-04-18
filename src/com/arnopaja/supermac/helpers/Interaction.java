@@ -14,7 +14,7 @@ import java.util.Arrays;
  *
  * @author Ari Weiland
  */
-public abstract class Interaction implements ToInteraction {
+public abstract class Interaction implements InteractionBuilder {
 
     private final EqualityParameters parameters;
 
@@ -41,23 +41,23 @@ public abstract class Interaction implements ToInteraction {
     };
 
     /**
-     * Combines a group of ToInteractions into one new interaction that runs the
-     * run methods of each interaction.toInteraction() in the order specified.
-     * This method runs no checks on the interactions, so it is the
-     * responsibility of the user to not do anything stupid.
+     * Combines a group of InteractionBuilders into one new interaction that runs
+     * the run methods of each builder.toInteraction() in the order specified.
+     * This method runs no checks on the interactions, so it is the responsibility
+     * of the user to not do anything stupid.
      *
-     * @param interactions the interactions to be combined
+     * @param builders the interactions to be combined
      * @return
      */
-    public static Interaction combine(final ToInteraction... interactions) {
-        if (interactions == null) {
+    public static <T extends InteractionBuilder> Interaction combine(final T... builders) {
+        if (builders == null) {
             return NULL;
         } else {
-            return new Interaction(interactions) {
+            return new Interaction(builders) {
                 @Override
                 public void run(GameScreen screen) {
-                    for (ToInteraction interaction : interactions) {
-                        interaction.toInteraction().run(screen);
+                    for (InteractionBuilder builder : builders) {
+                        builder.toInteraction().run(screen);
                     }
                 }
             };
@@ -83,7 +83,7 @@ public abstract class Interaction implements ToInteraction {
      * @param toInteractions
      * @return
      */
-    public static <T extends ToInteraction> Interaction[] convert(T... toInteractions) {
+    public static <T extends InteractionBuilder> Interaction[] convert(T... toInteractions) {
         Interaction[] interactions = new Interaction[toInteractions.length];
         for (int i=0; i<toInteractions.length; i++) {
             interactions[i] = toInteractions[i].toInteraction();
@@ -93,14 +93,14 @@ public abstract class Interaction implements ToInteraction {
 
     /**
      * Fills an array of interactions of the given size with the
-     * specified ToInteraction.toInteraction()
-     * @param toInteraction
+     * specified builder.toInteraction()
+     * @param builder
      * @return
      */
-    public static Interaction[] convert(ToInteraction toInteraction, int size) {
-        ToInteraction[] toInteractions = new ToInteraction[size];
-        Arrays.fill(toInteractions, toInteraction);
-        return convert(toInteractions);
+    public static Interaction[] convert(InteractionBuilder builder, int size) {
+        InteractionBuilder[] builders = new InteractionBuilder[size];
+        Arrays.fill(builders, builder);
+        return convert(builders);
     }
 
     @Override

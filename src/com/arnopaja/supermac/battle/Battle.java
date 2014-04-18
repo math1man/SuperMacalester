@@ -24,7 +24,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  *
  * @author Ari Weiland
  */
-public class Battle implements Controller, ToInteraction {
+public class Battle implements Controller, InteractionBuilder {
 
     private static final Random battleRandomGen = new Random();
 
