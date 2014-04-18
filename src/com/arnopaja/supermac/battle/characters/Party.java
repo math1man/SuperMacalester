@@ -1,5 +1,9 @@
 package com.arnopaja.supermac.battle.characters;
 
+import com.arnopaja.supermac.helpers.SuperParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 /**
@@ -7,6 +11,8 @@ import java.util.List;
  * Created by Nolan on 2/24/14.
  */
 public abstract class Party<T extends BattleCharacter> {
+
+    protected static final int MAX_SIZE = 3;
 
     protected final List<T> characters;
 
@@ -32,12 +38,27 @@ public abstract class Party<T extends BattleCharacter> {
     }
 
     public BattleCharacter[] getBattleParty() {
-        BattleCharacter battleParty[] = new BattleCharacter[3];
-        for(int i=0;i<3;i++) battleParty[i] = characters.get(i);
-        return battleParty;
+        return characters.toArray(new BattleCharacter[getSize()]);
     }
 
     public int getSize() {
         return characters.size();
+    }
+
+    public static abstract class Parser<U extends Party> extends SuperParser<U> {
+        @Override
+        public U fromJson(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            return construct(object);
+        }
+
+        @Override
+        public JsonElement toJson(U object) {
+            JsonObject json = new JsonObject();
+            addList(json, "characters", object.characters, BattleCharacter.class);
+            return json;
+        }
+
+        protected abstract U construct(JsonObject object);
     }
 }
