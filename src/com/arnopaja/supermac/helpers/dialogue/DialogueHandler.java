@@ -29,7 +29,7 @@ public class DialogueHandler {
     public static enum DisplayMode { NONE, DIALOGUE, OPTIONS }
 
     private final Rectangle dialogueSpace;
-    private final Rectangle fontSpace;
+    private final Rectangle textSpace;
     private final Rectangle[][] optionSpaces;
 
     private final Queue<Dialogue> dialogueQueue = new ConcurrentLinkedQueue<Dialogue>();
@@ -44,15 +44,15 @@ public class DialogueHandler {
                 gameHeight * (1 - DIALOGUE_TO_GAME_HEIGHT_RATIO), 
                 gameWidth - 2 * DIALOGUE_BOX_RENDER_GAP, 
                 gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO - DIALOGUE_BOX_RENDER_GAP);
-        fontSpace = new Rectangle(
+        textSpace = new Rectangle(
                 dialogueSpace.getX() + DIALOGUE_BOX_RENDER_GAP,
                 dialogueSpace.getY() + DIALOGUE_BOX_RENDER_GAP,
                 dialogueSpace.getWidth() - 2 * DIALOGUE_BOX_RENDER_GAP,
                 dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
-        AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * TEXT_ROWS));
+        AssetLoader.scaleFont(textSpace.getHeight() / (AssetLoader.font.getLineHeight() * TEXT_ROWS));
 
-        optionSpaces = initOptionRects(fontSpace.getX(), fontSpace.getY(),
-                    fontSpace.getWidth(), fontSpace.getHeight());
+        optionSpaces = initOptionRects(textSpace.getX(), textSpace.getY(),
+                    textSpace.getWidth(), textSpace.getHeight());
     }
 
     private static Rectangle[][] initOptionRects(float x, float y, float width, float height) {
@@ -92,11 +92,11 @@ public class DialogueHandler {
 
     private void renderDialogue(SpriteBatch batch) {
         AssetLoader.drawWrappedFont(batch, dialogueText.getCurrentDialogue(),
-                fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
+                textSpace.getX(), textSpace.getY(), textSpace.getWidth());
     }
 
     private void renderOptions(SpriteBatch batch) {
-        AssetLoader.drawFont(batch, options.getHeader(), fontSpace.getX(), fontSpace.getY());
+        AssetLoader.drawFont(batch, options.getHeader(), textSpace.getX(), textSpace.getY());
         int count = options.getCount();
         Rectangle[] spaces = getOptionSpaces(count);
         for (int i=0; i<count; i++) {
