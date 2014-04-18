@@ -52,7 +52,7 @@ public class Goal {
     }
 
     protected void setQuest(Quest quest) {
-        netInteraction = Interaction.combine(mainInteraction, Interaction.nextGoal(quest));
+        netInteraction = Interaction.combine(mainInteraction, quest.toInteraction());
     }
 
     public Entity getQuestNpc() {

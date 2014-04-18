@@ -16,6 +16,7 @@ public class MapNpc extends MapCharacter {
     public static final boolean DEFAULT_CAN_MOVE = true;
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
+    private Interaction interaction = Interaction.NULL;
     private boolean canMove = true;
 
     public MapNpc() {
@@ -70,6 +71,11 @@ public class MapNpc extends MapCharacter {
 
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
+    }
+
+    @Override
+    public Interaction toInteraction() {
+        return interaction;
     }
 
     public static class Parser extends Entity.Parser<MapNpc> {

@@ -128,7 +128,7 @@ public class DialogueHandler {
             } else {
                 pollQueue();
                 if (dialogueText.hasPostInteraction()) {
-                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, dialogueText.getPostInteraction());
+                    return Interaction.combine(Dialogue.CLEAR_DIALOGUE, dialogueText.getPostInteraction());
                 }
             }
         } else if (isOptions()) {
@@ -136,11 +136,11 @@ public class DialogueHandler {
             for (int i=0; i<count; i++) {
                 if (getOptionSpaces(count)[i].contains(x, y)) {
                     pollQueue();
-                    return Interaction.combine(Interaction.CLEAR_DIALOGUE, options.getInteraction(i));
+                    return Interaction.combine(Dialogue.CLEAR_DIALOGUE, options.getInteraction(i));
                 }
             }
         }
-        return isNone() ? Interaction.CLEAR_DIALOGUE : Interaction.NULL;
+        return isNone() ? Dialogue.CLEAR_DIALOGUE : Interaction.NULL;
     }
 
     private void pollQueue() {

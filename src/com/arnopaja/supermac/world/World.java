@@ -2,7 +2,6 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.world.grid.GameMap;
@@ -45,7 +44,7 @@ public class World implements Controller {
         MapNpc character = new MapNpc();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
-        character.setInteraction(Interaction.dialogue(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class)));
+        character.setInteraction(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction());
         character.changeGrid(new Location(getWorld(), 40, 40));
     }
 
@@ -112,7 +111,7 @@ public class World implements Controller {
             JsonArray array = new JsonArray();
             for (GameMap map : object.getMaps()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!entity.isQuestEntity()) {
+                    if (!entity.isQuestEntity() && !(entity instanceof MainMapCharacter)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }

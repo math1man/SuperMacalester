@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.ToInteraction;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonArray;
@@ -12,7 +14,27 @@ import com.google.gson.JsonPrimitive;
  *
  * @author Ari Weiland
  */
-public abstract class Dialogue {
+public abstract class Dialogue implements ToInteraction {
+
+    public static final Interaction CLEAR_DIALOGUE = new Interaction() {
+        @Override
+        public void run(GameScreen screen) {
+            screen.getDialogueHandler().clear();
+            screen.endDialogue();
+        }
+    };
+
+    @Override
+    public Interaction toInteraction() {
+        final Dialogue dialogue = this;
+        return new Interaction(dialogue) {
+            @Override
+            public void run(GameScreen screen) {
+                screen.dialogue();
+                screen.getDialogueHandler().displayDialogue(dialogue);
+            }
+        };
+    }
 
     public static class Parser extends SuperParser<Dialogue> {
         @Override

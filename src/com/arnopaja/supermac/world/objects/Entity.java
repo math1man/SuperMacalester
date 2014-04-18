@@ -1,7 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.ToInteraction;
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +18,7 @@ import java.util.Random;
 /**
  * @author Ari Weiland
  */
-public abstract class Entity implements Renderable {
+public abstract class Entity implements Renderable, ToInteraction {
 
     public static final Random RANDOM = new Random();
 
@@ -27,7 +29,6 @@ public abstract class Entity implements Renderable {
     private boolean isDelayed = false;
 
     private boolean isInteractable;
-    protected Interaction interaction = Interaction.NULL;
     protected boolean isQuestEntity = false;
 
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
@@ -53,8 +54,12 @@ public abstract class Entity implements Renderable {
 
     public abstract void update(float delta);
 
-    public Interaction interact(MainMapCharacter character) {
-        return interaction;
+    public Interaction interact() {
+        if (isInteractable) {
+            return toInteraction();
+        } else {
+            return Interaction.NULL;
+        }
     }
 
     /**
@@ -166,12 +171,17 @@ public abstract class Entity implements Renderable {
         location.setPosition(position);
     }
 
+
     public boolean isInteractable() {
         return isInteractable;
     }
 
     public void setInteractable(boolean isInteractable) {
         this.isInteractable = isInteractable;
+    }
+
+    public Direction getDirectionToward(Vector2 position) {
+        return Direction.getDirectionToward(getPosition(), position);
     }
 
     public boolean isQuestEntity() {

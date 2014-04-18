@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,21 +13,17 @@ import com.google.gson.JsonObject;
 public class Door extends Entity {
 
     private final Location destination;
+    private final Entity entity;
 
-    public Door(Location location, Location destination) {
+    public Door(Location location, Location destination, MainMapCharacter character) {
         super(false, location, true);
         this.destination = destination;
+        this.entity = character;
     }
 
     @Override
     public void update(float delta) {
         // nothing happens
-    }
-
-    @Override
-    public Interaction interact(MainMapCharacter character) {
-        interaction = Interaction.changeGrid(character, destination);
-        return super.interact(character);
     }
 
     public Location getDestination() {
@@ -38,13 +35,29 @@ public class Door extends Entity {
         return null;
     }
 
+    @Override
+    public Interaction toInteraction() {
+        final Entity entity = this.entity;
+        return new Interaction(entity, destination) {
+            @Override
+            public void run(GameScreen screen) {
+                for (Entity e : entity.getGrid().getEntities()) {
+                    if (e.isDelayed()) {
+                        e.changeGrid();
+                    }
+                }
+                entity.changeGrid(destination);
+            }
+        };
+    }
+
     public static class Parser extends Entity.Parser<Door> {
         @Override
         public Door fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = getObject(object, Location.class);
             Location destination = getObject(object, "destination", Location.class);
-            return new Door(location, destination);
+            return new Door(location, destination, world.getMainCharacter());
         }
 
         @Override

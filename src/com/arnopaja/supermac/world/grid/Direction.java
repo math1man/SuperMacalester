@@ -22,7 +22,10 @@ public enum Direction {
     }
 
     public static Vector2 getAdjacent(Vector2 position, Direction dir) {
-        Vector2 destination = new Vector2(position);
+        Vector2 destination;
+        if (dir == null) {
+            return new Vector2(position);
+        }
         switch (dir) {
             case EAST:
                 destination = new Vector2(position.x, position.y-1);
@@ -35,6 +38,9 @@ public enum Direction {
                 break;
             case NORTH:
                 destination = new Vector2(position.x-1, position.y);
+                break;
+            default:
+                destination = new Vector2(position);
                 break;
         }
         return destination;

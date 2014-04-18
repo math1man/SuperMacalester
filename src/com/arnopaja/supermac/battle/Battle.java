@@ -1,12 +1,10 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.InteractionUtils;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.inventory.Inventory;
@@ -26,7 +24,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  *
  * @author Ari Weiland
  */
-public class Battle implements Controller {
+public class Battle implements Controller, ToInteraction {
 
     private static final Random battleRandomGen = new Random();
 
@@ -90,14 +88,6 @@ public class Battle implements Controller {
         }
     }
 
-    private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
-        Spell[] spells = new Spell[0]; // TODO: get these from wherever
-        List<Item> itemList = Inventory.getMain().getAll(Item.class);
-        Item[] items = itemList.toArray(new Item[itemList.size()]);
-        return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
-                InteractionUtils.makeBattleActions(hero, enemies, spells, items));
-    }
-
     public void addAction(BattleAction action) {
         actionQueue.add(action);
     }
@@ -122,32 +112,104 @@ public class Battle implements Controller {
         return background;
     }
 
+    @Override
+    public Interaction toInteraction() {
+        final Battle battle = this;
+        return new Interaction(battle) {
+            @Override
+            public void run(GameScreen screen) {
+                screen.goToBattle(battle);
+            }
+        };
+    }
+
+    // getActionOptions and all supporting methods... guh, so long
+    private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
+        Spell[] spells = new Spell[0]; // TODO: get these from wherever
+        List<Item> itemList = Inventory.getMain().getAll(Item.class);
+        Item[] items = itemList.toArray(new Item[itemList.size()]);
+        return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
+                makeBattleActions(hero, enemies, spells, items));
+    }
+    private static Interaction[] makeBattleActions(BattleCharacter hero, BattleCharacter[] enemies,
+                                                   Spell[] spells, Item[] items) {
+        Interaction[] interactions = new Interaction[5];
+        interactions[0] = selectAttack(hero, enemies);
+        interactions[1] = selectDefend(hero);
+        interactions[2] = selectSpell(hero, spells, enemies);
+        interactions[3] = selectItem(hero, items, enemies);
+        interactions[4] = selectFlee(hero);
+        return interactions;
+    }
+
+    private static Interaction selectAttack(BattleCharacter hero, BattleCharacter[] enemies) {
+        return new DialogueOptions("Who do you want to attack?",
+                enemies, Interaction.convert(attacks(hero, enemies))).toInteraction();
+    }
+    private static Interaction selectDefend(BattleCharacter hero) {
+        return BattleAction.defend(hero).toInteraction();
+    }
+    private static Interaction selectSpell(BattleCharacter hero, Spell[] spells, BattleCharacter[] enemies) {
+        Interaction[] spellInteractions = new Interaction[spells.length];
+        for (int i=0; i<spells.length; i++) {
+            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells[i] + " on?",
+                    enemies, Interaction.convert(spells(hero, spells[i], enemies))).toInteraction();
+        }
+        return new DialogueOptions("What spell do you want to use?", spells, spellInteractions).toInteraction();
+    }
+    // TODO: can items be used on friends? On self?
+    private static Interaction selectItem(BattleCharacter hero, Item[] items, BattleCharacter[] enemies) {
+        Interaction[] itemInteractions = new Interaction[items.length];
+        for (int i=0; i<items.length; i++) {
+            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items[i] + " on?",
+                    enemies, Interaction.convert(items(hero, items[i], enemies))).toInteraction();
+        }
+        return new DialogueOptions("What item do you want to use?", items, itemInteractions).toInteraction();
+    }
+    private static Interaction selectFlee(BattleCharacter hero) {
+        return BattleAction.flee(hero).toInteraction();
+    }
+
+    private static BattleAction[] attacks(BattleCharacter source, BattleCharacter[] destinations) {
+        int count = destinations.length;
+        BattleAction[] attacks = new BattleAction[count];
+        for (int i=0; i<count; i++) {
+            attacks[i] = BattleAction.attack(source, destinations[i]);
+        }
+        return attacks;
+    }
+    private static BattleAction[] spells(BattleCharacter source, Spell spell, BattleCharacter[] destinations) {
+        int count = destinations.length;
+        BattleAction[] spells = new BattleAction[count];
+        for (int i=0; i<count; i++) {
+            spells[i] = BattleAction.spell(source, spell, destinations[i]);
+        }
+        return spells;
+    }
+    private static BattleAction[] items(BattleCharacter source, Item item, BattleCharacter[] destinations) {
+        int count = destinations.length;
+        BattleAction[] items = new BattleAction[count];
+        for (int i=0; i<count; i++) {
+            items[i] = BattleAction.item(source, item, destinations[i]);
+        }
+        return items;
+    }
+
     public static class Parser extends SuperParser<Battle> {
         @Override
         public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            EnemyParty enemy = enemyFromJson(object.get("enemy"));
-            String background = object.getAsJsonPrimitive("background").getAsString();
+            EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
+            String background = getString(object, "background");
             return new Battle(enemy, background);
-        }
+        } // TODO: create a Party.Parser
 
         @Override
         public JsonElement toJson(Battle object) {
             JsonObject json = new JsonObject();
-            json.add("enemy", enemyToJson(object.enemyParty));
-            json.addProperty("background", object.backgroundName);
+            addObject(json, "enemy", object.enemyParty, EnemyParty.class);
+            addString(json, "background", object.backgroundName);
             return json;
-        }
-
-        public EnemyParty enemyFromJson(JsonElement element) {
-            // TODO: finish me!
-            return new EnemyParty();
-        }
-
-        public JsonObject enemyToJson(EnemyParty enemy) {
-            JsonObject object = new JsonObject();
-            // TODO: finish me!
-            return object;
         }
     }
 }

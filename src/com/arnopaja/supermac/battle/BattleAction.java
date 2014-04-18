@@ -1,16 +1,20 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.ToInteraction;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 
 import java.util.Random;
 
 /**
- * Created by Envy on 2/28/14.
+ * @author Nolan Varani
  */
-public abstract class BattleAction {
+public abstract class BattleAction implements ToInteraction {
 
     private static final Random RANDOM = new Random();
 
@@ -115,5 +119,22 @@ public abstract class BattleAction {
 
     public Item getItem() {
         return item;
+    }
+
+    @Override
+    public Interaction toInteraction() {
+        final BattleAction action = this;
+        return new Interaction(action) {
+            @Override
+            public void run(GameScreen screen) {
+                screen.getBattle().addAction(action);
+                if (action.getType() == BattleAction.ActionType.ITEM) {
+                    // Removes the item from Inventory when the battle
+                    // action is put into the action queue
+                    Inventory.getMain().take(action.getItem());
+                }
+            }
+        };
+
     }
 }

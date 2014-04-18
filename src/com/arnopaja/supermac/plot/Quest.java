@@ -1,5 +1,8 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.ToInteraction;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +15,7 @@ import java.util.Set;
 /**
  * @author Ari Weiland
  */
-public class Quest {
+public class Quest implements ToInteraction {
 
     public static enum QuestState { INACTIVE, ACTIVE, COMPLETE }
 
@@ -127,6 +130,17 @@ public class Quest {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public Interaction toInteraction() {
+        final Quest quest = this;
+        return new Interaction(quest) {
+            @Override
+            public void run(GameScreen screen) {
+                quest.nextGoal();
+            }
+        };
     }
 
     @Override

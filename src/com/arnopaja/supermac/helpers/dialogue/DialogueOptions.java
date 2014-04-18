@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.InteractionUtils;
 
 import java.util.Arrays;
 
@@ -61,7 +60,7 @@ public class DialogueOptions extends Dialogue {
         this.header = header;
         this.options = Arrays.copyOf(options, options.length, Object[].class);
         if (interactions.length != options.length) {
-            this.interactions = InteractionUtils.getNulls(options.length);
+            this.interactions = Interaction.getNulls(options.length);
         } else {
             this.interactions = interactions;
         }

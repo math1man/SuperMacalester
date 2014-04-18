@@ -19,7 +19,7 @@ public class MainMapCharacter extends MapCharacter {
     }
 
     public MainMapCharacter(Location location, Direction direction) {
-        super(location, direction, false, AssetLoader.getAsset("Steven"));
+        super(location, direction, true, AssetLoader.getAsset("Steven"));
     }
 
     @Override
@@ -48,10 +48,15 @@ public class MainMapCharacter extends MapCharacter {
         return movingDirection != null;
     }
 
-    public Interaction interact() {
-        Entity entity = getGrid().getEntity(Direction.getAdjacent(getPosition(), getDirection()));
+    @Override
+    public Interaction toInteraction() {
+        Entity entity = getLocation().getAdjacent(getDirection()).getEntity();
         if (entity != null) {
-            return entity.interact(this);
+            Interaction interaction = entity.interact();
+            if (!interaction.equals(Interaction.NULL) && entity instanceof MapCharacter) {
+                ((MapCharacter) entity).setDirection(entity.getDirectionToward(getPosition()));
+            }
+            return interaction;
         }
         return Interaction.NULL;
     }
