@@ -27,7 +27,6 @@ public class WorldInputHandler extends BaseInputHandler {
         if (screen.isRunning()) {
             move(getTouchDirection(keycode));
         } else if (screen.isDialogue()) {
-            // TODO: figure out how to select options with keyboard?
             dialogueInput(0, 0);
         } else {
             return false;

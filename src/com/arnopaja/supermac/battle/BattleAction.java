@@ -16,7 +16,9 @@ import java.util.Random;
  */
 public abstract class BattleAction implements ToInteraction {
 
-    private static final Random RANDOM = new Random();
+    private static final Random random = new Random();
+    public static final int DEFEND_PRIORITY = 255; // TODO: should this be higher?
+    public static final int FLEE_PRIORITY = Integer.MAX_VALUE;
 
     public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
 
@@ -43,7 +45,7 @@ public abstract class BattleAction implements ToInteraction {
             @Override
             public Dialogue run(float delta) {
                 float damage = (float) (getSource().getAttack() / getDestination().getDefense()
-                        * (2 + Math.abs(RANDOM.nextGaussian())));
+                        * (2 + Math.abs(random.nextGaussian())));
                 int damageDone = (int) getDestination().modifyHealth(-damage);
                 String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
                         damageDone + " damage done.";
@@ -75,7 +77,7 @@ public abstract class BattleAction implements ToInteraction {
     }
 
     public static BattleAction defend(BattleCharacter source) {
-        return new BattleAction(source, null, ActionType.DEFEND, Integer.MAX_VALUE, null, null) {
+        return new BattleAction(source, null, ActionType.DEFEND, DEFEND_PRIORITY, null, null) {
             @Override
             public Dialogue run(float delta) {
                 // TODO: code for defending
@@ -86,8 +88,7 @@ public abstract class BattleAction implements ToInteraction {
     }
 
     public static BattleAction flee(BattleCharacter source) {
-        // TODO: what is the priority for fleeing?
-        return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null, null) {
+        return new BattleAction(source, null, ActionType.FLEE, FLEE_PRIORITY, null, null) {
             @Override
             public Dialogue run(float delta) {
                 // TODO: code for fleeing

@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.battle.characters;
 
 /**
- * Created by Envy on 2/24/14.
+ * @author Nolan Varani
  */
 public class Hero extends BattleCharacter {
 

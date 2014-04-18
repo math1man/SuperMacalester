@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.battle.characters;
 
 /**
- * Created by Envy on 2/26/14.
+ * @author Nolan Varani
  */
 public enum BattleClass {
     COMP_SCI(SpecialType.BLACK, 30, 10, 5, 10, 25, 15),
@@ -12,8 +12,7 @@ public enum BattleClass {
     public static enum SpecialType { BLACK, WHITE, RED, NONE }
 
     private final SpecialType specialType;
-    private final int baseMaxHealth;
-    private final int baseMaxMana;
+    private final int baseMaxHealth, baseMaxMana;
     private final int baseAttack, baseDefense, baseSpecial, baseSpeed;
 
     private BattleClass(SpecialType specialType, int baseMaxHealth, int baseMaxMana,

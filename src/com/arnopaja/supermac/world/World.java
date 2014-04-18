@@ -40,7 +40,6 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        // TODO: add characters here?
         MapNpc character = new MapNpc();
         character.setAsset(AssetLoader.getAsset("Betsy"));
         character.setInteractable(true);
