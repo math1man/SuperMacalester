@@ -125,7 +125,8 @@ public class Battle implements Controller, InteractionBuilder {
 
     // getActionOptions and all supporting methods... guh, so long
     private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
-        Spell[] spells = new Spell[0]; // TODO: get these from wherever
+        List<Spell> spellList = hero.getSpellsList();
+        Spell[] spells = spellList.toArray(new Spell[spellList.size()]);
         List<Item> itemList = Inventory.getMain().getAll(Item.class);
         Item[] items = itemList.toArray(new Item[itemList.size()]);
         return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
@@ -202,7 +203,7 @@ public class Battle implements Controller, InteractionBuilder {
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
             String background = getString(object, "background");
             return new Battle(enemy, background);
-        } // TODO: create a Party.Parser
+        }
 
         @Override
         public JsonElement toJson(Battle object) {

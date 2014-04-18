@@ -11,12 +11,14 @@ public class Spell {
     private final int universalID;
     private final String name;
     private final int damageModifier;
+    private final float manaCost;
 
     public Spell(int universalID) {
         this.universalID = universalID;
         //Generate given its universalID
         this.name = null;
         this.damageModifier = 0;
+        this.manaCost = 0;
     }
 
     public DialogueText use(BattleCharacter source, BattleCharacter destination) {
@@ -27,15 +29,25 @@ public class Spell {
         if (destination.isFainted()) {
             dialogue += "\n" + destination + " fell!";
         }
-        // TODO: decrement mana
+        int mana = (int) source.modifyMana(manaCost);
+        dialogue += "<d>" + source + " used " + mana + " mana.";
         if (source.isOutOfMana()) {
-            dialogue += "<d>" + source + " is out of mana...";
+            dialogue += "\n" + source + " is out of mana...";
         }
         return new DialogueText(dialogue);
     }
 
-    public String getName() { return name; }
-    public int getDamageModifier() { return damageModifier; }
+    public String getName() {
+        return name;
+    }
+
+    public int getDamageModifier() {
+        return damageModifier;
+    }
+
+    public float getManaCost() {
+        return manaCost;
+    }
 
     @Override
     public String toString() {

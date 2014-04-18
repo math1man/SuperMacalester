@@ -85,6 +85,7 @@ public abstract class BattleCharacter {
     public float getMana() { return fractionMana * maxMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
+    public List<Spell> getSpellsList() { return spellsList; }
 
     public Spell getSpell(int index) {
         return spellsList.get(index);
