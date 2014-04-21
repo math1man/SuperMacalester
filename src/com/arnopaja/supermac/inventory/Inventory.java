@@ -152,7 +152,7 @@ public class Inventory {
                 items.add(GenericItem.getCached(id, clazz));
             }
         }
-        return items;
+        return Collections.unmodifiableList(items);
     }
 
     public List<GenericItem> getAll() {
@@ -162,7 +162,7 @@ public class Inventory {
                 items.add(GenericItem.getCached(id));
             }
         }
-        return items;
+        return Collections.unmodifiableList(items);
     }
 
     public boolean contains(int id) {

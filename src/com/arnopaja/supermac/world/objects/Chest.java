@@ -129,7 +129,7 @@ public class Chest extends Entity {
 
                     dialogue = new DialogueOptions("Take items?", objects, interactions);
                 }
-                screen.getDialogueHandler().displayDialogue(dialogue);
+                screen.getDialogueHandler().display(dialogue);
             }
         };
     }

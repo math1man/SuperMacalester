@@ -57,6 +57,7 @@ public class DialogueOptions extends Dialogue {
      * @param interactions the list of interactions resulting from each option
      */
     public <T> DialogueOptions(String header, T[] options, Interaction... interactions) {
+        super(true);
         this.header = header;
         this.options = Arrays.copyOf(options, options.length, Object[].class);
         if (interactions.length != options.length) {

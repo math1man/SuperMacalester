@@ -218,7 +218,7 @@ public class GameScreen implements Screen {
     public void setBattle(Battle battle) {
         this.battle = battle;
         // TODO: set up main party
-        this.battle.readyBattle(null, dialogueHandler);
+        this.battle.ready(null, dialogueHandler);
     }
 
     public BattleRenderer getBattleRenderer() {

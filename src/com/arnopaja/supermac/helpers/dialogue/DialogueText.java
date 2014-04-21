@@ -44,6 +44,7 @@ public class DialogueText extends Dialogue {
     }
 
     private DialogueText(String[] dialogue, DialogueOptions options, Interaction postInteraction) {
+        super(false);
         this.dialogue = dialogue;
         this.hasOptions = (options != null);
         this.options = options;

@@ -16,10 +16,19 @@ import com.google.gson.JsonPrimitive;
  */
 public abstract class Dialogue implements InteractionBuilder {
 
+    private final boolean isOptions;
+
+    protected Dialogue(boolean isOptions) {
+        this.isOptions = isOptions;
+    }
+
+    public boolean isOptions() {
+        return isOptions;
+    }
+
     public static final Interaction CLEAR_DIALOGUE = new Interaction() {
         @Override
         public void run(GameScreen screen) {
-            screen.getDialogueHandler().clear();
             screen.endDialogue();
         }
     };
@@ -30,8 +39,8 @@ public abstract class Dialogue implements InteractionBuilder {
         return new Interaction(dialogue) {
             @Override
             public void run(GameScreen screen) {
+                screen.getDialogueHandler().display(dialogue);
                 screen.dialogue();
-                screen.getDialogueHandler().displayDialogue(dialogue);
             }
         };
     }

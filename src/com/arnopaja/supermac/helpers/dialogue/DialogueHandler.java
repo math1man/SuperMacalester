@@ -1,14 +1,9 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Class used to render a dialogue box.
@@ -20,178 +15,122 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class DialogueHandler {
 
-    public static final float DIALOGUE_TO_GAME_HEIGHT_RATIO = 0.3f;
-    public static final float DIALOGUE_BOX_RENDER_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
     public static final int TEXT_ROWS = 3;
-    public static final int OPTION_ROWS = TEXT_ROWS - 1;
-    public static final int MAX_OPTION_COLUMNS = 5;
 
     public static enum DisplayMode { NONE, DIALOGUE, OPTIONS }
 
-    private final Rectangle dialogueSpace;
-    private final Rectangle fontSpace;
-    private final Rectangle[][] optionSpaces;
-
-    private final Queue<Dialogue> dialogueQueue = new ConcurrentLinkedQueue<Dialogue>();
+    private final float gameWidth, gameHeight;
 
     private DisplayMode mode = DisplayMode.NONE;
-    private DialogueText dialogueText;
+    private DialogueText text;
     private DialogueOptions options;
+    private DialogueWindow window;
 
     public DialogueHandler(float gameWidth, float gameHeight) {
-        dialogueSpace = new Rectangle(
-                DIALOGUE_BOX_RENDER_GAP,
-                gameHeight * (1 - DIALOGUE_TO_GAME_HEIGHT_RATIO), 
-                gameWidth - 2 * DIALOGUE_BOX_RENDER_GAP, 
-                gameHeight * DIALOGUE_TO_GAME_HEIGHT_RATIO - DIALOGUE_BOX_RENDER_GAP);
-        fontSpace = new Rectangle(
-                dialogueSpace.getX() + DIALOGUE_BOX_RENDER_GAP,
-                dialogueSpace.getY() + DIALOGUE_BOX_RENDER_GAP,
-                dialogueSpace.getWidth() - 2 * DIALOGUE_BOX_RENDER_GAP,
-                dialogueSpace.getHeight() - 2 * DIALOGUE_BOX_RENDER_GAP);
-        AssetLoader.scaleFont(fontSpace.getHeight() / (AssetLoader.font.getLineHeight() * TEXT_ROWS));
-
-        optionSpaces = initOptionRects(fontSpace.getX(), fontSpace.getY(),
-                    fontSpace.getWidth(), fontSpace.getHeight());
-    }
-
-    private static Rectangle[][] initOptionRects(float x, float y, float width, float height) {
-        Rectangle[][] rects = new Rectangle[MAX_OPTION_COLUMNS][];
-        for (int i=0; i<MAX_OPTION_COLUMNS; i++) {
-            rects[i] = new Rectangle[OPTION_ROWS * (i + 1)];
-            float rectWidth = width / (i + 1);
-            float rectHeight = height / TEXT_ROWS;
-            for (int j=0; j<=i; j++) {
-                for (int k=0; k<OPTION_ROWS; k++) {
-                    rects[i][OPTION_ROWS * j + k] = new Rectangle(x + j*rectWidth,
-                            y + (k+1)*rectHeight, rectWidth, rectHeight);
-                }
-            }
-        }
-        return rects;
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
     }
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         if (!isNone()) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(1, 1, 1, 0.8f); // TODO: Why am I not transparent???
-            shapeRenderer.rect(dialogueSpace.getX(), dialogueSpace.getY(),
-                    dialogueSpace.getWidth(), dialogueSpace.getHeight());
-            shapeRenderer.end();
-
-            batch.begin();
-            batch.enableBlending();
-            if (getDialogueText()) {
-                renderDialogue(batch);
-            } else {
-                renderOptions(batch);
+            if (window == null) {
+                if (isText()) {
+                    window = getTextWindow(TEXT_ROWS);
+                } else {
+                    window = getOptionsWindow(TEXT_ROWS);
+                }
             }
-            batch.end();
+            window.render(shapeRenderer, batch);
         }
     }
 
-    private void renderDialogue(SpriteBatch batch) {
-        AssetLoader.drawWrappedFont(batch, dialogueText.getCurrentDialogue(),
-                fontSpace.getX(), fontSpace.getY(), fontSpace.getWidth());
+    private DialogueWindow getTextWindow(int rows) {
+        return new DialogueWindow(text, rows, DialogueWindow.FRAME_GAP,
+                gameHeight - DialogueWindow.getHeight(rows) - DialogueWindow.FRAME_GAP,
+                gameWidth - 2 * DialogueWindow.FRAME_GAP);
     }
 
-    private void renderOptions(SpriteBatch batch) {
-        AssetLoader.drawFont(batch, options.getHeader(), fontSpace.getX(), fontSpace.getY());
-        int count = options.getCount();
-        Rectangle[] spaces = getOptionSpaces(count);
-        for (int i=0; i<count; i++) {
-            AssetLoader.drawFont(batch, options.getOption(i), spaces[i].getX(), spaces[i].getY());
-        }
+    private DialogueWindow getOptionsWindow(int rows) {
+        return new DialogueWindow(options, rows, DialogueWindow.FRAME_GAP,
+                gameHeight - DialogueWindow.getHeight(rows) - DialogueWindow.FRAME_GAP,
+                gameWidth - 2 * DialogueWindow.FRAME_GAP);
     }
 
-    public void displayDialogue(Dialogue displayable) {
-        dialogueQueue.add(displayable);
-        if (isNone()) {
-            pollQueue();
+    public void display(Dialogue dialogue) {
+        if (dialogue == null) {
+            clear();
+        } else if (dialogue instanceof DialogueText) {
+            this.text = (DialogueText) dialogue;
+            this.text.reset();
+            window = getTextWindow(TEXT_ROWS);
+            mode = DisplayMode.DIALOGUE;
+        } else {
+            this.options = (DialogueOptions) dialogue;
+            window = getOptionsWindow(TEXT_ROWS);
+            mode = DisplayMode.OPTIONS;
         }
     }
 
     /**
      * Moves on to the next bit of dialogue.
-     * Returns null if the dialogue is to continue, or the resulting interaction.
+     * Returns NULL if the dialogue is to continue, or the resulting interaction.
      *
      * @param x the x coordinate of the click
      * @param y the y coordinate of the click
-     * @return null if the dialogue is to continue, or the resulting interaction
+     * @return NULL if the dialogue is to continue, or the resulting interaction
      */
     public Interaction onClick(int x, int y) {
-        if (getDialogueText()) {
-            if (dialogueText.hasNext()) {
-                dialogueText.next();
-            } else if (dialogueText.hasOptions()) {
-                display(dialogueText.getOptions());
+        if (isText()) {
+            if (text.hasNext()) {
+                text.next();
+                window = getTextWindow(TEXT_ROWS);
+            } else if (text.hasOptions()) {
+                display(text.getOptions());
             } else {
-                pollQueue();
-                if (dialogueText.hasPostInteraction()) {
-                    return Interaction.combine(Dialogue.CLEAR_DIALOGUE, dialogueText.getPostInteraction());
+                if (text.hasPostInteraction()) {
+                    return Interaction.combine(Dialogue.CLEAR_DIALOGUE, text.getPostInteraction());
                 }
+                return Dialogue.CLEAR_DIALOGUE;
             }
         } else if (isOptions()) {
-            int count = options.getCount();
-            for (int i=0; i<count; i++) {
-                if (getOptionSpaces(count)[i].contains(x, y)) {
-                    pollQueue();
+            for (int i=0; i<options.getCount(); i++) {
+                if (getOptionSpaces()[i].contains(x, y)) {
                     return Interaction.combine(Dialogue.CLEAR_DIALOGUE, options.getInteraction(i));
                 }
             }
-        }
-        return isNone() ? Dialogue.CLEAR_DIALOGUE : Interaction.NULL;
-    }
-
-    private void pollQueue() {
-        if (dialogueQueue.isEmpty()) {
-            clear();
         } else {
-            Dialogue displayable = dialogueQueue.poll();
-            if (displayable instanceof DialogueText) {
-               display((DialogueText) displayable);
-            } else if (displayable instanceof DialogueOptions) {
-                display((DialogueOptions) displayable);
-            } else {
-                pollQueue();
-            }
+            return Dialogue.CLEAR_DIALOGUE;
         }
+        return Interaction.NULL;
     }
 
-    private void display(DialogueText dialogueText) {
-        this.dialogueText = dialogueText;
-        this.dialogueText.reset();
-        mode = DisplayMode.DIALOGUE;
-    }
-
-    private void display(DialogueOptions options) {
-        this.options = options;
-        mode = DisplayMode.OPTIONS;
-    }
-
-    private Rectangle[] getOptionSpaces(int count) {
-        int index = (count - 1) / OPTION_ROWS;
-        return optionSpaces[index];
+    private Rectangle[] getOptionSpaces() {
+        Rectangle[][] sectors = window.getSectors();
+        int rows = sectors[0].length - 1;
+        int count = rows * sectors.length;
+        Rectangle[] optionSpaces = new Rectangle[count];
+        for (int i=0; i<count; i++) {
+            int x = i / rows;
+            int y = i % rows + 1;
+            optionSpaces[i] = sectors[x][y];
+        }
+        return optionSpaces;
     }
 
     public void clear() {
         mode = DisplayMode.NONE;
-        dialogueQueue.clear();
+        window = null;
     }
 
     public boolean isNone() {
         return mode == DisplayMode.NONE;
     }
 
-    public boolean getDialogueText() {
+    public boolean isText() {
         return mode == DisplayMode.DIALOGUE;
     }
 
     public boolean isOptions() {
         return mode == DisplayMode.OPTIONS;
-    }
-
-    public DialogueText getDialogue() {
-        return dialogueText;
     }
 }

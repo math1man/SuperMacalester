@@ -80,13 +80,13 @@ public abstract class Interaction implements InteractionBuilder {
     /**
      * Converts a set of ToInteractions into an array of interactions,
      * as per the ToInteraction.toInteraction method.
-     * @param toInteractions
+     * @param builders
      * @return
      */
-    public static <T extends InteractionBuilder> Interaction[] convert(T... toInteractions) {
-        Interaction[] interactions = new Interaction[toInteractions.length];
-        for (int i=0; i<toInteractions.length; i++) {
-            interactions[i] = toInteractions[i].toInteraction();
+    public static <T extends InteractionBuilder> Interaction[] convert(T... builders) {
+        Interaction[] interactions = new Interaction[builders.length];
+        for (int i=0; i<builders.length; i++) {
+            interactions[i] = builders[i].toInteraction();
         }
         return interactions;
     }
@@ -104,6 +104,11 @@ public abstract class Interaction implements InteractionBuilder {
     }
 
     @Override
+    public Interaction toInteraction() {
+        return this;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Interaction)) return false;
@@ -111,11 +116,6 @@ public abstract class Interaction implements InteractionBuilder {
         Interaction that = (Interaction) o;
 
         return (parameters.equals(that.parameters));
-    }
-
-    @Override
-    public Interaction toInteraction() {
-        return this;
     }
 
     private static class EqualityParameters<U, V> {

@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -144,6 +145,7 @@ public class AssetLoader {
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        scaleFont(GameScreen.GAME_HEIGHT * 0.2f / (AssetLoader.font.getLineHeight() * 3));
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }

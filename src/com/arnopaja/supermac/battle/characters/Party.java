@@ -4,13 +4,17 @@ import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * TODO should this maybe implement a Collection?
  * Created by Nolan on 2/24/14.
  */
-public abstract class Party<T extends BattleCharacter> {
+public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
+
+    protected static final Random random = new Random();
 
     protected static final int MAX_SIZE = 3;
 
@@ -32,17 +36,22 @@ public abstract class Party<T extends BattleCharacter> {
         return characters.get(index);
     }
 
-    public BattleCharacter getRandom() {
-        // TODO: ???
-        return null;
+    public T getRandom() {
+        int i = random.nextInt(characters.size());
+        return characters.get(i);
     }
 
-    public BattleCharacter[] getBattleParty() {
-        return characters.toArray(new BattleCharacter[getSize()]);
+    public BattleCharacter[] toArray() {
+        return characters.toArray(new BattleCharacter[size()]);
     }
 
-    public int getSize() {
+    public int size() {
         return characters.size();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return characters.iterator();
     }
 
     public static abstract class Parser<U extends Party> extends SuperParser<U> {
