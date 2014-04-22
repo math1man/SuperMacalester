@@ -69,29 +69,37 @@ public class MapLoader {
     }
 
     public static void initTileMap() {
-        Tile.TILE_MAP.put("g",   AssetLoader.grass0,
-                                 AssetLoader.grass1,
-                                 AssetLoader.grass2);
-        Tile.TILE_MAP.put("b",   AssetLoader.bush);
-        Tile.TILE_MAP.put("bh",  AssetLoader.bushH);
-        Tile.TILE_MAP.put("bv",  AssetLoader.bushV);
-        Tile.TILE_MAP.put("bfh", AssetLoader.bushFlowersH);
-        Tile.TILE_MAP.put("bfv", AssetLoader.bushFlowersV);
-        Tile.TILE_MAP.put("ts",  AssetLoader.treeSmall);
-        Tile.TILE_MAP.put("tb", AssetLoader.treeBig);
-        Tile.TILE_MAP.put("c",   AssetLoader.cobble);
-        Tile.TILE_MAP.put("cr",  AssetLoader.cobbleRed);
-        Tile.TILE_MAP.put("a",   AssetLoader.asphalt);
-        Tile.TILE_MAP.put("ah",  AssetLoader.asphaltLineH);
-        Tile.TILE_MAP.put("av",  AssetLoader.asphaltLineV);
-        Tile.TILE_MAP.put("an",  AssetLoader.asphaltEdgeN);
-        Tile.TILE_MAP.put("ae",  AssetLoader.asphaltEdgeE);
-        Tile.TILE_MAP.put("as",  AssetLoader.asphaltEdgeS);
-        Tile.TILE_MAP.put("aw",  AssetLoader.asphaltEdgeW);
-        Tile.TILE_MAP.put("ane", AssetLoader.asphaltCornerNE);
-        Tile.TILE_MAP.put("ase", AssetLoader.asphaltCornerSE);
-        Tile.TILE_MAP.put("asw", AssetLoader.asphaltCornerSW);
-        Tile.TILE_MAP.put("anw", AssetLoader.asphaltCornerNW);
+        Tile.TILE_MAP.put("g",    AssetLoader.grass0,
+                                  AssetLoader.grass1,
+                                  AssetLoader.grass2);
+        Tile.TILE_MAP.put("b",    AssetLoader.bush);
+        Tile.TILE_MAP.put("bh",   AssetLoader.bushH);
+        Tile.TILE_MAP.put("bv",   AssetLoader.bushV);
+        Tile.TILE_MAP.put("bfh",  AssetLoader.bushFlowersH);
+        Tile.TILE_MAP.put("bfv",  AssetLoader.bushFlowersV);
+        Tile.TILE_MAP.put("ts",   AssetLoader.treeSmall);
+        Tile.TILE_MAP.put("tb",   AssetLoader.treeBig);
+        Tile.TILE_MAP.put("c",    AssetLoader.cobble);
+        Tile.TILE_MAP.put("cr",   AssetLoader.cobbleRed);
+        Tile.TILE_MAP.put("a",    AssetLoader.asphalt);
+        Tile.TILE_MAP.put("ah",   AssetLoader.asphaltLineH);
+        Tile.TILE_MAP.put("av",   AssetLoader.asphaltLineV);
+        Tile.TILE_MAP.put("an",   AssetLoader.asphaltGrassN);
+        Tile.TILE_MAP.put("ae",   AssetLoader.asphaltGrassE);
+        Tile.TILE_MAP.put("as",   AssetLoader.asphaltGrassS);
+        Tile.TILE_MAP.put("aw",   AssetLoader.asphaltGrassW);
+        Tile.TILE_MAP.put("ane",  AssetLoader.asphaltGrassNE);
+        Tile.TILE_MAP.put("ase",  AssetLoader.asphaltGrassSE);
+        Tile.TILE_MAP.put("asw",  AssetLoader.asphaltGrassSW);
+        Tile.TILE_MAP.put("anw",  AssetLoader.asphaltGrassNW);
+        Tile.TILE_MAP.put("acn",  AssetLoader.asphaltCobbleN);
+        Tile.TILE_MAP.put("ace",  AssetLoader.asphaltCobbleE);
+        Tile.TILE_MAP.put("acs",  AssetLoader.asphaltCobbleS);
+        Tile.TILE_MAP.put("acw",  AssetLoader.asphaltCobbleW);
+        Tile.TILE_MAP.put("acne", AssetLoader.asphaltCobbleNE);
+        Tile.TILE_MAP.put("acse", AssetLoader.asphaltCobbleSE);
+        Tile.TILE_MAP.put("acsw", AssetLoader.asphaltCobbleSW);
+        Tile.TILE_MAP.put("acnw", AssetLoader.asphaltCobbleNW);
 
         Tile.TILE_MAP.put("_ar", AssetLoader.art);
         Tile.TILE_MAP.put("_ac", AssetLoader.artCommons);
@@ -110,6 +118,7 @@ public class MapLoader {
         Tile.TILE_MAP.put("_mu", AssetLoader.music);
         Tile.TILE_MAP.put("_om", AssetLoader.oldMain);
         Tile.TILE_MAP.put("_ol", AssetLoader.olin);
+        Tile.TILE_MAP.put("_or", AssetLoader.olinRiceStairs);
         Tile.TILE_MAP.put("_ri", AssetLoader.rice);
         Tile.TILE_MAP.put("_th", AssetLoader.theatre);
         Tile.TILE_MAP.put("_tm", AssetLoader.thirtyMac);
