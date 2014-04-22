@@ -44,6 +44,7 @@ public class AssetLoader {
     public static TextureRegion chestRedOpen, chestRedClosed;
     public static TextureRegion chestGreenOpen, chestGreenClosed;
     public static TextureRegion garbageCan;
+    public static Animation asteroid;
 
     // Characters
     public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();

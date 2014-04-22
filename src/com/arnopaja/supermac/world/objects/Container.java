@@ -9,18 +9,13 @@ import com.arnopaja.supermac.world.grid.Location;
 /**
  * @author Ari Weiland
  */
-public abstract class Container extends Entity {
+public abstract class Container extends StaticEntity {
 
     private final Inventory contents;
 
     protected Container(Location location, Inventory contents) {
         super(true, location, true);
         this.contents = contents;
-    }
-
-    @Override
-    public void update(float delta) {
-        // does nothing
     }
 
     public void removeItem(GenericItem item) {
