@@ -1,6 +1,8 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,9 +12,32 @@ import com.badlogic.gdx.math.Rectangle;
  * @author Ari Weiland
  */
 public class DialogueWindow {
-    public static final float FRAME_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
 
-    private final String[][] dialogue;
+    public static final float FRAME_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
+    public static final int TEXT_ROWS = 3;
+
+    public static enum Style {
+        BOTTOM(DialogueWindow.FRAME_GAP, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
+                GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP, TEXT_ROWS),
+        BOTTOM_LEFT(DialogueWindow.FRAME_GAP, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
+                GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP, TEXT_ROWS),
+        BOTTOM_RIGHT(GameScreen.GAME_WIDTH / 2, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
+                GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP, TEXT_ROWS);
+
+        private final float x;
+        private final float y;
+        private final float width;
+        private final int rows;
+
+        Style(float x, float y, float width, int rows) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.rows = rows;
+        }
+    }
+
+    private final DialogueMember[][] dialogue;
 
     private final int rows;
     private final int columns;
@@ -21,19 +46,15 @@ public class DialogueWindow {
     private final Rectangle textSpace;
     private final Rectangle[][] sectors;
 
-    public DialogueWindow(DialogueText text, int rows, float x, float y, float width) {
-        this(text.getCurrentDialogue(), rows, x, y, width);
+    public DialogueWindow(Dialogue dialogue, Style position) {
+        this(toArray(dialogue, position.rows), position);
     }
 
-    public DialogueWindow(String dialogue, int rows, float x, float y, float width) {
-        this(toArray(dialogue), x, y, width, getHeight(rows));
+    public DialogueWindow(DialogueMember[][] dialogue, Style position) {
+        this(dialogue, position.x, position.y, position.width, getHeight(position.rows));
     }
 
-    public DialogueWindow(DialogueOptions options, int rows, float x, float y, float width) {
-        this(toArray(options, rows), x, y, width, getHeight(rows));
-    }
-
-    public DialogueWindow(String[][] dialogue, float x, float y, float width, float height) {
+    public DialogueWindow(DialogueMember[][] dialogue, float x, float y, float width, float height) {
         this.dialogue = dialogue;
         this.rows = dialogue[0].length;
         this.columns = dialogue.length;
@@ -50,17 +71,25 @@ public class DialogueWindow {
         }
     }
 
-    private static String[][] toArray(String dialogue) {
-        String[][] array = new String[1][1];
-        array[0][0] = dialogue;
+    private static DialogueMember[][] toArray(Dialogue dialogue, int rows) {
+        if (dialogue instanceof DialogueText) {
+            return toArray((DialogueText) dialogue);
+        } else {
+            return toArray((DialogueOptions) dialogue, rows);
+        }
+    }
+
+    private static DialogueMember[][] toArray(DialogueText dialogue) {
+        DialogueMember[][] array = new DialogueMember[1][1];
+        array[0][0] = dialogue.getMember();
         return array;
     }
 
-    private static String[][] toArray(DialogueOptions options, int rows) {
+    private static DialogueMember[][] toArray(DialogueOptions options, int rows) {
         int count = options.getCount();
         int columns = (int) Math.ceil(count / (rows - 1.0f));
-        String[][] array = new String[columns][rows];
-        array[0][0] = options.getHeader();
+        DialogueMember[][] array = new DialogueMember[columns][rows];
+        array[0][0] = new DialogueMember(options.getHeader());
         for (int i=0; i<count; i++) {
             int x = i / (rows - 1);
             int y = i % (rows - 1) + 1;
@@ -77,18 +106,29 @@ public class DialogueWindow {
 
         batch.begin();
         batch.enableBlending();
-
-        float sectorWidth = textSpace.getWidth() / columns;
-        float sectorHeight = textSpace.getHeight() / rows;
-
         for (int i=0; i<columns; i++) {
             for (int j=0; j<rows; j++) {
-                AssetLoader.drawWrappedFont(batch, dialogue[i][j], sectors[i][j].getX(),
+                AssetLoader.drawWrappedFont(batch, dialogue[i][j].getText(), sectors[i][j].getX(),
                         sectors[i][j].getY(), textSpace.getWidth());
             }
         }
-
         batch.end();
+    }
+
+    public Interaction onClick(float x, float y) {
+        if (rows == 1 && columns == 1) {
+            return dialogue[0][0].getInteraction();
+        }
+        for (int i=0; i<columns; i++) {
+            for (int j=0; j<rows; j++) {
+                if (sectors[i][j].contains(x, y)) {
+                    if (dialogue[i][j].hasInteraction()) {
+                        return dialogue[i][j].getInteraction();
+                    }
+                }
+            }
+        }
+        return Interaction.NULL;
     }
 
     public float getWidth() {

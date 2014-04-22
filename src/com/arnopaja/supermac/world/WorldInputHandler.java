@@ -46,8 +46,8 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
         if (screen.isRunning()) {
             move(getDirection(gameX, gameY));
         } else if (screen.isDialogue()) {
@@ -60,8 +60,8 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
         return stop(getDirection(gameX, gameY));
     }
 
@@ -94,7 +94,7 @@ public class WorldInputHandler extends BaseInputHandler {
         return false;
     }
 
-    private Direction getDirection(int gameX, int gameY) {
+    private Direction getDirection(float gameX, float gameY) {
         if (gameX < SIDE_BUTTON_WIDTH) {
             return Direction.NORTH;
         } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {

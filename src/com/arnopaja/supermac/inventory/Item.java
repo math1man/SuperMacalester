@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,7 +19,7 @@ public class Item extends GenericItem {
         this.equippableBitMask = equippableBitMask;
     }
 
-    public DialogueText use(BattleCharacter source, BattleCharacter destination) {
+    public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item
         String dialogue = source + " uses " + this + " on " + destination + "!";
         return new DialogueText(dialogue);

@@ -14,7 +14,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -124,12 +127,12 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private DialogueOptions getOptions(Hero hero, Iterator<Hero> heroes, Interaction interaction) {
-        DialogueOptions options = new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
+        DialogueOptions options = new DialogueOptions("What should " + hero + " do?",
+                DialogueOptions.BATTLE_OPTIONS,
                 selectAttack(hero, interaction),
                 selectDefend(hero, interaction),
                 selectSpell(hero, interaction),
-                selectItem(hero, interaction),
-                selectFlee(hero, interaction));
+                selectItem(hero, interaction), selectFlee(hero, interaction));
         if (heroes.hasNext()) {
             return getOptions(heroes.next(), heroes, options.toInteraction());
         } else {
@@ -138,8 +141,8 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectAttack(Hero hero, Interaction interaction) {
-        return new DialogueOptions("Who do you want to attack?", enemyParty.toArray(),
-                attacks(hero, interaction)).toInteraction();
+        return new DialogueOptions("Who do you want to attack?",
+                enemyParty.toArray(), attacks(hero, interaction)).toInteraction();
     }
 
     private Interaction selectDefend(Hero hero, Interaction interaction) {

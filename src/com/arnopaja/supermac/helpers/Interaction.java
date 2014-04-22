@@ -16,6 +16,8 @@ import java.util.Arrays;
  */
 public abstract class Interaction implements InteractionBuilder {
 
+    private static Interaction last;
+
     private final EqualityParameters parameters;
 
     public Interaction() {
@@ -156,6 +158,8 @@ public abstract class Interaction implements InteractionBuilder {
             if (object.has("dialogue")) {
                 Dialogue dialogue = getObject(object, Dialogue.class);
                 return dialogue.toInteraction();
+            } else if (object.has("options")) {
+
             } else if (object.has("battle")) {
                 Battle battle = fromJson(object.get("battle"), Battle.class);
                 return battle.toInteraction();

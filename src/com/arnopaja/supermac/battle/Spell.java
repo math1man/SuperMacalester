@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 
 /**
@@ -21,7 +22,7 @@ public class Spell {
         this.manaCost = 0;
     }
 
-    public DialogueText use(BattleCharacter source, BattleCharacter destination) {
+    public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         float damage = getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
         int damageDone = (int) destination.modifyHealth(-damage);
         String dialogue = source + " casts " + this + "!\n" +

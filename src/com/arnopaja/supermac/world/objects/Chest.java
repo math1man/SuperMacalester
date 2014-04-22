@@ -108,7 +108,7 @@ public class Chest extends Entity {
                 chest.open();
                 Dialogue dialogue;
                 if (chest.isEmpty()) {
-                    dialogue = new DialogueText(chest.closeInteraction(), "This chest is empty");
+                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction());
                 } else {
                     // Items go into inventory from chest
                     List<GenericItem> items = chest.getContents().getAll();

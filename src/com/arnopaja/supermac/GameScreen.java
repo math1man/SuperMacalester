@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
     public GameScreen() {
         Settings.load();
 
-        dialogueHandler = new DialogueHandler(GAME_WIDTH, GAME_HEIGHT);
+        dialogueHandler = new DialogueHandler();
 
         world = MapLoader.generateWorld(AssetLoader.mapHandle);
         SuperParser.initParsers(world);
