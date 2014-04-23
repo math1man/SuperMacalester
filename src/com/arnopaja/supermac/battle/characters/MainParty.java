@@ -19,6 +19,12 @@ public class MainParty extends Party<Hero> {
         super(characters);
     }
 
+    @Override
+    public Hero getRandom()
+    {
+        return characters.get(random.nextInt() % 4);
+    }
+
     public void addCharacter(Hero h) {
         characters.add(h);
     }
@@ -35,5 +41,12 @@ public class MainParty extends Party<Hero> {
         protected MainParty construct(JsonObject object) {
             return new MainParty(getList(object, "characters", Hero.class));
         }
+    }
+
+    public List<Hero> getActiveParty()
+    {
+        ArrayList<Hero> h = new ArrayList<Hero>();
+        for(int i=0;i<4;i++) h.add(this.characters.get(i));
+        return h;
     }
 }

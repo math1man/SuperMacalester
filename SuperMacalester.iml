@@ -2,7 +2,14 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="gwt" name="GWT">
-      <configuration />
+      <configuration>
+        <setting name="compilerMaxHeapSize" value="256" />
+        <setting name="gwtScriptOutputStyle" value="DETAILED" />
+        <setting name="gwtSdkUrl" value="file://" />
+        <packaging>
+          <module name="MacGame" enabled="false" />
+        </packaging>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
@@ -13,7 +20,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
-    <orderEntry type="library" name="gson" level="project" />
   </component>
 </module>
 

@@ -32,7 +32,7 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
         return true;
     }
 
-    public BattleCharacter get(int index) {
+    public T get(int index) {
         return characters.get(index);
     }
 
