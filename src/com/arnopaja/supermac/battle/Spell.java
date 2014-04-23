@@ -1,25 +1,31 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by Envy on 2/28/14.
+ * @author Nolan Varani
  */
 public class Spell {
 
-    private final int universalID;
+    private final int id;
     private final String name;
-    private final int damageModifier;
+    private final float damageModifier;
     private final float manaCost;
 
-    public Spell(int universalID) {
-        this.universalID = universalID;
-        //Generate given its universalID
-        this.name = null;
-        this.damageModifier = 0;
-        this.manaCost = 0;
+    protected Spell(int id, String name, float damageModifier, float manaCost) {
+        this.id = id;
+        this.name = name;
+        this.damageModifier = damageModifier;
+        this.manaCost = manaCost;
+        cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
@@ -38,11 +44,15 @@ public class Spell {
         return new DialogueText(dialogue);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public int getDamageModifier() {
+    public float getDamageModifier() {
         return damageModifier;
     }
 
@@ -53,5 +63,52 @@ public class Spell {
     @Override
     public String toString() {
         return name;
+    }
+
+    // CACHE
+    private static final Map<Integer, Spell> cache = new HashMap<Integer, Spell>();
+
+    /**
+     * Returns whether the specified ID is in the cache
+     * @param id
+     * @return
+     */
+    public static boolean isCached(int id) {
+        return cache.containsKey(id);
+    }
+
+    /**
+     * Retrieves the AbstractItem of the specified ID from the cache
+     * @param id
+     * @return
+     */
+    public static Spell getCached(int id) {
+        return cache.get(id);
+    }
+
+    public static class Parser extends SuperParser<Spell> {
+        @Override
+        public Spell fromJson(JsonElement element) {
+            JsonObject object = element.getAsJsonObject();
+            int id = getInt(object, "id");
+            if (isCached(id)) {
+                return getCached(id);
+            } else {
+                String name = getString(object, "name");
+                float modifier = getFloat(object, "modifier");
+                float manaCost = getFloat(object, "mana");
+                return new Spell(id, name, modifier, manaCost);
+            }
+        }
+
+        @Override
+        public JsonElement toJson(Spell object) {
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.id);
+            addString(json, "name", object.name);
+            addFloat(json, "modifier", object.damageModifier);
+            addFloat(json, "mana", object.manaCost);
+            return json;
+        }
     }
 }

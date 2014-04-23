@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -13,29 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class DialogueWindow {
 
-    public static final float FRAME_GAP = 0.5f * Grid.GRID_PIXEL_DIMENSION;
-    public static final int TEXT_ROWS = 3;
-
-    public static enum Style {
-        BOTTOM(DialogueWindow.FRAME_GAP, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
-                GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP, TEXT_ROWS),
-        BOTTOM_LEFT(DialogueWindow.FRAME_GAP, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
-                GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP, TEXT_ROWS),
-        BOTTOM_RIGHT(GameScreen.GAME_WIDTH / 2, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(TEXT_ROWS) - DialogueWindow.FRAME_GAP,
-                GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP, TEXT_ROWS);
-
-        private final float x;
-        private final float y;
-        private final float width;
-        private final int rows;
-
-        Style(float x, float y, float width, int rows) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.rows = rows;
-        }
-    }
+    public static final float FRAME_GAP = Grid.GRID_PIXEL_DIMENSION / 2f;
 
     private final DialogueMember[][] dialogue;
 
@@ -46,12 +23,12 @@ public class DialogueWindow {
     private final Rectangle textSpace;
     private final Rectangle[][] sectors;
 
-    public DialogueWindow(Dialogue dialogue, Style position) {
-        this(toArray(dialogue, position.rows), position);
+    public DialogueWindow(Dialogue dialogue, DialogueStyle position) {
+        this(toArray(dialogue, position.getRows()), position);
     }
 
-    public DialogueWindow(DialogueMember[][] dialogue, Style position) {
-        this(dialogue, position.x, position.y, position.width, getHeight(position.rows));
+    public DialogueWindow(DialogueMember[][] dialogue, DialogueStyle position) {
+        this(dialogue, position.getX(), position.getY(), position.getWidth(), getHeight(position.getRows()));
     }
 
     public DialogueWindow(DialogueMember[][] dialogue, float x, float y, float width, float height) {

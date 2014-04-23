@@ -51,6 +51,7 @@ public class AssetLoader {
 
     // Data file handles
     public static FileHandle itemHandle;
+    public static FileHandle spellHandle;
     public static FileHandle dialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
@@ -138,6 +139,7 @@ public class AssetLoader {
         // TODO: battle backgrounds
 
         itemHandle = getHandle("items.txt");
+        spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
         plotHandle = getHandle("macalester/plot.txt");
         mapHandle = getHandle("macalester/maps");

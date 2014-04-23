@@ -103,7 +103,7 @@ public class GenericItem {
         @Override
         public T fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            int id = object.getAsJsonPrimitive("id").getAsInt();
+            int id = getInt(object, "id");
             if (isCached(id)) {
                 return (T) getCached(id);
             } else {

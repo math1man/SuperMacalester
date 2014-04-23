@@ -67,13 +67,11 @@ A sample dialogue:
     "options" : {
         "header" : "<option header goes here>",
         "options" : [
-            "<first option>",
-            "<second option>",
-            <etc>
-        ],
-        "interactions" : [
-            { <first interaction> },
-            { <second interaction> },
+            {
+                "text" : "<option 1 text>",
+                "interaction" : { <option 1 interaction> }
+            },
+            { <second option> },
             <etc>
         ]
     }
@@ -84,9 +82,9 @@ Dialogue may be specified in 4 ways:
   - text string plus interaction
   - options only
   - text string plus options
-Additionally, the dialogue options interactions are optional, though if present,
-they must match the amount of options given. Dialogue windows should be separated
-by <d>, as the newline "\n" character is usable in dialogue windows.
+Additionally, the dialogue options interactions are optional.
+Dialogue windows should be separated by <d>, as the newline "\n"
+character is usable in dialogue windows.
 
 A sample item:
 
@@ -95,12 +93,43 @@ A sample item:
     "id" : <unique identifier (int)>,
     "name" : "<the name of the item>",
     "value" : <the value of the item (int)>,
-    "modifier" : <the attack/defense modifier of weapons/armor (int)>,
+    "modifier" : <the attack/defense modifier of weapons/armor (float)>,
     "bitmask" : <... not for SpecialItems (int)>
+}
+
+A sample spell:
+
+"spell" : {
+    "id" : <unique identifier (int)>,
+    "name" : "<the name of the spell>",
+    "modifier" : <the damage modifier of the spell (float)>,
+    "mana" : <the mana cost of the spell (float)>
+}
+
+A sample enemy:
+
+"enemy" : {
+    "class" : "Enemy",
+    "name" : "<the name of the enemy>",
+    "battleclass" : "<the battle class of the enemy>",
+    "level" : <the level of the enemy (int)>,
+    "item" : { <the item the enemy has equipped (optional)> },
+    "boss" : <true if this enemy is a boss, default to false>
+}
+
+A sample party:
+
+"party" : {
+    "characters" : [
+        { <first party member> },
+        { <second party member> },
+        <etc>
+    ]
 }
 
 A sample battle:
 
-{
-    TODO: Parse battles
+"battle" : {
+    "enemy" : { <the enemy party> },
+    "background" : "<the name of the background>"
 }

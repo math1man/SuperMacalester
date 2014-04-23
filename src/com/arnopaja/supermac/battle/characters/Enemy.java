@@ -33,8 +33,14 @@ public class Enemy extends BattleCharacter {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            Item item = getObject(object, "item", Item.class);
-            boolean isBoss = getBoolean(object, "boss");
+            Item item = null;
+            if (has(object, Item.class)) {
+                item = getObject(object, Item.class);
+            }
+            boolean isBoss = false;
+            if (object.has("boss")) {
+                isBoss = getBoolean(object, "boss");
+            }
             return new Enemy(name, battleClass, level, item, isBoss);
         }
 

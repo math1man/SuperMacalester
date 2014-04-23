@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.battle.Battle;
+import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
@@ -51,6 +52,7 @@ public abstract class SuperParser<T> {
         addParser(Quest.class,            new Quest.Parser());
         addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
+        addParser(Spell.class,            new Spell.Parser());
         addParser(Weapon.class,           new Weapon.Parser());
         // TODO: we probably need battle character and party parsers
     }
@@ -67,6 +69,10 @@ public abstract class SuperParser<T> {
 
     public static void initItems(FileHandle handle) {
         parseAll(handle, GenericItem.class);
+    }
+
+    public static void initSpells(FileHandle handle) {
+        parseAll(handle, Spell.class);
     }
 
     /**
@@ -190,7 +196,7 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive(name).getAsInt();
     }
 
-    protected static void addInt(JsonObject json, String name, int i) {
+    protected static void addInt(JsonObject json, String name, float i) {
         json.addProperty(name, i);
     }
 
