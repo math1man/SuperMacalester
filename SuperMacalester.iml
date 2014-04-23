@@ -12,8 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="libs" level="project" />
-    <orderEntry type="library" name="gson" level="project" />
+    <orderEntry type="library" name="libs2" level="project" />
   </component>
 </module>
 

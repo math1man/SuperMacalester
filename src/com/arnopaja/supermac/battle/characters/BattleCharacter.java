@@ -60,7 +60,6 @@ public abstract class BattleCharacter {
             fractionMana = 0;
         }
         return (fractionMana - before) * maxMana;
-        // TODO: Display fractionMana increase/decrease as blue or orange text, respectively;
     }
 
     public boolean isOutOfMana() {
