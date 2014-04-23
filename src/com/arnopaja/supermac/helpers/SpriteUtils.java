@@ -84,11 +84,11 @@ public class SpriteUtils {
      * @return
      */
     public static TextureRegion[][] split(TextureRegion sprite, int tileWidth, int tileHeight, boolean flipX, boolean flipY) {
-        sprite = new TextureRegion(sprite);
-        sprite.flip(flipX, flipY); // flip the sprite appropriately
+        sprite = new TextureRegion(sprite); // create a duplicate so as not to contaminate other tiles
+        sprite.flip(flipX, flipY);          // flip the sprite appropriately
         boolean flipX2 = sprite.isFlipX();
         boolean flipY2 = sprite.isFlipY();
-        sprite.flip(flipX2, flipY2); // unflip the sprite for the splitting process
+        sprite.flip(flipX2, flipY2);        // unflip the sprite for the splitting process
         int x = sprite.getRegionX();
         int y = sprite.getRegionY();
         int width = sprite.getRegionWidth();
