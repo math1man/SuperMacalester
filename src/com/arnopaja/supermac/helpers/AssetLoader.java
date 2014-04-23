@@ -115,6 +115,7 @@ public class AssetLoader {
         weyerhauser = SpriteUtils.makeSprite(tilesTexture, 0, 5, 24, 12);
         campusCenter = SpriteUtils.makeSprite(tilesTexture, 24, 5, 20, 16);
         chapel = SpriteUtils.makeSprite(tilesTexture, 44, 5, 14, 16);
+        leonardCenter = SpriteUtils.makeSprite(tilesTexture, 58, 5, 52, 24);
         library = SpriteUtils.makeSprite(tilesTexture, 0, 17, 16, 12);
         oldMain = SpriteUtils.makeSprite(tilesTexture, 16, 17, 6, 12);
         olin = SpriteUtils.makeSprite(tilesTexture, 42, 21, 16, 32);
