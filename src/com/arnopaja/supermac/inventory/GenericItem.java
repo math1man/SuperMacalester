@@ -1,5 +1,8 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,7 +13,7 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class GenericItem {
+public class GenericItem implements InteractionBuilder {
 
     private final int id;
     private final String name;
@@ -40,7 +43,21 @@ public class GenericItem {
         return getName();
     }
 
-    // Cache of all AbstractItems
+    @Override
+    public Interaction toInteraction() {
+        final GenericItem item = this;
+        return new Interaction() {
+            @Override
+            public void run(GameScreen screen) {
+                Inventory.getMain().store(item);
+            }
+        };
+    }
+
+    //-----------------------------
+    //     Cache and Methods
+    //-----------------------------
+
     private static final Map<Integer, GenericItem> cache = new HashMap<Integer, GenericItem>();
 
     /**
