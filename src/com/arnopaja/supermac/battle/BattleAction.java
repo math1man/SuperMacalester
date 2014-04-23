@@ -139,4 +139,16 @@ public abstract class BattleAction implements InteractionBuilder {
         };
 
     }
+
+    @Override
+    public String toString() {
+        return "BattleAction{" +
+                "source=" + source +
+                ", destination=" + destination +
+                ", priority=" + priority +
+                ", spell=" + spell +
+                ", item=" + item +
+                ", type=" + type +
+                '}';
+    }
 }

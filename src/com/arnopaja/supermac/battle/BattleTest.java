@@ -1,7 +1,11 @@
 package com.arnopaja.supermac.battle;
 
+import com.arnopaja.supermac.battle.characters.Enemy;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
+import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+
+import java.util.Random;
 
 /**
  * @author Ari Weiland
@@ -33,9 +37,27 @@ public class BattleTest extends Battle {
     @Override
     protected void setTurnActions() {
         // implement me!
+        Random r = new Random();
+        //Set enemy actions
+        BattleAction a;
+        for (Enemy e:enemyParty)
+        {
+            a = BattleAction.attack(e,mainParty.getRandom());
+            addAction(a);
+            System.out.println(a);
+        }
+        //Set friendly actions
+        for (Hero h:mainParty.getActiveParty())
+        {
+            a = BattleAction.attack(h,enemyParty.getRandom());
+            addAction(a);
+            System.out.println(a);
+        }
     }
 
     public static void main(String[] args) {
+        //create enemy party
+        //create main party
         Battle battle = new Battle(/*enemy part*/, null);
         DialogueHandler handler = new DialogueHandler();
         battle.ready(/*main party*/, handler);
