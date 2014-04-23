@@ -9,6 +9,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
+import com.arnopaja.supermac.inventory.Spell;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

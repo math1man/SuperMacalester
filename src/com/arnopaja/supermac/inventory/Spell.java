@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.battle;
+package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
