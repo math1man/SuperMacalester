@@ -18,9 +18,6 @@ public class DialogueHandler {
     private boolean isDisplaying = false;
     private DialogueWindow window;
 
-    public DialogueHandler() {
-    }
-
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         if (isDisplaying) {
             window.render(shapeRenderer, batch);

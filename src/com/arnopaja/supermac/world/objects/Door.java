@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Ari Weiland
  */
-public class Door extends Entity {
+public class Door extends StaticEntity {
 
     private final Location destination;
     private final Entity entity;
@@ -19,11 +19,6 @@ public class Door extends Entity {
         super(false, location, true);
         this.destination = destination;
         this.entity = character;
-    }
-
-    @Override
-    public void update(float delta) {
-        // nothing happens
     }
 
     public Location getDestination() {
