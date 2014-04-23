@@ -22,13 +22,14 @@ A sample location:
 A sample interaction:
 
 "interaction" : {
-    "dialogue" : { <a dialogue instance> }
-    "battle" : { <a battle instance> }
+    "dialogue" : { <a dialogue instance, initiates a dialogue> }
+    "options" : { <a dialogue options instance, initiates a dialogue> }
+    "battle" : { <a battle instance, initiates a battle> }
+    "item" : { <an item instance, adds the item to your inventory> }
+    "hero" : { <a hero instance, adds the hero to your party> }
 }
 
-An interaction may have either a dialogue or a battle, but not both.
-In order to add a battle to the end of a dialogue, create a dialogue
-with an interaction in it.
+An interaction may have one of the listed objects, and only one.
 
 A sample goal:
 
@@ -99,6 +100,15 @@ A sample spell:
     "name" : "<the name of the spell>",
     "modifier" : <the damage modifier of the spell (float)>,
     "mana" : <the mana cost of the spell (float)>
+}
+
+A sample hero:
+
+"hero" : {
+    "class" : "Hero",
+    "name" : "<the name of the hero>",
+    "battleclass" : "<the battle class of the hero>",
+    "level" : <the level of the hero (int)>
 }
 
 A sample enemy:
