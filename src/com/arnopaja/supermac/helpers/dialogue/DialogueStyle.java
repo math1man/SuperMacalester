@@ -8,18 +8,18 @@ import com.arnopaja.supermac.world.grid.Grid;
 */
 public enum DialogueStyle {
 
-    BOTTOM(DialogueWindow.FRAME_GAP,
+    WORLD(DialogueWindow.FRAME_GAP,
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP,
             3),
-    BOTTOM_LEFT(Grid.GRID_PIXEL_DIMENSION / 2,
-            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
+    BATTLE_CONSOLE(Grid.GRID_PIXEL_DIMENSION / 2,
+            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
-            3),
-    BOTTOM_RIGHT(GameScreen.GAME_WIDTH / 2,
-            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
+            4),
+    BATTLE_STATUS(GameScreen.GAME_WIDTH / 2,
+            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
-            3);
+            4);
 
     private final float x;
     private final float y;

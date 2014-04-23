@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class DialogueHandler {
 
-    private DialogueStyle style = DialogueStyle.BOTTOM;
+    private DialogueStyle style = DialogueStyle.WORLD;
     private boolean isDisplaying = false;
     private DialogueWindow window;
 

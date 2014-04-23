@@ -80,13 +80,13 @@ public class GameScreen implements Screen {
         this.mode = mode;
         switch (this.mode) {
             case WORLD:
-                dialogueHandler.setStyle(DialogueStyle.BOTTOM);
+                dialogueHandler.setStyle(DialogueStyle.WORLD);
                 currentController = world;
                 currentRenderer = worldRenderer;
                 currentInputHandler = worldInputHandler;
                 break;
             case BATTLE:
-                dialogueHandler.setStyle(DialogueStyle.BOTTOM_LEFT);
+                dialogueHandler.setStyle(DialogueStyle.BATTLE_CONSOLE);
                 currentController = battle;
                 battleRenderer.setController(battle);
                 currentRenderer = battleRenderer;
