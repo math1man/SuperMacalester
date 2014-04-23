@@ -78,7 +78,7 @@ public class Battle implements Controller, InteractionBuilder {
         }
     }
 
-    private void setTurnActions() {
+    protected void setTurnActions() {
         for (BattleCharacter enemy : enemyParty) {
             // TODO: make the enemies more intelligent?
             addAction(BattleAction.attack(enemy, mainParty.getRandom()));

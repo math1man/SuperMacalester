@@ -63,4 +63,8 @@ public class DialogueHandler {
     public boolean isDisplaying() {
         return isDisplaying;
     }
+
+    public DialogueWindow getWindow() {
+        return window;
+    }
 }

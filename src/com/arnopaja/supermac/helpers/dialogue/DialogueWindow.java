@@ -123,4 +123,9 @@ public class DialogueWindow {
     public static float getHeight(int rows) {
         return 2 * FRAME_GAP - rows * AssetLoader.font.getLineHeight();
     }
+
+    @Override
+    public String toString() {
+        return ""; // TODO: implement me!
+    }
 }
