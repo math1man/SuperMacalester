@@ -4,6 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -50,6 +51,7 @@ public class GenericItem implements InteractionBuilder {
             @Override
             public void run(GameScreen screen) {
                 Inventory.getMain().store(item);
+                new DialogueText(item + " has been added to your inventory!").toInteraction().run(screen);
             }
         };
     }
@@ -115,7 +117,6 @@ public class GenericItem implements InteractionBuilder {
             parsers.put(SpecialItem.class.getSimpleName(), new SpecialItem.Parser());
             parsers.put(Weapon.class.getSimpleName(), new Weapon.Parser());
         }
-
 
         @Override
         public T fromJson(JsonElement element) {

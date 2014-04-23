@@ -47,54 +47,47 @@ public abstract class Dialogue implements InteractionBuilder {
                     return new DialogueText(dialogue);
                 }
             } else if (object.has("options")) {
-                return optionsFromJson(object.getAsJsonObject("options"));
+                JsonArray array = object.getAsJsonArray("options");
+                DialogueMember[] members = new DialogueMember[array.size() + 1];
+                members[0] = new DialogueMember(getString(object, "header"));
+                for (int i=0; i<array.size(); i++) {
+                    JsonObject member = array.get(i).getAsJsonObject();
+                    Interaction interaction = Interaction.NULL;
+                    if (has(member, Interaction.class)) {
+                        interaction = getObject(member, Interaction.class);
+                    }
+                    members[i+1] = new DialogueMember(getString(member, "text"), interaction);
+                }
+                return new DialogueOptions(members);
             }
             return null;
         }
 
         @Override
         public JsonElement toJson(Dialogue object) {
-            JsonObject json = new JsonObject();
             if (object instanceof DialogueText) {
+                JsonObject json = new JsonObject();
                 DialogueText text = (DialogueText) object;
                 addString(json, "text", text.getText());
                 if (text.hasInteraction()) {
                     addObject(json, text.getInteraction(), Interaction.class);
                 }
+                return json;
             } else {
-                json.add("options", optionsToJson((DialogueOptions) object));
-            }
-            return json;
-        }
-
-        public DialogueOptions optionsFromJson(JsonObject object) {
-            JsonArray array = object.getAsJsonArray("options");
-            DialogueMember[] members = new DialogueMember[array.size()];
-            members[0] = new DialogueMember(getString(object, "header"));
-            for (int i=0; i<array.size(); i++) {
-                JsonObject member = array.get(i).getAsJsonObject();
-                Interaction interaction = Interaction.NULL;
-                if (has(member, Interaction.class)) {
-                    interaction = getObject(member, Interaction.class);
+                JsonObject json = new JsonObject();
+                DialogueOptions options = (DialogueOptions) object;
+                addString(json, "header", options.getHeader());
+                JsonArray array = new JsonArray();
+                for (int i=0; i<options.getCount(); i++) {
+                    DialogueMember option = options.getOption(i);
+                    JsonObject o = new JsonObject();
+                    addString(o, "text", option.getText());
+                    addObject(o, option.getInteraction(), Interaction.class);
+                    array.add(o);
                 }
-                members[i+1] = new DialogueMember(getString(member, "text"), interaction);
+                json.add("options", array);
+                return json;
             }
-            return new DialogueOptions(members);
-        }
-
-        public JsonObject optionsToJson(DialogueOptions options) {
-            JsonObject json = new JsonObject();
-            addString(json, "header", options.getHeader());
-            JsonArray array = new JsonArray();
-            for (int i=0; i<options.getCount(); i++) {
-                DialogueMember option = options.getOption(i);
-                JsonObject object = new JsonObject();
-                addString(object, "text", option.getText());
-                addObject(object, option.getInteraction(), Interaction.class);
-                array.add(object);
-            }
-            json.add("options", array);
-            return json;
         }
     }
 }

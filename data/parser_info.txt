@@ -16,8 +16,7 @@ A sample location:
 "location" : {
     "grid" : "<world for world map, or building name and floor number>",
     "x" : <x coordinate>,
-    "y" : <y coordinate>,
-    "direction" : <north, east, south, or west>
+    "y" : <y coordinate>
 }
 
 A sample interaction:
@@ -63,28 +62,24 @@ A sample dialogue:
 
 "dialogue" : {
     "text" : "<string of dialogue goes here>",
-    "interaction" : { <an interaction instance> },
-    "options" : {
-        "header" : "<option header goes here>",
-        "options" : [
-            {
-                "text" : "<option 1 text>",
-                "interaction" : { <option 1 interaction> }
-            },
-            { <second option> },
-            <etc>
-        ]
-    }
+    "interaction" : { <an interaction instance (optional)> }
 }
 
-Dialogue may be specified in 4 ways:
-  - text string only
-  - text string plus interaction
-  - options only
-  - text string plus options
-Additionally, the dialogue options interactions are optional.
-Dialogue windows should be separated by <d>, as the newline "\n"
-character is usable in dialogue windows.
+A sample dialogue options:
+
+"options" : {
+    "header" : "<the prompt for the options>",
+    "options" : [
+        {
+            "text" : "<first option text>",
+            "interaction" : { <the interaction for the first option (optional)> }
+        },
+        <etc>
+    ]
+}
+
+Dialogue windows should be separated by <d>, as the newline "\n" character is
+usable in dialogue windows. Neither of these should be used in options header or text.
 
 A sample item:
 

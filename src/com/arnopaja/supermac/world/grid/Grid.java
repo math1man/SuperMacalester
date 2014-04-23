@@ -21,27 +21,27 @@ public class Grid extends GameMap {
 
     protected final int gridWidth, gridHeight;
 
-    protected Tile[][] tileArray;
+    protected Tile[][] tileMatrix;
     protected Map<Vector2, Entity> entityMap;
 
     public Grid(String name, int gridWidth, int gridHeight) {
         this(name, new Tile[gridWidth][gridHeight]);
     }
 
-    public Grid(String name, Tile[][] tileArray) {
-        this(name, tileArray, new Hashtable<Vector2, Entity>());
+    public Grid(String name, Tile[][] tileMatrix) {
+        this(name, tileMatrix, new Hashtable<Vector2, Entity>());
     }
 
-    public Grid(String name, Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
+    public Grid(String name, Tile[][] tileMatrix, Map<Vector2, Entity> entityMap) {
         super(name, true);
-        this.tileArray = tileArray;
+        this.tileMatrix = tileMatrix;
         this.entityMap = entityMap;
-        gridWidth = tileArray.length;
-        gridHeight = tileArray[0].length;
+        gridWidth = tileMatrix.length;
+        gridHeight = tileMatrix[0].length;
     }
 
     public Grid(Grid grid) {
-        this(grid.getName(), grid.getTileGrid(), grid.getEntityMap());
+        this(grid.getName(), grid.tileMatrix, grid.entityMap);
     }
 
     /**
@@ -100,6 +100,21 @@ public class Grid extends GameMap {
      */
     public Entity removeEntity(Vector2 position) {
         return entityMap.remove(position);
+    }
+
+    @Override
+    public Collection<Entity> getEntities() {
+        return entityMap.values();
+    }
+
+    @Override
+    public void clear() {
+        entityMap.clear();
+    }
+
+    @Override
+    public Grid getGrid(int index) {
+        return this;
     }
 
     public Location getNearestValidLocation(Location location, Direction direction) {
@@ -178,38 +193,7 @@ public class Grid extends GameMap {
     }
 
     public Tile getTile(Vector2 position) {
-        return tileArray[cast(position.x)][cast(position.y)];
-    }
-
-    public Tile[][] getTileGrid() {
-        return tileArray;
-    }
-
-    public void clearTiles() {
-        tileArray = new Tile[gridWidth][gridHeight];
-    }
-
-    public Map<Vector2, Entity> getEntityMap() {
-        return entityMap;
-    }
-
-    @Override
-    public Collection<Entity> getEntities() {
-        return entityMap.values();
-    }
-
-    public void clearEntities() {
-        entityMap.clear();
-    }
-
-    public void clearAll() {
-        clearTiles();
-        clearEntities();
-    }
-
-    @Override
-    public Grid getGrid(int index) {
-        return this;
+        return tileMatrix[cast(position.x)][cast(position.y)];
     }
 
     @Override
@@ -219,7 +203,7 @@ public class Grid extends GameMap {
 
         Grid grid = (Grid) o;
 
-        return Arrays.equals(this.getTileGrid(), grid.getTileGrid());
+        return Arrays.equals(this.tileMatrix, grid.tileMatrix);
     }
 
     protected Tile[][] getSubTileGrid(Vector2 corner, int width, int height) {
@@ -228,7 +212,7 @@ public class Grid extends GameMap {
             for (int j=0; j<height; j++) {
                 Vector2 position = new Vector2(i, j).add(corner);
                 if (isInBounds(position)) {
-                    subTileArray[i][j] = tileArray[cast(position.x)][cast(position.y)];
+                    subTileArray[i][j] = tileMatrix[cast(position.x)][cast(position.y)];
                 } else {
                     subTileArray[i][j] = Tile.NULL;
                 }

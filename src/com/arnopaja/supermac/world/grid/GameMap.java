@@ -19,6 +19,8 @@ public abstract class GameMap {
 
     public abstract Collection<Entity> getEntities();
 
+    public abstract void clear();
+
     public abstract Grid getGrid(int index);
 
     public String getName() {

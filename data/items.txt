@@ -10,13 +10,13 @@
         "id" : 1,
         "name" : "PBR",
         "value" : 2
-    }
+    },
     "Energy Drink" : {
         "class" : "Item",
         "id" : 2,
         "name" : "Energy Drink",
         "value" : 3
-    }
+    },
 
     "Bolivia Spurdo" : {
         "class" : "SpecialItem",

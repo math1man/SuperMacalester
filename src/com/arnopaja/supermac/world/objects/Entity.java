@@ -197,6 +197,8 @@ public abstract class Entity implements Renderable, InteractionBuilder {
             parsers.put(MapNpc.class.getSimpleName(), new MapNpc.Parser());
             parsers.put(Door.class.getSimpleName(), new Door.Parser());
             parsers.put(Chest.class.getSimpleName(), new Chest.Parser());
+            parsers.put(GarbageCan.class.getSimpleName(), new GarbageCan.Parser());
+            parsers.put(Asteroid.class.getSimpleName(), new Asteroid.Parser());
         }
 
         @Override

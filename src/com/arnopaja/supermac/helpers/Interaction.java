@@ -156,10 +156,11 @@ public abstract class Interaction implements InteractionBuilder {
         public Interaction fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             if (object.has("dialogue")) {
-                Dialogue dialogue = getObject(object, Dialogue.class);
+                Dialogue dialogue = getObject(object, "dialogue", Dialogue.class);
                 return dialogue.toInteraction();
             } else if (object.has("options")) {
-
+                Dialogue dialogue = getObject(object, "options", Dialogue.class);
+                return dialogue.toInteraction();
             } else if (object.has("battle")) {
                 Battle battle = fromJson(object.get("battle"), Battle.class);
                 return battle.toInteraction();

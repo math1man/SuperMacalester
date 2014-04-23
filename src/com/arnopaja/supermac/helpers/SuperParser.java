@@ -28,8 +28,8 @@ public abstract class SuperParser<T> {
     private static final JsonParser parser = new JsonParser();
     private static final Map<Class, SuperParser> parsers = new HashMap<Class, SuperParser>();
     static {
-        addParser(GenericItem.class,     new GenericItem.Parser());
         addParser(Armor.class,            new Armor.Parser());
+        addParser(Asteroid.class,         new Asteroid.Parser());
         addParser(Battle.class,           new Battle.Parser());
         addParser(BattleClass.class,      new EnumParser<BattleClass>(BattleClass.class));
         addParser(Chest.class,            new Chest.Parser());
@@ -39,6 +39,8 @@ public abstract class SuperParser<T> {
         addParser(Enemy.class,            new Enemy.Parser());
         addParser(EnemyParty.class,       new EnemyParty.Parser());
         addParser(Entity.class,           new Entity.Parser());
+        addParser(GarbageCan.class,       new GarbageCan.Parser());
+        addParser(GenericItem.class,      new GenericItem.Parser());
         addParser(Goal.class,             new Goal.Parser());
         addParser(Hero.class,             new Hero.Parser());
         addParser(Interaction.class,      new Interaction.Parser());
@@ -54,10 +56,9 @@ public abstract class SuperParser<T> {
         addParser(SpecialItem.class,      new SpecialItem.Parser());
         addParser(Spell.class,            new Spell.Parser());
         addParser(Weapon.class,           new Weapon.Parser());
-        // TODO: we probably need battle character and party parsers
     }
 
-    protected static <U> void addParser(Class<U> clazz, SuperParser<U> parser) {
+    private static <U> void addParser(Class<U> clazz, SuperParser<U> parser) {
         parsers.put(clazz, parser);
     }
 

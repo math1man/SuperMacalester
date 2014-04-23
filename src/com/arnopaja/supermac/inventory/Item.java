@@ -11,12 +11,10 @@ import com.google.gson.JsonObject;
  */
 public class Item extends GenericItem {
 
-    private final int equippableBitMask;
     // TODO: image definition
 
-    protected Item(int id, String name, int value, int equippableBitMask) {
+    protected Item(int id, String name, int value) {
         super(id, name, value);
-        this.equippableBitMask = equippableBitMask;
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
@@ -25,8 +23,6 @@ public class Item extends GenericItem {
         return new DialogueText(dialogue);
     }
 
-    public int getEquippableBitMask() { return equippableBitMask; }
-
     public static class Parser extends GenericItem.Parser<Item> {
         @Override
         public Item fromJson(JsonElement element) {
@@ -34,15 +30,12 @@ public class Item extends GenericItem {
             int id = getInt(object, "id");
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            int bitmask = getInt(object, "bitmask");
-            return new Item(id, name, value, bitmask);
+            return new Item(id, name, value);
         }
 
         @Override
         public JsonElement toJson(Item object) {
-            JsonObject json = toBaseJson(object);
-            addInt(json, "bitmask", object.equippableBitMask);
-            return json;
+            return toBaseJson(object);
         }
     }
 }
