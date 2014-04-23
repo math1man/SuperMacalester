@@ -63,7 +63,7 @@ public class SpriteUtils {
      */
     public static TextureRegion makeSprite(Texture texture, int x, int y,
                                            int width, int height, boolean flipX, boolean flipY) {
-        TextureRegion sprite = new TextureRegion(texture, //x, y, width, height);
+        TextureRegion sprite = new TextureRegion(texture,
                 x * Grid.GRID_PIXEL_DIMENSION, y * Grid.GRID_PIXEL_DIMENSION,
                 width * Grid.GRID_PIXEL_DIMENSION, height * Grid.GRID_PIXEL_DIMENSION);
         sprite.flip(flipX, !flipY);
@@ -84,10 +84,11 @@ public class SpriteUtils {
      * @return
      */
     public static TextureRegion[][] split(TextureRegion sprite, int tileWidth, int tileHeight, boolean flipX, boolean flipY) {
+        sprite = new TextureRegion(sprite);
         sprite.flip(flipX, flipY); // flip the sprite appropriately
-        flipX = sprite.isFlipX();
-        flipY = sprite.isFlipY();
-        sprite.flip(flipX, flipY); // unflip the sprite for the splitting process
+        boolean flipX2 = sprite.isFlipX();
+        boolean flipY2 = sprite.isFlipY();
+        sprite.flip(flipX2, flipY2); // unflip the sprite for the splitting process
         int x = sprite.getRegionX();
         int y = sprite.getRegionY();
         int width = sprite.getRegionWidth();
@@ -102,7 +103,7 @@ public class SpriteUtils {
             y = startY;
             for (int tileY = 0; tileY < yTiles; tileY++, y += tileHeight) {
                 tiles[tileX][tileY] = new TextureRegion(sprite.getTexture(), x, y, tileWidth, tileHeight);
-                tiles[tileX][tileY].flip(flipX, flipY);
+                tiles[tileX][tileY].flip(flipX2, flipY2);
             }
         }
         return tiles;

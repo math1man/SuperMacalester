@@ -1,0 +1,57 @@
+{
+    "origin" : [0,0],
+    "dependencies" : [
+
+    ],
+    "quests" : [
+        {
+            "id" : 0,
+            "goals" : [
+                {
+                    "entity" : {
+                        "class" : "MapNpc",
+                        "name" : "John",
+                        "canMove" : false
+                    },
+                    "location" : {
+                        "grid" : "world",
+                        "x" : 39,
+                        "y" : 35
+                    },
+                    "interaction" : {
+                        "dialogue" : {
+                            "text" : "Tom: What was that?
+                            <d>John: There was a bright flash in the sky. Something’s happening.
+                            <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
+                            <d>John: Quite possibly.
+                            <d>Tom: Either way, this seems serious. I’m going out for a look.
+                            <d>John: Be careful."
+                        }
+                    }
+                },
+                {
+                    "entity" : {
+                        "class" : "MapNpc",
+                        "name" : "Brian Rosenberg",
+                        "canMove" : false
+                    },
+                    "location" : {
+                        "grid" : "world",
+                        "x" : 50,
+                        "y" : 55
+                    },
+                    "interaction" : {
+                        "dialogue" : {
+                            "text" : "Tom: What was that?
+                            <d>John: There was a bright flash in the sky. Something’s happening.
+                            <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
+                            <d>John: Quite possibly.
+                            <d>Tom: Either way, this seems serious. I’m going out for a look.
+                            <d>John: Be careful."
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
