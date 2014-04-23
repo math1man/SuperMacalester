@@ -8,18 +8,15 @@ import com.google.gson.JsonObject;
  */
 public class Weapon extends GenericItem {
 
-    private final int attackModifier;
-    private final int equippableBitMask;
+    private final float attackModifier;
     // TODO: image definition
 
-    protected Weapon(int universalID, String name, int value, int attackModifier, int equippableBitMask) {
+    protected Weapon(int universalID, String name, int value, float attackModifier) {
         super(universalID, name, value);
         this.attackModifier = attackModifier;
-        this.equippableBitMask = equippableBitMask;
     }
 
-    public int getAttackModifier() { return attackModifier; }
-    public int getEquippableBitMask() { return equippableBitMask; }
+    public float getAttackModifier() { return attackModifier; }
 
     public static class Parser extends GenericItem.Parser<Weapon> {
         @Override
@@ -28,16 +25,14 @@ public class Weapon extends GenericItem {
             int id = getInt(object, "id");
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            int modifier = getInt(object, "modifier");
-            int bitmask = getInt(object, "bitmask");
-            return new Weapon(id, name, value, modifier, bitmask);
+            float modifier = getFloat(object, "modifier");
+            return new Weapon(id, name, value, modifier);
         }
 
         @Override
         public JsonElement toJson(Weapon object) {
             JsonObject json = toBaseJson(object);
-            addInt(json, "modifier", object.attackModifier);
-            addInt(json, "bitmask", object.equippableBitMask);
+            addFloat(json, "modifier", object.attackModifier);
             return json;
         }
     }

@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.battle.Battle;
+import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
@@ -27,8 +28,8 @@ public abstract class SuperParser<T> {
     private static final JsonParser parser = new JsonParser();
     private static final Map<Class, SuperParser> parsers = new HashMap<Class, SuperParser>();
     static {
-        addParser(GenericItem.class,     new GenericItem.Parser());
         addParser(Armor.class,            new Armor.Parser());
+        addParser(Asteroid.class,         new Asteroid.Parser());
         addParser(Battle.class,           new Battle.Parser());
         addParser(BattleClass.class,      new EnumParser<BattleClass>(BattleClass.class));
         addParser(Chest.class,            new Chest.Parser());
@@ -38,6 +39,8 @@ public abstract class SuperParser<T> {
         addParser(Enemy.class,            new Enemy.Parser());
         addParser(EnemyParty.class,       new EnemyParty.Parser());
         addParser(Entity.class,           new Entity.Parser());
+        addParser(GarbageCan.class,       new GarbageCan.Parser());
+        addParser(GenericItem.class,      new GenericItem.Parser());
         addParser(Goal.class,             new Goal.Parser());
         addParser(Hero.class,             new Hero.Parser());
         addParser(Interaction.class,      new Interaction.Parser());
@@ -51,11 +54,11 @@ public abstract class SuperParser<T> {
         addParser(Quest.class,            new Quest.Parser());
         addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
+        addParser(Spell.class,            new Spell.Parser());
         addParser(Weapon.class,           new Weapon.Parser());
-        // TODO: we probably need battle character and party parsers
     }
 
-    protected static <U> void addParser(Class<U> clazz, SuperParser<U> parser) {
+    private static <U> void addParser(Class<U> clazz, SuperParser<U> parser) {
         parsers.put(clazz, parser);
     }
 
@@ -67,6 +70,10 @@ public abstract class SuperParser<T> {
 
     public static void initItems(FileHandle handle) {
         parseAll(handle, GenericItem.class);
+    }
+
+    public static void initSpells(FileHandle handle) {
+        parseAll(handle, Spell.class);
     }
 
     /**
@@ -190,7 +197,7 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive(name).getAsInt();
     }
 
-    protected static void addInt(JsonObject json, String name, int i) {
+    protected static void addInt(JsonObject json, String name, float i) {
         json.addProperty(name, i);
     }
 

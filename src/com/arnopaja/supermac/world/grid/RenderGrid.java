@@ -40,7 +40,7 @@ public class RenderGrid extends Grid {
     private void renderTiles(SpriteBatch batch, Vector2 offset, float runTime) {
         for (int i=0; i<gridWidth; i++) {
             for (int j=0; j<gridHeight; j++) {
-                Tile tile = tileArray[i][j];
+                Tile tile = tileMatrix[i][j];
                 if (tile.isRendered()) {
                     tile.render(batch, new Vector2(i, j).add(offset), runTime);
                 }

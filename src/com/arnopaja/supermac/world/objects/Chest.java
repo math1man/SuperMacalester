@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Ari Weiland
  */
-public class Chest extends Entity {
+public class Chest extends Container {
 
     public static enum ChestColor {
         BROWN(AssetLoader.chestBrownClosed, AssetLoader.chestBrownOpen),
@@ -50,25 +50,9 @@ public class Chest extends Entity {
     private final ChestColor color;
     private boolean isOpen = false;
 
-    private Inventory contents;
-
     public Chest(Location location, ChestColor color, Inventory contents) {
-        super(true, location, true);
-        this.contents = contents;
+        super(location, contents);
         this.color = color;
-    }
-
-    @Override
-    public void update(float delta) {
-        // does nothing
-    }
-
-    public void removeItem(GenericItem item) {
-        contents.take(item);
-    }
-
-    public boolean isEmpty() {
-        return contents.isEmpty();
     }
 
     public boolean isOpen() {
@@ -81,14 +65,6 @@ public class Chest extends Entity {
 
     public void close() {
         isOpen = false;
-    }
-
-    public Inventory getContents() {
-        return contents;
-    }
-
-    public void setContents(Inventory contents) {
-        this.contents = contents;
     }
 
     public TextureRegion getSprite() {
@@ -108,7 +84,7 @@ public class Chest extends Entity {
                 chest.open();
                 Dialogue dialogue;
                 if (chest.isEmpty()) {
-                    dialogue = new DialogueText(chest.closeInteraction(), "This chest is empty");
+                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction());
                 } else {
                     // Items go into inventory from chest
                     List<GenericItem> items = chest.getContents().getAll();
@@ -129,18 +105,7 @@ public class Chest extends Entity {
 
                     dialogue = new DialogueOptions("Take items?", objects, interactions);
                 }
-                screen.getDialogueHandler().displayDialogue(dialogue);
-            }
-        };
-    }
-
-    private Interaction takeItemInteraction(final GenericItem item) {
-        final Chest chest = this;
-        return new Interaction(item, chest) {
-            @Override
-            public void run(GameScreen screen) {
-                chest.removeItem(item);          // take item from chest
-                Inventory.getMain().store(item); // place in inventory
+                dialogue.toInteraction().run(screen);
             }
         };
     }
@@ -169,7 +134,7 @@ public class Chest extends Entity {
         public JsonElement toJson(Chest object) {
             JsonObject json = toBaseJson(object);
             addString(json, "color", object.color.name());
-            addObject(json, "contents", object.contents, Inventory.class);
+            addObject(json, "contents", object.getContents(), Inventory.class);
             return json;
         }
     }

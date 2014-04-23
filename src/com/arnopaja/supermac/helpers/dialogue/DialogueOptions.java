@@ -12,9 +12,7 @@ public class DialogueOptions extends Dialogue {
     public static final String[] YES_NO_OPTIONS = {"Yes", "No"};
     public static final String[] BATTLE_OPTIONS = {"Attack", "Defend", "Spell", "Item", "Flee"};
 
-    private final String header;
-    private final Object[] options;
-    private final Interaction[] interactions;
+    private final DialogueMember[] members;
     private final int count;
 
     public DialogueOptions(String rawOptions) {
@@ -57,31 +55,38 @@ public class DialogueOptions extends Dialogue {
      * @param interactions the list of interactions resulting from each option
      */
     public <T> DialogueOptions(String header, T[] options, Interaction... interactions) {
-        this.header = header;
-        this.options = Arrays.copyOf(options, options.length, Object[].class);
-        if (interactions.length != options.length) {
-            this.interactions = Interaction.getNulls(options.length);
-        } else {
-            this.interactions = interactions;
+        this(encapsulate(header, options, interactions));
+    }
+
+    protected DialogueOptions(DialogueMember[] members) {
+        this.members = members;
+        count = members.length - 1;
+    }
+
+    private static <T> DialogueMember[] encapsulate(String header, T[] options, Interaction... interactions) {
+        DialogueMember[] members = new DialogueMember[options.length + 1];
+        members[0] = new DialogueMember(header);
+        for (int i=0; i<options.length; i++) {
+            members[i+1] = new DialogueMember(options[i].toString(), interactions.length > i ? interactions[i] : Interaction.NULL);
         }
-        this.count = options.length;
+        return members;
     }
 
     public String getHeader() {
-        return header;
+        return members[0].getText();
     }
 
-    public String getOption(int option) {
-        if (option < count && option >= 0) {
-            return options[option].toString();
+    public DialogueMember getOption(int i) {
+        if (i < count && i >= 0) {
+            return members[i+1];
         } else {
-            return "";
+            return null;
         }
     }
 
-    public Interaction getInteraction(int interaction) {
-        if (interaction < count) {
-            return interactions[interaction];
+    public Interaction getInteraction(int i) {
+        if (i < count) {
+            return members[i+1].getInteraction();
         } else {
             return Interaction.NULL;
         }

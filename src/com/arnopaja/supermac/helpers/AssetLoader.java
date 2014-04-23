@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -29,18 +30,22 @@ public class AssetLoader {
     public static TextureRegion treeSmall, treeBig;
     public static TextureRegion cobble, cobbleRed;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
-    public static TextureRegion asphaltEdgeN, asphaltEdgeE, asphaltEdgeS, asphaltEdgeW;
-    public static TextureRegion asphaltCornerNE, asphaltCornerSE, asphaltCornerSW, asphaltCornerNW;
+    public static TextureRegion asphaltGrassN, asphaltGrassE, asphaltGrassS, asphaltGrassW;
+    public static TextureRegion asphaltGrassNE, asphaltGrassSE, asphaltGrassSW, asphaltGrassNW;
+    public static TextureRegion asphaltCobbleN, asphaltCobbleE, asphaltCobbleS, asphaltCobbleW;
+    public static TextureRegion asphaltCobbleNE, asphaltCobbleSE, asphaltCobbleSW, asphaltCobbleNW;
 
     // Buildings
     public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
     public static TextureRegion humanities, kagin, kirk, leonardCenter, library, markim, music, oldMain;
-    public static TextureRegion olin, rice, theatre, thirtyMac, turk, wallace, weyerhauser;
+    public static TextureRegion olin, olinRiceStairs, rice, theatre, thirtyMac, turk, wallace, weyerhauser;
 
     // Non-character entities
     public static TextureRegion chestBrownOpen, chestBrownClosed;
     public static TextureRegion chestRedOpen, chestRedClosed;
     public static TextureRegion chestGreenOpen, chestGreenClosed;
+    public static TextureRegion garbageCan;
+    public static Animation asteroid;
 
     // Characters
     public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
@@ -50,6 +55,7 @@ public class AssetLoader {
 
     // Data file handles
     public static FileHandle itemHandle;
+    public static FileHandle spellHandle;
     public static FileHandle dialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
@@ -84,16 +90,25 @@ public class AssetLoader {
         cobbleRed = SpriteUtils.makeSprite(tilesTexture, 0, 2);
         cobble = SpriteUtils.makeSprite(tilesTexture, 1, 2);
 
-        asphaltEdgeE = SpriteUtils.makeSprite(tilesTexture, 0, 3);
-        asphaltEdgeW = SpriteUtils.makeSprite(tilesTexture, 0, 3, false, true);
-        asphaltEdgeN = SpriteUtils.makeSprite(tilesTexture, 0, 4);
-        asphaltEdgeS = SpriteUtils.makeSprite(tilesTexture, 0, 4, true, false);
-        asphaltCornerNE = SpriteUtils.makeSprite(tilesTexture, 2, 3);
-        asphaltCornerSE = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, false);
-        asphaltCornerSW = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, true);
-        asphaltCornerNW = SpriteUtils.makeSprite(tilesTexture, 2, 3, false, true);
+        asphalt = SpriteUtils.makeSprite(tilesTexture, 5, 4);
+        asphaltGrassE = SpriteUtils.makeSprite(tilesTexture, 0, 3);
+        asphaltGrassW = SpriteUtils.makeSprite(tilesTexture, 0, 3, false, true);
+        asphaltGrassN = SpriteUtils.makeSprite(tilesTexture, 0, 4);
+        asphaltGrassS = SpriteUtils.makeSprite(tilesTexture, 0, 4, true, false);
+        asphaltGrassNE = SpriteUtils.makeSprite(tilesTexture, 2, 3);
+        asphaltGrassSE = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, false);
+        asphaltGrassSW = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, true);
+        asphaltGrassNW = SpriteUtils.makeSprite(tilesTexture, 2, 3, false, true);
         asphaltLineH = SpriteUtils.makeSprite(tilesTexture, 4, 3);
         asphaltLineV = SpriteUtils.makeSprite(tilesTexture, 4, 4);
+        asphaltCobbleE = SpriteUtils.makeSprite(tilesTexture, 6, 3, false, true);
+        asphaltCobbleW = SpriteUtils.makeSprite(tilesTexture, 6, 3);
+        asphaltCobbleN = SpriteUtils.makeSprite(tilesTexture, 5, 3);
+        asphaltCobbleS = SpriteUtils.makeSprite(tilesTexture, 5, 3, true, false);
+        asphaltCobbleNE = SpriteUtils.makeSprite(tilesTexture, 6, 4, false, true);
+        asphaltCobbleSE = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, true);
+        asphaltCobbleSW = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, false);
+        asphaltCobbleNW = SpriteUtils.makeSprite(tilesTexture, 6, 4);
 
         //--------------------------
         //        Buildings
@@ -104,10 +119,9 @@ public class AssetLoader {
         chapel = SpriteUtils.makeSprite(tilesTexture, 44, 5, 14, 16);
         library = SpriteUtils.makeSprite(tilesTexture, 0, 17, 16, 12);
         oldMain = SpriteUtils.makeSprite(tilesTexture, 16, 17, 6, 12);
-
-
-        tilesTexture = new Texture(getHandle("landscapetiles/asphalt_tile.png"));
-        asphalt = SpriteUtils.makeSprite(tilesTexture, 0, 0, 1, 1);
+        olin = SpriteUtils.makeSprite(tilesTexture, 42, 21, 16, 32);
+        olinRiceStairs = SpriteUtils.makeSprite(tilesTexture, 38, 43, 3, 5);
+        rice = SpriteUtils.makeSprite(tilesTexture, 34, 53, 24, 16);
 
         MapLoader.initTileMap(); // Must be called after all tiles and buildings are loaded
 
@@ -137,6 +151,7 @@ public class AssetLoader {
         // TODO: battle backgrounds
 
         itemHandle = getHandle("items.txt");
+        spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
         plotHandle = getHandle("macalester/plot.txt");
         mapHandle = getHandle("macalester/maps");
@@ -144,6 +159,7 @@ public class AssetLoader {
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        scaleFont(GameScreen.GAME_HEIGHT * 0.2f / (AssetLoader.font.getLineHeight() * 3));
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }

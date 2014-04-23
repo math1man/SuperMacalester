@@ -3,6 +3,7 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.EnemyParty;
+import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
@@ -15,9 +16,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -27,14 +28,13 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class Battle implements Controller, InteractionBuilder {
 
-    private static final Random battleRandomGen = new Random();
-
     private final EnemyParty enemyParty;
     private final boolean isBossFight;
     private final String backgroundName;
     private final TextureRegion background;
     private final Queue<BattleAction> actionQueue;
 
+    private boolean isReady = false;
     private DialogueHandler dialogueHandler;
     private MainParty mainParty;
 
@@ -43,7 +43,7 @@ public class Battle implements Controller, InteractionBuilder {
         this.isBossFight = enemyParty.containsBoss();
         this.backgroundName = backgroundName;
         this.background = AssetLoader.getBackground(backgroundName);
-        actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.getSize() + enemyParty.getSize(),
+        actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.size() + enemyParty.size(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
@@ -53,14 +53,17 @@ public class Battle implements Controller, InteractionBuilder {
         );
     }
 
-    public void readyBattle(MainParty mainParty, DialogueHandler dialogueHandler) {
-        this.mainParty = mainParty;
-        this.dialogueHandler = dialogueHandler;
+    public void ready(MainParty mainParty, DialogueHandler dialogueHandler) {
+        if (!isReady) {
+            isReady = true;
+            this.mainParty = mainParty;
+            this.dialogueHandler = dialogueHandler;
+        }
     }
 
     @Override
     public void update(float delta) {
-        if (canUpdate()) {
+        if (isReady()) {
             if (mainParty.isDefeated()) {
                 // run code for if the main party is defeated
             } else if (enemyParty.isDefeated()) {
@@ -70,31 +73,26 @@ public class Battle implements Controller, InteractionBuilder {
                 if (action == null) {
                     setTurnActions();
                 } else {
-                    dialogueHandler.displayDialogue(action.run(delta));
+                    dialogueHandler.display(action.run(delta));
                 }
             }
         }
     }
 
-    private void setTurnActions() {
-        BattleCharacter heroes[] = mainParty.getBattleParty();
-        BattleCharacter enemies[] = enemyParty.getBattleParty();
-        for (BattleCharacter enemy : enemies) {
+    protected void setTurnActions() {
+        for (BattleCharacter enemy : enemyParty) {
             // TODO: make the enemies more intelligent?
-            addAction(BattleAction.attack(enemy,
-                    heroes[battleRandomGen.nextInt(3)]));
+            addAction(BattleAction.attack(enemy, mainParty.getRandom()));
         }
-        for (BattleCharacter hero : heroes) {
-            dialogueHandler.displayDialogue(getActionOptions(hero, enemies));
-        }
+        dialogueHandler.display(makeActions());
     }
 
     public void addAction(BattleAction action) {
         actionQueue.add(action);
     }
 
-    public boolean canUpdate() {
-        return dialogueHandler != null;
+    public boolean isReady() {
+        return isReady;
     }
 
     public MainParty getMainParty() {
@@ -124,77 +122,83 @@ public class Battle implements Controller, InteractionBuilder {
         };
     }
 
-    // getActionOptions and all supporting methods... guh, so long
-    private static DialogueOptions getActionOptions(BattleCharacter hero, BattleCharacter[] enemies) {
-        List<Spell> spellList = hero.getSpellsList();
-        Spell[] spells = spellList.toArray(new Spell[spellList.size()]);
-        List<Item> itemList = Inventory.getMain().getAll(Item.class);
-        Item[] items = itemList.toArray(new Item[itemList.size()]);
-        return new DialogueOptions("What should " + hero + " do?", DialogueOptions.BATTLE_OPTIONS,
-                makeBattleActions(hero, enemies, spells, items));
-    }
-    private static Interaction[] makeBattleActions(BattleCharacter hero, BattleCharacter[] enemies,
-                                                   Spell[] spells, Item[] items) {
-        Interaction[] interactions = new Interaction[5];
-        interactions[0] = selectAttack(hero, enemies);
-        interactions[1] = selectDefend(hero);
-        interactions[2] = selectSpell(hero, spells, enemies);
-        interactions[3] = selectItem(hero, items, enemies);
-        interactions[4] = selectFlee(hero);
-        return interactions;
+    private DialogueOptions makeActions() {
+        Iterator<Hero> heroes = mainParty.iterator();
+        return getOptions(heroes.next(), heroes, Interaction.NULL);
     }
 
-    private static Interaction selectAttack(BattleCharacter hero, BattleCharacter[] enemies) {
+    private DialogueOptions getOptions(Hero hero, Iterator<Hero> heroes, Interaction interaction) {
+        DialogueOptions options = new DialogueOptions("What should " + hero + " do?",
+                DialogueOptions.BATTLE_OPTIONS,
+                selectAttack(hero, interaction),
+                selectDefend(hero, interaction),
+                selectSpell(hero, interaction),
+                selectItem(hero, interaction), selectFlee(hero, interaction));
+        if (heroes.hasNext()) {
+            return getOptions(heroes.next(), heroes, options.toInteraction());
+        } else {
+            return options;
+        }
+    }
+
+    private Interaction selectAttack(Hero hero, Interaction interaction) {
         return new DialogueOptions("Who do you want to attack?",
-                enemies, Interaction.convert(attacks(hero, enemies))).toInteraction();
+                enemyParty.toArray(), attacks(hero, interaction)).toInteraction();
     }
-    private static Interaction selectDefend(BattleCharacter hero) {
-        return BattleAction.defend(hero).toInteraction();
+
+    private Interaction selectDefend(Hero hero, Interaction interaction) {
+        return Interaction.combine(BattleAction.defend(hero), interaction);
     }
-    private static Interaction selectSpell(BattleCharacter hero, Spell[] spells, BattleCharacter[] enemies) {
-        Interaction[] spellInteractions = new Interaction[spells.length];
-        for (int i=0; i<spells.length; i++) {
-            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells[i] + " on?",
-                    enemies, Interaction.convert(spells(hero, spells[i], enemies))).toInteraction();
+
+    private Interaction selectSpell(Hero hero, Interaction interaction) {
+        List<Spell> spells = hero.getSpellsList();
+        Interaction[] spellInteractions = new Interaction[spells.size()];
+        for (int i=0; i<spells.size(); i++) {
+            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells.get(i) + " on?",
+                    enemyParty.toArray(), spells(hero, spells.get(i), interaction)).toInteraction();
         }
         return new DialogueOptions("What spell do you want to use?", spells, spellInteractions).toInteraction();
     }
     // TODO: can items be used on friends? On self?
-    private static Interaction selectItem(BattleCharacter hero, Item[] items, BattleCharacter[] enemies) {
-        Interaction[] itemInteractions = new Interaction[items.length];
-        for (int i=0; i<items.length; i++) {
-            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items[i] + " on?",
-                    enemies, Interaction.convert(items(hero, items[i], enemies))).toInteraction();
+    private Interaction selectItem(Hero hero, Interaction interaction) {
+        List<Item> items = Inventory.getMain().getAll(Item.class);
+        Interaction[] itemInteractions = new Interaction[items.size()];
+        for (int i=0; i<items.size(); i++) {
+            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items.get(i) + " on?",
+                    enemyParty.toArray(), items(hero, items.get(i), interaction)).toInteraction();
         }
         return new DialogueOptions("What item do you want to use?", items, itemInteractions).toInteraction();
     }
-    private static Interaction selectFlee(BattleCharacter hero) {
-        return BattleAction.flee(hero).toInteraction();
+
+    private Interaction selectFlee(Hero hero, Interaction interaction) {
+        return Interaction.combine(BattleAction.flee(hero), interaction);
     }
 
-    private static BattleAction[] attacks(BattleCharacter source, BattleCharacter[] destinations) {
-        int count = destinations.length;
-        BattleAction[] attacks = new BattleAction[count];
+    private Interaction[] attacks(Hero hero, Interaction interaction) {
+        int count = enemyParty.size();
+        Interaction[] attacks = new Interaction[count];
         for (int i=0; i<count; i++) {
-            attacks[i] = BattleAction.attack(source, destinations[i]);
+            attacks[i] = Interaction.combine(BattleAction.attack(hero, enemyParty.get(i)), interaction);
         }
         return attacks;
     }
-    private static BattleAction[] spells(BattleCharacter source, Spell spell, BattleCharacter[] destinations) {
-        int count = destinations.length;
-        BattleAction[] spells = new BattleAction[count];
+
+    private Interaction[] spells(Hero hero, Spell spell, Interaction interaction) {
+        int count = enemyParty.size();
+        Interaction[] spells = new Interaction[count];
         for (int i=0; i<count; i++) {
-            spells[i] = BattleAction.spell(source, spell, destinations[i]);
+            spells[i] = Interaction.combine(BattleAction.spell(hero, spell, enemyParty.get(i)), interaction);
         }
         return spells;
     }
-    private static BattleAction[] items(BattleCharacter source, Item item, BattleCharacter[] destinations) {
-        int count = destinations.length;
-        BattleAction[] items = new BattleAction[count];
+
+    private Interaction[] items(Hero hero, Item item, Interaction interaction) {
+        int count = enemyParty.size();
+        Interaction[] items = new Interaction[count];
         for (int i=0; i<count; i++) {
-            items[i] = BattleAction.item(source, item, destinations[i]);
+            items[i] = Interaction.combine(BattleAction.item(hero, item, enemyParty.get(i)), interaction);
         }
-        return items;
+        return Interaction.convert(items);
     }
 
     public static class Parser extends SuperParser<Battle> {

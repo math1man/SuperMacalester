@@ -27,11 +27,6 @@ public class EnemyParty extends Party<Enemy> {
         return false;
     }
 
-    @Override
-    public BattleCharacter getRandom() {
-        return(this.get(0));
-    }
-
     public static class Parser extends Party.Parser<EnemyParty> {
         @Override
         protected EnemyParty construct(JsonObject object) {

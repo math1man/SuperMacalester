@@ -1,13 +1,12 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 /**
  * Superclass for DialogueText and DialogueOptions
@@ -19,7 +18,6 @@ public abstract class Dialogue implements InteractionBuilder {
     public static final Interaction CLEAR_DIALOGUE = new Interaction() {
         @Override
         public void run(GameScreen screen) {
-            screen.getDialogueHandler().clear();
             screen.endDialogue();
         }
     };
@@ -30,8 +28,8 @@ public abstract class Dialogue implements InteractionBuilder {
         return new Interaction(dialogue) {
             @Override
             public void run(GameScreen screen) {
+                screen.getDialogueHandler().display(dialogue);
                 screen.dialogue();
-                screen.getDialogueHandler().displayDialogue(dialogue);
             }
         };
     }
@@ -40,72 +38,56 @@ public abstract class Dialogue implements InteractionBuilder {
         @Override
         public Dialogue fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            boolean hasText = object.has("text");
-            boolean hasOptions = object.has("options");
-            if (hasText) {
-                String dialogue = object.getAsJsonPrimitive("text").getAsString();
-                if (hasOptions) {
-                    DialogueOptions options = optionsFromJson(object.getAsJsonObject("options"));
-                    return new DialogueText(dialogue, options);
-                } else if (object.has("interaction")) {
-                    Interaction interaction = fromJson(object.get("interaction"), Interaction.class);
+            if (object.has("text")) {
+                String dialogue = getString(object, "text");
+                if (has(object, Interaction.class)) {
+                    Interaction interaction = getObject(object, Interaction.class);
                     return new DialogueText(dialogue, interaction);
                 } else {
                     return new DialogueText(dialogue);
                 }
-            } else if (hasOptions) {
-                return optionsFromJson(object.getAsJsonObject("options"));
+            } else if (object.has("options")) {
+                JsonArray array = object.getAsJsonArray("options");
+                DialogueMember[] members = new DialogueMember[array.size() + 1];
+                members[0] = new DialogueMember(getString(object, "header"));
+                for (int i=0; i<array.size(); i++) {
+                    JsonObject member = array.get(i).getAsJsonObject();
+                    Interaction interaction = Interaction.NULL;
+                    if (has(member, Interaction.class)) {
+                        interaction = getObject(member, Interaction.class);
+                    }
+                    members[i+1] = new DialogueMember(getString(member, "text"), interaction);
+                }
+                return new DialogueOptions(members);
             }
             return null;
         }
 
         @Override
         public JsonElement toJson(Dialogue object) {
-            JsonObject json = new JsonObject();
             if (object instanceof DialogueText) {
+                JsonObject json = new JsonObject();
                 DialogueText text = (DialogueText) object;
-                json.addProperty("text", text.getRaw());
-                if (text.hasOptions()) {
-                    json.add("options", optionsToJson(text.getOptions()));
-                } else if (text.hasPostInteraction()) {
-                    json.add("interaction", toJson(text.getPostInteraction(), Interaction.class));
+                addString(json, "text", text.getText());
+                if (text.hasInteraction()) {
+                    addObject(json, text.getInteraction(), Interaction.class);
                 }
+                return json;
             } else {
-                json.add("options", optionsToJson((DialogueOptions) object));
-            }
-            return json;
-        }
-
-        public DialogueOptions optionsFromJson(JsonObject object) {
-            String header = object.getAsJsonPrimitive("header").getAsString();
-            JsonArray optionsJson = object.getAsJsonArray("options");
-            String[] options = new String[optionsJson.size()];
-            for (int i=0; i<optionsJson.size(); i++) {
-                options[i] = optionsJson.get(i).getAsString();
-            }
-            Interaction[] interactions = new Interaction[0];
-            if (object.has("interactions")) {
-                JsonArray interactionsJson = object.getAsJsonArray("interactions");
-                interactions = new Interaction[interactionsJson.size()];
-                for (int i=0; i<interactionsJson.size(); i++) {
-                    interactions[i] = fromJson(interactionsJson.get(i).getAsJsonObject(), Interaction.class);
+                JsonObject json = new JsonObject();
+                DialogueOptions options = (DialogueOptions) object;
+                addString(json, "header", options.getHeader());
+                JsonArray array = new JsonArray();
+                for (int i=0; i<options.getCount(); i++) {
+                    DialogueMember option = options.getOption(i);
+                    JsonObject o = new JsonObject();
+                    addString(o, "text", option.getText());
+                    addObject(o, option.getInteraction(), Interaction.class);
+                    array.add(o);
                 }
+                json.add("options", array);
+                return json;
             }
-            return new DialogueOptions(header, options, interactions);
-        }
-
-        public JsonObject optionsToJson(DialogueOptions options) {
-            JsonObject json = new JsonObject();
-            json.addProperty("header", options.getHeader());
-            JsonArray optionsJson = new JsonArray();
-            JsonArray interactionsJson = new JsonArray();
-            for (int i=0; i<options.getCount(); i++) {
-                optionsJson.add(new JsonPrimitive(options.getOption(i)));
-                interactionsJson.add(toJson(options.getInteraction(i), Interaction.class));
-            }
-            json.add("options", optionsJson);
-            json.add("interactions", interactionsJson);
-            return json;
         }
     }
 }
