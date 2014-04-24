@@ -39,6 +39,7 @@ public class Goal {
     }
 
     public void activate() {
+        questNpc.setInteractable(true);
         questNpc.setInteraction(netInteraction);
         questNpc.changeGrid(location, true);
         questNpc.makeQuestNpc();
