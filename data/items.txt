@@ -18,7 +18,7 @@
         "value" : 3
     },
 
-    "Bolivia Spurdo" : {
+    "Bolivia Spurdo's ID card" : {
         "class" : "SpecialItem",
         "id" : 1000,
         "name" : "Bolivia Spurdo's ID card"

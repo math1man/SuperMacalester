@@ -98,8 +98,8 @@ public class Chest extends Container {
                     interactions[length - 2] = Interaction.NULL;
                     for (int i=0; i<length-2; i++) {
                         Interaction temp = chest.takeItemInteraction(items.get(i));
-                        interactions[i] = Interaction.combine(temp, chest.toInteraction());
-                        interactions[length - 2] = Interaction.combine(interactions[length - 2], temp);
+                        interactions[i] = temp.attach(chest);
+                        interactions[length - 2] = interactions[length - 2].attach(temp);
                     }
                     interactions[length - 1] = chest.closeInteraction();
 

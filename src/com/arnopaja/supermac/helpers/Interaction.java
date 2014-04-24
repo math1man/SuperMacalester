@@ -2,7 +2,9 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.Battle;
+import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.inventory.GenericItem;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -15,8 +17,6 @@ import java.util.Arrays;
  * @author Ari Weiland
  */
 public abstract class Interaction implements InteractionBuilder {
-
-    private static Interaction last;
 
     private final EqualityParameters parameters;
 
@@ -35,6 +35,22 @@ public abstract class Interaction implements InteractionBuilder {
     public abstract void run(GameScreen screen);
 
     /**
+     * Returns a new interaction that adds the builder onto this interaction.
+     * This interaction is NOT modified by this method
+     * @param builder
+     * @return
+     */
+    public Interaction attach(InteractionBuilder builder) {
+        if (builder == null) {
+            return this;
+        } else {
+            return combine(this, builder);
+        }
+    }
+
+
+
+    /**
      * Default null interaction.  Running this does nothing
      */
     public static final Interaction NULL = new Interaction() {
@@ -51,8 +67,8 @@ public abstract class Interaction implements InteractionBuilder {
      * @param builders the interactions to be combined
      * @return
      */
-    public static <T extends InteractionBuilder> Interaction combine(final T... builders) {
-        if (builders == null) {
+    public static Interaction combine(final InteractionBuilder... builders) {
+        if (builders == null || builders.length == 0) {
             return NULL;
         } else {
             return new Interaction(builders) {
@@ -85,7 +101,7 @@ public abstract class Interaction implements InteractionBuilder {
      * @param builders
      * @return
      */
-    public static <T extends InteractionBuilder> Interaction[] convert(T... builders) {
+    public static Interaction[] convert(InteractionBuilder... builders) {
         Interaction[] interactions = new Interaction[builders.length];
         for (int i=0; i<builders.length; i++) {
             interactions[i] = builders[i].toInteraction();
@@ -155,29 +171,50 @@ public abstract class Interaction implements InteractionBuilder {
         @Override
         public Interaction fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
+            Interaction interaction = NULL;
             if (object.has("dialogue")) {
                 Dialogue dialogue = getObject(object, "dialogue", Dialogue.class);
                 return dialogue.toInteraction();
             } else if (object.has("options")) {
                 Dialogue dialogue = getObject(object, "options", Dialogue.class);
                 return dialogue.toInteraction();
-            } else if (object.has("battle")) {
-                Battle battle = fromJson(object.get("battle"), Battle.class);
-                return battle.toInteraction();
             }
-            return Interaction.NULL;
+            if (has(object, GenericItem.class)) {
+                GenericItem item = getObject(object, GenericItem.class);
+                interaction.attach(item);
+            }
+            if (has(object, Hero.class)) {
+                Hero hero = getObject(object, Hero.class);
+                interaction.attach(hero);
+            }
+            if (has(object, Battle.class)) {
+                Battle battle = getObject(object, Battle.class);
+                interaction.attach(battle);
+            }
+            return interaction;
         }
 
         @Override
         public JsonElement toJson(Interaction object) {
             JsonObject json = new JsonObject();
-            Object param = object.parameters.primary;
+            addToJson(json, object.parameters.primary);
+            return json;
+        }
+
+        private static void addToJson(JsonObject json, Object param) {
             if (param instanceof Dialogue) {
                 addObject(json, (Dialogue) param, Dialogue.class);
             } else if (param instanceof Battle) {
                 addObject(json, (Battle) param, Battle.class);
+            } else if (param instanceof GenericItem) {
+                addObject(json, (GenericItem) param, GenericItem.class);
+            } else if (param instanceof Hero) {
+                addObject(json, (Hero) param, Hero.class);
+            } else if (param instanceof InteractionBuilder[]) {
+                for (InteractionBuilder builder : ((InteractionBuilder[]) param)) {
+                    addToJson(json, builder);
+                }
             }
-            return json;
         }
     }
 }

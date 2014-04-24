@@ -29,7 +29,7 @@ A sample interaction:
     "hero" : { <a hero instance, adds the hero to your party> }
 }
 
-An interaction may have one of the listed objects, and only one.
+An interaction either may have dialogue, options, or any number of the other interactions.
 
 A sample goal:
 

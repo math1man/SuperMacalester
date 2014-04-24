@@ -38,7 +38,7 @@ public class Door extends StaticEntity {
             public void run(GameScreen screen) {
                 for (Entity e : entity.getGrid().getEntities()) {
                     if (e.isDelayed()) {
-                        e.changeGrid();
+                        e.forceChangeGrid();
                     }
                 }
                 entity.changeGrid(destination);

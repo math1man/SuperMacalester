@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.battle.Battle;
-import com.arnopaja.supermac.battle.Spell;
 import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
@@ -277,6 +276,7 @@ public abstract class SuperParser<T> {
         @Override
         public T fromJson(JsonElement element) {
             String enumName = element.getAsString().toUpperCase().trim();
+            enumName = enumName.replace(" ", "_");
             return clazz.cast(Enum.valueOf(clazz, enumName));
         }
 
