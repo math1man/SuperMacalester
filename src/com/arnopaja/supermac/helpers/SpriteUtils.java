@@ -3,6 +3,7 @@ package com.arnopaja.supermac.helpers;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -109,6 +110,11 @@ public class SpriteUtils {
         return tiles;
     }
 
+    public static TextureRegion[][] split(TextureRegion sprite, int tileWidth, int tileHeight) {
+        return split(sprite, tileWidth, tileHeight, false, false);
+    }
+
+
     public static TextureRegion[][] split(Texture texture) {
         return split(texture, false, false);
     }
@@ -121,12 +127,31 @@ public class SpriteUtils {
         return split(new TextureRegion(texture), tileWidth, tileHeight, flipX, !flipY);
     }
 
-    public static TextureRegion[][] split(Tile tile) {
+    public static Tile[][] split(Tile tile) {
         return split(tile, Grid.GRID_PIXEL_DIMENSION, Grid.GRID_PIXEL_DIMENSION);
     }
 
-    public static TextureRegion[][] split(Tile tile, int tileWidth, int tileHeight) {
-        return split(tile.getSprite(), tileWidth, tileHeight, false, false);
+    public static Tile[][] split(Tile tile, int tileWidth, int tileHeight) {
+        TextureRegion[] animation = tile.getAnimation().getKeyFrames();
+        int length = animation.length;
+        TextureRegion[][][] matrix = new TextureRegion[length][][];
+        for (int i=0; i<length; i++) {
+            matrix[i] = split(animation[i], tileWidth, tileHeight);
+        }
+        int width = matrix[0].length;
+        int height = matrix[0][0].length;
+        Tile[][] tiles = new Tile[width][height];
+        for (int i=0; i<width; i++) {
+            for (int j=0; j<height; j++) {
+                TextureRegion[] array = new TextureRegion[length];
+                for (int k=0; k<length; k++) {
+                    array[k] = matrix[k][i][j];
+                }
+                Animation newAnim = new Animation(tile.getAnimation().frameDuration, array);
+                tiles[i][j] = Tile.createTile(tile.getTileKey(), newAnim, tile.isPathable());
+            }
+        }
+        return tiles;
     }
 
     public static void split(Tile[][] tiles) {
@@ -134,10 +159,10 @@ public class SpriteUtils {
             for (int j=0; j<tiles[0].length; j++) {
                 Tile tile = tiles[i][j];
                 if (tile.isLarge()) {
-                    TextureRegion[][] sprites = split(tile);
+                    Tile[][] sprites = split(tile);
                     for (int p=0; p< sprites.length; p++) {
                         for (int q=0; q< sprites[0].length; q++) {
-                            tiles[i+p][j+q] = Tile.createTile("", sprites[p][q], tile.isPathable());
+                            tiles[i+p][j+q] = sprites[p][q];
                         }
                     }
                 }
