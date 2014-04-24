@@ -178,7 +178,7 @@
                         },
                         "interaction" : {
                             "item" : {
-                                "id" : 0,
+                                "id" : 1000,
                                 "name" : "Bolivia Spurdo's ID card"
                             }
                         }
