@@ -15,14 +15,15 @@ public class MainParty extends Party<Hero> {
         this(new ArrayList<Hero>());
     }
 
-    protected MainParty(List<Hero> characters) {
+    public MainParty(List<Hero> characters) {
         super(characters);
     }
 
     @Override
     public Hero getRandom()
     {
-        return characters.get(random.nextInt() % 4);
+        return characters.get(random.nextInt(4));
+//        return characters.get(0);
     }
 
     public void addCharacter(Hero h) {

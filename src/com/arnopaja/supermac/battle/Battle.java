@@ -34,16 +34,18 @@ public class Battle implements Controller, InteractionBuilder {
     protected final TextureRegion background;
     protected final Queue<BattleAction> actionQueue;
 
-    protected boolean isReady = false;
+    protected boolean isReady = true;
     protected DialogueHandler dialogueHandler;
     protected MainParty mainParty;
 
-    public Battle(EnemyParty enemyParty, String backgroundName) {
+    public Battle(EnemyParty enemyParty, MainParty mainParty, String backgroundName) {
         this.enemyParty = enemyParty;
+        this.mainParty = mainParty;
         this.isBossFight = enemyParty.containsBoss();
         this.backgroundName = backgroundName;
         this.background = AssetLoader.getBackground(backgroundName);
-        actionQueue = new PriorityBlockingQueue<BattleAction>(mainParty.size() + enemyParty.size(),
+        //We don't instantiate the mainparty's character list, so we get null pointer exception. WORD.
+        actionQueue = new PriorityBlockingQueue<BattleAction>(4 + enemyParty.size(),
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
@@ -207,7 +209,7 @@ public class Battle implements Controller, InteractionBuilder {
             JsonObject object = element.getAsJsonObject();
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
             String background = getString(object, "background");
-            return new Battle(enemy, background);
+            return new Battle(enemy,null, background);
         }
 
         @Override

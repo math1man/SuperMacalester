@@ -14,7 +14,7 @@ public class EnemyParty extends Party<Enemy> {
         this(new ArrayList<Enemy>());
     }
 
-    protected EnemyParty(List<Enemy> characters) {
+    public EnemyParty(List<Enemy> characters) {
         super(characters);
     }
 
