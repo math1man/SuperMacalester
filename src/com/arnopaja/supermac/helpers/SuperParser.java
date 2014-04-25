@@ -196,7 +196,7 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive(name).getAsInt();
     }
 
-    protected static void addInt(JsonObject json, String name, float i) {
+    protected static void addInt(JsonObject json, String name, int i) {
         json.addProperty(name, i);
     }
 
