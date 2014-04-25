@@ -3,31 +3,25 @@ package com.arnopaja.supermac.world.objects;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Location;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
  * @author Ari Weiland
  */
-public class Door extends StaticEntity {
+public class Door extends NonRenderedEntity {
 
     private final Location destination;
     private final Entity entity;
 
     public Door(Location location, Location destination, MainMapCharacter character) {
-        super(false, location, true);
+        super(location);
         this.destination = destination;
         this.entity = character;
     }
 
     public Location getDestination() {
         return destination;
-    }
-
-    @Override
-    public TextureRegion getSprite(float runTime) {
-        return null;
     }
 
     @Override
