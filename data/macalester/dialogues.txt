@@ -10,23 +10,29 @@
     },
     "Betsy" : {
         "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own evil profit!
-        <d>
-        I like animals, and I don't want to see animals tortured!",
-        "options" : {
-            "header" : "Do you like animals?",
-            "options" : [ "Yes", "No" ],
-            "interactions" : [
-                {
-                    "dialogue" : {
-                        "text" : "Yay!"
+        <d>I like animals, and I don't want to see animals tortured!",
+        "interaction" : {
+            "options" : {
+                "header" : "Do you like animals?",
+                "options" : [
+                    {
+                        "text" : "Yes",
+                        "interaction" : {
+                            "dialogue" : {
+                                "text" : "Yay!"
+                            }
+                        }
+                    },
+                    {
+                        "text" : "No",
+                        "interaction" : {
+                            "dialogue" : {
+                                "text" : "Asshole..."
+                            }
+                        }
                     }
-                },
-                {
-                    "dialogue" : {
-                        "text" : "Asshole..."
-                    }
-                }
-            ]
+                ]
+            }
         }
     }
 }

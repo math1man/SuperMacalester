@@ -84,7 +84,7 @@ public class Chest extends Container {
                 chest.open();
                 Dialogue dialogue;
                 if (chest.isEmpty()) {
-                    dialogue = new DialogueText(chest.closeInteraction(), "This chest is empty");
+                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction());
                 } else {
                     // Items go into inventory from chest
                     List<GenericItem> items = chest.getContents().getAll();
@@ -98,14 +98,14 @@ public class Chest extends Container {
                     interactions[length - 2] = Interaction.NULL;
                     for (int i=0; i<length-2; i++) {
                         Interaction temp = chest.takeItemInteraction(items.get(i));
-                        interactions[i] = Interaction.combine(temp, chest.toInteraction());
-                        interactions[length - 2] = Interaction.combine(interactions[length - 2], temp);
+                        interactions[i] = temp.attach(chest);
+                        interactions[length - 2] = interactions[length - 2].attach(temp);
                     }
                     interactions[length - 1] = chest.closeInteraction();
 
                     dialogue = new DialogueOptions("Take items?", objects, interactions);
                 }
-                screen.getDialogueHandler().displayDialogue(dialogue);
+                dialogue.toInteraction().run(screen);
             }
         };
     }

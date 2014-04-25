@@ -31,8 +31,8 @@ public class BattleInputHandler extends BaseInputHandler {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // convert screen coordinates to game coordinates
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
         if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {

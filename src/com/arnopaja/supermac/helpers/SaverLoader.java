@@ -9,8 +9,8 @@ import com.google.gson.JsonParser;
  */
 public class SaverLoader {
 
-    public static final Gson gson = new Gson();
-    public static final JsonParser parser = new JsonParser();
+    private static final Gson gson = new Gson();
+    private static final JsonParser parser = new JsonParser();
 
     public static <T> void save(T savable, Class<T> clazz) {
         save(savable, clazz.getName(), clazz);

@@ -2,12 +2,13 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
+import com.arnopaja.supermac.inventory.Spell;
 
 import java.util.Random;
 
@@ -137,5 +138,17 @@ public abstract class BattleAction implements InteractionBuilder {
             }
         };
 
+    }
+
+    @Override
+    public String toString() {
+        return "BattleAction{" +
+                "source=" + source +
+                ", destination=" + destination +
+                ", priority=" + priority +
+                ", spell=" + spell +
+                ", item=" + item +
+                ", type=" + type +
+                '}';
     }
 }

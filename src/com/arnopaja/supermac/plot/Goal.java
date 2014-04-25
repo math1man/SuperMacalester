@@ -29,31 +29,37 @@ public class Goal {
     private final MapNpc questNpc;
     private final Location location;
     private final Interaction mainInteraction;
+    private final boolean delay;
     private Interaction netInteraction = Interaction.NULL;
     private boolean isActive = false;
 
     public Goal(MapNpc questNpc, Location location, Interaction mainInteraction) {
+        this(questNpc, location, mainInteraction, true);
+    }
+
+    public Goal(MapNpc questNpc, Location location, Interaction mainInteraction, boolean delay) {
         this.questNpc = questNpc;
         this.location = location;
         this.mainInteraction = mainInteraction;
+        this.delay = delay;
     }
 
     public void activate() {
         questNpc.setInteractable(true);
         questNpc.setInteraction(netInteraction);
-        questNpc.changeGrid(location, true);
+        questNpc.forceChangeGrid(location);
         questNpc.makeQuestNpc();
         isActive = true;
     }
 
     public void deactivate() {
         questNpc.setInteractable(false);
-        questNpc.delayedRemoveFromGrid();
+        questNpc.removeFromGrid(delay);
         isActive = false;
     }
 
     protected void setQuest(Quest quest) {
-        netInteraction = Interaction.combine(mainInteraction, quest.toInteraction());
+        netInteraction = mainInteraction.attach(quest);
     }
 
     public Entity getQuestNpc() {
@@ -90,7 +96,11 @@ public class Goal {
             MapNpc entity = getObject(object, MapNpc.class);
             Location location = getObject(object, Location.class);
             Interaction interaction = getObject(object, Interaction.class);
-            return new Goal(entity, location, interaction);
+            boolean delay = true;
+            if (object.has("delay")) {
+                delay = getBoolean(object, "delay");
+            }
+            return new Goal(entity, location, interaction, delay);
         }
 
         @Override

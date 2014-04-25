@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -54,6 +55,7 @@ public class AssetLoader {
 
     // Data file handles
     public static FileHandle itemHandle;
+    public static FileHandle spellHandle;
     public static FileHandle dialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
@@ -153,6 +155,7 @@ public class AssetLoader {
         // TODO: battle backgrounds
 
         itemHandle = getHandle("items.txt");
+        spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
         plotHandle = getHandle("macalester/plot.txt");
         mapHandle = getHandle("macalester/maps");
@@ -160,6 +163,7 @@ public class AssetLoader {
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        scaleFont(GameScreen.GAME_HEIGHT * 0.2f / (AssetLoader.font.getLineHeight() * 3));
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }

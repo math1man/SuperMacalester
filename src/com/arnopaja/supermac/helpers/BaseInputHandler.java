@@ -22,15 +22,15 @@ public abstract class BaseInputHandler implements InputProcessor {
         this.scaleFactorY = scaleFactorY;
     }
 
-    public void dialogueInput(int gameX, int gameY) {
+    public void dialogueInput(float gameX, float gameY) {
         screen.getDialogueHandler().onClick(gameX, gameY).run(screen);
     }
 
-    protected int scaleX(int screenX) {
-        return (int) (screenX * scaleFactorX);
+    protected float scaleX(int screenX) {
+        return screenX * scaleFactorX;
     }
 
-    protected int scaleY(int screenY) {
-        return (int) (screenY * scaleFactorY);
+    protected float scaleY(int screenY) {
+        return screenY * scaleFactorY;
     }
 }

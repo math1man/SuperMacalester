@@ -55,6 +55,12 @@ public class World implements Controller {
         }
     }
 
+    public void clear() {
+        for (GameMap map : maps.values()) {
+            map.clear();
+        }
+    }
+
     public Grid getGrid(String name) {
         String gridName = name.replaceAll("[^\\p{Alpha}]*", ""); // get the text portion
         String number = name.replaceAll("[\\D]*", "");           // get the numeric portion
@@ -92,14 +98,15 @@ public class World implements Controller {
     public static class Parser extends SuperParser<World> {
         @Override
         public World fromJson(JsonElement element) {
+            world.clear();
             JsonObject object = element.getAsJsonObject();
-            JsonArray array = object.getAsJsonArray("entities");
-            for (JsonElement e : array) {
+            JsonArray entities = getEntitiesJson(object);
+            for (JsonElement e : entities) {
                 // Just instantiating entities puts them in the world,
                 // so nothing else needs to be done here
                 SuperParser.fromJson(e, Entity.class);
             }
-            return SuperParser.world;
+            return world;
         }
 
         @Override
@@ -115,6 +122,37 @@ public class World implements Controller {
             }
             json.add("entities", array);
             return json;
+        }
+
+        private JsonArray getEntitiesJson(JsonObject object) {
+            JsonArray entities = object.getAsJsonArray("entities");
+            if (object.has("origin")) {
+                JsonArray array = object.getAsJsonArray("origin");
+                int originX = array.get(0).getAsInt();
+                int originY = array.get(1).getAsInt();
+                for (int i=0; i<entities.size(); i++) {
+                    JsonObject entity = entities.get(i).getAsJsonObject();
+                    JsonObject location = entity.getAsJsonObject("location");
+                    if (location.getAsJsonPrimitive("grid").getAsString().equals("world")) {
+                        shiftLocation(location, originX, originY);
+                    }
+                    if (entity.has("destination")) {
+                        JsonObject destination = entity.getAsJsonObject("destination");
+                        if (destination.getAsJsonPrimitive("grid").getAsString().equals("world")) {
+                            shiftLocation(destination, originX, originY);
+                        }
+                    }
+                }
+            }
+            return entities;
+        }
+
+        private void shiftLocation(JsonObject location, int shiftX, int shiftY) {
+            // this should adjust the coordinates
+            int x = location.getAsJsonPrimitive("x").getAsInt() + shiftX;
+            int y = location.getAsJsonPrimitive("y").getAsInt() + shiftY;
+            location.addProperty("x", x);
+            location.addProperty("y", y);
         }
     }
 }

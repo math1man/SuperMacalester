@@ -5,6 +5,7 @@ import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -49,11 +50,12 @@ public class GameScreen implements Screen {
     public GameScreen() {
         Settings.load();
 
-        dialogueHandler = new DialogueHandler(GAME_WIDTH, GAME_HEIGHT);
+        dialogueHandler = new DialogueHandler();
 
         world = MapLoader.generateWorld(AssetLoader.mapHandle);
         SuperParser.initParsers(world);
         SuperParser.initItems(AssetLoader.itemHandle);
+        SuperParser.initSpells(AssetLoader.spellHandle);
 
         // TODO: do we want to load automatically?
         plot = SuperParser.parse(AssetLoader.plotHandle, Plot.class);
@@ -78,11 +80,13 @@ public class GameScreen implements Screen {
         this.mode = mode;
         switch (this.mode) {
             case WORLD:
+                dialogueHandler.setStyle(DialogueStyle.WORLD);
                 currentController = world;
                 currentRenderer = worldRenderer;
                 currentInputHandler = worldInputHandler;
                 break;
             case BATTLE:
+                dialogueHandler.setStyle(DialogueStyle.BATTLE_CONSOLE);
                 currentController = battle;
                 battleRenderer.setController(battle);
                 currentRenderer = battleRenderer;
@@ -217,8 +221,7 @@ public class GameScreen implements Screen {
 
     public void setBattle(Battle battle) {
         this.battle = battle;
-        // TODO: set up main party
-        this.battle.readyBattle(null, dialogueHandler);
+        this.battle.ready(world.getMainCharacter().getParty(), dialogueHandler);
     }
 
     public BattleRenderer getBattleRenderer() {

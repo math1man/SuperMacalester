@@ -65,9 +65,20 @@ public abstract class Entity implements Renderable, InteractionBuilder {
     /**
      * Removes the entity from the grid.
      * If the entity has been delayed, it will not be removed immediately.
+     * Identical to calling removeFromGrid(false).
      */
     public void removeFromGrid() {
-        changeGrid(null);
+        removeFromGrid(false);
+    }
+
+    /**
+     * Removes the entity from the grid.
+     * If the entity has been delayed or delay is set to true,
+     * it will not be removed until a call to forceChangeGrid.
+     * Identical to calling changeGrid(null, delay).
+     */
+    public void removeFromGrid(boolean delay) {
+        changeGrid(null, delay);
     }
 
     /**
@@ -82,44 +93,36 @@ public abstract class Entity implements Renderable, InteractionBuilder {
     }
 
     /**
-     * Delays any further grid changes until a call to changeGrid() is made.
+     * Moves the entity to a new location.
+     * If the entity has been delayed or if delay is set to true,
+     * it will not be moved until a call to forceChangeGrid().
+     *
+     * @param destination the new location to move to
+     */
+    public void changeGrid(Location destination, boolean delay) {
+        this.destination = destination;
+        if (delay || isDelayed) {
+            delay();
+        } else {
+            forceChangeGrid();
+        }
+    }
+
+    /**
+     * Delays any further grid changes until a call to forceChangeGrid() is made.
      */
     public void delay() {
         isDelayed = true;
     }
 
     /**
-     * Removes the entity from the grid eventually.
-     * A call to changeGrid() must be made to move the entity.
-     */
-    public void delayedRemoveFromGrid() {
-        delayedChangeGrid(null);
-    }
-
-    /**
-     * Moves the entity to a new location eventually.
-     * A call to changeGrid() must be made to move the entity.
+     * Moves the entity to a new location, overriding any delay.
      *
      * @param destination the new location to move to
      */
-    public void delayedChangeGrid(Location destination) {
-        delay();
-        changeGrid(destination, false);
-    }
-
-    /**
-     * Moves the entity to a new location.
-     * If force is set to true, the entity will move whether or not
-     * it was previously delayed.
-     *
-     * @param destination the new location to move to
-     * @param force forces the entity to move despite a delay
-     */
-    public void changeGrid(Location destination, boolean force) {
-        this.destination = destination;
-        if (force || !isDelayed) {
-            changeGrid();
-        }
+    public void forceChangeGrid(Location destination) {
+        changeGrid(destination);
+        forceChangeGrid();
     }
 
     /**
@@ -127,7 +130,7 @@ public abstract class Entity implements Renderable, InteractionBuilder {
      * If the destination has not been updated since the last call, nothing will happen.
      * This method concludes any delay placed on the entity.
      */
-    public void changeGrid() {
+    public void forceChangeGrid() {
         isQuestEntity = false;
         isDelayed = false;
         if (location == null || !location.equals(destination)) {
@@ -197,6 +200,8 @@ public abstract class Entity implements Renderable, InteractionBuilder {
             parsers.put(MapNpc.class.getSimpleName(), new MapNpc.Parser());
             parsers.put(Door.class.getSimpleName(), new Door.Parser());
             parsers.put(Chest.class.getSimpleName(), new Chest.Parser());
+            parsers.put(GarbageCan.class.getSimpleName(), new GarbageCan.Parser());
+            parsers.put(Asteroid.class.getSimpleName(), new Asteroid.Parser());
         }
 
         @Override
