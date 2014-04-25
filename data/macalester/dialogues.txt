@@ -34,5 +34,43 @@
                 ]
             }
         }
+    },
+    "Jeff" : {
+        "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious practice of apathetic
+        <d>indifference and willful ignorance.",
+        "interaction" : {
+            "options" : {
+                "header" : "Want to help?",
+                "options" : [
+                    {
+                        "text" : "Where do I sign?!",
+                        "interaction" : {
+                            "dialogue" : {
+                                "text" : "No! Caring enough to sign a petition makes you part of the problem!"
+                            }
+                        }
+                    },
+                    {
+                        "text" : "Sure, I'll help you organize an event.",
+                        "interaction" : {
+                            "dialogue" : {
+                                "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring enough
+                                <d>to organize it.
+                                <d>But you'd better not care, or you'll get kicked out."
+                            }
+                        }
+                    },
+                    {
+                        "text" : "Whatever",
+                        "interaction" : {
+                            "dialogue" : {
+                                "text" : "Excellent! A kindred spirit! Carry on! I'm off to take a nap."
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+
     }
 }
