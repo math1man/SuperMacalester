@@ -95,4 +95,9 @@ public class DialogueOptions extends Dialogue {
     public int getCount() {
         return count;
     }
+
+    @Override
+    public String getText() {
+        return Arrays.toString(members);
+    }
 }

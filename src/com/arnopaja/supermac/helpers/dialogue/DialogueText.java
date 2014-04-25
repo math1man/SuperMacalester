@@ -39,6 +39,7 @@ public class DialogueText extends Dialogue {
         return member;
     }
 
+    @Override
     public String getText() {
         return member.getText();
     }

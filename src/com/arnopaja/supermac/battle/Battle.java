@@ -10,6 +10,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
+import com.arnopaja.supermac.inventory.Spell;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,15 +28,15 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class Battle implements Controller, InteractionBuilder {
 
-    private final EnemyParty enemyParty;
-    private final boolean isBossFight;
-    private final String backgroundName;
-    private final TextureRegion background;
-    private final Queue<BattleAction> actionQueue;
+    protected final EnemyParty enemyParty;
+    protected final boolean isBossFight;
+    protected final String backgroundName;
+    protected final TextureRegion background;
+    protected final Queue<BattleAction> actionQueue;
 
-    private boolean isReady = false;
-    private DialogueHandler dialogueHandler;
-    private MainParty mainParty;
+    protected boolean isReady = false;
+    protected DialogueHandler dialogueHandler;
+    protected MainParty mainParty;
 
     public Battle(EnemyParty enemyParty, String backgroundName) {
         this.enemyParty = enemyParty;
