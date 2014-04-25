@@ -2,15 +2,6 @@
     "origin" : [ 0, 0 ],
     "entities" : [
         {
-            "class" : "Asteroid",
-            "location" : {
-                "grid" : "world",
-                "x" : 50,
-                "y" : 54
-            }
-        },
-
-        {
             "class" : "Door",
             "location" : {
                 "grid" : "world",
