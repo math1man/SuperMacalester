@@ -12,12 +12,11 @@ import com.google.gson.JsonObject;
  */
 public class MapNpc extends MapCharacter {
 
-    public static final boolean DEFAULT_INTERACTABLE = false;
     public static final boolean DEFAULT_CAN_MOVE = true;
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private final String name;
-    private Interaction interaction = Interaction.NULL;
+    private Interaction interaction;
     private boolean canMove = true;
 
     public MapNpc(String name) {
@@ -29,16 +28,17 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(String name, Location location, Direction direction) {
-        this(name, location, direction, DEFAULT_INTERACTABLE);
+        this(name, location, direction, false, Interaction.NULL);
     }
 
-    public MapNpc(String name, Location location, Direction direction, boolean isInteractable) {
-        this(name, location, direction, isInteractable, DEFAULT_CAN_MOVE);
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, Interaction interaction) {
+        this(name, location, direction, isInteractable, interaction, DEFAULT_CAN_MOVE);
     }
 
-    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, boolean canMove) {
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, Interaction interaction, boolean canMove) {
         super(location, direction, isInteractable, AssetLoader.getCharacter(name));
         this.name = name;
+        this.interaction = interaction;
         this.canMove = canMove;
     }
 
@@ -91,19 +91,19 @@ public class MapNpc extends MapCharacter {
             if (has(object, Direction.class)) {
                 direction = getObject(object, Direction.class);
             }
-            boolean isInteractable = MapNpc.DEFAULT_INTERACTABLE;
+            boolean isInteractable = false;
             if (object.has("interactable")) {
                 isInteractable = getBoolean(object, "interactable");
+            }
+            Interaction interaction = Interaction.NULL;
+            if (has(object, Interaction.class)) {
+                interaction = getObject(object, Interaction.class);
             }
             boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
             }
-            MapNpc npc = new MapNpc(name, location, direction, isInteractable, canMove);
-            if (has(object, Interaction.class)) {
-                npc.setInteraction(getObject(object, Interaction.class));
-            }
-            return npc;
+            return new MapNpc(name, location, direction, isInteractable, interaction, canMove);
         }
 
         @Override

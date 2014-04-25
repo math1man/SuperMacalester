@@ -2,8 +2,10 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
@@ -40,9 +42,8 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        MapNpc character = new MapNpc("Betsy", new Location(getWorld(), 40, 40));
-        character.setInteractable(true);
-        character.setInteraction(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction());
+        Interaction interaction = SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
+        new MapNpc("Betsy", new Location(getWorld(), 40, 40), Direction.WEST, true, interaction);
     }
 
     @Override
@@ -115,7 +116,7 @@ public class World implements Controller {
             JsonArray array = new JsonArray();
             for (GameMap map : object.getMaps()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!entity.isQuestEntity() && !(entity instanceof MainMapCharacter)) {
+                    if (!(entity.isQuestEntity()) && !(entity instanceof MainMapCharacter)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }
