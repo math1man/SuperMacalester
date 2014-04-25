@@ -19,7 +19,7 @@ public class MainMapCharacter extends MapCharacter {
     }
 
     public MainMapCharacter(Location location, Direction direction) {
-        super(location, direction, true, AssetLoader.getAsset("Steven"));
+        super(location, direction, true, AssetLoader.getCharacter("Tom"));
     }
 
     @Override

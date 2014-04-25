@@ -22,7 +22,7 @@ public abstract class MapCharacter extends Entity {
     private Direction direction;
 
     protected MapCharacter(Location location, Direction direction, boolean isInteractable, CharacterAsset asset) {
-        super(true, location, isInteractable);
+        super(asset != null, location, isInteractable);
         this.direction = direction;
         this.asset = asset;
     }

@@ -142,8 +142,9 @@ public class AssetLoader {
         //       Characters
         //--------------------------
 
-        loadCharacter("Steven", "entities/steven.png");
+        loadCharacter("Tom", "entities/steven.png");
         loadCharacter("Betsy", "entities/betsy.png");
+        loadCharacter("Jeff", "entities/beardguy.png");
 
         //--------------------------
         //          Other
@@ -214,7 +215,7 @@ public class AssetLoader {
         return battleBackgrounds.get(name);
     }
 
-    public static CharacterAsset getAsset(String name) {
+    public static CharacterAsset getCharacter(String name) {
         return characterAssetMap.get(name);
     }
 

@@ -40,11 +40,9 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        MapNpc character = new MapNpc();
-        character.setAsset(AssetLoader.getAsset("Betsy"));
+        MapNpc character = new MapNpc("Betsy", new Location(getWorld(), 40, 40));
         character.setInteractable(true);
         character.setInteraction(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction());
-        character.changeGrid(new Location(getWorld(), 40, 40));
     }
 
     @Override

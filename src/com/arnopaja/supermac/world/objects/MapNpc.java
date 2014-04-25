@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.CharacterAsset;
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
@@ -16,32 +16,29 @@ public class MapNpc extends MapCharacter {
     public static final boolean DEFAULT_CAN_MOVE = true;
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
+    private final String name;
     private Interaction interaction = Interaction.NULL;
     private boolean canMove = true;
 
-    public MapNpc() {
-        this(null);
+    public MapNpc(String name) {
+        this(name, null);
     }
 
-    public MapNpc(Location location) {
-        this(location, Direction.WEST);
+    public MapNpc(String name, Location location) {
+        this(name, location, Direction.WEST);
     }
 
-    public MapNpc(Location location, Direction direction) {
-        this(location, direction, DEFAULT_INTERACTABLE);
+    public MapNpc(String name, Location location, Direction direction) {
+        this(name, location, direction, DEFAULT_INTERACTABLE);
     }
 
-    public MapNpc(Location location, Direction direction, boolean isInteractable) {
-        this(location, direction, isInteractable, DEFAULT_CAN_MOVE);
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable) {
+        this(name, location, direction, isInteractable, DEFAULT_CAN_MOVE);
     }
 
-    public MapNpc(Location location, Direction direction, boolean isInteractable, boolean canMove) {
-        this(location, direction, isInteractable, canMove, null);
-    }
-
-    public MapNpc(Location location, Direction direction, boolean isInteractable, boolean canMove,
-                  CharacterAsset asset) {
-        super(location, direction, isInteractable, asset);
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, boolean canMove) {
+        super(location, direction, isInteractable, AssetLoader.getCharacter(name));
+        this.name = name;
         this.canMove = canMove;
     }
 
@@ -82,6 +79,10 @@ public class MapNpc extends MapCharacter {
         @Override
         public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
+            String name = null;
+            if (object.has("name")) {
+                name = getString(object, "name");
+            }
             Location location = null;
             if (has(object, Location.class)) {
                 location = getObject(object, Location.class);
@@ -98,7 +99,7 @@ public class MapNpc extends MapCharacter {
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
             }
-            MapNpc npc = new MapNpc(location, direction, isInteractable, canMove);
+            MapNpc npc = new MapNpc(name, location, direction, isInteractable, canMove);
             if (has(object, Interaction.class)) {
                 npc.setInteraction(getObject(object, Interaction.class));
             }
@@ -109,6 +110,7 @@ public class MapNpc extends MapCharacter {
         public JsonElement toJson(MapNpc object) {
             JsonObject json = toBaseJson(object);
             addObject(json, object.getDirection(), Direction.class);
+            addString(json, "name", object.name);
             addBoolean(json, "canMove", object.canMove);
             if (object.interaction != null) {
                 addObject(json, object.interaction, Interaction.class);
