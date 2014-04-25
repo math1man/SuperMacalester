@@ -1,13 +1,10 @@
 SuperMacalester
 ===============
 
-Okay, this time it's for real.  Everything is up and running I think.
-
-When you set up the project, I recommend putting it in a superfolder within your project directory to group all five modules.
-
-In order to find the missing projects and actually run anything, download the missing modules from the following link and save them in the same directory as the primary module.
+When you set up the project, I recommend you first create a superfolder.  I called mine SuperMacalester as well.  Before you import the actual project, first download the additional modules from the following link and save them in the superfolder you just created.  You may also need to download some of the libraries in the dropbox folder.
 https://www.dropbox.com/sh/rd06fxudjymsdfe/Pg6XybdFOH
 
-In order to run the program, you can either open up the SuperMacalester-desktop directory and run the Main class main method.  This will run the program as a java class on your computer.  Alternatively, you can run the MainActivity in the SuperMacalester-android as an Android program.  The latter of course requires a device or emulator.
+Next, import this project as the main module into the superfolder previously created.  It may automatically import the other modules, but if not you will need to import each one manually.  Once all the modules are present in the project, you will probably need to go into the project structure and set the main module and its library(s) as dependencies for the additional modules.
 
-Any external resources (images, animations, and sounds) should be placed in the data folder in the primary project, though they may need to be placed in the appropriate folder in the other modules (assets in android, bin/data in desktop).
+In order to run the program, you can either open up the SuperMacalester-desktop module and run the Main class's main method.  This will run the program as a java application on your computer.  Alternatively, you can run the MainActivity in the SuperMacalester-android as an Android program.  The latter of course requires a device or emulator.
+
