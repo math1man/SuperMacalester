@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class MapCharacter extends Entity {
 
-    public static final float MOVE_SPEED = 6f; // grid spaces per second TODO: revert to 3
+    public static final float MOVE_SPEED = 4.5f; // 4.5 feels like the optimal speed
 
     private boolean isMoving = false;
     private Vector2 renderOffset = new Vector2();

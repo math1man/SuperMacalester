@@ -12,7 +12,7 @@ import com.badlogic.gdx.Input.Keys;
  */
 public class WorldInputHandler extends BaseInputHandler {
 
-    public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 4;
+    public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 3;
 
     private final MainMapCharacter character;
 

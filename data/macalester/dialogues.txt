@@ -9,8 +9,8 @@
         }
     },
     "Betsy" : {
-        "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own evil profit!
-        <d>I like animals, and I don't want to see animals tortured!",
+        "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own
+        <d>evil profit! I like animals, and I don't want to see animals tortured!",
         "interaction" : {
             "options" : {
                 "header" : "Do you like animals?",
@@ -54,8 +54,8 @@
                         "text" : "Sure, I'll help you organize an event.",
                         "interaction" : {
                             "dialogue" : {
-                                "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring enough
-                                <d>to organize it.
+                                "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring
+                                <d>enough to organize it.
                                 <d>But you'd better not care, or you'll get kicked out."
                             }
                         }

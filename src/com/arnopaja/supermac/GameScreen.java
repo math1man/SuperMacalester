@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 
     // TODO: allow for variable aspect ratios (i.e. below)
     public static final float ASPECT_RATIO = 5.0f / 3; // Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-    public static final float GAME_HEIGHT = 480;
+    public static final float GAME_HEIGHT = 360;
     public static final float GAME_WIDTH = GAME_HEIGHT * ASPECT_RATIO;
 
     public static enum GameMode { WORLD, BATTLE, MENU }
