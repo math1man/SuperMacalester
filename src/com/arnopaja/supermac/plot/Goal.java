@@ -26,18 +26,18 @@ import com.google.gson.JsonObject;
  */
 public class Goal {
 
-    private final MapNpc questNpc;
+    private final QuestEntity questNpc;
     private final Location location;
     private final Interaction mainInteraction;
     private final boolean delay;
     private Interaction netInteraction = Interaction.NULL;
     private boolean isActive = false;
 
-    public Goal(MapNpc questNpc, Location location, Interaction mainInteraction) {
+    public Goal(QuestEntity questNpc, Location location, Interaction mainInteraction) {
         this(questNpc, location, mainInteraction, true);
     }
 
-    public Goal(MapNpc questNpc, Location location, Interaction mainInteraction, boolean delay) {
+    public Goal(QuestEntity questNpc, Location location, Interaction mainInteraction, boolean delay) {
         this.questNpc = questNpc;
         this.location = location;
         this.mainInteraction = mainInteraction;
@@ -45,10 +45,8 @@ public class Goal {
     }
 
     public void activate() {
-        questNpc.setInteractable(true);
         questNpc.setInteraction(netInteraction);
-        questNpc.forceChangeGrid(location);
-        questNpc.makeQuestNpc();
+        questNpc.changeGrid(location);
         isActive = true;
     }
 
@@ -62,7 +60,7 @@ public class Goal {
         netInteraction = mainInteraction.attach(quest);
     }
 
-    public Entity getQuestNpc() {
+    public QuestEntity getQuestNpc() {
         return questNpc;
     }
 
@@ -93,7 +91,7 @@ public class Goal {
         @Override
         public Goal fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            MapNpc entity = getObject(object, MapNpc.class);
+            QuestEntity entity = getObject(object, QuestEntity.class);
             Location location = getObject(object, Location.class);
             Interaction interaction = getObject(object, Interaction.class);
             boolean delay = true;
@@ -106,7 +104,7 @@ public class Goal {
         @Override
         public JsonElement toJson(Goal object) {
             JsonObject json = new JsonObject();
-            addObject(json, object.getQuestNpc(), Entity.class);
+            addObject(json, object.getQuestNpc(), QuestEntity.class);
             addObject(json, object.getLocation(), Location.class);
             addObject(json, object.getMainInteraction(), Interaction.class);
             return json;

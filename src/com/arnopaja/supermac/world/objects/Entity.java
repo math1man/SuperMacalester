@@ -29,7 +29,6 @@ public abstract class Entity implements Renderable, InteractionBuilder {
     private boolean isDelayed = false;
 
     private boolean isInteractable;
-    protected boolean isQuestEntity = false;
 
     protected Entity(boolean isRendered, Location location, boolean isInteractable) {
         this.isRendered = isRendered;
@@ -60,6 +59,13 @@ public abstract class Entity implements Renderable, InteractionBuilder {
         } else {
             return Interaction.NULL;
         }
+    }
+
+    /**
+     * Delays any further grid changes until a call to forceChangeGrid() is made.
+     */
+    public void delay() {
+        isDelayed = true;
     }
 
     /**
@@ -101,18 +107,12 @@ public abstract class Entity implements Renderable, InteractionBuilder {
      */
     public void changeGrid(Location destination, boolean delay) {
         this.destination = destination;
-        if (delay || isDelayed) {
+        if (delay) {
             delay();
-        } else {
+        }
+        if (!isDelayed) {
             forceChangeGrid();
         }
-    }
-
-    /**
-     * Delays any further grid changes until a call to forceChangeGrid() is made.
-     */
-    public void delay() {
-        isDelayed = true;
     }
 
     /**
@@ -131,7 +131,6 @@ public abstract class Entity implements Renderable, InteractionBuilder {
      * This method concludes any delay placed on the entity.
      */
     public void forceChangeGrid() {
-        isQuestEntity = false;
         isDelayed = false;
         if (location == null || !location.equals(destination)) {
             if (isInGrid()) {
@@ -174,7 +173,6 @@ public abstract class Entity implements Renderable, InteractionBuilder {
         location.setPosition(position);
     }
 
-
     public boolean isInteractable() {
         return isInteractable;
     }
@@ -185,10 +183,6 @@ public abstract class Entity implements Renderable, InteractionBuilder {
 
     public Direction getDirectionToward(Vector2 position) {
         return Direction.getDirectionToward(getPosition(), position);
-    }
-
-    public boolean isQuestEntity() {
-        return isQuestEntity;
     }
 
     public static class Parser<T extends Entity> extends SuperParser<T> {

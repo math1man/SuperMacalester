@@ -16,6 +16,11 @@ public abstract class NonRenderedEntity extends StaticEntity {
     }
 
     @Override
+    public void delay() {
+        // there is no point delaying the removal of an entity that is not rendered
+    }
+
+    @Override
     public final TextureRegion getSprite(float runTime) {
         return null;
     }

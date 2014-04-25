@@ -5,6 +5,7 @@ import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.plot.QuestEntity;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
@@ -116,7 +117,7 @@ public class World implements Controller {
             JsonArray array = new JsonArray();
             for (GameMap map : object.getMaps()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!(entity.isQuestEntity()) && !(entity instanceof MainMapCharacter)) {
+                    if (!(entity instanceof QuestEntity)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }

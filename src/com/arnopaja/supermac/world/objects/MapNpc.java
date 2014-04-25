@@ -16,7 +16,7 @@ public class MapNpc extends MapCharacter {
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private final String name;
-    private Interaction interaction;
+    protected Interaction interaction;
     private boolean canMove = true;
 
     public MapNpc(String name) {
@@ -52,14 +52,6 @@ public class MapNpc extends MapCharacter {
                 move(Direction.values()[ordinal]);
             }
         }
-    }
-
-    public void setInteraction(Interaction interaction) {
-        this.interaction = interaction;
-    }
-
-    public void makeQuestNpc() {
-        isQuestEntity = true;
     }
 
     public boolean canMove() {
