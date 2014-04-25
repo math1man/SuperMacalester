@@ -4,8 +4,10 @@ import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -74,6 +76,10 @@ public class GameScreen implements Screen {
         changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
         runTime = 0;
+
+        dialogueHandler.setStyle(DialogueStyle.FULL_SCEEN);
+        new DialogueText(SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class).getRaw(),
+                Dialogue.CLEAR_DIALOGUE.attach(DialogueStyle.WORLD)).toInteraction().run(this);
     }
 
     public void changeMode(GameMode mode) {
