@@ -2,9 +2,10 @@ package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 /**
  * A goal is a single plot interaction.
@@ -24,29 +25,29 @@ import com.google.gson.JsonObject;
  */
 public class Goal {
 
-    private final QuestEntity questNpc;
-    private final Location location;
+    private final List<QuestEntity> questEntities;
     private final Interaction mainInteraction;
     private final boolean delay;
     private Interaction netInteraction = Interaction.NULL;
     private boolean isActive = false;
 
-    public Goal(QuestEntity questNpc, Location location, Interaction mainInteraction, boolean delay) {
-        this.questNpc = questNpc;
-        this.location = location;
+    public Goal(List<QuestEntity> questEntities, Interaction mainInteraction, boolean delay) {
+        this.questEntities = questEntities;
         this.mainInteraction = mainInteraction;
         this.delay = delay;
     }
 
     public void activate() {
-        questNpc.setInteraction(netInteraction);
-        questNpc.changeGrid(location);
+        for (QuestEntity entity : questEntities) {
+            entity.activate(netInteraction);
+        }
         isActive = true;
     }
 
     public void deactivate() {
-        questNpc.setInteractable(false);
-        questNpc.removeFromGrid(delay);
+        for (QuestEntity entity : questEntities) {
+            entity.deactivate(delay);
+        }
         isActive = false;
     }
 
@@ -54,16 +55,12 @@ public class Goal {
         netInteraction = mainInteraction.attach(quest);
     }
 
-    public QuestEntity getQuestNpc() {
-        return questNpc;
+    public List<QuestEntity> getQuestEntities() {
+        return questEntities;
     }
 
     public Interaction getMainInteraction() {
         return mainInteraction;
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     public boolean isActive() {
@@ -77,30 +74,28 @@ public class Goal {
 
         Goal goal = (Goal) o;
 
-        return questNpc.equals(goal.questNpc) && location.equals(goal.location)
-                && mainInteraction.equals(goal.mainInteraction);
+        return questEntities.equals(goal.questEntities) && mainInteraction.equals(goal.mainInteraction);
     }
 
     public static class Parser extends SuperParser<Goal> {
         @Override
         public Goal fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            QuestEntity entity = getObject(object, QuestEntity.class);
-            Location location = getObject(object, Location.class);
+            List<QuestEntity> entities = getList(object, "entities", QuestEntity.class);
             Interaction interaction = getObject(object, Interaction.class);
             boolean delay = true;
             if (object.has("delay")) {
                 delay = getBoolean(object, "delay");
             }
-            return new Goal(entity, location, interaction, delay);
+            return new Goal(entities, interaction, delay);
         }
 
         @Override
         public JsonElement toJson(Goal object) {
             JsonObject json = new JsonObject();
-            addObject(json, object.getQuestNpc(), QuestEntity.class);
-            addObject(json, object.getLocation(), Location.class);
+            addList(json, "entities", object.getQuestEntities(), QuestEntity.class);
             addObject(json, object.getMainInteraction(), Interaction.class);
+            addBoolean(json, "delay", object.delay);
             return json;
         }
     }

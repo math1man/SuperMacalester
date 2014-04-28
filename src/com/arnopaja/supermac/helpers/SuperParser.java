@@ -22,7 +22,7 @@ import java.util.*;
  *
  * @author Ari Weiland
  */
-public abstract class SuperParser<T> {
+public class SuperParser<T> {
 
     private static final JsonParser parser = new JsonParser();
     private static final Map<String, SuperParser> parsers = new HashMap<String, SuperParser>();
@@ -37,7 +37,7 @@ public abstract class SuperParser<T> {
         addParser(Door.class,                   new Door.Parser());
         addParser(Enemy.class,                  new Enemy.Parser());
         addParser(EnemyParty.class,             new EnemyParty.Parser());
-        addParser(Entity.class,                 new Entity.Parser());
+        addParser(Entity.class,                 new SuperParser<Entity>());
         addParser(GarbageCan.class,             new GarbageCan.Parser());
         addParser(GenericItem.class,            new GenericItem.Parser());
         addParser(Goal.class,                   new Goal.Parser());
@@ -91,9 +91,19 @@ public abstract class SuperParser<T> {
      * @param element
      * @return
      */
-    public abstract T fromJson(JsonElement element);
+    public T fromJson(JsonElement element) {
+        JsonObject object = element.getAsJsonObject();
+        String className = getClass(object);
+        SuperParser<T> parser = getParser(className);
+        return parser.fromJson(element);
+    }
 
-    public abstract JsonElement toJson(T object);
+    public JsonElement toJson(T object) {
+        SuperParser parser = getParser(object.getClass());
+        JsonObject json = parser.toJson(object).getAsJsonObject();
+        addClass(json, object.getClass());
+        return json;
+    }
 
     /**
      * Finds and parses a member of name name from the specified JSON element.

@@ -3,6 +3,7 @@ package com.arnopaja.supermac.world.objects;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
@@ -51,7 +52,7 @@ public class GarbageCan extends Container {
     }
 
 
-    public static class Parser extends Entity.Parser<GarbageCan> {
+    public static class Parser extends SuperParser<GarbageCan> {
         @Override
         public GarbageCan fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -62,7 +63,7 @@ public class GarbageCan extends Container {
 
         @Override
         public JsonElement toJson(GarbageCan object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
             addObject(json, "contents", object.getContents(), Inventory.class);
             return json;
         }

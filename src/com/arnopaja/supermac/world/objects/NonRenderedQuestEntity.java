@@ -1,7 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.plot.QuestEntity;
+import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -10,15 +12,24 @@ import com.google.gson.JsonObject;
  */
 public class NonRenderedQuestEntity extends NonRenderedEntity implements QuestEntity {
 
+    private final Location location;
     private Interaction interaction = Interaction.NULL;
 
-    public NonRenderedQuestEntity() {
+    public NonRenderedQuestEntity(Location location) {
         super(null);
+        this.location = location;
     }
 
     @Override
-    public void setInteraction(Interaction interaction) {
+    public void activate(Interaction interaction) {
         this.interaction = interaction;
+        forceChangeGrid(location);
+    }
+
+    @Override
+    public void deactivate(boolean delay) {
+        setInteractable(false);
+        removeFromGrid(delay);
     }
 
     @Override
@@ -26,16 +37,21 @@ public class NonRenderedQuestEntity extends NonRenderedEntity implements QuestEn
         return interaction;
     }
 
-    public static class Parser extends Entity.Parser<NonRenderedQuestEntity> {
+    public static class Parser extends SuperParser<NonRenderedQuestEntity> {
         @Override
         public NonRenderedQuestEntity fromJson(JsonElement element) {
-            return new NonRenderedQuestEntity();
+            JsonObject object = element.getAsJsonObject();
+            Location location = null;
+            if (has(object, Location.class)) {
+                location = getObject(object, Location.class);
+            }
+            return new NonRenderedQuestEntity(location);
         }
 
         @Override
         public JsonElement toJson(NonRenderedQuestEntity object) {
             JsonObject json = new JsonObject();
-            addClass(json, NonRenderedQuestEntity.class);
+            addObject(json, object.location, Location.class);
             return json;
         }
     }

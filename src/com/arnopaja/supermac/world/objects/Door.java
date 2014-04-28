@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -40,7 +41,7 @@ public class Door extends NonRenderedEntity {
         };
     }
 
-    public static class Parser extends Entity.Parser<Door> {
+    public static class Parser extends SuperParser<Door> {
         @Override
         public Door fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -51,7 +52,8 @@ public class Door extends NonRenderedEntity {
 
         @Override
         public JsonElement toJson(Door object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, "location", object.getLocation(), Location.class);
             addObject(json, "destination", object.destination, Location.class);
             return json;
         }

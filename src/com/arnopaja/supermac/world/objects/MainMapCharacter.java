@@ -4,6 +4,7 @@ import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -73,7 +74,7 @@ public class MainMapCharacter extends MapCharacter {
         return Interaction.NULL;
     }
 
-    public static class Parser extends Entity.Parser<MainMapCharacter> {
+    public static class Parser extends SuperParser<MainMapCharacter> {
         @Override
         public MainMapCharacter fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -87,7 +88,8 @@ public class MainMapCharacter extends MapCharacter {
 
         @Override
         public JsonElement toJson(MainMapCharacter object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
             addObject(json, object.getDirection(), Direction.class);
             return json;
         }

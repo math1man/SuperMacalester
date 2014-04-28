@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -81,7 +82,7 @@ public class MapNpc extends MapCharacter {
                 '}';
     }
 
-    public static class Parser extends Entity.Parser<MapNpc> {
+    public static class Parser extends SuperParser<MapNpc> {
         @Override
         public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -114,10 +115,12 @@ public class MapNpc extends MapCharacter {
 
         @Override
         public JsonElement toJson(MapNpc object) {
-            JsonObject json = toBaseJson(object);
-            addObject(json, object.getDirection(), Direction.class);
+            JsonObject json = new JsonObject();
             addString(json, "name", object.name);
+            addObject(json, object.getLocation(), Location.class);
+            addObject(json, object.getDirection(), Direction.class);
             addBoolean(json, "canMove", object.canMove);
+            addBoolean(json, "interactable", object.isInteractable());
             if (object.interaction != null) {
                 addObject(json, object.interaction, Interaction.class);
             }

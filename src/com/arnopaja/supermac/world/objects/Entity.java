@@ -2,14 +2,11 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.Random;
 
@@ -181,34 +178,5 @@ public abstract class Entity implements Renderable, InteractionBuilder {
 
     public Direction getDirectionToward(Vector2 position) {
         return Direction.getDirectionToward(getPosition(), position);
-    }
-
-    public static class Parser<T extends Entity> extends SuperParser<T> {
-
-        @Override
-        public T fromJson(JsonElement element) {
-            JsonObject entity = element.getAsJsonObject();
-            String className = getClass(entity);
-            SuperParser<T> parser = getParser(className);
-            T e = parser.fromJson(element);
-            return e;
-        }
-
-        @Override
-        public JsonElement toJson(T object) {
-            SuperParser parser = getParser(object.getClass());
-            JsonElement element = parser.toJson(object);
-            return element;
-        }
-
-        protected JsonObject toBaseJson(T object) {
-            JsonObject json = new JsonObject();
-            if (object.getLocation() != null) {
-                addObject(json, object.getLocation(), Location.class);
-            }
-            addBoolean(json, "interactable", object.isInteractable());
-            addClass(json, object.getClass());
-            return json;
-        }
     }
 }

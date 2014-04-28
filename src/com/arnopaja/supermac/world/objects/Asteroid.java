@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -20,7 +21,7 @@ public class Asteroid extends NonRenderedEntity {
         return new DialogueText("This asteriod seems to be pulsing with a strange energy").toInteraction();
     }
 
-    public static class Parser extends Entity.Parser<Asteroid> {
+    public static class Parser extends SuperParser<Asteroid> {
         @Override
         public Asteroid fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -30,7 +31,9 @@ public class Asteroid extends NonRenderedEntity {
 
         @Override
         public JsonElement toJson(Asteroid object) {
-            return toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
+            return json;
         }
     }
 }

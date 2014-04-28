@@ -1,8 +1,10 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.plot.QuestEntity;
 import com.arnopaja.supermac.world.grid.Direction;
+import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -11,16 +13,26 @@ import com.google.gson.JsonObject;
  */
 public class QuestNpc extends MapNpc implements QuestEntity {
 
-    public QuestNpc(String name, Direction direction) {
+    private final Location location;
+
+    public QuestNpc(String name, Location location, Direction direction) {
         super(name, null, direction, true, Interaction.NULL);
+        this.location = location;
     }
 
     @Override
-    public void setInteraction(Interaction interaction) {
+    public void activate(Interaction interaction) {
         this.interaction = interaction;
+        forceChangeGrid(location);
     }
 
-    public static class Parser extends Entity.Parser<QuestNpc> {
+    @Override
+    public void deactivate(boolean delay) {
+        setInteractable(false);
+        removeFromGrid(delay);
+    }
+
+    public static class Parser extends SuperParser<QuestNpc> {
         @Override
         public QuestNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -28,18 +40,22 @@ public class QuestNpc extends MapNpc implements QuestEntity {
             if (object.has("name")) {
                 name = getString(object, "name");
             }
+            Location location = null;
+            if (has(object, Location.class)) {
+                location = getObject(object, Location.class);
+            }
             Direction direction = Direction.WEST;
             if (has(object, Direction.class)) {
                 direction = getObject(object, Direction.class);
             }
-            return new QuestNpc(name, direction);
+            return new QuestNpc(name, location, direction);
         }
 
         @Override
         public JsonElement toJson(QuestNpc object) {
             JsonObject json = new JsonObject();
-            addClass(json, QuestNpc.class);
             addString(json, "name", object.getName());
+            addObject(json, object.getLocation(), Location.class);
             addObject(json, object.getDirection(), Direction.class);
             return json;
         }
