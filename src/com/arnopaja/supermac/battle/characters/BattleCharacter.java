@@ -1,16 +1,11 @@
 package com.arnopaja.supermac.battle.characters;
 
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Armor;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.Weapon;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Nolan Varani
@@ -150,36 +145,5 @@ public abstract class BattleCharacter {
     @Override
     public String toString() {
         return getName();
-    }
-
-    public static class Parser<T extends BattleCharacter> extends SuperParser<T> {
-        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
-
-        static {
-            parsers.put(Hero.class.getSimpleName(), new Hero.Parser());
-            parsers.put(Enemy.class.getSimpleName(), new Enemy.Parser());
-        }
-
-        @Override
-        public T fromJson(JsonElement element) {
-            JsonObject battleCharacter = element.getAsJsonObject();
-            String className = getClass(battleCharacter);
-            Parser<T> parser = parsers.get(className);
-            return parser.fromJson(element);
-        }
-
-        @Override
-        public JsonElement toJson(T object) {
-            Parser parser = parsers.get(object.getClass().getSimpleName());
-            return parser.toJson(object);
-        }
-
-        protected JsonObject toBaseJson(T object) {
-            JsonObject json = new JsonObject();
-            addString(json, "name", object.name);
-            addObject(json, object.battleClass, BattleClass.class);
-            addInt(json, "level", object.level);
-            return json;
-        }
     }
 }

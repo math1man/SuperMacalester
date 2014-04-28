@@ -50,6 +50,9 @@ public class GameScreen implements Screen {
     private float runTime;
 
     public GameScreen() {
+//        AssetLoader.prefs.clear();
+//        AssetLoader.prefs.flush();
+
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
@@ -59,8 +62,6 @@ public class GameScreen implements Screen {
         SuperParser.initItems(AssetLoader.itemHandle);
         SuperParser.initSpells(AssetLoader.spellHandle);
 
-//        SuperParser.parse(AssetLoader.entitiesHandle, World.class);
-//        SaverLoader.save(world, World.class);
         load();
 
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();

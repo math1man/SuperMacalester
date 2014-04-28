@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.google.gson.JsonElement;
@@ -23,7 +24,7 @@ public class Item extends GenericItem {
         return new DialogueText(dialogue);
     }
 
-    public static class Parser extends GenericItem.Parser<Item> {
+    public static class Parser extends SuperParser<Item> {
         @Override
         public Item fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -35,7 +36,11 @@ public class Item extends GenericItem {
 
         @Override
         public JsonElement toJson(Item object) {
-            return toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.getId());
+            addString(json, "name", object.getName());
+            addInt(json, "value", object.getValue());
+            return json;
         }
     }
 }

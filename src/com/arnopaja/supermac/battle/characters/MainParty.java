@@ -10,12 +10,11 @@ import java.util.List;
  */
 public class MainParty extends Party<Hero> {
 
-    //Main party can only have 3 characters
     public MainParty() {
         this(new ArrayList<Hero>());
     }
 
-    protected MainParty(List<Hero> characters) {
+    public MainParty(List<Hero> characters) {
         super(characters);
     }
 

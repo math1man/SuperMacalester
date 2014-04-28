@@ -22,7 +22,7 @@ import java.util.*;
  *
  * @author Ari Weiland
  */
-public class SuperParser<T> {
+public abstract class SuperParser<T> {
 
     private static final JsonParser parser = new JsonParser();
     private static final Map<String, SuperParser> parsers = new HashMap<String, SuperParser>();
@@ -37,9 +37,7 @@ public class SuperParser<T> {
         addParser(Door.class,                   new Door.Parser());
         addParser(Enemy.class,                  new Enemy.Parser());
         addParser(EnemyParty.class,             new EnemyParty.Parser());
-        addParser(Entity.class,                 new SuperParser<Entity>());
         addParser(GarbageCan.class,             new GarbageCan.Parser());
-        addParser(GenericItem.class,            new GenericItem.Parser());
         addParser(Goal.class,                   new Goal.Parser());
         addParser(Hero.class,                   new Hero.Parser());
         addParser(Interaction.class,            new Interaction.Parser());
@@ -72,6 +70,10 @@ public class SuperParser<T> {
         return parsers.get(className);
     }
 
+    //--------------------------------
+    //         Init methods
+    //--------------------------------
+
     protected static World world;
 
     public static void initParsers(World w) {
@@ -86,51 +88,60 @@ public class SuperParser<T> {
         parseAll(handle, Spell.class);
     }
 
+    //--------------------------------
+    //        Abstract methods
+    //--------------------------------
+
+    public abstract T fromJson(JsonElement element);
+
+    public abstract JsonElement toJson(T object);
+
+    //--------------------------------
+    //  Static generic class methods
+    //--------------------------------
+
     /**
-     * Converts a JSON element into an object of type T
+     * Creates an object of the specified class from the element.
+     * The returned object may actually be a subclass of clazz.
      * @param element
+     * @param clazz
+     * @param <U>
      * @return
      */
-    public T fromJson(JsonElement element) {
-        JsonObject object = element.getAsJsonObject();
-        String className = getClass(object);
-        SuperParser<T> parser = getParser(className);
-        return parser.fromJson(element);
-    }
-
-    public JsonElement toJson(T object) {
-        SuperParser parser = getParser(object.getClass());
-        JsonObject json = parser.toJson(object).getAsJsonObject();
-        addClass(json, object.getClass());
-        return json;
+    public static <U> U fromJson(JsonElement element, Class<U> clazz) {
+        SuperParser parser;
+        if (clazz.isEnum()) {
+            parser = getParser(clazz);
+        } else {
+            parser = getParser(getClass(element.getAsJsonObject()));
+        }
+        if (parser == null) {
+            parser = getParser(clazz);
+        }
+        return clazz.cast(parser.fromJson(element));
     }
 
     /**
-     * Finds and parses a member of name name from the specified JSON element.
-     * Will return null if the name is not found, or fail catastrophically if
-     * the name's element is incorrectly formatted.
-     * @param name
+     * Creates a JSON of the element. The element must be of the specified
+     * class, but the class does not otherwise affect the code. It is only
+     * used to differentiate this method from the non-static equivalent.
      * @param element
+     * @param clazz
+     * @param <U>
      * @return
      */
-    public T parse(String name, JsonElement element) {
-        if (element == null || !element.isJsonObject()) {
-            return null;
+    public static <U> JsonElement toJson(U element, Class<U> clazz) {
+        if (clazz.isEnum()) {
+            return getParser(clazz).toJson(element);
+        } else {
+            SuperParser parser = getParser(element.getClass());
+            if (parser == null) {
+                parser = getParser(clazz);
+            }
+            JsonObject json = parser.toJson(element).getAsJsonObject();
+            addClass(json, element.getClass());
+            return json;
         }
-        JsonObject object = element.getAsJsonObject();
-        if (object.has(name)) {
-            return fromJson(object.get(name));
-        }
-        return null;
-    }
-
-    /**
-     * Returns the head of the JSON tree
-     * @param json
-     * @return
-     */
-    public JsonElement getJsonHead(String json) {
-        return parser.parse(json);
     }
 
     /**
@@ -141,13 +152,50 @@ public class SuperParser<T> {
      * @param json
      * @return
      */
-    public T parse(String name, String json) {
+    public static <U> U parse(String name, String json, Class<U> clazz) {
         JsonElement element = getJsonHead(json);
-        return parse(name, element);
+        if (element == null || !element.isJsonObject()) {
+            return null;
+        }
+        JsonObject object = element.getAsJsonObject();
+        if (object.has(name)) {
+            return fromJson(object.get(name), clazz);
+        }
+        return null;
     }
 
-    public T parse(String json) {
-        return fromJson(getJsonHead(json));
+    /**
+     * Finds and parses a member of name name from the specified FileHandle.
+     * Will return null if the name is not found, or fail catastrophically
+     * if the name's element is incorrectly formatted.
+     * @param name
+     * @param handle
+     * @return
+     */
+    public static <U> U parse(String name, FileHandle handle, Class<U> clazz) {
+        return parse(name, handle.readString(), clazz);
+    }
+
+    /**
+     * Parses the JSON string as a whole as an object of clazz.
+     * @param json
+     * @param clazz
+     * @param <U>
+     * @return
+     */
+    public static <U> U parse(String json, Class<U> clazz) {
+        return fromJson(getJsonHead(json), clazz);
+    }
+
+    /**
+     * Parses the FileHandle as a whole as an object of clazz.
+     * @param handle
+     * @param clazz
+     * @param <U>
+     * @return
+     */
+    public static <U> U parse(FileHandle handle, Class<U> clazz) {
+        return parse(handle.readString(), clazz);
     }
 
     /**
@@ -156,54 +204,29 @@ public class SuperParser<T> {
      * @param json
      * @return
      */
-    public List<T> parseAll(String json) {
+    public static <U> List<U> parseAll(String json, Class<U> clazz) {
         JsonElement element = getJsonHead(json);
-        List<T> parsables = new ArrayList<T>();
+        List<U> parsables = new ArrayList<U>();
         Set<Map.Entry<String, JsonElement>> entries = element.getAsJsonObject().entrySet();
         for (Map.Entry<String, JsonElement> entry : entries) {
-            parsables.add(fromJson(entry.getValue()));
+            parsables.add(fromJson(entry.getValue(), clazz));
         }
         return parsables;
     }
 
-    //--------------------------------
-    //  Static generic class methods
-    //--------------------------------
-
-    public static <U> U fromJson(JsonElement element, Class<U> clazz) {
-        return clazz.cast(getParser(clazz).fromJson(element));
-    }
-
-    public static <U> JsonElement toJson(U element, Class<U> clazz) {
-        return getParser(clazz).toJson(element);
-    }
-
-    public static <U> U parse(String name, String json, Class<U> clazz) {
-        return clazz.cast(getParser(clazz).parse(name, json));
-    }
-
-    public static <U> U parse(String name, FileHandle handle, Class<U> clazz) {
-        return parse(name, handle.readString(), clazz);
-    }
-
-    public static <U> U parse(String json, Class<U> clazz) {
-        return clazz.cast(getParser(clazz).parse(json));
-    }
-
-    public static <U> U parse(FileHandle handle, Class<U> clazz) {
-        return parse(handle.readString(), clazz);
-    }
-
-    public static <U> List<U> parseAll(String json, Class<U> clazz) {
-        return getParser(clazz).parseAll(json);
-    }
-
+    /**
+     * Parses all members in the FileHandle as if they were of type T.
+     * Will fail catastrophically if any member is incorrectly formatted.
+     * @param handle
+     * @return
+     */
     public static <U> List<U> parseAll(FileHandle handle, Class<U> clazz) {
         return parseAll(handle.readString(), clazz);
     }
 
     //--------------------------------
     //     Convenience methods
+    //     for subclasses
     //--------------------------------
 
     protected static boolean getBoolean(JsonObject json, String name) {
@@ -285,6 +308,10 @@ public class SuperParser<T> {
 
     protected static boolean hasClass(JsonObject json) {
         return json.has("class");
+    }
+
+    private static JsonElement getJsonHead(String json) {
+        return parser.parse(json);
     }
 
     public static class EnumParser<T extends Enum> extends SuperParser<T> {

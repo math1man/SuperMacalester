@@ -134,6 +134,13 @@ public abstract class Interaction implements InteractionBuilder {
         return (parameters.equals(that.parameters));
     }
 
+    @Override
+    public String toString() {
+        return "Interaction{" +
+                "parameters=" + parameters +
+                '}';
+    }
+
     private static class EqualityParameters<U, V> {
         protected final U primary;
         protected final V secondary;
@@ -162,6 +169,14 @@ public abstract class Interaction implements InteractionBuilder {
             } else {
                return a.equals(b);
             }
+        }
+
+        @Override
+        public String toString() {
+            return "EqualityParameters{" +
+                    "primary=" + primary +
+                    ", secondary=" + secondary +
+                    '}';
         }
     }
 

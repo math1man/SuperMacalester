@@ -3,6 +3,7 @@ package com.arnopaja.supermac.battle.characters;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.google.gson.JsonElement;
@@ -48,7 +49,7 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
         }
     }
 
-    public static class Parser extends BattleCharacter.Parser<Hero> {
+    public static class Parser extends SuperParser<Hero> {
         @Override
         public Hero fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -68,7 +69,10 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
 
         @Override
         public JsonElement toJson(Hero object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addString(json, "name", object.name);
+            addObject(json, object.battleClass, BattleClass.class);
+            addInt(json, "level", object.level);
             addFloat(json, "health", object.fractionHealth);
             addFloat(json, "mana", object.fractionMana);
             return json;
