@@ -56,10 +56,6 @@ public abstract class Interaction implements InteractionBuilder {
         public void run(GameScreen screen) {}
     };
 
-    static {
-        System.out.println(NULL);
-    }
-
     /**
      * Combines a group of InteractionBuilders into one new interaction that runs
      * the run methods of each builder.toInteraction() in the order specified.

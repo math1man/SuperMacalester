@@ -187,21 +187,17 @@ public abstract class Entity implements Renderable, InteractionBuilder {
 
         @Override
         public T fromJson(JsonElement element) {
-            System.out.println("Parsing entity: " + element);
             JsonObject entity = element.getAsJsonObject();
             String className = getClass(entity);
             SuperParser<T> parser = getParser(className);
             T e = parser.fromJson(element);
-            System.out.println("Parsed entity: " + e);
             return e;
         }
 
         @Override
         public JsonElement toJson(T object) {
-//            System.out.println("Parsing entity: " + object);
             SuperParser parser = getParser(object.getClass());
             JsonElement element = parser.toJson(object);
-//            System.out.println("Parsed entity: " + element);
             return element;
         }
 
