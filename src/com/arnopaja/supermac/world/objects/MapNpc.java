@@ -17,7 +17,7 @@ public class MapNpc extends MapCharacter {
 
     private final String name;
     protected Interaction interaction;
-    private boolean canMove = true;
+    private boolean canMove;
 
     public MapNpc(String name) {
         this(name, null);
@@ -62,9 +62,23 @@ public class MapNpc extends MapCharacter {
         this.canMove = canMove;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public Interaction toInteraction() {
         return interaction;
+    }
+
+    @Override
+    public String toString() {
+        return "MapNpc{" +
+                "name='" + name + '\'' +
+                ", isInteractable=" + isInteractable() +
+                ", interaction=" + interaction +
+                ", canMove=" + canMove +
+                '}';
     }
 
     public static class Parser extends Entity.Parser<MapNpc> {
@@ -74,10 +88,12 @@ public class MapNpc extends MapCharacter {
             String name = null;
             if (object.has("name")) {
                 name = getString(object, "name");
+                System.out.println("My name is " + name);
             }
             Location location = null;
             if (has(object, Location.class)) {
                 location = getObject(object, Location.class);
+                System.out.println("I am at " + location);
             }
             Direction direction = Direction.WEST;
             if (has(object, Direction.class)) {
@@ -85,15 +101,18 @@ public class MapNpc extends MapCharacter {
             }
             boolean isInteractable = false;
             if (object.has("interactable")) {
+                System.out.println("I am interactable!");
                 isInteractable = getBoolean(object, "interactable");
             }
             Interaction interaction = Interaction.NULL;
             if (has(object, Interaction.class)) {
                 interaction = getObject(object, Interaction.class);
+                System.out.println("I have an interaction");
             }
             boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
+                System.out.println("I can move");
             }
             return new MapNpc(name, location, direction, isInteractable, interaction, canMove);
         }

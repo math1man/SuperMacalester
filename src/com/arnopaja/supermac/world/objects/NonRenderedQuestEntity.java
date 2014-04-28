@@ -2,6 +2,8 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.plot.QuestEntity;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * @author Ari Weiland
@@ -24,5 +26,17 @@ public class NonRenderedQuestEntity extends NonRenderedEntity implements QuestEn
         return interaction;
     }
 
-    // TODO: make me a parser
+    public static class Parser extends Entity.Parser<NonRenderedQuestEntity> {
+        @Override
+        public NonRenderedQuestEntity fromJson(JsonElement element) {
+            return new NonRenderedQuestEntity();
+        }
+
+        @Override
+        public JsonElement toJson(NonRenderedQuestEntity object) {
+            JsonObject json = new JsonObject();
+            addClass(json, NonRenderedQuestEntity.class);
+            return json;
+        }
+    }
 }

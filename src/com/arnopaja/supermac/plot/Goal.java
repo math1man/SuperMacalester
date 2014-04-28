@@ -3,8 +3,6 @@ package com.arnopaja.supermac.plot;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.Entity;
-import com.arnopaja.supermac.world.objects.MapNpc;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -32,10 +30,6 @@ public class Goal {
     private final boolean delay;
     private Interaction netInteraction = Interaction.NULL;
     private boolean isActive = false;
-
-    public Goal(QuestEntity questNpc, Location location, Interaction mainInteraction) {
-        this(questNpc, location, mainInteraction, true);
-    }
 
     public Goal(QuestEntity questNpc, Location location, Interaction mainInteraction, boolean delay) {
         this.questNpc = questNpc;

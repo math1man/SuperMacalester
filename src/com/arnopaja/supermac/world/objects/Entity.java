@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -187,29 +185,24 @@ public abstract class Entity implements Renderable, InteractionBuilder {
 
     public static class Parser<T extends Entity> extends SuperParser<T> {
 
-        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
-
-        static {
-            parsers.put(MainMapCharacter.class.getSimpleName(), new MainMapCharacter.Parser());
-            parsers.put(MapNpc.class.getSimpleName(), new MapNpc.Parser());
-            parsers.put(Door.class.getSimpleName(), new Door.Parser());
-            parsers.put(Chest.class.getSimpleName(), new Chest.Parser());
-            parsers.put(GarbageCan.class.getSimpleName(), new GarbageCan.Parser());
-            parsers.put(Asteroid.class.getSimpleName(), new Asteroid.Parser());
-        }
-
         @Override
         public T fromJson(JsonElement element) {
+            System.out.println("Parsing entity: " + element);
             JsonObject entity = element.getAsJsonObject();
             String className = getClass(entity);
-            Parser<T> parser = parsers.get(className);
-            return parser.fromJson(element);
+            SuperParser<T> parser = getParser(className);
+            T e = parser.fromJson(element);
+            System.out.println("Parsed entity: " + e);
+            return e;
         }
 
         @Override
         public JsonElement toJson(T object) {
-            Parser parser = parsers.get(object.getClass().getSimpleName());
-            return parser.toJson(object);
+//            System.out.println("Parsing entity: " + object);
+            SuperParser parser = getParser(object.getClass());
+            JsonElement element = parser.toJson(object);
+//            System.out.println("Parsed entity: " + element);
+            return element;
         }
 
         protected JsonObject toBaseJson(T object) {

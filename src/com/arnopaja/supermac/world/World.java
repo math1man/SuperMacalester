@@ -27,15 +27,15 @@ import java.util.Map;
 public class World implements Controller {
 
     private final Map<String, GameMap> maps;
-    private final MainMapCharacter mainCharacter;
+    private MainMapCharacter mainCharacter;
 
     public World(Map<String, GameMap> maps) {
         if (!maps.containsKey("world") || maps.get("world") == null || !maps.get("world").isGrid()) {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
         this.maps = maps;
-        mainCharacter = new MainMapCharacter(new Location(getWorld(), 40, 35));
-        initCharacters();
+//        mainCharacter = new MainMapCharacter(new Location(getWorld(), 40, 35));
+//        initCharacters();
     }
 
     public World(World world) {
@@ -78,7 +78,11 @@ public class World implements Controller {
     }
 
     public Grid getGrid(String name, int floor) {
-        return maps.get(name).getGrid(floor);
+        GameMap map = maps.get(name);
+        if (map != null) {
+            return map.getGrid(floor);
+        }
+        return null;
     }
 
     public Grid getWorld() {
@@ -108,7 +112,10 @@ public class World implements Controller {
             for (JsonElement e : entities) {
                 // Just instantiating entities puts them in the world,
                 // so nothing else needs to be done here
-                SuperParser.fromJson(e, Entity.class);
+                Entity entity = SuperParser.fromJson(e, Entity.class);
+                if (entity instanceof MainMapCharacter) {
+                    world.mainCharacter = (MainMapCharacter) entity;
+                }
             }
             return world;
         }

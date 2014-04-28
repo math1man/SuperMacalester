@@ -59,8 +59,9 @@ public class GameScreen implements Screen {
         SuperParser.initItems(AssetLoader.itemHandle);
         SuperParser.initSpells(AssetLoader.spellHandle);
 
-        // TODO: do we want to load automatically?
-        plot = SuperParser.parse(AssetLoader.plotHandle, Plot.class);
+//        SuperParser.parse(AssetLoader.entitiesHandle, World.class);
+//        SaverLoader.save(world, World.class);
+        load();
 
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
@@ -157,7 +158,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-//        save(); // TODO: should we save here automatically?
+        save();
         Settings.save();
         worldRenderer.dispose();
         battleRenderer.dispose();

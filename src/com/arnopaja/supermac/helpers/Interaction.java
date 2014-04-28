@@ -48,8 +48,6 @@ public abstract class Interaction implements InteractionBuilder {
         }
     }
 
-
-
     /**
      * Default null interaction.  Running this does nothing
      */
@@ -57,6 +55,10 @@ public abstract class Interaction implements InteractionBuilder {
         @Override
         public void run(GameScreen screen) {}
     };
+
+    static {
+        System.out.println(NULL);
+    }
 
     /**
      * Combines a group of InteractionBuilders into one new interaction that runs

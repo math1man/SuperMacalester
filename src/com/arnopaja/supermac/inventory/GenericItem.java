@@ -109,15 +109,6 @@ public class GenericItem implements InteractionBuilder {
 
     public static class Parser<T extends GenericItem> extends SuperParser<T> {
 
-        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
-
-        static {
-            parsers.put(Armor.class.getSimpleName(), new Armor.Parser());
-            parsers.put(Item.class.getSimpleName(), new Item.Parser());
-            parsers.put(SpecialItem.class.getSimpleName(), new SpecialItem.Parser());
-            parsers.put(Weapon.class.getSimpleName(), new Weapon.Parser());
-        }
-
         @Override
         public T fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -126,14 +117,14 @@ public class GenericItem implements InteractionBuilder {
                 return (T) getCached(id);
             } else {
                 String className = getClass(object);
-                Parser<T> parser = parsers.get(className);
+                SuperParser<T> parser = getParser(className);
                 return parser.fromJson(element);
             }
         }
 
         @Override
         public JsonElement toJson(T object) {
-            Parser<T> parser = parsers.get(object.getClass().getSimpleName());
+            SuperParser parser = getParser(object.getClass());
             return parser.toJson(object);
         }
 

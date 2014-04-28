@@ -2,107 +2,102 @@
     "origin" : [ 0, 0 ],
     "entities" : [
         {
-            "class" : "Door",
-            "location" : {
-                "grid" : "world",
-                "x" : 155,
-                "y" : 68
-            },
-            "destination" : {
-                "grid" : "Olin Rice",
-                "x" : 0,
-                "y" : 0
-            }
-        },
-        {
-            "class" : "Door",
-            "location" : {
-                "grid" : "world",
-                "x" : 155,
-                "y" : 69
-            },
-            "destination" : {
-                "grid" : "Olin Rice",
-                "x" : 0,
-                "y" : 1
-            }
-        },
-        {
-            "class" : "Door",
-            "location" : {
-                "grid" : "world",
-                "x" : 155,
-                "y" : 70
-            },
-            "destination" : {
-                "grid" : "Olin Rice",
-                "x" : 0,
-                "y" : 2
-            }
-        },
-        {
-            "class" : "Door",
-            "location" : {
-                "grid" : "world",
-                "x" : 155,
-                "y" : 71
-            },
-            "destination" : {
-                "grid" : "Olin Rice",
-                "x" : 0,
-                "y" : 3
-            }
-        },
-        {
-            "class" : "Door",
-            "location" : {
-                "grid" : "world",
-                "x" : 39,
-                "y" : 30
-            },
-            "destination" : {
-                "grid" : "Campus Center",
-                "x" : 0,
-                "y" : 0
-            }
-        },
-        {
-            "class" : "Door",
+            "class" : "MainMapCharacter",
             "location" : {
                 "grid" : "world",
                 "x" : 40,
-                "y" : 30
+                "y" : 35
             },
-            "destination" : {
-                "grid" : "Campus Center",
-                "x" : 1,
-                "y" : 0
-            }
+            "direction" : "West"
         },
         {
-            "class" : "Door",
+            "class" : "MapNpc",
+            "name" : "Betsy",
             "location" : {
                 "grid" : "world",
-                "x" : 41,
-                "y" : 30
+                "x" : 33,
+                "y" : 36
             },
-            "destination" : {
-                "grid" : "Campus Center",
-                "x" : 2,
-                "y" : 0
+            "direction" : "North",
+            "interactable" : true,
+            "interaction" : {
+                "dialogue" : {
+                    "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own
+                    <d>evil profit! I like animals, and I don't want to see animals tortured!",
+                    "interaction" : {
+                        "options" : {
+                            "header" : "Do you like animals?",
+                            "options" : [
+                                {
+                                    "text" : "Yes",
+                                    "interaction" : {
+                                        "dialogue" : {
+                                            "text" : "Yay!"
+                                        }
+                                    }
+                                },
+                                {
+                                    "text" : "No",
+                                    "interaction" : {
+                                        "dialogue" : {
+                                            "text" : "Asshole..."
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         {
-            "class" : "Door",
+            "class" : "MapNpc",
+            "name" : "Jeff",
             "location" : {
                 "grid" : "world",
                 "x" : 42,
-                "y" : 30
+                "y" : 39
             },
-            "destination" : {
-                "grid" : "Campus Center",
-                "x" : 3,
-                "y" : 0
+            "direction" : "South",
+            "interactable" : true,
+            "interaction" : {
+                "dialogue" : {
+                    "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious practice of apathetic
+                    <d>indifference and willful ignorance.",
+                    "interaction" : {
+                        "options" : {
+                            "header" : "Want to help?",
+                            "options" : [
+                                {
+                                    "text" : "Where do I sign?!",
+                                    "interaction" : {
+                                        "dialogue" : {
+                                            "text" : "No! Caring enough to sign a petition makes you part of the problem!"
+                                        }
+                                    }
+                                },
+                                {
+                                    "text" : "Sure, I'll help you organize an event.",
+                                    "interaction" : {
+                                        "dialogue" : {
+                                            "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring
+                                            <d>enough to organize it.
+                                            <d>But you'd better not care, or you'll get kicked out."
+                                        }
+                                    }
+                                },
+                                {
+                                    "text" : "Whatever",
+                                    "interaction" : {
+                                        "dialogue" : {
+                                            "text" : "Excellent! A kindred spirit! Carry on! I'm off to take a nap."
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     ]
