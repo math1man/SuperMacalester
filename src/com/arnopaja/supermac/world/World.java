@@ -34,7 +34,7 @@ public class World implements Controller {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
         this.maps = maps;
-        mainCharacter = new MainMapCharacter(new Location(getWorld(), 36, 36));
+        mainCharacter = new MainMapCharacter(new Location(getWorld(), 40, 35));
         initCharacters();
     }
 
@@ -43,8 +43,10 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        Interaction interaction = SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
-        new MapNpc("Betsy", new Location(getWorld(), 40, 40), Direction.WEST, true, interaction);
+        Interaction betsy = SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
+        new MapNpc("Betsy", new Location(getWorld(), 33, 36), Direction.WEST, true, betsy);
+        Interaction jeff = SuperParser.parse("Jeff", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
+        new MapNpc("Jeff", new Location(getWorld(), 42, 39), Direction.SOUTH, true, jeff);
     }
 
     @Override

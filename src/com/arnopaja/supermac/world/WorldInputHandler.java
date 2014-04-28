@@ -12,7 +12,7 @@ import com.badlogic.gdx.Input.Keys;
  */
 public class WorldInputHandler extends BaseInputHandler {
 
-    public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
+    public static final float SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2f;
 
     private final MainMapCharacter character;
 
@@ -95,14 +95,14 @@ public class WorldInputHandler extends BaseInputHandler {
     }
 
     private Direction getDirection(float gameX, float gameY) {
-        if (gameX < SIDE_BUTTON_WIDTH) {
-            return Direction.NORTH;
-        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-            return Direction.SOUTH;
-        } else if (gameY < SIDE_BUTTON_WIDTH) {
+        if (gameY < SIDE_BUTTON_WIDTH) {
             return Direction.EAST;
         } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
             return Direction.WEST;
+        } else if (gameX < SIDE_BUTTON_WIDTH) {
+            return Direction.NORTH;
+        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+            return Direction.SOUTH;
         } else {
             return null;
         }

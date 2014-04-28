@@ -24,6 +24,8 @@ public abstract class Dialogue implements InteractionBuilder {
 
     public abstract String getText();
 
+    public abstract String getRaw();
+
     @Override
     public Interaction toInteraction() {
         final Dialogue dialogue = this;

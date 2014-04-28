@@ -85,8 +85,11 @@ public class DialogueWindow {
         batch.enableBlending();
         for (int i=0; i<columns; i++) {
             for (int j=0; j<rows; j++) {
-                AssetLoader.drawWrappedFont(batch, dialogue[i][j].getText(), sectors[i][j].getX(),
-                        sectors[i][j].getY(), textSpace.getWidth());
+                DialogueMember member = dialogue[i][j];
+                if (member != null) {
+                    AssetLoader.drawWrappedFont(batch, member.getText(), sectors[i][j].getX(),
+                            sectors[i][j].getY(), textSpace.getWidth());
+                }
             }
         }
         batch.end();
@@ -99,8 +102,9 @@ public class DialogueWindow {
         for (int i=0; i<columns; i++) {
             for (int j=0; j<rows; j++) {
                 if (sectors[i][j].contains(x, y)) {
-                    if (dialogue[i][j].hasInteraction()) {
-                        return dialogue[i][j].getInteraction();
+                    DialogueMember member = dialogue[i][j];
+                    if (member != null && member.hasInteraction()) {
+                        return member.getInteraction();
                     }
                 }
             }

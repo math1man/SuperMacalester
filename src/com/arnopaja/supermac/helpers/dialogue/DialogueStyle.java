@@ -1,12 +1,14 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.world.grid.Grid;
 
 /**
 * @author Ari Weiland
 */
-public enum DialogueStyle {
+public enum DialogueStyle implements InteractionBuilder {
 
     WORLD(DialogueWindow.FRAME_GAP,
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
@@ -19,7 +21,11 @@ public enum DialogueStyle {
     BATTLE_STATUS(GameScreen.GAME_WIDTH / 2,
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
-            4);
+            4),
+    FULL_SCEEN(DialogueWindow.FRAME_GAP,
+            DialogueWindow.FRAME_GAP,
+            GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP,
+            12);
 
     private final float x;
     private final float y;
@@ -31,6 +37,17 @@ public enum DialogueStyle {
         this.y = y;
         this.width = width;
         this.rows = rows;
+    }
+
+    @Override
+    public Interaction toInteraction() {
+        final DialogueStyle style = this;
+        return new Interaction(style) {
+            @Override
+            public void run(GameScreen screen) {
+                screen.getDialogueHandler().setStyle(style);
+            }
+        };
     }
 
     public float getX() {
