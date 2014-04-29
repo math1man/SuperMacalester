@@ -192,6 +192,9 @@ public abstract class Interaction implements InteractionBuilder {
                 Dialogue dialogue = getObject(object, "options", Dialogue.class);
                 return dialogue.toInteraction();
             }
+            if (object.has("clear")) {
+                interaction.attach(Dialogue.CLEAR_DIALOGUE);
+            }
             if (has(object, GenericItem.class)) {
                 GenericItem item = getObject(object, GenericItem.class);
                 interaction.attach(item);

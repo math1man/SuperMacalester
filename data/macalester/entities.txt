@@ -1,4 +1,4 @@
-{
+ {
     "class" : "World",
     "origin" : [ 0, 0 ],
     "entities" : [
@@ -11,6 +11,79 @@
                 "y" : 35
             },
             "direction" : "West"
+        },
+        {
+            "class" : "MapNpc",
+            "name" : "Tom",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 40,
+                "y" : 36
+            },
+            "direction" : "West",
+            "canMove" : false,
+            "interactable" : true,
+            "interaction" : {
+                "class" : "Interaction",
+                "options" : {
+                    "class" : "Dialogue",
+                    "header" : "Do you want to fight?",
+                    "options" : [
+                        {
+                            "text" : "yes",
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "battle" : {
+                                    "class" : "Battle",
+                                    "background" : "",
+                                    "enemy" : {
+                                        "class" : "EnemyParty",
+                                        "characters" : [
+                                            {
+                                                "class" : "Enemy",
+                                                "name" : "Dave",
+                                                "battleclass" : "COMP_SCI",
+                                                "level" : 1,
+                                                "item" : {
+                                                    "class" : "Item",
+                                                    "id" : 0
+                                                }
+                                            },
+                                            {
+                                                "class" : "Enemy",
+                                                "name" : "Joe",
+                                                "battleclass" : "Humanities",
+                                                "level" : 1,
+                                                "item" : {
+                                                    "class" : "Item",
+                                                    "id" : 1
+                                                }
+                                            },
+                                            {
+                                                "class" : "Enemy",
+                                                "name" : "Rachel",
+                                                "battleclass" : "Econ",
+                                                "level" : 1,
+                                                "item" : {
+                                                    "class" : "Item",
+                                                    "id" : 2
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "text" : "no",
+                            "interaction" : {
+                                "clear" :
+                            }
+                        }
+                    ]
+                }
+            }
         },
         {
             "class" : "MapNpc",

@@ -50,8 +50,8 @@ public class GameScreen implements Screen {
     private float runTime;
 
     public GameScreen() {
-//        AssetLoader.prefs.clear();
-//        AssetLoader.prefs.flush();
+        AssetLoader.prefs.clear();
+        AssetLoader.prefs.flush();
 
         Settings.load();
 
