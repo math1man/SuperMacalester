@@ -4,6 +4,8 @@ import com.arnopaja.supermac.helpers.Interaction;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.util.EnumMap;
+
 /**
  * Class used to render a dialogue box.
  *
@@ -14,21 +16,21 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class DialogueHandler {
 
+    private final EnumMap<DialogueStyle, DialogueWindow> windows = new EnumMap<DialogueStyle, DialogueWindow>(DialogueStyle.class);
     private boolean isDisplaying = false;
-    private DialogueWindow window;
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         if (isDisplaying) {
-            window.render(shapeRenderer, batch);
+            for (DialogueWindow window : windows.values()) {
+                window.render(shapeRenderer, batch);
+            }
         }
     }
 
     public void display(Dialogue dialogue) {
-        if (dialogue == null) {
-            clear();
-        } else {
+        if (dialogue != null) {
             isDisplaying = true;
-            window = new DialogueWindow(dialogue);
+            windows.put(dialogue.getStyle(), new DialogueWindow(dialogue));
         }
     }
 
@@ -42,20 +44,33 @@ public class DialogueHandler {
      */
     public Interaction onClick(float x, float y) {
         if (isDisplaying) {
-            return window.onClick(x, y);
+            for (DialogueWindow window : windows.values()) {
+                Interaction interaction = window.onClick(x, y);
+                if (interaction != null && interaction != Interaction.NULL) {
+                    return interaction;
+                }
+            }
         }
         return Interaction.NULL;
     }
 
     public void clear() {
         isDisplaying = false;
+        windows.clear();
+    }
+
+    public void clear(DialogueStyle style) {
+        windows.remove(style);
+        if (windows.isEmpty()) {
+            isDisplaying = false;
+        }
     }
 
     public boolean isDisplaying() {
         return isDisplaying;
     }
 
-    public DialogueWindow getWindow() {
-        return window;
+    public DialogueWindow getWindow(DialogueStyle style) {
+        return windows.get(style);
     }
 }

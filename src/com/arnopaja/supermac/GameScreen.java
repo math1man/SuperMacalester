@@ -7,6 +7,7 @@ import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -78,10 +79,8 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-//        dialogueHandler.setStyle(DialogueStyle.FULL_SCEEN);
         Dialogue prologue = SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class);
-        prologue.setStyle(DialogueStyle.FULL_SCEEN);
-        prologue.toInteraction().run(this);
+        new DialogueText(prologue.getRaw(), DialogueStyle.FULL_SCEEN).toInteraction().run(this);
     }
 
     public void changeMode(GameMode mode) {

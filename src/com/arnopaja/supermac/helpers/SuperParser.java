@@ -294,6 +294,10 @@ public abstract class SuperParser<T> {
         json.add(name, array);
     }
 
+    protected static void addNull(JsonObject json, String name) {
+        json.add(name, JsonNull.INSTANCE);
+    }
+
     protected static boolean has(JsonObject json, Class clazz) {
         return json.has(clazz.getSimpleName().toLowerCase());
     }
