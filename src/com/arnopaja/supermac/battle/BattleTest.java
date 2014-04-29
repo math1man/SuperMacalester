@@ -40,8 +40,9 @@ public class BattleTest extends Battle {
         Random r = new Random();
         //Set enemy actions
         BattleAction a;
-        for (Enemy e:enemyParty)
+        for (Enemy e:enemyParty.getActiveParty())
         {
+            System.out.println(e);
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
             System.out.println(a);
@@ -49,6 +50,7 @@ public class BattleTest extends Battle {
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty())
         {
+            System.out.println(h);
             a = BattleAction.attack(h,enemyParty.getRandom());
             addAction(a);
             System.out.println(a);

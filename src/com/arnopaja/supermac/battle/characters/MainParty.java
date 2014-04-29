@@ -42,11 +42,4 @@ public class MainParty extends Party<Hero> {
             return new MainParty(getList(object, "characters", Hero.class));
         }
     }
-
-    public List<Hero> getActiveParty()
-    {
-        ArrayList<Hero> h = new ArrayList<Hero>();
-        for(int i=0;i<4;i++) h.add(this.characters.get(i));
-        return h;
-    }
 }

@@ -4,6 +4,7 @@ import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -37,8 +38,9 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
     }
 
     public T getRandom() {
-        int i = random.nextInt(characters.size());
-        return characters.get(i);
+        List<T> charlist = getActiveParty();
+        int i = random.nextInt(charlist.size());
+        return charlist.get(i);
     }
 
     public BattleCharacter[] toArray() {
@@ -47,6 +49,18 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
 
     public int size() {
         return characters.size();
+    }
+
+    public List<T> getActiveParty()
+    {
+        ArrayList<T> h = new ArrayList<T>();
+        for(int i=0;i<4;i++){
+            T dumbass = characters.get(i);
+            if(!dumbass.isFainted()){
+                h.add(dumbass);
+            }
+        }
+        return h;
     }
 
     @Override
