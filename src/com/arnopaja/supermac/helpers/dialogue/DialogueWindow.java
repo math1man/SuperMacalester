@@ -23,12 +23,16 @@ public class DialogueWindow {
     private final Rectangle textSpace;
     private final Rectangle[][] sectors;
 
-    public DialogueWindow(Dialogue dialogue, DialogueStyle position) {
-        this(toArray(dialogue, position.getRows()), position);
+    public DialogueWindow(Dialogue dialogue) {
+        this(dialogue, dialogue.getStyle());
     }
 
-    public DialogueWindow(DialogueMember[][] dialogue, DialogueStyle position) {
-        this(dialogue, position.getX(), position.getY(), position.getWidth(), getHeight(position.getRows()));
+    public DialogueWindow(Dialogue dialogue, DialogueStyle style) {
+        this(toArray(dialogue, style.getRows()), style);
+    }
+
+    public DialogueWindow(DialogueMember[][] dialogue, DialogueStyle style) {
+        this(dialogue, style.getX(), style.getY(), style.getWidth(), getHeight(style.getRows()));
     }
 
     public DialogueWindow(DialogueMember[][] dialogue, float x, float y, float width, float height) {

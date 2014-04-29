@@ -1,18 +1,12 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.plot.QuestEntity;
-import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.world.objects.MapNpc;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,19 +28,10 @@ public class World implements Controller {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
         this.maps = maps;
-//        mainCharacter = new MainMapCharacter(new Location(getWorld(), 40, 35));
-//        initCharacters();
     }
 
     public World(World world) {
         this(world.maps);
-    }
-
-    private void initCharacters() {
-        Interaction betsy = SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
-        new MapNpc("Betsy", new Location(getWorld(), 33, 36), Direction.WEST, true, betsy);
-        Interaction jeff = SuperParser.parse("Jeff", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
-        new MapNpc("Jeff", new Location(getWorld(), 42, 39), Direction.SOUTH, true, jeff);
     }
 
     @Override

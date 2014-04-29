@@ -6,8 +6,8 @@ import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.*;
-import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
@@ -35,7 +35,7 @@ public class Battle implements Controller, InteractionBuilder {
     protected final Queue<BattleAction> actionQueue;
 
     protected boolean isReady = false;
-    protected DialogueHandler dialogueHandler;
+    protected GameScreen screen;
     protected MainParty mainParty;
 
     public Battle(EnemyParty enemyParty, String backgroundName) {
@@ -54,11 +54,11 @@ public class Battle implements Controller, InteractionBuilder {
         );
     }
 
-    public void ready(MainParty mainParty, DialogueHandler dialogueHandler) {
+    public void ready(MainParty mainParty, GameScreen screen) {
         if (!isReady) {
             isReady = true;
             this.mainParty = mainParty;
-            this.dialogueHandler = dialogueHandler;
+            this.screen = screen;
         }
     }
 
@@ -74,7 +74,7 @@ public class Battle implements Controller, InteractionBuilder {
                 if (action == null) {
                     setTurnActions();
                 } else {
-                    dialogueHandler.display(action.run(delta));
+                    action.run(delta).toInteraction().run(screen);
                 }
             }
         }
@@ -85,7 +85,7 @@ public class Battle implements Controller, InteractionBuilder {
             // TODO: make the enemies more intelligent?
             addAction(BattleAction.attack(enemy, mainParty.getRandom()));
         }
-        dialogueHandler.display(makeActions());
+        makeActions().toInteraction().run(screen);
     }
 
     public void addAction(BattleAction action) {
@@ -131,10 +131,12 @@ public class Battle implements Controller, InteractionBuilder {
     private DialogueOptions getOptions(Hero hero, Iterator<Hero> heroes, Interaction interaction) {
         DialogueOptions options = new DialogueOptions("What should " + hero + " do?",
                 DialogueOptions.BATTLE_OPTIONS,
+                DialogueStyle.BATTLE_CONSOLE,
                 selectAttack(hero, interaction),
                 selectDefend(hero, interaction),
                 selectSpell(hero, interaction),
-                selectItem(hero, interaction), selectFlee(hero, interaction));
+                selectItem(hero, interaction),
+                selectFlee(hero, interaction));
         if (heroes.hasNext()) {
             return getOptions(heroes.next(), heroes, options.toInteraction());
         } else {
@@ -143,8 +145,8 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectAttack(Hero hero, Interaction interaction) {
-        return new DialogueOptions("Who do you want to attack?",
-                enemyParty.toArray(), attacks(hero, interaction)).toInteraction();
+        return new DialogueOptions("Who do you want to attack?", enemyParty.toArray(),
+                attacks(hero, interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
     private Interaction selectDefend(Hero hero, Interaction interaction) {
@@ -153,22 +155,28 @@ public class Battle implements Controller, InteractionBuilder {
 
     private Interaction selectSpell(Hero hero, Interaction interaction) {
         List<Spell> spells = hero.getSpellsList();
-        Interaction[] spellInteractions = new Interaction[spells.size()];
+        int count = spells.size();
+        Spell[] spellArray = spells.toArray(new Spell[count]);
+        Interaction[] spellInteractions = new Interaction[count];
         for (int i=0; i<spells.size(); i++) {
-            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells.get(i) + " on?",
-                    enemyParty.toArray(), spells(hero, spells.get(i), interaction)).toInteraction();
+            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells.get(i) + " on?", enemyParty.toArray(),
+                    spells(hero, spells.get(i), interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
         }
-        return new DialogueOptions("What spell do you want to use?", spells, spellInteractions).toInteraction();
+        return new DialogueOptions("What spell do you want to use?", spellArray,
+                spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
     // TODO: can items be used on friends? On self?
     private Interaction selectItem(Hero hero, Interaction interaction) {
         List<Item> items = Inventory.getMain().getAll(Item.class);
+        int count = items.size();
+        Item[] itemArray = items.toArray(new Item[count]);
         Interaction[] itemInteractions = new Interaction[items.size()];
         for (int i=0; i<items.size(); i++) {
-            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items.get(i) + " on?",
-                    enemyParty.toArray(), items(hero, items.get(i), interaction)).toInteraction();
+            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items.get(i) + " on?", enemyParty.toArray(),
+                    items(hero, items.get(i), interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
         }
-        return new DialogueOptions("What item do you want to use?", items, itemInteractions).toInteraction();
+        return new DialogueOptions("What item do you want to use?", itemArray,
+                itemInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
     private Interaction selectFlee(Hero hero, Interaction interaction) {

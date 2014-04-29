@@ -22,9 +22,23 @@ public abstract class Dialogue implements InteractionBuilder {
         }
     };
 
+    private DialogueStyle style;
+
+    protected Dialogue(DialogueStyle style) {
+        this.style = style;
+    }
+
     public abstract String getText();
 
     public abstract String getRaw();
+
+    public DialogueStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(DialogueStyle style) {
+        this.style = style;
+    }
 
     @Override
     public Interaction toInteraction() {
@@ -48,7 +62,7 @@ public abstract class Dialogue implements InteractionBuilder {
                 if (has(object, Interaction.class)) {
                     interaction = getObject(object, Interaction.class);
                 }
-                return new DialogueText(dialogue, interaction);
+                return new DialogueText(dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
                 DialogueMember[] members = new DialogueMember[array.size() + 1];
@@ -61,7 +75,7 @@ public abstract class Dialogue implements InteractionBuilder {
                     }
                     members[i+1] = new DialogueMember(getString(member, "text"), interaction);
                 }
-                return new DialogueOptions(members);
+                return new DialogueOptions(members, DialogueStyle.WORLD);
             }
             return null;
         }

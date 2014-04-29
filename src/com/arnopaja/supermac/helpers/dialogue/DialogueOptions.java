@@ -15,32 +15,19 @@ public class DialogueOptions extends Dialogue {
     private final DialogueMember[] members;
     private final int count;
 
-    public DialogueOptions(String rawOptions) {
-        this(rawOptions.split("\n"));
-    }
-
-    public DialogueOptions(String[] lines) {
-        this(lines, new Interaction[0]);
-    }
-
-    public DialogueOptions(String rawOptions, Interaction... interactions) {
-        this(rawOptions.split("\n"), interactions);
-    }
-
-    public DialogueOptions(String[] lines, Interaction... interactions) {
-        this(lines[0], Arrays.copyOfRange(lines, 1, lines.length), interactions);
-    }
-
     /**
-     * Constructs a DialogueOptions with the specified header and options,
-     * with no interactive effects on selection. If options are not strings,
-     * the displayed text will call the toString method on the object.
+     * Constructs a DialogueOptions with the specified header, options, and
+     * interactions. The first option with cause the first interaction, etc.
+     * There must be as many interactions as options, or the interactions
+     * will be set to null. If options are not strings, the displayed text
+     * will call the toString method on the object.
      *
      * @param header the option header
      * @param options the list of options to select from
+     * @param interactions the list of interactions resulting from each option
      */
-    public <T> DialogueOptions(String header, T... options) {
-        this(header, options, new Interaction[0]);
+    public <T> DialogueOptions(String header, T[] options, DialogueStyle style, Interaction... interactions) {
+        this(encapsulate(header, options, interactions), style);
     }
 
     /**
@@ -54,16 +41,17 @@ public class DialogueOptions extends Dialogue {
      * @param options the list of options to select from
      * @param interactions the list of interactions resulting from each option
      */
-    public <T> DialogueOptions(String header, T[] options, Interaction... interactions) {
-        this(encapsulate(header, options, interactions));
+    public <T> DialogueOptions(String header, T[] options, Interaction[] interactions, DialogueStyle style) {
+        this(encapsulate(header, options, interactions), style);
     }
 
-    protected DialogueOptions(DialogueMember[] members) {
+    protected DialogueOptions(DialogueMember[] members, DialogueStyle style) {
+        super(style);
         this.members = members;
         count = members.length - 1;
     }
 
-    private static <T> DialogueMember[] encapsulate(String header, T[] options, Interaction... interactions) {
+    private static <T> DialogueMember[] encapsulate(String header, T[] options, Interaction[] interactions) {
         DialogueMember[] members = new DialogueMember[options.length + 1];
         members[0] = new DialogueMember(header);
         for (int i=0; i<options.length; i++) {

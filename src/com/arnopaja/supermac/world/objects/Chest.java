@@ -6,6 +6,7 @@ import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
@@ -85,7 +86,7 @@ public class Chest extends Container {
                 chest.open();
                 Dialogue dialogue;
                 if (chest.isEmpty()) {
-                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction());
+                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction(), DialogueStyle.WORLD);
                 } else {
                     // Items go into inventory from chest
                     List<GenericItem> items = chest.getContents().getAll();
@@ -104,7 +105,7 @@ public class Chest extends Container {
                     }
                     interactions[length - 1] = chest.closeInteraction();
 
-                    dialogue = new DialogueOptions("Take items?", objects, interactions);
+                    dialogue = new DialogueOptions("Take items?", objects, interactions, DialogueStyle.WORLD);
                 }
                 dialogue.toInteraction().run(screen);
             }

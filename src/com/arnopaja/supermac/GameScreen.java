@@ -7,7 +7,6 @@ import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -79,22 +78,21 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-        dialogueHandler.setStyle(DialogueStyle.FULL_SCEEN);
-        new DialogueText(SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class).getRaw(),
-                Dialogue.CLEAR_DIALOGUE.attach(DialogueStyle.WORLD)).toInteraction().run(this);
+//        dialogueHandler.setStyle(DialogueStyle.FULL_SCEEN);
+        Dialogue prologue = SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class);
+        prologue.setStyle(DialogueStyle.FULL_SCEEN);
+        prologue.toInteraction().run(this);
     }
 
     public void changeMode(GameMode mode) {
         this.mode = mode;
         switch (this.mode) {
             case WORLD:
-                dialogueHandler.setStyle(DialogueStyle.WORLD);
                 currentController = world;
                 currentRenderer = worldRenderer;
                 currentInputHandler = worldInputHandler;
                 break;
             case BATTLE:
-                dialogueHandler.setStyle(DialogueStyle.BATTLE_CONSOLE);
                 currentController = battle;
                 battleRenderer.setController(battle);
                 currentRenderer = battleRenderer;
@@ -229,7 +227,7 @@ public class GameScreen implements Screen {
 
     public void setBattle(Battle battle) {
         this.battle = battle;
-        this.battle.ready(world.getMainCharacter().getParty(), dialogueHandler);
+        this.battle.ready(world.getMainCharacter().getParty(), this);
     }
 
     public BattleRenderer getBattleRenderer() {
