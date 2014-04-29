@@ -3,6 +3,7 @@ package com.arnopaja.supermac.inventory;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -41,7 +42,7 @@ public class Spell {
         if (source.isOutOfMana()) {
             dialogue += "\n" + source + " is out of mana...";
         }
-        return new DialogueText(dialogue);
+        return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
     public int getId() {

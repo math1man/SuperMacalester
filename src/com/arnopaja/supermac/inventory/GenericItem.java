@@ -3,6 +3,7 @@ package com.arnopaja.supermac.inventory;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class GenericItem implements InteractionBuilder {
             @Override
             public void run(GameScreen screen) {
                 Inventory.getMain().store(item);
-                new DialogueText(item + " has been added to your inventory!").toInteraction().run(screen);
+                new DialogueText(item + " has been added to your inventory!", DialogueStyle.WORLD).toInteraction().run(screen);
             }
         };
     }

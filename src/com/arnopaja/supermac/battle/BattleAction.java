@@ -5,6 +5,7 @@ import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
@@ -54,7 +55,7 @@ public abstract class BattleAction implements InteractionBuilder {
                     dialogue += "\n" + getDestination() + " fell!";
                 }
                 System.out.println(dialogue);
-                return new DialogueText(dialogue);
+                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
         };
     }
@@ -83,7 +84,7 @@ public abstract class BattleAction implements InteractionBuilder {
             public Dialogue run(float delta) {
                 // TODO: code for defending
                 String dialogue = getSource() + " is defending!";
-                return new DialogueText(dialogue);
+                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
         };
     }
@@ -94,7 +95,7 @@ public abstract class BattleAction implements InteractionBuilder {
             public Dialogue run(float delta) {
                 // TODO: code for fleeing
                 String dialogue = getSource() + " flees!";
-                return new DialogueText(dialogue);
+                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
         };
     }

@@ -1,14 +1,12 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.world.grid.Grid;
 
 /**
 * @author Ari Weiland
 */
-public enum DialogueStyle implements InteractionBuilder {
+public enum DialogueStyle {
 
     WORLD(DialogueWindow.FRAME_GAP,
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
@@ -37,17 +35,6 @@ public enum DialogueStyle implements InteractionBuilder {
         this.y = y;
         this.width = width;
         this.rows = rows;
-    }
-
-    @Override
-    public Interaction toInteraction() {
-        final DialogueStyle style = this;
-        return new Interaction(style) {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getDialogueHandler().setStyle(style);
-            }
-        };
     }
 
     public float getX() {

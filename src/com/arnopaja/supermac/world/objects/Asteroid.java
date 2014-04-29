@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -18,7 +19,7 @@ public class Asteroid extends NonRenderedEntity {
 
     @Override
     public Interaction toInteraction() {
-        return new DialogueText("This asteriod seems to be pulsing with a strange energy").toInteraction();
+        return new DialogueText("This asteroid seems to be pulsing with a strange energy", DialogueStyle.WORLD).toInteraction();
     }
 
     public static class Parser extends SuperParser<Asteroid> {

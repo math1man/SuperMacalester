@@ -1,10 +1,10 @@
 package com.arnopaja.supermac.world;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.BaseInputHandler;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.GameScreen;
 import com.badlogic.gdx.Input.Keys;
 
 /**

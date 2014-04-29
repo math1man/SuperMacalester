@@ -4,6 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.google.gson.JsonElement;
@@ -43,7 +44,7 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
                 @Override
                 public void run(GameScreen screen) {
                     main.addToParty(hero);
-                    new DialogueText(hero.name + " has joined the party!").toInteraction().run(screen);
+                    new DialogueText(hero.name + " has joined the party!", DialogueStyle.WORLD).toInteraction().run(screen);
                 }
             };
         }
