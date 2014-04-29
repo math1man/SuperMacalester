@@ -1,14 +1,21 @@
 package com.arnopaja.supermac.battle.characters;
 
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Envy on 2/28/14.
+ * @author Nolan Varani
  */
 public class EnemyParty extends Party<Enemy> {
 
     public EnemyParty() {
-        super(new ArrayList<Enemy>());
+        this(new ArrayList<Enemy>());
+    }
+
+    public EnemyParty(List<Enemy> characters) {
+        super(characters);
     }
 
     public boolean containsBoss() {
@@ -20,8 +27,10 @@ public class EnemyParty extends Party<Enemy> {
         return false;
     }
 
-    @Override
-    public BattleCharacter getRandom() {
-        return(this.get(0));
+    public static class Parser extends Party.Parser<EnemyParty> {
+        @Override
+        protected EnemyParty construct(JsonObject object) {
+            return new EnemyParty(getList(object, "characters", Enemy.class));
+        }
     }
 }

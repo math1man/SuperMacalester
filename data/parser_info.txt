@@ -16,20 +16,20 @@ A sample location:
 "location" : {
     "grid" : "<world for world map, or building name and floor number>",
     "x" : <x coordinate>,
-    "y" : <y coordinate>,
-    "direction" : <north, east, south, or west>
+    "y" : <y coordinate>
 }
 
 A sample interaction:
 
 "interaction" : {
-    "dialogue" : { <a dialogue instance> }
-    "battle" : { <a battle instance> }
+    "dialogue" : { <a dialogue instance, initiates a dialogue> }
+    "options" : { <a dialogue options instance, initiates a dialogue> }
+    "battle" : { <a battle instance, initiates a battle> }
+    "item" : { <an item instance, adds the item to your inventory> }
+    "hero" : { <a hero instance, adds the hero to your party> }
 }
 
-An interaction may have either a dialogue or a battle, but not both.
-In order to add a battle to the end of a dialogue, create a dialogue
-with an interaction in it.
+An interaction either may have dialogue, options, or any number of the other interactions.
 
 A sample goal:
 
@@ -63,30 +63,24 @@ A sample dialogue:
 
 "dialogue" : {
     "text" : "<string of dialogue goes here>",
-    "interaction" : { <an interaction instance> },
-    "options" : {
-        "header" : "<option header goes here>",
-        "options" : [
-            "<first option>",
-            "<second option>",
-            <etc>
-        ],
-        "interactions" : [
-            { <first interaction> },
-            { <second interaction> },
-            <etc>
-        ]
-    }
+    "interaction" : { <an interaction instance (optional)> }
 }
 
-Dialogue may be specified in 4 ways:
-  - text string only
-  - text string plus interaction
-  - options only
-  - text string plus options
-Additionally, the dialogue options interactions are optional, though if present,
-they must match the amount of options given. Dialogue windows should be separated
-by <d>, as the newline "\n" character is usable in dialogue windows.
+A sample dialogue options:
+
+"options" : {
+    "header" : "<the prompt for the options>",
+    "options" : [
+        {
+            "text" : "<first option text>",
+            "interaction" : { <the interaction for the first option (optional)> }
+        },
+        <etc>
+    ]
+}
+
+Dialogue windows should be separated by <d>, as the newline "\n" character is
+usable in dialogue windows. Neither of these should be used in options header or text.
 
 A sample item:
 
@@ -95,12 +89,52 @@ A sample item:
     "id" : <unique identifier (int)>,
     "name" : "<the name of the item>",
     "value" : <the value of the item (int)>,
-    "modifier" : <the attack/defense modifier of weapons/armor (int)>,
+    "modifier" : <the attack/defense modifier of weapons/armor (float)>,
     "bitmask" : <... not for SpecialItems (int)>
+}
+
+A sample spell:
+
+"spell" : {
+    "id" : <unique identifier (int)>,
+    "name" : "<the name of the spell>",
+    "modifier" : <the damage modifier of the spell (float)>,
+    "mana" : <the mana cost of the spell (float)>
+}
+
+A sample hero:
+
+"hero" : {
+    "class" : "Hero",
+    "name" : "<the name of the hero>",
+    "battleclass" : "<the battle class of the hero>",
+    "level" : <the level of the hero (int)>
+}
+
+A sample enemy:
+
+"enemy" : {
+    "class" : "Enemy",
+    "name" : "<the name of the enemy>",
+    "battleclass" : "<the battle class of the enemy>",
+    "level" : <the level of the enemy (int)>,
+    "item" : { <the item the enemy has equipped (optional)> },
+    "boss" : <true if this enemy is a boss, default to false>
+}
+
+A sample party:
+
+"party" : {
+    "characters" : [
+        { <first party member> },
+        { <second party member> },
+        <etc>
+    ]
 }
 
 A sample battle:
 
-{
-    TODO: Parse battles
+"battle" : {
+    "enemy" : { <the enemy party> },
+    "background" : "<the name of the background>"
 }

@@ -32,6 +32,13 @@ public class Building extends GameMap {
     }
 
     @Override
+    public void clear() {
+        for (Grid floor : floors) {
+            floor.clear();
+        }
+    }
+
+    @Override
     public Grid getGrid(int floorNumber) {
         return floors[floorNumber - 1 + firstFloorIndex];
     }

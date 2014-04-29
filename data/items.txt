@@ -1,3 +1,26 @@
 {
+    "Fragrant Herb" : {
+        "class" : "Item",
+        "id" : 0,
+        "name" : "Fragrant Herb",
+        "value" : 20
+    },
+    "PBR" : {
+        "class" : "Item",
+        "id" : 1,
+        "name" : "PBR",
+        "value" : 2
+    },
+    "Energy Drink" : {
+        "class" : "Item",
+        "id" : 2,
+        "name" : "Energy Drink",
+        "value" : 3
+    },
 
+    "Bolivia Spurdo's ID card" : {
+        "class" : "SpecialItem",
+        "id" : 1000,
+        "name" : "Bolivia Spurdo's ID card"
+    }
 }

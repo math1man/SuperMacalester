@@ -12,7 +12,7 @@ import com.badlogic.gdx.Input.Keys;
  */
 public class WorldInputHandler extends BaseInputHandler {
 
-    public static final int SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2;
+    public static final float SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2f;
 
     private final MainMapCharacter character;
 
@@ -25,7 +25,7 @@ public class WorldInputHandler extends BaseInputHandler {
     @Override
     public boolean keyDown(int keycode) {
         if (screen.isRunning()) {
-            move(getTouchDirection(keycode));
+            move(getDirection(keycode));
         } else if (screen.isDialogue()) {
             dialogueInput(0, 0);
         } else {
@@ -36,7 +36,7 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean keyUp(int keycode) {
-        return stop(getTouchDirection(keycode));
+        return stop(getDirection(keycode));
     }
 
     @Override
@@ -46,10 +46,10 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
         if (screen.isRunning()) {
-            move(getTouchDirection(gameX, gameY));
+            move(getDirection(gameX, gameY));
         } else if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {
@@ -60,9 +60,9 @@ public class WorldInputHandler extends BaseInputHandler {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
-        return stop(getTouchDirection(gameX, gameY));
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
+        return stop(getDirection(gameX, gameY));
     }
 
     @Override
@@ -94,21 +94,21 @@ public class WorldInputHandler extends BaseInputHandler {
         return false;
     }
 
-    private Direction getTouchDirection(int gameX, int gameY) {
-        if (gameX < SIDE_BUTTON_WIDTH) {
-            return Direction.NORTH;
-        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
-            return Direction.SOUTH;
-        } else if (gameY < SIDE_BUTTON_WIDTH) {
+    private Direction getDirection(float gameX, float gameY) {
+        if (gameY < SIDE_BUTTON_WIDTH) {
             return Direction.EAST;
         } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
             return Direction.WEST;
+        } else if (gameX < SIDE_BUTTON_WIDTH) {
+            return Direction.NORTH;
+        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+            return Direction.SOUTH;
         } else {
             return null;
         }
     }
 
-    private Direction getTouchDirection(int keycode) {
+    private Direction getDirection(int keycode) {
         switch (keycode) {
             case Keys.UP:
                 return Direction.EAST;

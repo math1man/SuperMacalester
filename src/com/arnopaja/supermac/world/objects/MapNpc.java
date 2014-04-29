@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -12,13 +13,12 @@ import com.google.gson.JsonObject;
  */
 public class MapNpc extends MapCharacter {
 
-    public static final boolean DEFAULT_INTERACTABLE = false;
     public static final boolean DEFAULT_CAN_MOVE = true;
     public static final float SECONDS_BETWEEN_RANDOM_MOVES = 4;
 
     private final String name;
-    private Interaction interaction = Interaction.NULL;
-    private boolean canMove = true;
+    protected Interaction interaction;
+    private boolean canMove;
 
     public MapNpc(String name) {
         this(name, null);
@@ -29,16 +29,17 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(String name, Location location, Direction direction) {
-        this(name, location, direction, DEFAULT_INTERACTABLE);
+        this(name, location, direction, false, Interaction.NULL);
     }
 
-    public MapNpc(String name, Location location, Direction direction, boolean isInteractable) {
-        this(name, location, direction, isInteractable, DEFAULT_CAN_MOVE);
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, Interaction interaction) {
+        this(name, location, direction, isInteractable, interaction, DEFAULT_CAN_MOVE);
     }
 
-    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, boolean canMove) {
+    public MapNpc(String name, Location location, Direction direction, boolean isInteractable, Interaction interaction, boolean canMove) {
         super(location, direction, isInteractable, AssetLoader.getCharacter(name));
         this.name = name;
+        this.interaction = interaction;
         this.canMove = canMove;
     }
 
@@ -54,14 +55,6 @@ public class MapNpc extends MapCharacter {
         }
     }
 
-    public void setInteraction(Interaction interaction) {
-        this.interaction = interaction;
-    }
-
-    public void makeQuestNpc() {
-        isQuestEntity = true;
-    }
-
     public boolean canMove() {
         return canMove;
     }
@@ -70,12 +63,26 @@ public class MapNpc extends MapCharacter {
         this.canMove = canMove;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public Interaction toInteraction() {
         return interaction;
     }
 
-    public static class Parser extends Entity.Parser<MapNpc> {
+    @Override
+    public String toString() {
+        return "MapNpc{" +
+                "name='" + name + '\'' +
+                ", isInteractable=" + isInteractable() +
+                ", interaction=" + interaction +
+                ", canMove=" + canMove +
+                '}';
+    }
+
+    public static class Parser extends SuperParser<MapNpc> {
         @Override
         public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -91,27 +98,29 @@ public class MapNpc extends MapCharacter {
             if (has(object, Direction.class)) {
                 direction = getObject(object, Direction.class);
             }
-            boolean isInteractable = MapNpc.DEFAULT_INTERACTABLE;
+            boolean isInteractable = false;
             if (object.has("interactable")) {
                 isInteractable = getBoolean(object, "interactable");
+            }
+            Interaction interaction = Interaction.NULL;
+            if (has(object, Interaction.class)) {
+                interaction = getObject(object, Interaction.class);
             }
             boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
             if (object.has("canMove")) {
                 canMove = getBoolean(object, "canMove");
             }
-            MapNpc npc = new MapNpc(name, location, direction, isInteractable, canMove);
-            if (has(object, Interaction.class)) {
-                npc.setInteraction(getObject(object, Interaction.class));
-            }
-            return npc;
+            return new MapNpc(name, location, direction, isInteractable, interaction, canMove);
         }
 
         @Override
         public JsonElement toJson(MapNpc object) {
-            JsonObject json = toBaseJson(object);
-            addObject(json, object.getDirection(), Direction.class);
+            JsonObject json = new JsonObject();
             addString(json, "name", object.name);
+            addObject(json, object.getLocation(), Location.class);
+            addObject(json, object.getDirection(), Direction.class);
             addBoolean(json, "canMove", object.canMove);
+            addBoolean(json, "interactable", object.isInteractable());
             if (object.interaction != null) {
                 addObject(json, object.interaction, Interaction.class);
             }

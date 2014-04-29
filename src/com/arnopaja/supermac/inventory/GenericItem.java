@@ -3,9 +3,7 @@ package com.arnopaja.supermac.inventory;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +48,7 @@ public class GenericItem implements InteractionBuilder {
             @Override
             public void run(GameScreen screen) {
                 Inventory.getMain().store(item);
+                new DialogueText(item + " has been added to your inventory!").toInteraction().run(screen);
             }
         };
     }
@@ -103,46 +102,5 @@ public class GenericItem implements InteractionBuilder {
             return clazz.cast(item);
         }
         return null;
-    }
-
-    public static class Parser<T extends GenericItem> extends SuperParser<T> {
-
-        private static final Map<String, Parser> parsers = new HashMap<String, Parser>();
-
-        static {
-            parsers.put(Armor.class.getSimpleName(), new Armor.Parser());
-            parsers.put(Item.class.getSimpleName(), new Item.Parser());
-            parsers.put(SpecialItem.class.getSimpleName(), new SpecialItem.Parser());
-            parsers.put(Weapon.class.getSimpleName(), new Weapon.Parser());
-        }
-
-
-        @Override
-        public T fromJson(JsonElement element) {
-            JsonObject object = element.getAsJsonObject();
-            int id = object.getAsJsonPrimitive("id").getAsInt();
-            if (isCached(id)) {
-                return (T) getCached(id);
-            } else {
-                String className = getClass(object);
-                Parser<T> parser = parsers.get(className);
-                return parser.fromJson(element);
-            }
-        }
-
-        @Override
-        public JsonElement toJson(T object) {
-            Parser<T> parser = parsers.get(object.getClass().getSimpleName());
-            return parser.toJson(object);
-        }
-
-        protected JsonObject toBaseJson(T object) {
-            JsonObject json = new JsonObject();
-            addInt(json, "id", object.getId());
-            addString(json, "name", object.getName());
-            addInt(json, "value", object.getValue());
-            addClass(json, object.getClass());
-            return json;
-        }
     }
 }

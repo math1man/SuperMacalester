@@ -1,7 +1,10 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.battle.characters.Hero;
+import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -13,6 +16,7 @@ import com.google.gson.JsonObject;
 public class MainMapCharacter extends MapCharacter {
 
     private Direction movingDirection = null;
+    private final MainParty party;
 
     public MainMapCharacter(Location location) {
         this(location, Direction.WEST);
@@ -20,6 +24,7 @@ public class MainMapCharacter extends MapCharacter {
 
     public MainMapCharacter(Location location, Direction direction) {
         super(location, direction, true, AssetLoader.getCharacter("Tom"));
+        party = new MainParty();
     }
 
     @Override
@@ -48,6 +53,14 @@ public class MainMapCharacter extends MapCharacter {
         return movingDirection != null;
     }
 
+    public MainParty getParty() {
+        return party;
+    }
+
+    public void addToParty(Hero hero) {
+        party.addCharacter(hero);
+    }
+
     @Override
     public Interaction toInteraction() {
         Entity entity = getLocation().getAdjacent(getDirection()).getEntity();
@@ -61,7 +74,7 @@ public class MainMapCharacter extends MapCharacter {
         return Interaction.NULL;
     }
 
-    public static class Parser extends Entity.Parser<MainMapCharacter> {
+    public static class Parser extends SuperParser<MainMapCharacter> {
         @Override
         public MainMapCharacter fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -75,7 +88,8 @@ public class MainMapCharacter extends MapCharacter {
 
         @Override
         public JsonElement toJson(MainMapCharacter object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
             addObject(json, object.getDirection(), Direction.class);
             return json;
         }

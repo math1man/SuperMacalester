@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.InteractionBuilder;
 
 import java.util.Arrays;
 
@@ -9,101 +10,53 @@ import java.util.Arrays;
  */
 public class DialogueText extends Dialogue {
 
-    private final String[] dialogue;
-    private final boolean hasOptions;
-    private final DialogueOptions options;
-    private final boolean hasPostInteraction;
-    private final Interaction postInteraction;
-
-    private int position;
-    private String currentDialogue;
-    private boolean hasNext;
+    private final String rawDialogue;
+    private final DialogueMember member;
 
     public DialogueText(String rawDialogue) {
-        this(rawDialogue.split("<d>"));
+        this(rawDialogue, CLEAR_DIALOGUE);
     }
 
-    public DialogueText(String... dialogue) {
-        this(dialogue, null, null);
+    public DialogueText(String rawDialogue, InteractionBuilder builder) {
+        this(rawDialogue, builder, rawDialogue.split("<d>"));
     }
 
-    public DialogueText(String rawDialogue, Interaction postInteraction) {
-        this(postInteraction, rawDialogue.split("<d>"));
-    }
-
-    public DialogueText(Interaction postInteraction, String... dialogue) {
-        this(dialogue, null, postInteraction);
-    }
-
-    public DialogueText(String rawDialogue, DialogueOptions options) {
-        this(options, rawDialogue.split("<d>"));
-    }
-
-    public DialogueText(DialogueOptions options, String... dialogue) {
-        this(dialogue, options, null);
-    }
-
-    private DialogueText(String[] dialogue, DialogueOptions options, Interaction postInteraction) {
-        this.dialogue = dialogue;
-        this.hasOptions = (options != null);
-        this.options = options;
-        this.hasPostInteraction = (postInteraction != null);
-        this.postInteraction = postInteraction;
-        reset();
-    }
-
-    public void next() {
-        position++;
-        currentDialogue = dialogue[position];
-        hasNext = position + 1 < dialogue.length ;
-    }
-
-    public String[] getDialogue() {
-        return dialogue;
-    }
-
-    public boolean hasOptions() {
-        return hasOptions;
-    }
-
-    public DialogueOptions getOptions() {
-        return options;
-    }
-
-
-    public boolean hasPostInteraction() {
-        return hasPostInteraction;
-    }
-
-    public Interaction getPostInteraction() {
-        return postInteraction;
-    }
-
-    public String getCurrentDialogue() {
-        return currentDialogue.trim();
-    }
-
-    public boolean hasNext() {
-        return hasNext;
-    }
-
-    public void reset() {
-        position = 0;
-        currentDialogue = dialogue[0];
-        hasNext = dialogue.length > 1;
-    }
-
-    public String getRaw() {
-        StringBuilder sb = new StringBuilder();
-        for (String line : dialogue) {
-            sb.append(line);
-            sb.append("<d>");
+    public DialogueText(String rawDialogue, InteractionBuilder builder, String... text) {
+        this.rawDialogue = rawDialogue;
+        if (text.length > 1) {
+            member = new DialogueMember(text[0], new DialogueText(rawDialogue, builder,
+                    Arrays.copyOfRange(text, 1, text.length)).toInteraction());
+        } else if (builder == null) {
+            member = new DialogueMember(text[0], CLEAR_DIALOGUE);
+        } else {
+            member = new DialogueMember(text[0], builder.toInteraction());
         }
-        return sb.toString();
+    }
+
+    public DialogueMember getMember() {
+        return member;
+    }
+
+    @Override
+    public String getText() {
+        return member.getText();
+    }
+
+    @Override
+    public String getRaw() {
+        return rawDialogue;
+    }
+
+    public boolean hasInteraction() {
+        return member.hasInteraction();
+    }
+
+    public Interaction getInteraction() {
+        return member.getInteraction();
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(dialogue);
+        return getRaw();
     }
 }
