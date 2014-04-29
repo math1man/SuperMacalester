@@ -47,13 +47,12 @@ public abstract class BattleAction implements InteractionBuilder {
             public Dialogue run(float delta) {
                 float damage = (float) (getSource().getAttack() / getDestination().getDefense()
                         * (2 + Math.abs(random.nextGaussian())));
-                int damageDone = (int) getDestination().modifyHealth(-damage);
+                int damageDone = -(int) getDestination().modifyHealth(-damage);
                 String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
                         damageDone + " damage done.";
                 if(getDestination().isFainted()) {
                     dialogue += "\n" + getDestination() + " fell!";
                 }
-                System.out.println(dialogue);
                 return new DialogueText(dialogue);
             }
         };

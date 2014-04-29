@@ -25,10 +25,10 @@ public class BattleTest extends Battle {
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
-                    System.out.println("Setting turn actions");
+                    //System.out.println("Setting turn actions");
                     setTurnActions();
                 } else {
-                    System.out.println(action.run(delta).getText());
+                    action.run(delta);
                 }
             }
         }
@@ -42,18 +42,18 @@ public class BattleTest extends Battle {
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty())
         {
-            System.out.println(e);
+            //System.out.println(e);
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
-            System.out.println(a);
+            //System.out.println(a);
         }
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty())
         {
-            System.out.println(h);
+            //System.out.println(h);
             a = BattleAction.attack(h,enemyParty.getRandom());
             addAction(a);
-            System.out.println(a);
+            //System.out.println(a);
         }
     }
 
