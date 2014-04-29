@@ -69,7 +69,7 @@ public abstract class Dialogue implements InteractionBuilder {
                 members[0] = new DialogueMember(getString(object, "header"));
                 for (int i=0; i<array.size(); i++) {
                     JsonObject member = array.get(i).getAsJsonObject();
-                    Interaction interaction = Interaction.NULL;
+                    Interaction interaction = Dialogue.CLEAR_DIALOGUE;
                     if (has(member, Interaction.class)) {
                         interaction = getObject(member, Interaction.class);
                     }

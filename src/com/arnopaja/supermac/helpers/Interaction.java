@@ -218,17 +218,23 @@ public abstract class Interaction implements InteractionBuilder {
         }
 
         private static void addToJson(JsonObject json, Object param) {
-            if (param instanceof Dialogue) {
-                addObject(json, (Dialogue) param, Dialogue.class);
-            } else if (param instanceof Battle) {
-                addObject(json, (Battle) param, Battle.class);
-            } else if (param instanceof GenericItem) {
-                addObject(json, (GenericItem) param, GenericItem.class);
-            } else if (param instanceof Hero) {
-                addObject(json, (Hero) param, Hero.class);
-            } else if (param instanceof InteractionBuilder[]) {
-                for (InteractionBuilder builder : ((InteractionBuilder[]) param)) {
-                    addToJson(json, builder);
+            if (param != null) {
+                if (param == Dialogue.CLEAR_DIALOGUE) {
+                    addNull(json, "clear");
+                } else if (param instanceof Interaction) {
+                    addObject(json, (Interaction) param, Interaction.class);
+                } else if (param instanceof Dialogue) {
+                    addObject(json, (Dialogue) param, Dialogue.class);
+                } else if (param instanceof Battle) {
+                    addObject(json, (Battle) param, Battle.class);
+                } else if (param instanceof GenericItem) {
+                    addObject(json, (GenericItem) param, GenericItem.class);
+                } else if (param instanceof Hero) {
+                    addObject(json, (Hero) param, Hero.class);
+                } else if (param.getClass().isArray()) {
+                    for (InteractionBuilder builder : ((InteractionBuilder[]) param)) {
+                        addToJson(json, builder);
+                    }
                 }
             }
         }
