@@ -78,7 +78,7 @@
                         {
                             "text" : "no",
                             "interaction" : {
-                                "clear" :
+                                "clear" : null
                             }
                         }
                     ]
