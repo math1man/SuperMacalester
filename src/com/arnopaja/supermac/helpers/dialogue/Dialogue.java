@@ -24,6 +24,8 @@ public abstract class Dialogue implements InteractionBuilder {
 
     public abstract String getText();
 
+    public abstract String getRaw();
+
     @Override
     public Interaction toInteraction() {
         final Dialogue dialogue = this;
@@ -42,12 +44,11 @@ public abstract class Dialogue implements InteractionBuilder {
             JsonObject object = element.getAsJsonObject();
             if (object.has("text")) {
                 String dialogue = getString(object, "text");
+                Interaction interaction = CLEAR_DIALOGUE;
                 if (has(object, Interaction.class)) {
-                    Interaction interaction = getObject(object, Interaction.class);
-                    return new DialogueText(dialogue, interaction);
-                } else {
-                    return new DialogueText(dialogue);
+                    interaction = getObject(object, Interaction.class);
                 }
+                return new DialogueText(dialogue, interaction);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
                 DialogueMember[] members = new DialogueMember[array.size() + 1];

@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -14,7 +15,7 @@ public class SpecialItem extends GenericItem {
         super(id, name, 0);
     }
 
-    public static class Parser extends GenericItem.Parser<SpecialItem> {
+    public static class Parser extends SuperParser<SpecialItem> {
         @Override
         public SpecialItem fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -25,7 +26,10 @@ public class SpecialItem extends GenericItem {
 
         @Override
         public JsonElement toJson(SpecialItem object) {
-            return toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.getId());
+            addString(json, "name", object.getName());
+            return json;
         }
     }
 }

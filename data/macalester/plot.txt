@@ -1,4 +1,6 @@
 {
+    "class" : "Plot",
+    "origin" : [0,0],
     "dependencies" : [
 
     ],

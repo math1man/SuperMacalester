@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.world.grid.Grid;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,18 +20,18 @@ public class Tile implements Renderable {
 
     private final String tileKey; // primarily for debugging
     private final boolean isRendered;
-    private final TextureRegion sprite;
+    private final Animation animation;
     private final boolean isPathable;
 
-    private Tile(String tileKey, boolean isRendered, TextureRegion sprite, boolean isPathable) {
+    private Tile(String tileKey, boolean isRendered, Animation animation, boolean isPathable) {
         this.tileKey = tileKey;
         this.isRendered = isRendered;
-        this.sprite = sprite;
+        this.animation = animation;
         this.isPathable = isPathable;
     }
 
-    public static Tile createTile(String tileCode, TextureRegion sprite, boolean isPathable) {
-        return new Tile(tileCode, true, sprite, isPathable);
+    public static Tile createTile(String tileKey, Animation animation, boolean isPathable) {
+        return new Tile(tileKey, true, animation, isPathable);
     }
 
     public static Tile createTile(String tileCode) {
@@ -39,8 +40,8 @@ public class Tile implements Renderable {
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
-        TextureRegion sprite = TILE_MAP.get(tileKey);
-        if (sprite == null) {
+        Animation animation = TILE_MAP.get(tileKey);
+        if (animation == null) {
             return NULL;
         }
 
@@ -53,7 +54,7 @@ public class Tile implements Renderable {
                 }
             }
         }
-        return createTile(tileKey, sprite, isPathable);
+        return createTile(tileKey, animation, isPathable);
     }
 
     @Override
@@ -71,13 +72,13 @@ public class Tile implements Renderable {
         return isRendered;
     }
 
-    public TextureRegion getSprite() {
-        return sprite;
-    }
-
     @Override
     public TextureRegion getSprite(float runTime) {
-        return getSprite();
+        return animation.getKeyFrame(runTime);
+    }
+
+    public Animation getAnimation() {
+        return animation;
     }
 
     public boolean isPathable() {
@@ -85,8 +86,12 @@ public class Tile implements Renderable {
     }
 
     public boolean isLarge() {
-        return sprite != null && !(sprite.getRegionWidth() == Grid.GRID_PIXEL_DIMENSION
-                && sprite.getRegionHeight() == Grid.GRID_PIXEL_DIMENSION);
+        if (animation != null) {
+            TextureRegion sprite = animation.getKeyFrames()[0];
+            return sprite != null && !(sprite.getRegionWidth() == Grid.GRID_PIXEL_DIMENSION
+                    && sprite.getRegionHeight() == Grid.GRID_PIXEL_DIMENSION);
+        }
+        return false;
     }
 
     public String getTileKey() {
@@ -101,7 +106,7 @@ public class Tile implements Renderable {
         Tile tile = (Tile) o;
 
         return (!isRendered && !tile.isRendered) || (isPathable == tile.isPathable
-                && (sprite != null ? sprite.equals(tile.sprite) : tile.sprite == null));
+                && (animation != null ? animation.equals(tile.animation) : tile.animation == null));
 
 
     }
@@ -109,7 +114,7 @@ public class Tile implements Renderable {
     public static class TileMap {
         private static final Random random = new Random();
 
-        private final Map<String, TextureRegion> tileMap = new HashMap<String, TextureRegion>();
+        private final Map<String, Animation> tileMap = new HashMap<String, Animation>();
         private final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
 
         /**
@@ -121,17 +126,33 @@ public class Tile implements Renderable {
          */
         public void put(String code, TextureRegion... sprites) {
             int length = sprites.length;
+            Animation[] animations = new Animation[length];
+            for (int i=0; i<length; i++) {
+                animations[i] = new Animation(1, sprites[i]);
+            }
+            put(code, animations);
+        }
+
+        /**
+         * Notes:
+         * _ is a prefix for large tiles
+         * only letters should be used otherwise
+         * @param code
+         * @param animations
+         */
+        public void put(String code, Animation... animations) {
+            int length = animations.length;
             if (length > 1) {
                 randomTileMap.put(code, length);
                 for (int i=0; i<length; i++) {
-                    tileMap.put(code + i, sprites[i]);
+                    tileMap.put(code + i, animations[i]);
                 }
             } else {
-                tileMap.put(code, sprites[0]);
+                tileMap.put(code, animations[0]);
             }
         }
 
-        public TextureRegion get(String tileKey) {
+        public Animation get(String tileKey) {
             tileKey = tileKey.trim();
             if (randomTileMap.containsKey(tileKey)) {
                 tileKey += random.nextInt(randomTileMap.get(tileKey));

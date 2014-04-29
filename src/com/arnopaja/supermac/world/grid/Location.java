@@ -74,6 +74,14 @@ public class Location {
 
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "grid=" + grid +
+                ", position=" + position +
+                '}';
+    }
+
     public static class Parser extends SuperParser<Location> {
         @Override
         public Location fromJson(JsonElement element) {

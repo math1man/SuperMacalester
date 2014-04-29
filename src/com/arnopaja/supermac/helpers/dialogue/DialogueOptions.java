@@ -100,4 +100,15 @@ public class DialogueOptions extends Dialogue {
     public String getText() {
         return Arrays.toString(members);
     }
+
+    @Override
+    public String getRaw() {
+        StringBuilder sb = new StringBuilder();
+        for (DialogueMember member : members) {
+            sb.append(member.getText());
+            sb.append("\n");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
 }

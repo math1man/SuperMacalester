@@ -28,12 +28,13 @@ public class AssetLoader {
     public static TextureRegion grass0, grass1, grass2;
     public static TextureRegion bush, bushH, bushV, bushFlowersH, bushFlowersV;
     public static TextureRegion treeSmall, treeBig;
-    public static TextureRegion cobble, cobbleRed;
+    public static TextureRegion sidewalk, cobble, cobbleRed;
     public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
     public static TextureRegion asphaltGrassN, asphaltGrassE, asphaltGrassS, asphaltGrassW;
     public static TextureRegion asphaltGrassNE, asphaltGrassSE, asphaltGrassSW, asphaltGrassNW;
     public static TextureRegion asphaltCobbleN, asphaltCobbleE, asphaltCobbleS, asphaltCobbleW;
     public static TextureRegion asphaltCobbleNE, asphaltCobbleSE, asphaltCobbleSW, asphaltCobbleNW;
+    public static Animation asteroid;
 
     // Buildings
     public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
@@ -45,7 +46,6 @@ public class AssetLoader {
     public static TextureRegion chestRedOpen, chestRedClosed;
     public static TextureRegion chestGreenOpen, chestGreenClosed;
     public static TextureRegion garbageCan;
-    public static Animation asteroid;
 
     // Characters
     public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
@@ -87,6 +87,7 @@ public class AssetLoader {
         bushV = SpriteUtils.makeSprite(tilesTexture, 9, 0);
         bushFlowersV = SpriteUtils.makeSprite(tilesTexture, 10, 0);
 
+        sidewalk = SpriteUtils.makeSprite(tilesTexture, 11, 0);
         cobbleRed = SpriteUtils.makeSprite(tilesTexture, 0, 2);
         cobble = SpriteUtils.makeSprite(tilesTexture, 1, 2);
 
@@ -117,6 +118,8 @@ public class AssetLoader {
         weyerhauser = SpriteUtils.makeSprite(tilesTexture, 0, 5, 24, 12);
         campusCenter = SpriteUtils.makeSprite(tilesTexture, 24, 5, 20, 16);
         chapel = SpriteUtils.makeSprite(tilesTexture, 44, 5, 14, 16);
+        kirk = SpriteUtils.makeSprite(tilesTexture, 58, 29, 32, 16);
+        leonardCenter = SpriteUtils.makeSprite(tilesTexture, 58, 5, 52, 24);
         library = SpriteUtils.makeSprite(tilesTexture, 0, 17, 16, 12);
         oldMain = SpriteUtils.makeSprite(tilesTexture, 16, 17, 6, 12);
         olin = SpriteUtils.makeSprite(tilesTexture, 42, 21, 16, 32);
@@ -141,8 +144,9 @@ public class AssetLoader {
         //       Characters
         //--------------------------
 
-        loadCharacter("Steven", "entities/steven.png");
+        loadCharacter("Tom", "entities/steven.png");
         loadCharacter("Betsy", "entities/betsy.png");
+        loadCharacter("Jeff", "entities/beardguy.png");
 
         //--------------------------
         //          Other
@@ -215,7 +219,7 @@ public class AssetLoader {
         return battleBackgrounds.get(name);
     }
 
-    public static CharacterAsset getAsset(String name) {
+    public static CharacterAsset getCharacter(String name) {
         return characterAssetMap.get(name);
     }
 

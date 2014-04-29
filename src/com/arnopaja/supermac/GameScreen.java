@@ -4,8 +4,10 @@ import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -22,7 +24,7 @@ public class GameScreen implements Screen {
 
     // TODO: allow for variable aspect ratios (i.e. below)
     public static final float ASPECT_RATIO = 5.0f / 3; // Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-    public static final float GAME_HEIGHT = 480;
+    public static final float GAME_HEIGHT = 360;
     public static final float GAME_WIDTH = GAME_HEIGHT * ASPECT_RATIO;
 
     public static enum GameMode { WORLD, BATTLE, MENU }
@@ -48,6 +50,9 @@ public class GameScreen implements Screen {
     private float runTime;
 
     public GameScreen() {
+//        AssetLoader.prefs.clear();
+//        AssetLoader.prefs.flush();
+
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
@@ -57,8 +62,7 @@ public class GameScreen implements Screen {
         SuperParser.initItems(AssetLoader.itemHandle);
         SuperParser.initSpells(AssetLoader.spellHandle);
 
-        // TODO: do we want to load automatically?
-        plot = SuperParser.parse(AssetLoader.plotHandle, Plot.class);
+        load();
 
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
@@ -74,6 +78,10 @@ public class GameScreen implements Screen {
         changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
         runTime = 0;
+
+        dialogueHandler.setStyle(DialogueStyle.FULL_SCEEN);
+        new DialogueText(SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class).getRaw(),
+                Dialogue.CLEAR_DIALOGUE.attach(DialogueStyle.WORLD)).toInteraction().run(this);
     }
 
     public void changeMode(GameMode mode) {
@@ -151,7 +159,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-//        save(); // TODO: should we save here automatically?
+        save();
         Settings.save();
         worldRenderer.dispose();
         battleRenderer.dispose();

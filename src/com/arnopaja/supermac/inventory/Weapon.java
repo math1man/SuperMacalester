@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -18,7 +19,7 @@ public class Weapon extends GenericItem {
 
     public float getAttackModifier() { return attackModifier; }
 
-    public static class Parser extends GenericItem.Parser<Weapon> {
+    public static class Parser extends SuperParser<Weapon> {
         @Override
         public Weapon fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -31,7 +32,10 @@ public class Weapon extends GenericItem {
 
         @Override
         public JsonElement toJson(Weapon object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addInt(json, "id", object.getId());
+            addString(json, "name", object.getName());
+            addInt(json, "value", object.getValue());
             addFloat(json, "modifier", object.attackModifier);
             return json;
         }

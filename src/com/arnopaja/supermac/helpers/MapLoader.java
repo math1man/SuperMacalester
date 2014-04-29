@@ -79,6 +79,7 @@ public class MapLoader {
         Tile.TILE_MAP.put("bfv",  AssetLoader.bushFlowersV);
         Tile.TILE_MAP.put("ts",   AssetLoader.treeSmall);
         Tile.TILE_MAP.put("tb",   AssetLoader.treeBig);
+        Tile.TILE_MAP.put("s",    AssetLoader.sidewalk);
         Tile.TILE_MAP.put("c",    AssetLoader.cobble);
         Tile.TILE_MAP.put("cr",   AssetLoader.cobbleRed);
         Tile.TILE_MAP.put("a",    AssetLoader.asphalt);
@@ -100,6 +101,7 @@ public class MapLoader {
         Tile.TILE_MAP.put("acse", AssetLoader.asphaltCobbleSE);
         Tile.TILE_MAP.put("acsw", AssetLoader.asphaltCobbleSW);
         Tile.TILE_MAP.put("acnw", AssetLoader.asphaltCobbleNW);
+        Tile.TILE_MAP.put("ast",  AssetLoader.asteroid);
 
         Tile.TILE_MAP.put("_ar", AssetLoader.art);
         Tile.TILE_MAP.put("_ac", AssetLoader.artCommons);

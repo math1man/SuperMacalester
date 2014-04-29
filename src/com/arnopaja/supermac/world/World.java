@@ -2,8 +2,11 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.plot.QuestEntity;
+import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.Location;
@@ -24,15 +27,15 @@ import java.util.Map;
 public class World implements Controller {
 
     private final Map<String, GameMap> maps;
-    private final MainMapCharacter mainCharacter;
+    private MainMapCharacter mainCharacter;
 
     public World(Map<String, GameMap> maps) {
         if (!maps.containsKey("world") || maps.get("world") == null || !maps.get("world").isGrid()) {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
         this.maps = maps;
-        mainCharacter = new MainMapCharacter(new Location(getWorld(), 36, 36));
-        initCharacters();
+//        mainCharacter = new MainMapCharacter(new Location(getWorld(), 40, 35));
+//        initCharacters();
     }
 
     public World(World world) {
@@ -40,11 +43,10 @@ public class World implements Controller {
     }
 
     private void initCharacters() {
-        MapNpc character = new MapNpc();
-        character.setAsset(AssetLoader.getAsset("Betsy"));
-        character.setInteractable(true);
-        character.setInteraction(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction());
-        character.changeGrid(new Location(getWorld(), 40, 40));
+        Interaction betsy = SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
+        new MapNpc("Betsy", new Location(getWorld(), 33, 36), Direction.WEST, true, betsy);
+        Interaction jeff = SuperParser.parse("Jeff", AssetLoader.dialogueHandle, Dialogue.class).toInteraction();
+        new MapNpc("Jeff", new Location(getWorld(), 42, 39), Direction.SOUTH, true, jeff);
     }
 
     @Override
@@ -76,7 +78,11 @@ public class World implements Controller {
     }
 
     public Grid getGrid(String name, int floor) {
-        return maps.get(name).getGrid(floor);
+        GameMap map = maps.get(name);
+        if (map != null) {
+            return map.getGrid(floor);
+        }
+        return null;
     }
 
     public Grid getWorld() {
@@ -106,7 +112,10 @@ public class World implements Controller {
             for (JsonElement e : entities) {
                 // Just instantiating entities puts them in the world,
                 // so nothing else needs to be done here
-                SuperParser.fromJson(e, Entity.class);
+                Entity entity = SuperParser.fromJson(e, Entity.class);
+                if (entity instanceof MainMapCharacter) {
+                    world.mainCharacter = (MainMapCharacter) entity;
+                }
             }
             return world;
         }
@@ -117,7 +126,7 @@ public class World implements Controller {
             JsonArray array = new JsonArray();
             for (GameMap map : object.getMaps()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!entity.isQuestEntity() && !(entity instanceof MainMapCharacter)) {
+                    if (!(entity instanceof QuestEntity)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }

@@ -3,6 +3,7 @@ package com.arnopaja.supermac.world.objects;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -98,8 +99,8 @@ public class Chest extends Container {
                     interactions[length - 2] = Interaction.NULL;
                     for (int i=0; i<length-2; i++) {
                         Interaction temp = chest.takeItemInteraction(items.get(i));
-                        interactions[i] = Interaction.combine(temp, chest.toInteraction());
-                        interactions[length - 2] = Interaction.combine(interactions[length - 2], temp);
+                        interactions[i] = temp.attach(chest);
+                        interactions[length - 2] = interactions[length - 2].attach(temp);
                     }
                     interactions[length - 1] = chest.closeInteraction();
 
@@ -120,7 +121,7 @@ public class Chest extends Container {
         };
     }
 
-    public static class Parser extends Entity.Parser<Chest> {
+    public static class Parser extends SuperParser<Chest> {
         @Override
         public Chest fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -132,7 +133,8 @@ public class Chest extends Container {
 
         @Override
         public JsonElement toJson(Chest object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
             addString(json, "color", object.color.name());
             addObject(json, "contents", object.getContents(), Inventory.class);
             return json;

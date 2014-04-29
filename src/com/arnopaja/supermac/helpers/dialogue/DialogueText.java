@@ -10,24 +10,22 @@ import java.util.Arrays;
  */
 public class DialogueText extends Dialogue {
 
+    private final String rawDialogue;
     private final DialogueMember member;
 
     public DialogueText(String rawDialogue) {
         this(rawDialogue, CLEAR_DIALOGUE);
     }
 
-    public DialogueText(String... text) {
-        this(CLEAR_DIALOGUE, text);
-    }
-
     public DialogueText(String rawDialogue, InteractionBuilder builder) {
-        this(builder, rawDialogue.split("<d>"));
+        this(rawDialogue, builder, rawDialogue.split("<d>"));
     }
 
-    public DialogueText(InteractionBuilder builder, String... text) {
+    public DialogueText(String rawDialogue, InteractionBuilder builder, String... text) {
+        this.rawDialogue = rawDialogue;
         if (text.length > 1) {
-            member = new DialogueMember(text[0],
-                    new DialogueText(builder, Arrays.copyOfRange(text, 1, text.length)).toInteraction());
+            member = new DialogueMember(text[0], new DialogueText(rawDialogue, builder,
+                    Arrays.copyOfRange(text, 1, text.length)).toInteraction());
         } else if (builder == null) {
             member = new DialogueMember(text[0], CLEAR_DIALOGUE);
         } else {
@@ -44,6 +42,11 @@ public class DialogueText extends Dialogue {
         return member.getText();
     }
 
+    @Override
+    public String getRaw() {
+        return rawDialogue;
+    }
+
     public boolean hasInteraction() {
         return member.hasInteraction();
     }
@@ -54,6 +57,6 @@ public class DialogueText extends Dialogue {
 
     @Override
     public String toString() {
-        return getText();
+        return getRaw();
     }
 }

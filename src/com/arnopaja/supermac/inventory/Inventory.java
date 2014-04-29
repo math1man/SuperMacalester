@@ -229,7 +229,8 @@ public class Inventory {
     public static class Parser extends SuperParser<Inventory> {
         @Override
         public Inventory fromJson(JsonElement element) {
-            JsonArray array = element.getAsJsonArray();
+            JsonObject object = element.getAsJsonObject();
+            JsonArray array = object.getAsJsonArray("contents");
             Inventory inventory = new Inventory();
             for (JsonElement e : array) {
                 JsonObject o = e.getAsJsonObject();
@@ -240,13 +241,15 @@ public class Inventory {
 
         @Override
         public JsonElement toJson(Inventory object) {
-            JsonArray json = new JsonArray();
+            JsonObject json = new JsonObject();
+            JsonArray array = new JsonArray();
             for (Map.Entry<Integer, Integer> entry : object.idMap.entrySet()) {
                 JsonObject o = new JsonObject();
                 addInt(o, "id", entry.getKey());
                 addInt(o, "amount", entry.getValue());
-                json.add(o);
+                array.add(o);
             }
+            json.add("contents", array);
             return json;
         }
     }

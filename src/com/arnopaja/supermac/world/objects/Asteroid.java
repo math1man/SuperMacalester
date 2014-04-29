@@ -1,20 +1,19 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.world.grid.Location;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
  * @author Ari Weiland
  */
-public class Asteroid extends StaticEntity {
+public class Asteroid extends NonRenderedEntity {
 
     public Asteroid(Location location) {
-        super(true, location, true);
+        super(location);
     }
 
     @Override
@@ -22,12 +21,7 @@ public class Asteroid extends StaticEntity {
         return new DialogueText("This asteriod seems to be pulsing with a strange energy").toInteraction();
     }
 
-    @Override
-    public TextureRegion getSprite(float runTime) {
-        return AssetLoader.asteroid.getKeyFrame(runTime);
-    }
-
-    public static class Parser extends Entity.Parser<Asteroid> {
+    public static class Parser extends SuperParser<Asteroid> {
         @Override
         public Asteroid fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -37,7 +31,9 @@ public class Asteroid extends StaticEntity {
 
         @Override
         public JsonElement toJson(Asteroid object) {
-            return toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
+            return json;
         }
     }
 }
