@@ -34,13 +34,12 @@ public class Battle implements Controller, InteractionBuilder {
     protected final TextureRegion background;
     protected final Queue<BattleAction> actionQueue;
 
-    protected boolean isReady = true;
+    protected boolean isReady = false;
     protected DialogueHandler dialogueHandler;
     protected MainParty mainParty;
 
-    public Battle(EnemyParty enemyParty, MainParty mainParty, String backgroundName) {
+    public Battle(EnemyParty enemyParty, String backgroundName) {
         this.enemyParty = enemyParty;
-        this.mainParty = mainParty;
         this.isBossFight = enemyParty.containsBoss();
         this.backgroundName = backgroundName;
         this.background = AssetLoader.getBackground(backgroundName);
@@ -209,7 +208,7 @@ public class Battle implements Controller, InteractionBuilder {
             JsonObject object = element.getAsJsonObject();
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
             String background = getString(object, "background");
-            return new Battle(enemy,null, background);
+            return new Battle(enemy, background);
         }
 
         @Override

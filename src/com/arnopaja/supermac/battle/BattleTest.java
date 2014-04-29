@@ -1,19 +1,16 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.*;
-import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
-import com.arnopaja.supermac.inventory.Item;
 
-import java.util.Random;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 /**
  * @author Ari Weiland
  */
 public class BattleTest extends Battle {
 
-    public BattleTest(EnemyParty enemyParty, MainParty mainParty, String backgroundName) {
-        super(enemyParty, mainParty, backgroundName);
+    public BattleTest(EnemyParty enemyParty, String backgroundName) {
+        super(enemyParty, backgroundName);
     }
 
     @Override
@@ -21,14 +18,14 @@ public class BattleTest extends Battle {
         if (isReady()) {
             if (mainParty.isDefeated()) {
                 // run code for if the main party is defeated
-                System.out.println("NIGGA YOU DEAD");
+                System.out.println("You have lost");
             } else if (enemyParty.isDefeated()) {
                 // run code for if the enemy party is defeated'
-                System.out.println("NIGGA THEY DEAD");
+                System.out.println("You have won!");
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
-                    System.out.println("SETTIN YO ACTIONS N SHEEEEIT");
+                    System.out.println("Setting turn actions");
                     setTurnActions();
                 } else {
                     System.out.println(action.run(delta).getText());
@@ -85,15 +82,14 @@ public class BattleTest extends Battle {
         teamswag.addCharacter(smart3);
         teamswag.addCharacter(smart4);
 
-        BattleTest battle = new BattleTest(teamyolo, teamswag, "teamyolo");
-        //DialogueHandler handler = new DialogueHandler();
-        //battle.ready(teamswag, null);
+        BattleTest battle = new BattleTest(teamyolo, "teamyolo");
+        battle.ready(teamswag, null);
 
         while (true) {
             float delta = 1f / 60;
-            System.out.println("FUCKYODICKNIGGA");
             battle.update(delta);
             try {
+                // sleep for 1/60 of a second
                 Thread.sleep((int)(delta*1000));
             } catch(InterruptedException e) {
             }
