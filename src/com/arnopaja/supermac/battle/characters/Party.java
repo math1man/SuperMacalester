@@ -58,6 +58,14 @@ public abstract class Party<T extends BattleCharacter> {
         return h;
     }
 
+    public void clearDefend()
+    {
+        for(BattleCharacter bc:characters)
+        {
+            bc.setIsDefending(false);
+        }
+    }
+
     public static abstract class Parser<U extends Party> extends SuperParser<U> {
         @Override
         public U fromJson(JsonElement element) {

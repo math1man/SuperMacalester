@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 public class Hero extends BattleCharacter implements InteractionBuilder {
 
     private final MainMapCharacter main;
+    protected boolean hasFled = false;
 
     public Hero(String name, BattleClass battleClass) {
         this(name, battleClass, 1);
@@ -32,6 +33,15 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
     public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana, MainMapCharacter character) {
         super(name, battleClass, level, fractionHealth, fractionMana);
         main = character;
+    }
+
+    public void setHasFled(boolean a)
+    {
+        hasFled = a;
+    }
+    public boolean getHasFled()
+    {
+        return hasFled;
     }
 
     @Override

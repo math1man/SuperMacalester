@@ -2,6 +2,7 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
@@ -81,7 +82,9 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, null, ActionType.DEFEND, DEFEND_PRIORITY, null, null) {
             @Override
             public Dialogue run(float delta) {
-                // TODO: code for defending
+                //Sets defending to true, which will cause the character to return twice its normal defense value
+                //for the rest of the turn
+                getSource().setIsDefending(true);
                 String dialogue = getSource() + " is defending!";
                 return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
@@ -93,7 +96,18 @@ public abstract class BattleAction implements InteractionBuilder {
             @Override
             public Dialogue run(float delta) {
                 // TODO: code for fleeing
-                String dialogue = getSource() + " flees!";
+                String dialogue;
+                Hero h = (Hero) getSource();
+                if(random.nextInt(5) == 4)
+                {
+                    //Only heroes can flee #YOLOSWAG
+                    h.setHasFled(true);
+                    dialogue = h + " flees!";
+                }
+                else
+                {
+                    dialogue = h + " could not flee!";
+                }
                 return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
         };
