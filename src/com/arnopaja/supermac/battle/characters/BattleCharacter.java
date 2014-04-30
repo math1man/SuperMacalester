@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class BattleCharacter {
 
     protected final String name;
+    protected Boolean isDefending;
     protected final BattleClass battleClass;
     protected int level;
     protected float maxHealth, maxMana;
@@ -29,6 +30,7 @@ public abstract class BattleCharacter {
         setLevel(level);
         this.fractionHealth = (fractionHealth >= 0 && fractionHealth <= 1) ? fractionHealth : 1;
         this.fractionMana = (fractionMana >= 0 && fractionMana <= 1) ? fractionMana : 1;
+        this.isDefending = false;
     }
 
     public float modifyHealth(float amount) {
@@ -45,6 +47,8 @@ public abstract class BattleCharacter {
     public boolean isFainted() {
         return fractionHealth == 0;
     }
+
+
 
     public float modifyMana(float amount) {
         float before = fractionMana;
@@ -72,7 +76,10 @@ public abstract class BattleCharacter {
     public float getMaxHealth() { return maxHealth; }
     public float getMaxMana() { return maxMana; }
     public int getAttack() { return attack; }
-    public int getDefense() { return defense; }
+    public int getDefense() {
+        if(!isDefending) return defense;
+        else return defense * 2;
+    }
     public int getSpecial() { return special; }
     public int getSpeed() { return speed; }
     public float getHealth() { return fractionHealth * maxHealth; }
@@ -129,6 +136,16 @@ public abstract class BattleCharacter {
     public void setLevel(int level) {
         this.level = level;
         updateStats();
+    }
+
+    public void setIsDefending(Boolean a)
+    {
+        this.isDefending = a;
+    }
+
+    public Boolean getIsDefending()
+    {
+        return this.isDefending;
     }
 
     private void updateStats() {

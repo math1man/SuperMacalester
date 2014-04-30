@@ -63,6 +63,14 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
         return h;
     }
 
+    public void clearDefend()
+    {
+        for(BattleCharacter bc:characters)
+        {
+            bc.setIsDefending(false);
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
         return characters.iterator();

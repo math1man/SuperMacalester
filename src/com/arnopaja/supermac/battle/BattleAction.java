@@ -2,6 +2,7 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
@@ -23,7 +24,7 @@ public abstract class BattleAction implements InteractionBuilder {
 
     public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
 
-    private final BattleCharacter source;
+    public final BattleCharacter source;
     private final BattleCharacter destination;
     private final int priority;
     private final Spell spell;
@@ -80,7 +81,9 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, null, ActionType.DEFEND, DEFEND_PRIORITY, null, null) {
             @Override
             public Dialogue run(float delta) {
-                // TODO: code for defending
+                //Sets defending to true, which will cause the character to return twice its normal defense value
+                //for the rest of the turn
+                this.source.setIsDefending(true);
                 String dialogue = getSource() + " is defending!";
                 return new DialogueText(dialogue);
             }
@@ -92,7 +95,18 @@ public abstract class BattleAction implements InteractionBuilder {
             @Override
             public Dialogue run(float delta) {
                 // TODO: code for fleeing
-                String dialogue = getSource() + " flees!";
+                String dialogue;
+                if(random.nextInt(5) == 4)
+                {
+                    //Only heroes can flee #YOLOSWAG
+                    Hero h = (Hero) this.source;
+                    h.setHasFled(true);
+                    dialogue = getSource() + " flees!";
+                }
+                else
+                {
+                    dialogue = getSource() + " could not flee!";
+                }
                 return new DialogueText(dialogue);
             }
         };

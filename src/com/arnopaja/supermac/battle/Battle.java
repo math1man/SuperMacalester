@@ -33,7 +33,7 @@ public class Battle implements Controller, InteractionBuilder {
     protected final String backgroundName;
     protected final TextureRegion background;
     protected final Queue<BattleAction> actionQueue;
-
+    protected boolean isOver = false;
     protected boolean isReady = false;
     protected DialogueHandler dialogueHandler;
     protected MainParty mainParty;
@@ -48,7 +48,7 @@ public class Battle implements Controller, InteractionBuilder {
                 new Comparator<BattleAction>() {
                     public int compare(BattleAction a, BattleAction b) {
                         // compare n1 and n2
-                        return a.getPriority() - b.getPriority();
+                        return b.getPriority() - a.getPriority();
                     }
                 }
         );
@@ -95,6 +95,10 @@ public class Battle implements Controller, InteractionBuilder {
     public boolean isReady() {
         return isReady;
     }
+
+    public boolean isOver() {return isOver;}
+
+    public void setOver()   {isOver = true;}
 
     public MainParty getMainParty() {
         return mainParty;

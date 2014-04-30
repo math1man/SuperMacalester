@@ -25,10 +25,15 @@ public class BattleTest extends Battle {
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
-                    //System.out.println("Setting turn actions");
+                    System.out.println("\nSetting turn actions");
                     setTurnActions();
                 } else {
-                    action.run(delta);
+                    System.out.println(action.run(delta));
+                    if(mainParty.partyHasFled())
+                    {
+                        mainParty.clearHasFled();
+                        this.setOver();
+                    }
                 }
             }
         }
@@ -36,16 +41,18 @@ public class BattleTest extends Battle {
 
     @Override
     protected void setTurnActions() {
+        enemyParty.clearDefend();
+        mainParty.clearDefend();
         // implement me!
         Random r = new Random();
         //Set enemy actions
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty())
         {
-            //System.out.println(e);
+//            System.out.println(e);
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
-            //System.out.println(a);
+            System.out.println(a);
         }
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty())
@@ -53,7 +60,7 @@ public class BattleTest extends Battle {
             //System.out.println(h);
             a = BattleAction.attack(h,enemyParty.getRandom());
             addAction(a);
-            //System.out.println(a);
+            System.out.println(a);
         }
     }
 
@@ -61,7 +68,7 @@ public class BattleTest extends Battle {
         //create enemy party
         //create main party
         //Look into java timing.
-
+        System.out.println("IT'S HAPPENING");
         Enemy dumb = new Enemy("titface", BattleClass.COMP_SCI, 5, null, false);
         Enemy dumb2 = new Enemy("SwagFace", BattleClass.ECON, 6, null, false);
         Enemy dumb3 = new Enemy("highFace", BattleClass.HUMANITIES, 1, null, false);
@@ -90,11 +97,13 @@ public class BattleTest extends Battle {
         while (true) {
             float delta = 1f / 60;
             battle.update(delta);
+            if(battle.isOver()) break;
             try {
                 // sleep for 1/60 of a second
                 Thread.sleep((int)(delta*1000));
             } catch(InterruptedException e) {
             }
+            System.out.println("IT'S OVER");
             // some timing function based on delta
         }
     }
