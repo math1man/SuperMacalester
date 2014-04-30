@@ -24,6 +24,9 @@ public class Armor extends GenericItem {
         public Armor fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             int id = getInt(object, "id");
+            if (isCached(id, Armor.class)) {
+                return getCached(id, Armor.class);
+            }
             String name = getString(object, "name");
             int value = getInt(object, "value");
             float modifier = getFloat(object, "modifier");

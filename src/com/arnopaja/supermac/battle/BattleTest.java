@@ -19,9 +19,11 @@ public class BattleTest extends Battle {
             if (mainParty.isDefeated()) {
                 // run code for if the main party is defeated
                 System.out.println("You have lost");
+                setOver();
             } else if (enemyParty.isDefeated()) {
                 // run code for if the enemy party is defeated'
                 System.out.println("You have won!");
+                setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -94,17 +96,15 @@ public class BattleTest extends Battle {
         BattleTest battle = new BattleTest(teamyolo, "teamyolo");
         battle.ready(teamswag, null);
 
-        while (true) {
+        while (!battle.isOver()) {
             float delta = 1f / 60;
             battle.update(delta);
-            if(battle.isOver()) break;
             try {
                 // sleep for 1/60 of a second
                 Thread.sleep((int)(delta*1000));
             } catch(InterruptedException e) {
             }
-            System.out.println("IT'S OVER");
-            // some timing function based on delta
         }
+        System.out.println("IT'S OVER");
     }
 }

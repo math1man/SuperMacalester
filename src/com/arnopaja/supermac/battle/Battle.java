@@ -63,8 +63,10 @@ public class Battle implements Controller, InteractionBuilder {
         if (isReady()) {
             if (mainParty.isDefeated()) {
                 // run code for if the main party is defeated
+                setOver();
             } else if (enemyParty.isDefeated()) {
                 // run code for if the enemy party is defeated
+                setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {

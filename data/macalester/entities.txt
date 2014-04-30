@@ -78,6 +78,7 @@
                         {
                             "text" : "no",
                             "interaction" : {
+                                "class" : "Interaction",
                                 "clear" : null
                             }
                         }

@@ -30,6 +30,9 @@ public class Item extends GenericItem {
         public Item fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             int id = getInt(object, "id");
+            if (isCached(id, Item.class)) {
+                return getCached(id, Item.class);
+            }
             String name = getString(object, "name");
             int value = getInt(object, "value");
             return new Item(id, name, value);

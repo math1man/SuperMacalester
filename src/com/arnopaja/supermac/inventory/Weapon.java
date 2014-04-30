@@ -24,6 +24,9 @@ public class Weapon extends GenericItem {
         public Weapon fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             int id = getInt(object, "id");
+            if (isCached(id, Weapon.class)) {
+                return getCached(id, Weapon.class);
+            }
             String name = getString(object, "name");
             int value = getInt(object, "value");
             float modifier = getFloat(object, "modifier");

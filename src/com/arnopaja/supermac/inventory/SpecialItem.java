@@ -20,6 +20,9 @@ public class SpecialItem extends GenericItem {
         public SpecialItem fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             int id = getInt(object, "id");
+            if (isCached(id, SpecialItem.class)) {
+                return getCached(id, SpecialItem.class);
+            }
             String name = getString(object, "name");
             return new SpecialItem(id, name);
         }

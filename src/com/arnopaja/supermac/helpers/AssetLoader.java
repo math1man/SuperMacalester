@@ -62,7 +62,8 @@ public class AssetLoader {
     public static FileHandle entitiesHandle;
 
     // Font
-    public static BitmapFont font, shadow;
+    public static final float FONT_HEIGHT = GameScreen.GAME_HEIGHT / 15; // 15 lines fit on the screen exactly
+    private static BitmapFont font, shadow;
 
     // Preferences
     public static Preferences prefs;
@@ -163,7 +164,7 @@ public class AssetLoader {
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
-        scaleFont(GameScreen.GAME_HEIGHT * 0.2f / (AssetLoader.font.getLineHeight() * 3));
+        scaleFont(FONT_HEIGHT / AssetLoader.font.getLineHeight());
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }

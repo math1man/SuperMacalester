@@ -129,7 +129,7 @@ public class DialogueWindow {
     }
 
     public static float getHeight(int rows) {
-        return 2 * FRAME_GAP - rows * AssetLoader.font.getLineHeight();
+        return 2 * FRAME_GAP - rows * AssetLoader.FONT_HEIGHT;
     }
 
     @Override
