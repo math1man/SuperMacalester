@@ -1,10 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.battle.characters.EnemyParty;
-import com.arnopaja.supermac.battle.characters.Hero;
-import com.arnopaja.supermac.battle.characters.MainParty;
+import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
@@ -15,10 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -27,6 +21,8 @@ import java.util.concurrent.PriorityBlockingQueue;
  * @author Ari Weiland
  */
 public class Battle implements Controller, InteractionBuilder {
+
+    public static final List<String> BATTLE_OPTIONS = Arrays.asList("Attack", "Defend", "Spell", "Item", "Flee");
 
     protected final EnemyParty enemyParty;
     protected final boolean isBossFight;
@@ -81,7 +77,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     protected void setTurnActions() {
-        for (BattleCharacter enemy : enemyParty) {
+        for (BattleCharacter enemy : enemyParty.getActiveParty()) {
             // TODO: make the enemies more intelligent?
             addAction(BattleAction.attack(enemy, mainParty.getRandom()));
         }
@@ -124,19 +120,18 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private DialogueOptions makeActions() {
-        Iterator<Hero> heroes = mainParty.iterator();
+        Iterator<Hero> heroes = mainParty.getActiveParty().iterator();
         return getOptions(heroes.next(), heroes, Interaction.NULL);
     }
 
     private DialogueOptions getOptions(Hero hero, Iterator<Hero> heroes, Interaction interaction) {
-        DialogueOptions options = new DialogueOptions("What should " + hero + " do?",
-                DialogueOptions.BATTLE_OPTIONS,
-                DialogueStyle.BATTLE_CONSOLE,
-                selectAttack(hero, interaction),
-                selectDefend(hero, interaction),
-                selectSpell(hero, interaction),
-                selectItem(hero, interaction),
-                selectFlee(hero, interaction));
+        DialogueOptions options = new DialogueOptions("What should " + hero + " do?", BATTLE_OPTIONS,
+                Arrays.asList(selectAttack(hero, interaction),
+                        selectDefend(hero, interaction),
+                        selectSpell(hero, interaction),
+                        selectItem(hero, interaction),
+                        selectFlee(hero, interaction)),
+                DialogueStyle.BATTLE_CONSOLE);
         if (heroes.hasNext()) {
             return getOptions(heroes.next(), heroes, options.toInteraction());
         } else {
@@ -145,7 +140,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectAttack(Hero hero, Interaction interaction) {
-        return new DialogueOptions("Who do you want to attack?", enemyParty.toArray(),
+        return new DialogueOptions("Who do you want to attack?", enemyParty.getActiveParty(),
                 attacks(hero, interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
@@ -155,27 +150,27 @@ public class Battle implements Controller, InteractionBuilder {
 
     private Interaction selectSpell(Hero hero, Interaction interaction) {
         List<Spell> spells = hero.getSpellsList();
-        int count = spells.size();
-        Spell[] spellArray = spells.toArray(new Spell[count]);
-        Interaction[] spellInteractions = new Interaction[count];
-        for (int i=0; i<spells.size(); i++) {
-            spellInteractions[i] = new DialogueOptions("Who do you want to use " + spells.get(i) + " on?", enemyParty.toArray(),
-                    spells(hero, spells.get(i), interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
+        List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
+        for (Spell spell : spells) {
+            spellInteractions.add(new DialogueOptions("Who do you want to use " + spell + " on?",
+                    enemyParty.getActiveParty(),
+                    spells(hero, spell, interaction),
+                    DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("What spell do you want to use?", spellArray,
+        return new DialogueOptions("What spell do you want to use?", spells,
                 spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
     // TODO: can items be used on friends? On self?
     private Interaction selectItem(Hero hero, Interaction interaction) {
         List<Item> items = Inventory.getMain().getAll(Item.class);
-        int count = items.size();
-        Item[] itemArray = items.toArray(new Item[count]);
-        Interaction[] itemInteractions = new Interaction[items.size()];
-        for (int i=0; i<items.size(); i++) {
-            itemInteractions[i] = new DialogueOptions("Who do you want to use " + items.get(i) + " on?", enemyParty.toArray(),
-                    items(hero, items.get(i), interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
+        List<Interaction> itemInteractions = new ArrayList<Interaction>(items.size());
+        for (Item item : items) {
+            itemInteractions.add(new DialogueOptions("Who do you want to use " + item + " on?",
+                    enemyParty.getActiveParty(),
+                    items(hero, item, interaction),
+                    DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("What item do you want to use?", itemArray,
+        return new DialogueOptions("What item do you want to use?", items,
                 itemInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
@@ -183,29 +178,29 @@ public class Battle implements Controller, InteractionBuilder {
         return Interaction.combine(BattleAction.flee(hero), interaction);
     }
 
-    private Interaction[] attacks(Hero hero, Interaction interaction) {
-        int count = enemyParty.size();
-        Interaction[] attacks = new Interaction[count];
-        for (int i=0; i<count; i++) {
-            attacks[i] = Interaction.combine(BattleAction.attack(hero, enemyParty.get(i)), interaction);
+    private List<Interaction> attacks(Hero hero, Interaction interaction) {
+        List<Enemy> enemies = enemyParty.getActiveParty();
+        List<Interaction> attacks = new ArrayList<Interaction>(enemies.size());
+        for (Enemy enemy : enemies) {
+            attacks.add(Interaction.combine(BattleAction.attack(hero, enemy), interaction));
         }
         return attacks;
     }
 
-    private Interaction[] spells(Hero hero, Spell spell, Interaction interaction) {
-        int count = enemyParty.size();
-        Interaction[] spells = new Interaction[count];
-        for (int i=0; i<count; i++) {
-            spells[i] = Interaction.combine(BattleAction.spell(hero, spell, enemyParty.get(i)), interaction);
+    private List<Interaction> spells(Hero hero, Spell spell, Interaction interaction) {
+        List<Enemy> enemies = enemyParty.getActiveParty();
+        List<Interaction> spells = new ArrayList<Interaction>(enemies.size());
+        for (Enemy enemy : enemies) {
+            spells.add(Interaction.combine(BattleAction.spell(hero, spell, enemy), interaction));
         }
         return spells;
     }
 
-    private Interaction[] items(Hero hero, Item item, Interaction interaction) {
-        int count = enemyParty.size();
-        Interaction[] items = new Interaction[count];
-        for (int i=0; i<count; i++) {
-            items[i] = Interaction.combine(BattleAction.item(hero, item, enemyParty.get(i)), interaction);
+    private List<Interaction> items(Hero hero, Item item, Interaction interaction) {
+        List<Enemy> enemies = enemyParty.getActiveParty();
+        List<Interaction> items = new ArrayList<Interaction>(enemies.size());
+        for (Enemy enemy : enemies) {
+            items.add(Interaction.combine(BattleAction.item(hero, item, enemy), interaction));
         }
         return Interaction.convert(items);
     }

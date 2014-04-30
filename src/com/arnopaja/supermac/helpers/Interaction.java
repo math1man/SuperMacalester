@@ -8,7 +8,10 @@ import com.arnopaja.supermac.inventory.GenericItem;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class dictates how an interaction proceeds via its run method.
@@ -81,42 +84,40 @@ public abstract class Interaction implements InteractionBuilder {
     }
 
     //-----------------------------
-    //  Interaction Array Methods
+    //  Interaction List Methods
     //-----------------------------
 
     /**
-     * Returns an array of null interactions of the given size
+     * Returns a list of null interactions of the given size
      * @return
      * @param size
      */
-    public static Interaction[] getNulls(int size) {
+    public static List<Interaction> getNulls(int size) {
         return convert(NULL, size);
     }
 
     /**
-     * Converts a set of ToInteractions into an array of interactions,
-     * as per the ToInteraction.toInteraction method.
+     * Converts a set of InteractionBuilders into a list of interactions,
+     * as per the InteractionBuilder.toInteraction method.
      * @param builders
      * @return
      */
-    public static Interaction[] convert(InteractionBuilder... builders) {
-        Interaction[] interactions = new Interaction[builders.length];
-        for (int i=0; i<builders.length; i++) {
-            interactions[i] = builders[i].toInteraction();
+    public static List<Interaction> convert(List<? extends InteractionBuilder> builders) {
+        List<Interaction> interactions = new ArrayList<Interaction>(builders.size());
+        for (InteractionBuilder builder : builders) {
+            interactions.add(builder.toInteraction());
         }
         return interactions;
     }
 
     /**
-     * Fills an array of interactions of the given size with the
+     * Fills a list of interactions of the given size with the
      * specified builder.toInteraction()
      * @param builder
      * @return
      */
-    public static Interaction[] convert(InteractionBuilder builder, int size) {
-        InteractionBuilder[] builders = new InteractionBuilder[size];
-        Arrays.fill(builders, builder);
-        return convert(builders);
+    public static List<Interaction> convert(InteractionBuilder builder, int size) {
+        return Collections.nCopies(size, builder.toInteraction());
     }
 
     @Override

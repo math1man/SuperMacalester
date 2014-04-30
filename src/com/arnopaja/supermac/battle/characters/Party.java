@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -13,7 +12,7 @@ import java.util.Random;
  * TODO should this maybe implement a Collection?
  * Created by Nolan on 2/24/14.
  */
-public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
+public abstract class Party<T extends BattleCharacter> {
 
     protected static final Random random = new Random();
 
@@ -43,10 +42,6 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
         return charlist.get(i);
     }
 
-    public BattleCharacter[] toArray() {
-        return characters.toArray(new BattleCharacter[size()]);
-    }
-
     public int size() {
         return characters.size();
     }
@@ -61,11 +56,6 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
             }
         }
         return h;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return characters.iterator();
     }
 
     public static abstract class Parser<U extends Party> extends SuperParser<U> {

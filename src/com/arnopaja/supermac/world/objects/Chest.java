@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,21 +90,19 @@ public class Chest extends Container {
                 } else {
                     // Items go into inventory from chest
                     List<GenericItem> items = chest.getContents().getAll();
-                    int length = items.size() + 2;
+                    List<Object> objects = new ArrayList<Object>(items);
+                    objects.add("All");
+                    objects.add("Close");
 
-                    Object[] objects = Arrays.copyOf(items.toArray(), length);
-                    objects[length - 2] = "All";
-                    objects[length - 1] = "Close";
-
-                    Interaction[] interactions = new Interaction[length];
-                    interactions[length - 2] = Interaction.NULL;
-                    for (int i=0; i<length-2; i++) {
-                        Interaction temp = chest.takeItemInteraction(items.get(i));
-                        interactions[i] = temp.attach(chest);
-                        interactions[length - 2] = interactions[length - 2].attach(temp);
+                    List<Interaction> interactions = new ArrayList<Interaction>(objects.size());
+                    Interaction all = NULL;
+                    for (GenericItem item : items) {
+                        Interaction temp = chest.takeItemInteraction(item);
+                        interactions.add(temp.attach(chest));
+                        all.attach(temp);
                     }
-                    interactions[length - 1] = chest.closeInteraction();
-
+                    interactions.add(all);
+                    interactions.add(chest.closeInteraction());
                     dialogue = new DialogueOptions("Take items?", objects, interactions, DialogueStyle.WORLD);
                 }
                 dialogue.toInteraction().run(screen);
