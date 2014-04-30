@@ -4,6 +4,7 @@ import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +22,7 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
     protected final List<T> characters;
 
     protected Party(List<T> characters) {
-        this.characters = characters;
+        this.characters = new ArrayList<T>(characters);
     }
     //Characters will be added to party in different methods, as defined by their non-abstract subclasses
 

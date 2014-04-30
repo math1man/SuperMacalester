@@ -1,15 +1,11 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.world.World;
-import com.arnopaja.supermac.world.grid.Building;
-import com.arnopaja.supermac.world.grid.GameMap;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.files.FileHandle;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * TODO: add non-quest entities to the world
@@ -17,40 +13,15 @@ import java.util.regex.Pattern;
  */
 public class MapLoader {
 
-    public static World generateWorld(FileHandle folder) {
+    public static Map<String, Grid> generateGrids(FileHandle folder) {
         FileHandle[] handles = folder.list("txt");
-        Map<String, GameMap> maps = new HashMap<String, GameMap>();
+        Map<String, Grid> maps = new HashMap<String, Grid>();
         for (FileHandle handle : handles) {
-            String name = handle.nameWithoutExtension();
+            String name = handle.nameWithoutExtension().toLowerCase().replaceAll("[\\W_]", "");
             String data = handle.readString();
-            maps.put(name, generateMap(name, data));
+            maps.put(name, parseGrid(name, data));
         }
-        return new World(maps);
-    }
-
-    public static GameMap generateMap(String name, String raw) {
-        String[] grids = raw.split("<floor>");
-        if (grids.length == 0) {
-            return null;
-        } else if (grids.length == 1){
-            return parseGrid(name, grids[0]);
-        } else {
-            int firstFloorIndex = 0;
-            int floorCount = grids.length;
-            Grid[] floors = new Grid[floorCount];
-            for (int i=0; i<floorCount; i++) {
-                if (i == 0) {
-                    String[] temp = grids[i].split("\n", 2);
-                    String first = temp[0].trim();
-                    if (Pattern.matches("first floor:\\d*", first)) {
-                        grids[i] = temp[1];
-                        firstFloorIndex = Integer.parseInt(first.replaceAll("\\D*", ""));
-                    }
-                }
-                floors[i] = parseGrid(name + " " + (i + 1 - firstFloorIndex), grids[i]);
-            }
-            return new Building(name, floors, firstFloorIndex);
-        }
+        return maps;
     }
 
     private static Grid parseGrid(String name, String raw) {

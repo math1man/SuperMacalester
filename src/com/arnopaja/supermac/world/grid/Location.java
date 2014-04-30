@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -87,7 +88,7 @@ public class Location {
         public Location fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             String gridName = getString(object, "grid");
-            Grid grid = world.getGrid(gridName);
+            Grid grid = AssetLoader.grids.get(gridName);
             int x = getInt(object, "x");
             int y = getInt(object, "y");
             return new Location(grid, x, y);

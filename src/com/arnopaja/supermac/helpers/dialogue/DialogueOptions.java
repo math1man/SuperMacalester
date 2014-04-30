@@ -27,7 +27,7 @@ public class DialogueOptions extends Dialogue {
      * @param interactions the list of interactions resulting from each option
      */
     public <T> DialogueOptions(String header, T[] options, DialogueStyle style, Interaction... interactions) {
-        this(encapsulate(header, options, interactions), style);
+        this("", header, options, interactions, style);
     }
 
     /**
@@ -42,11 +42,26 @@ public class DialogueOptions extends Dialogue {
      * @param interactions the list of interactions resulting from each option
      */
     public <T> DialogueOptions(String header, T[] options, Interaction[] interactions, DialogueStyle style) {
-        this(encapsulate(header, options, interactions), style);
+        this("", header, options, interactions, style);
     }
 
-    protected DialogueOptions(DialogueMember[] members, DialogueStyle style) {
-        super(style);
+    /**
+     * Constructs a DialogueOptions with the specified header, options, and
+     * interactions. The first option with cause the first interaction, etc.
+     * There must be as many interactions as options, or the interactions
+     * will be set to null. If options are not strings, the displayed text
+     * will call the toString method on the object.
+     *
+     * @param header the option header
+     * @param options the list of options to select from
+     * @param interactions the list of interactions resulting from each option
+     */
+    public <T> DialogueOptions(String name, String header, T[] options, Interaction[] interactions, DialogueStyle style) {
+        this(name, encapsulate(header, options, interactions), style);
+    }
+
+    protected DialogueOptions(String name, DialogueMember[] members, DialogueStyle style) {
+        super(name, style);
         this.members = members;
         count = members.length - 1;
     }
