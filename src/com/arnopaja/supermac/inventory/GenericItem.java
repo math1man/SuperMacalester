@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author Ari Weiland
  */
-public class GenericItem implements InteractionBuilder {
+public abstract class GenericItem implements InteractionBuilder {
 
     private final int id;
     private final String name;
@@ -103,5 +103,9 @@ public class GenericItem implements InteractionBuilder {
             return clazz.cast(item);
         }
         return null;
+    }
+
+    protected static void cache(GenericItem item) {
+        cache.put(item.getId(), item);
     }
 }

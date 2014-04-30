@@ -35,7 +35,9 @@ public class Item extends GenericItem {
             }
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            return new Item(id, name, value);
+            Item item = new Item(id, name, value);
+            cache(item);
+            return item;
         }
 
         @Override

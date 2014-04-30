@@ -24,7 +24,9 @@ public class SpecialItem extends GenericItem {
                 return getCached(id, SpecialItem.class);
             }
             String name = getString(object, "name");
-            return new SpecialItem(id, name);
+            SpecialItem special = new SpecialItem(id, name);
+            cache(special);
+            return special;
         }
 
         @Override

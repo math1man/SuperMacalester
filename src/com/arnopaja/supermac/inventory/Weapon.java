@@ -30,7 +30,9 @@ public class Weapon extends GenericItem {
             String name = getString(object, "name");
             int value = getInt(object, "value");
             float modifier = getFloat(object, "modifier");
-            return new Weapon(id, name, value, modifier);
+            Weapon weapon = new Weapon(id, name, value, modifier);
+            cache(weapon);
+            return weapon;
         }
 
         @Override

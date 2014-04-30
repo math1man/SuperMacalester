@@ -30,7 +30,9 @@ public class Armor extends GenericItem {
             String name = getString(object, "name");
             int value = getInt(object, "value");
             float modifier = getFloat(object, "modifier");
-            return new Armor(id, name, value, modifier);
+            Armor armor = new Armor(id, name, value, modifier);
+            cache(armor);
+            return armor;
         }
 
         @Override
