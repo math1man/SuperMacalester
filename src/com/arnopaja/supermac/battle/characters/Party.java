@@ -32,6 +32,11 @@ public abstract class Party<T extends BattleCharacter> {
         return true;
     }
 
+    public int getIndex(BattleCharacter b)
+    {
+        return this.characters.indexOf(b);
+    }
+
     public T get(int index) {
         return characters.get(index);
     }

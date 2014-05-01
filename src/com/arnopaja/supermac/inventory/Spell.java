@@ -55,7 +55,7 @@ public class Spell {
             damage = (int) getDamageModifier() * source.getSpecial();
             destination.modifyHealth(damage);
             dialogue = source + " casts " + this + "!\n" +
-                    damage + " health restored.";
+                    damage + " health restored to " + destination.getName() + "." ;
             source.modifyMana(-manaCost);
             dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {

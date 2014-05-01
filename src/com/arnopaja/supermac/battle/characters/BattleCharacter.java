@@ -81,6 +81,10 @@ public abstract class BattleCharacter {
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }
+    public int getSpellIndex(Spell s)
+    {
+        return spellsList.indexOf(s);
+    }
 
     public Spell getSpell(int index) {
         return spellsList.get(index);
