@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.*;
+import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
 
 import java.util.ArrayList;
@@ -51,7 +52,9 @@ public class BattleTest extends Battle {
                      */
                     //TODO: Items, item types.
                     if(action.getSource().isFainted()) return;
-                    if(action.getDestination() != null && action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && (action.getType() != BattleAction.ActionType.SPELL && action.getSpell().isBlack())) return;
+                    if(action.getDestination() != null && action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && action.getType() != BattleAction.ActionType.SPELL) return;
+                    if(action.getType() == BattleAction.ActionType.SPELL && action.getSpell().isBlack()) return;
+                    if(action.getType() == BattleAction.ActionType.ITEM && action.getItem().getType() != Item.ItemType.HEAL) return;
                     System.out.println(action.run(delta));
                 }
             }
