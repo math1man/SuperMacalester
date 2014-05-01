@@ -50,7 +50,8 @@ public class BattleTest extends Battle {
                     (non-resurrection items/spells are to be consumed as normal, but without effect)
                      */
                     //TODO: Items, item types.
-                    if(action.getSource().isFainted() || (action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && (action.getType() != BattleAction.ActionType.SPELL && action.getSpell().isBlack()))) return;
+                    if(action.getSource().isFainted()) return;
+                    if(action.getDestination() != null && action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && (action.getType() != BattleAction.ActionType.SPELL && action.getSpell().isBlack())) return;
                     System.out.println(action.run(delta));
                 }
             }
