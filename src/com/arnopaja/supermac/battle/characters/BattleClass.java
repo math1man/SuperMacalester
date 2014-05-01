@@ -3,11 +3,11 @@ package com.arnopaja.supermac.battle.characters;
 /**
  * @author Nolan Varani
  */
-public enum BattleClass {
-    COMP_SCI(SpecialType.BLACK, 30, 10, 5, 10, 25, 15),
-    ECON(SpecialType.WHITE, 40, 5, 20, 15, 10, 5),
-    NAT_SCI(SpecialType.RED, 35, 5, 10, 10, 15, 10),
-    HUMANITIES(SpecialType.NONE, 30, 0, 20, 10, 5, 20);
+public enum BattleClass {     // hp  m   a   d   s   speed
+    COMP_SCI(SpecialType.BLACK,  30, 10, 5,  10, 25, 15),
+    ECON(SpecialType.WHITE,      40, 5,  20, 15, 10, 5),
+    NAT_SCI(SpecialType.RED,     35, 5,  10, 10, 15, 10),
+    HUMANITIES(SpecialType.NONE, 30, 0,  20, 10, 5,  20);
 
     public static enum SpecialType { BLACK, WHITE, RED, NONE }
 

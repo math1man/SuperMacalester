@@ -71,10 +71,10 @@ public class BattleTest extends Battle {
         //create main party
         //Look into java timing.
         System.out.println("IT'S HAPPENING");
-        Enemy dumb = new Enemy("titface", BattleClass.COMP_SCI, 5, null, false);
-        Enemy dumb2 = new Enemy("SwagFace", BattleClass.ECON, 6, null, false);
-        Enemy dumb3 = new Enemy("highFace", BattleClass.HUMANITIES, 1, null, false);
-        Enemy dumb4 = new Enemy("DrunkFace", BattleClass.NAT_SCI, 1, null, false);
+        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, null, false);
+        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, null, false);
+        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, null, false);
+        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, null, false);
         ArrayList<Enemy> enemlist = new ArrayList<Enemy>();
         enemlist.add(dumb);
         enemlist.add(dumb2);
@@ -82,11 +82,10 @@ public class BattleTest extends Battle {
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
 
-        Hero smart = new Hero("WonderWoman", BattleClass.ECON, 5);
-        Hero smart2 = new Hero("Superman", BattleClass.NAT_SCI, 6);
-        Hero smart3 = new Hero("Jesus", BattleClass.NAT_SCI, 5);
-        Hero smart4 = new Hero("Swagtastic", BattleClass.COMP_SCI, 4);
-        ArrayList<Hero> herolist = new ArrayList<Hero>();
+        Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
+        Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
+        Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
+        Hero smart4 = new Hero("Hero Comp Sci", BattleClass.COMP_SCI, 5);
         MainParty teamswag = new MainParty();
         teamswag.addCharacter(smart);
         teamswag.addCharacter(smart2);
