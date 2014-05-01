@@ -52,9 +52,13 @@ public class BattleTest extends Battle {
                      */
                     //TODO: Items, item types.
                     if(action.getSource().isFainted()) return;
-                    if(action.getDestination() != null && action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && action.getType() != BattleAction.ActionType.SPELL) return;
-                    if(action.getType() == BattleAction.ActionType.SPELL && action.getSpell().isBlack()) return;
-                    if(action.getType() == BattleAction.ActionType.ITEM && action.getItem().getType() != Item.ItemType.HEAL) return;
+                    if(action.getDestination() != null && action.getDestination().isFainted())
+                    {
+                        //Messy, but readable.
+                        if(action.getType() != BattleAction.ActionType.SPELL && action.getType() != BattleAction.ActionType.ITEM) return;
+                        if(action.getType() == BattleAction.ActionType.SPELL && action.getSpell().isBlack()) return;
+                        if(action.getType() == BattleAction.ActionType.ITEM && action.getItem().getType() != Item.ItemType.HEAL) return;
+                    }
                     System.out.println(action.run(delta));
                 }
             }
