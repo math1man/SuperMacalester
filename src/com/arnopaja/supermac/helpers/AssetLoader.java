@@ -1,7 +1,11 @@
 package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.inventory.GenericItem;
+import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.world.grid.Direction;
+import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
@@ -60,6 +64,10 @@ public class AssetLoader {
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
     public static FileHandle entitiesHandle;
+
+    // Caches
+    public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
+    public static Map<String, Grid> grids = new HashMap<String, Grid>();
 
     // Font
     public static final float FONT_HEIGHT = GameScreen.GAME_HEIGHT / 15; // 15 lines fit on the screen exactly
@@ -158,9 +166,14 @@ public class AssetLoader {
         itemHandle = getHandle("items.txt");
         spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
-        plotHandle = getHandle("macalester/plot.txt");
         mapHandle = getHandle("macalester/maps");
+        plotHandle = getHandle("macalester/plot.txt");
         entitiesHandle = getHandle("macalester/entities.txt");
+
+        SuperParser.parseAll(AssetLoader.itemHandle, GenericItem.class);
+        SuperParser.parseAll(AssetLoader.spellHandle, Spell.class);
+        dialogues = SuperParser.parseAll(AssetLoader.dialogueHandle, Dialogue.class);
+        grids = MapLoader.generateGrids(AssetLoader.mapHandle);
 
         font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
         shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));

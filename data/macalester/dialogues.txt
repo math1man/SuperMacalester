@@ -1,6 +1,7 @@
 {
     "Prologue" : {
         "class" : "Dialogue",
+        "name" : "Prologue",
         "text" : "All characters and events in this game - even those based on real people - are entirely fictional.
 
         The following game contains coarse language and due to its content it should not be played by anyone.
@@ -15,6 +16,7 @@
     },
     "Betsy" : {
         "class" : "Dialogue",
+        "name" : "Betsy",
         "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own
         <d>evil profit! I like animals, and I don't want to see animals tortured!",
         "interaction" : {
@@ -47,8 +49,9 @@
             }
         }
     },
-    "Jeff" : {
+    "Slackathon" : {
         "class" : "Dialogue",
+        "name" : "Slackathon",
         "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious practice of apathetic
         <d>indifference and willful ignorance.",
         "interaction" : {

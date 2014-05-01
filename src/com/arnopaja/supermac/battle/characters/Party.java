@@ -21,7 +21,7 @@ public abstract class Party<T extends BattleCharacter> {
     protected final List<T> characters;
 
     protected Party(List<T> characters) {
-        this.characters = characters;
+        this.characters = new ArrayList<T>(characters);
     }
     //Characters will be added to party in different methods, as defined by their non-abstract subclasses
 
@@ -62,7 +62,7 @@ public abstract class Party<T extends BattleCharacter> {
     {
         for(BattleCharacter bc:characters)
         {
-            bc.setIsDefending(false);
+            bc.setDefending(false);
         }
     }
 

@@ -101,37 +101,7 @@
                 "class" : "Interaction",
                 "dialogue" : {
                     "class" : "Dialogue",
-                    "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own
-                    <d>evil profit! I like animals, and I don't want to see animals tortured!",
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "options" : {
-                            "class" : "Dialogue",
-                            "header" : "Do you like animals?",
-                            "options" : [
-                                {
-                                    "text" : "Yes",
-                                    "interaction" : {
-                                        "class" : "Interaction",
-                                        "dialogue" : {
-                                            "class" : "Dialogue",
-                                            "text" : "Yay!"
-                                        }
-                                    }
-                                },
-                                {
-                                    "text" : "No",
-                                    "interaction" : {
-                                        "class" : "Interaction",
-                                        "dialogue" : {
-                                            "class" : "Dialogue",
-                                            "text" : "Asshole..."
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                    "name" : "Betsy"
                 }
             }
         },
@@ -150,49 +120,7 @@
                 "class" : "Interaction",
                 "dialogue" : {
                     "class" : "Dialogue",
-                    "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious practice of apathetic
-                    <d>indifference and willful ignorance.",
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "options" : {
-                            "class" : "Dialogue",
-                            "header" : "Want to help?",
-                            "options" : [
-                                {
-                                    "text" : "Where do I sign?!",
-                                    "interaction" : {
-                                        "class" : "Interaction",
-                                        "dialogue" : {
-                                            "class" : "Dialogue",
-                                            "text" : "No! Caring enough to sign a petition makes you part of the problem!"
-                                        }
-                                    }
-                                },
-                                {
-                                    "text" : "Sure, I'll help you organize an event.",
-                                    "interaction" : {
-                                        "class" : "Interaction",
-                                        "dialogue" : {
-                                            "class" : "Dialogue",
-                                            "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring
-                                            <d>enough to organize it.
-                                            <d>But you'd better not care, or you'll get kicked out."
-                                        }
-                                    }
-                                },
-                                {
-                                    "text" : "Whatever",
-                                    "interaction" : {
-                                        "class" : "Interaction",
-                                        "dialogue" : {
-                                            "class" : "Dialogue",
-                                            "text" : "Excellent! A kindred spirit! Carry on! I'm off to take a nap."
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                    "name" : "Slackathon"
                 }
             }
         }

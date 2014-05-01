@@ -71,24 +71,6 @@ public abstract class SuperParser<T> {
     }
 
     //--------------------------------
-    //         Init methods
-    //--------------------------------
-
-    protected static World world;
-
-    public static void initParsers(World w) {
-        world = w;
-    }
-
-    public static void initItems(FileHandle handle) {
-        parseAll(handle, GenericItem.class);
-    }
-
-    public static void initSpells(FileHandle handle) {
-        parseAll(handle, Spell.class);
-    }
-
-    //--------------------------------
     //        Abstract methods
     //--------------------------------
 
@@ -204,12 +186,12 @@ public abstract class SuperParser<T> {
      * @param json
      * @return
      */
-    public static <U> List<U> parseAll(String json, Class<U> clazz) {
+    public static <U> Map<String, U> parseAll(String json, Class<U> clazz) {
         JsonElement element = getJsonHead(json);
-        List<U> parsables = new ArrayList<U>();
+        Map<String, U> parsables = new HashMap<String, U>();
         Set<Map.Entry<String, JsonElement>> entries = element.getAsJsonObject().entrySet();
         for (Map.Entry<String, JsonElement> entry : entries) {
-            parsables.add(fromJson(entry.getValue(), clazz));
+            parsables.put(entry.getKey(), fromJson(entry.getValue(), clazz));
         }
         return parsables;
     }
@@ -220,7 +202,7 @@ public abstract class SuperParser<T> {
      * @param handle
      * @return
      */
-    public static <U> List<U> parseAll(FileHandle handle, Class<U> clazz) {
+    public static <U> Map<String, U> parseAll(FileHandle handle, Class<U> clazz) {
         return parseAll(handle.readString(), clazz);
     }
 

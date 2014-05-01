@@ -26,7 +26,11 @@ public class DialogueOptions extends Dialogue {
      * @param interactions the list of interactions resulting from each option
      */
     public DialogueOptions(String header, List<?> options, List<Interaction> interactions, DialogueStyle style) {
-        this(encapsulate(header, options, interactions), style);
+        this("", header, options, interactions, style);
+    }
+
+    public DialogueOptions(String name, String header, List<?> options, List<Interaction> interactions, DialogueStyle style) {
+        this(name, encapsulate(header, options, interactions), style);
     }
 
     protected DialogueOptions(DialogueMember[] members, DialogueStyle style) {
@@ -34,7 +38,11 @@ public class DialogueOptions extends Dialogue {
     }
 
     protected DialogueOptions(List<DialogueMember> members, DialogueStyle style) {
-        super(style);
+        this("", members, style);
+    }
+
+    protected DialogueOptions(String name, List<DialogueMember> members, DialogueStyle style) {
+        super(name, style);
         this.members = members;
         count = members.size() - 1;
     }

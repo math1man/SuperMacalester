@@ -83,7 +83,7 @@ public abstract class BattleAction implements InteractionBuilder {
             public Dialogue run(float delta) {
                 //Sets defending to true, which will cause the character to return twice its normal defense value
                 //for the rest of the turn
-                getSource().setIsDefending(true);
+                getSource().setDefending(true);
                 String dialogue = getSource() + " is defending!";
                 return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }

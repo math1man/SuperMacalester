@@ -1,12 +1,16 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Superclass for DialogueText and DialogueOptions
@@ -22,10 +26,16 @@ public abstract class Dialogue implements InteractionBuilder {
         }
     };
 
-    private DialogueStyle style;
+    private final String name;
+    private final DialogueStyle style;
 
-    protected Dialogue(DialogueStyle style) {
+    protected Dialogue(String name, DialogueStyle style) {
+        this.name = name;
         this.style = style;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public abstract String getText();
@@ -34,10 +44,6 @@ public abstract class Dialogue implements InteractionBuilder {
 
     public DialogueStyle getStyle() {
         return style;
-    }
-
-    public void setStyle(DialogueStyle style) {
-        this.style = style;
     }
 
     @Override
@@ -56,6 +62,14 @@ public abstract class Dialogue implements InteractionBuilder {
         @Override
         public Dialogue fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
+            String name = null;
+            if (object.has("name")) {
+                name = getString(object, "name");
+            }
+            Dialogue cached = AssetLoader.dialogues.get(name);
+            if (cached != null) {
+                return cached;
+            }
             if (object.has("text")) {
                 String dialogue = getString(object, "text");
                 Interaction interaction = CLEAR_DIALOGUE;
@@ -65,33 +79,32 @@ public abstract class Dialogue implements InteractionBuilder {
                 return new DialogueText(dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
-                DialogueMember[] members = new DialogueMember[array.size() + 1];
-                members[0] = new DialogueMember(getString(object, "header"));
+                List<DialogueMember> members = new ArrayList<DialogueMember>(array.size() + 1);
+                members.add(new DialogueMember(getString(object, "header")));
                 for (int i=0; i<array.size(); i++) {
                     JsonObject member = array.get(i).getAsJsonObject();
                     Interaction interaction = Dialogue.CLEAR_DIALOGUE;
                     if (has(member, Interaction.class)) {
                         interaction = getObject(member, Interaction.class);
                     }
-                    members[i+1] = new DialogueMember(getString(member, "text"), interaction);
+                    members.add(new DialogueMember(getString(member, "text"), interaction));
                 }
-                return new DialogueOptions(members, DialogueStyle.WORLD);
+                return new DialogueOptions(name, members, DialogueStyle.WORLD);
             }
             return null;
         }
 
         @Override
         public JsonElement toJson(Dialogue object) {
+            JsonObject json = new JsonObject();
+            addString(json, "name", object.getName());
             if (object instanceof DialogueText) {
-                JsonObject json = new JsonObject();
                 DialogueText text = (DialogueText) object;
                 addString(json, "text", text.getText());
                 if (text.hasInteraction()) {
                     addObject(json, text.getInteraction(), Interaction.class);
                 }
-                return json;
             } else {
-                JsonObject json = new JsonObject();
                 DialogueOptions options = (DialogueOptions) object;
                 addString(json, "header", options.getHeader());
                 JsonArray array = new JsonArray();
@@ -103,8 +116,8 @@ public abstract class Dialogue implements InteractionBuilder {
                     array.add(o);
                 }
                 json.add("options", array);
-                return json;
             }
+            return json;
         }
     }
 }
