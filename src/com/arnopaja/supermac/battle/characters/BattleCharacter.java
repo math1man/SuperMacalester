@@ -49,6 +49,11 @@ public abstract class BattleCharacter {
         return currentHealth == 0;
     }
 
+    public void resurrect()
+    {
+        currentHealth = maxHealth;
+    }
+
     public void modifyMana(int amount) {
         currentMana += amount;
         if(currentMana > maxMana) currentMana = maxMana;

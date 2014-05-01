@@ -49,6 +49,7 @@ public class BattleTest extends Battle {
                     destination is fainted, action taken is NOT an item OR a healing spell
                     (non-resurrection items/spells are to be consumed as normal, but without effect)
                      */
+                    //TODO: Items, item types.
                     if(action.getSource().isFainted() || (action.getDestination().isFainted() && action.getType() != BattleAction.ActionType.ITEM && (action.getType() != BattleAction.ActionType.SPELL && action.getSpell().isBlack()))) return;
                     System.out.println(action.run(delta));
                 }
@@ -144,7 +145,7 @@ public class BattleTest extends Battle {
                                     }
                                     userInput = input.next(".").charAt(0);
                                     index = Integer.parseInt(userInput.toString());
-                                    if(p.get(index) != null && !p.get(index).isFainted()) //TODO: update to allow resurrect spells on fainted characters
+                                    if(p.get(index) != null && (!p.get(index).isFainted() || spell.getDamageModifier() == Float.POSITIVE_INFINITY) ) //Don't allow for invalid characters. Allow ONLY resurrect spells on fainted characters
                                     {
                                         a = BattleAction.spell(h,spell,p.get(index));
                                         return;

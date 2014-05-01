@@ -9,17 +9,32 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * TODO: Bitmasks and effects!
+ * TODO: Bitmasks and effects! (parse in)
  * @author Nolan Varani
  */
 public class Item extends GenericItem {
 
-    protected Item(int id, String name, int value) {
-        super(id, name, value);
+    public static enum ItemType
+    {
+        HEAL,DAMAGE,POWERUP_ATK,POWERUP_DEF,POWERUP_SPD,POWERUP_SPC; //Resurrect = HEAL w/ modifier = POSITIVE_INFINITY
     }
-
+    private ItemType type;
+    public ItemType getType()
+    {
+        return type;
+    }
+    public int getModifier()
+    {
+        return modifier;
+    }
+    private int modifier; //The item's effective power, regardless of what ItemType it is
+    protected Item(int id, String name, int value,int m, ItemType t) {
+        super(id, name, value);
+        this.type = t;
+        this.modifier = m;
+    }
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        // TODO: use item
+        // TODO: use item. Add new methods and variables to BattleCharacter to enable temporary powerups to attack, defense, speed, special
         String dialogue = source + " uses " + this + " on " + destination + "!";
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
@@ -34,7 +49,9 @@ public class Item extends GenericItem {
             }
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            Item item = new Item(id, name, value);
+            int mod = getInt(object, "modifier");
+            //TODO: parse string version of ItemType to ItemType
+            Item item = new Item(id, name, value, mod, null); //REMOVE THE NULL FOR THE FINAL VERSION!
             cache(item);
             return item;
         }
@@ -45,6 +62,8 @@ public class Item extends GenericItem {
             addInt(json, "id", object.getId());
             addString(json, "name", object.getName());
             addInt(json, "value", object.getValue());
+            addInt(json, "modifier", object.getModifier());
+            addString(json, "type", object.getType().toString());
             return json;
         }
     }
