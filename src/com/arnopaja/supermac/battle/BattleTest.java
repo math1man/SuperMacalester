@@ -62,7 +62,8 @@ public class BattleTest extends Battle {
         {
             //System.out.println(h);
             if(h.getMana() > h.getSpell(0).getManaCost()){
-                a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
+                if(h.getSpell(0).isBlack()) a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
+                else a = BattleAction.spell(h, h.getSpell(0), mainParty.getRandom());
             } else {
                 a = BattleAction.attack(h,enemyParty.getRandom());
             }
@@ -87,12 +88,13 @@ public class BattleTest extends Battle {
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
         Spell yoloswag = new Spell(1, "yoloswag69", 10, 3, true);
+        Spell smokeWeedEveryDay = new Spell(2, "Smoke Weed Erryday", 5, 3, false);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
         Hero smart4 = new Hero("Hero Comp Sci", BattleClass.COMP_SCI, 5);
         smart.addSpells(yoloswag);
-        smart2.addSpells(yoloswag);
+        smart2.addSpells(smokeWeedEveryDay);
         smart3.addSpells(yoloswag);
         smart4.addSpells(yoloswag);
         ArrayList<Hero> herolist = new ArrayList<Hero>();

@@ -20,22 +20,23 @@ public class Spell {
     private final String name;
     private final float damageModifier;
     private final int manaCost;
-    private boolean type; //TRUE = BLACK, FALSE = WHITE
+    private boolean isBlack; //TRUE = BLACK, FALSE = WHITE
 
     public Spell(int id, String name, float damageModifier, int manaCost, boolean offensive) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
         this.manaCost = manaCost;
-        this.type = offensive;
+        this.isBlack = offensive;
         cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        int damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
+        int damage;
         String dialogue;
-        if(type)
+        if(isBlack)
         {
+            damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " damage done.";
@@ -50,6 +51,8 @@ public class Spell {
         }
         else
         {
+            //TODO: Make sure people can't come back from the dead
+            damage = (int) getDamageModifier() * source.getSpecial();
             destination.modifyHealth(damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " health restored.";
@@ -65,6 +68,8 @@ public class Spell {
     public int getId() {
         return id;
     }
+
+    public boolean isBlack() { return isBlack; }
 
     public String getName() {
         return name;
