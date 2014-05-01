@@ -5,6 +5,7 @@ import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.Weapon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,11 +27,16 @@ public abstract class BattleCharacter {
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana) {
         this.name = name;
+        this.spellsList = new ArrayList<Spell>();
         this.battleClass = battleClass;
         setLevel(level);
         this.fractionHealth = (fractionHealth >= 0 && fractionHealth <= 1) ? fractionHealth : 1;
         this.fractionMana = (fractionMana >= 0 && fractionMana <= 1) ? fractionMana : 1;
         this.isDefending = false;
+    }
+
+    public void addSpells(Spell dspell){
+        this.spellsList.add(dspell);
     }
 
     public float modifyHealth(float amount) {

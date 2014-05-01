@@ -21,7 +21,7 @@ public class Spell {
     private final float damageModifier;
     private final float manaCost;
 
-    protected Spell(int id, String name, float damageModifier, float manaCost) {
+    public Spell(int id, String name, float damageModifier, float manaCost) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
@@ -37,8 +37,8 @@ public class Spell {
         if (destination.isFainted()) {
             dialogue += "\n" + destination + " fell!";
         }
-        int mana = (int) source.modifyMana(manaCost);
-        dialogue += "<d>" + source + " used " + mana + " mana.";
+        source.modifyMana(manaCost);
+        dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
         if (source.isOutOfMana()) {
             dialogue += "\n" + source + " is out of mana...";
         }
