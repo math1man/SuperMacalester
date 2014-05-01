@@ -9,6 +9,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Superclass for DialogueText and DialogueOptions
  *
@@ -76,15 +79,15 @@ public abstract class Dialogue implements InteractionBuilder {
                 return new DialogueText(dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
-                DialogueMember[] members = new DialogueMember[array.size() + 1];
-                members[0] = new DialogueMember(getString(object, "header"));
+                List<DialogueMember> members = new ArrayList<DialogueMember>(array.size() + 1);
+                members.add(new DialogueMember(getString(object, "header")));
                 for (int i=0; i<array.size(); i++) {
                     JsonObject member = array.get(i).getAsJsonObject();
                     Interaction interaction = Dialogue.CLEAR_DIALOGUE;
                     if (has(member, Interaction.class)) {
                         interaction = getObject(member, Interaction.class);
                     }
-                    members[i+1] = new DialogueMember(getString(member, "text"), interaction);
+                    members.add(new DialogueMember(getString(member, "text"), interaction));
                 }
                 return new DialogueOptions(name, members, DialogueStyle.WORLD);
             }
