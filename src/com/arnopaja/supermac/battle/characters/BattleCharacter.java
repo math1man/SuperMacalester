@@ -35,8 +35,8 @@ public abstract class BattleCharacter {
         this.isDefending = false;
     }
 
-    public void addSpells(Spell dspell){
-        this.spellsList.add(dspell);
+    public void addSpells(Spell spell){
+        this.spellsList.add(spell);
     }
 
     public void modifyHealth(int amount) {
