@@ -30,8 +30,8 @@ public abstract class BattleCharacter {
         this.spellsList = new ArrayList<Spell>();
         this.battleClass = battleClass;
         setLevel(level);
-        this.currentHealth = maxHealth;
-        this.currentMana = maxMana;
+        this.currentHealth = currentHealth == -1 ? maxHealth : currentHealth;
+        this.currentMana = currentMana == -1 ? maxMana : currentMana;
         this.isDefending = false;
     }
 

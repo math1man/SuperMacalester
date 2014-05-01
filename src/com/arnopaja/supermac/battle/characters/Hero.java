@@ -56,12 +56,10 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            //TODO fix int here
             int health = -1;
             if (object.has("health")) {
                 health = getInt(object, "health");
             }
-            //TODO fix int here
             int mana = -1;
             if (object.has("mana")) {
                 mana = getInt(object, "mana");
