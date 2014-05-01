@@ -18,14 +18,22 @@ public class DialogueText extends Dialogue {
     }
 
     public DialogueText(String rawDialogue, InteractionBuilder builder, DialogueStyle style) {
-        this(rawDialogue, rawDialogue.split("<d>"), builder, style);
+        this("", rawDialogue, builder, style);
     }
 
-    protected DialogueText(String rawDialogue, String[] text, InteractionBuilder builder, DialogueStyle style) {
-        super(style);
+    public DialogueText(String name, String rawDialogue, DialogueStyle style) {
+        this(name, rawDialogue, CLEAR_DIALOGUE, style);
+    }
+
+    public DialogueText(String name, String rawDialogue, InteractionBuilder builder, DialogueStyle style) {
+        this(name, rawDialogue, rawDialogue.split("<d>"), builder, style);
+    }
+
+    protected DialogueText(String name, String rawDialogue, String[] text, InteractionBuilder builder, DialogueStyle style) {
+        super(name, style);
         this.rawDialogue = rawDialogue;
         if (text.length > 1) {
-            member = new DialogueMember(text[0], new DialogueText(rawDialogue,
+            member = new DialogueMember(text[0], new DialogueText(name, rawDialogue,
                     Arrays.copyOfRange(text, 1, text.length), builder, style).toInteraction());
         } else if (builder == null) {
             member = new DialogueMember(text[0], CLEAR_DIALOGUE);

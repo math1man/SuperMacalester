@@ -15,7 +15,6 @@ import com.google.gson.JsonObject;
  */
 public class Hero extends BattleCharacter implements InteractionBuilder {
 
-    private final MainMapCharacter main;
     protected boolean hasFled = false;
 
     public Hero(String name, BattleClass battleClass) {
@@ -27,12 +26,7 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
     }
 
     public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana) {
-        this(name, battleClass, level, fractionHealth, fractionMana, null);
-    }
-
-    public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana, MainMapCharacter character) {
         super(name, battleClass, level, fractionHealth, fractionMana);
-        main = character;
     }
 
     public void setHasFled(boolean a)
@@ -46,18 +40,14 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
 
     @Override
     public Interaction toInteraction() {
-        if (main == null) {
-            return Interaction.NULL;
-        } else {
-            final Hero hero = this;
-            return new Interaction(hero) {
-                @Override
-                public void run(GameScreen screen) {
-                    main.addToParty(hero);
-                    new DialogueText(hero.name + " has joined the party!", DialogueStyle.WORLD).toInteraction().run(screen);
-                }
-            };
-        }
+        final Hero hero = this;
+        return new Interaction(hero) {
+            @Override
+            public void run(GameScreen screen) {
+                screen.getParty().addCharacter(hero);
+                new DialogueText(hero.name + " has joined the party!", DialogueStyle.WORLD).toInteraction().run(screen);
+            }
+        };
     }
 
     public static class Parser extends SuperParser<Hero> {
@@ -75,7 +65,7 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             if (object.has("mana")) {
                 mana = getFloat(object, "mana");
             }
-            return new Hero(name, battleClass, level, health, mana, world.getMainCharacter());
+            return new Hero(name, battleClass, level, health, mana);
         }
 
         @Override

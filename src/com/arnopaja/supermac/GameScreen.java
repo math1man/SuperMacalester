@@ -3,6 +3,9 @@ package com.arnopaja.supermac;
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
+import com.arnopaja.supermac.battle.characters.BattleClass;
+import com.arnopaja.supermac.battle.characters.Hero;
+import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
@@ -16,6 +19,8 @@ import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+
+import java.util.Collections;
 
 /**
  * @author Ari Weiland
@@ -31,13 +36,10 @@ public class GameScreen implements Screen {
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
-    private Plot plot;
 
-    private final World world;
     private final WorldRenderer worldRenderer;
     private final WorldInputHandler worldInputHandler;
 
-    private Battle battle;
     private final BattleRenderer battleRenderer;
     private final BattleInputHandler battleInputHandler;
 
@@ -49,6 +51,11 @@ public class GameScreen implements Screen {
     private GameState state;
     private float runTime;
 
+    private Plot plot;
+    private World world;
+    private MainParty party;
+    private Battle battle;
+
     public GameScreen() {
         AssetLoader.prefs.clear();
         AssetLoader.prefs.flush();
@@ -56,11 +63,6 @@ public class GameScreen implements Screen {
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
-
-        world = MapLoader.generateWorld(AssetLoader.mapHandle);
-        SuperParser.initParsers(world);
-        SuperParser.initItems(AssetLoader.itemHandle);
-        SuperParser.initSpells(AssetLoader.spellHandle);
 
         load();
 
@@ -165,13 +167,16 @@ public class GameScreen implements Screen {
     public void save() {
         SaverLoader.save(plot, Plot.class);
         SaverLoader.save(world, World.class);
+        SaverLoader.save(party, MainParty.class);
         Inventory.save();
         SaverLoader.flush();
     }
 
     public void load() {
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
-        SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
+        world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
+        party = SaverLoader.load(MainParty.class, new MainParty(
+                Collections.singletonList(new Hero("Tom", BattleClass.COMP_SCI, 1))));
         Inventory.load();
     }
 
@@ -208,25 +213,12 @@ public class GameScreen implements Screen {
         return dialogueHandler;
     }
 
-    public World getWorld() {
-        return world;
-    }
-
     public WorldRenderer getWorldRenderer() {
         return worldRenderer;
     }
 
     public WorldInputHandler getWorldInputHandler() {
         return worldInputHandler;
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-        this.battle.ready(world.getMainCharacter().getParty(), this);
     }
 
     public BattleRenderer getBattleRenderer() {
@@ -247,5 +239,26 @@ public class GameScreen implements Screen {
 
     public Controller getCurrentController() {
         return currentController;
+    }
+
+    public Plot getPlot() {
+        return plot;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public MainParty getParty() {
+        return party;
+    }
+
+    public Battle getBattle() {
+        return battle;
+    }
+
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+        this.battle.ready(party, this);
     }
 }
