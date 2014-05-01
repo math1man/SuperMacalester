@@ -117,6 +117,7 @@ public class BattleTest extends Battle {
                                     a = BattleAction.attack(h,enemyParty.get(index));
                                 }
                             }
+                            break;
                         case 'd':
                             a = BattleAction.defend(h);
                             break;
@@ -155,9 +156,10 @@ public class BattleTest extends Battle {
                                     }
                                 }
                             }
+                            break;
                         case 'f':
                             a = BattleAction.flee(h);
-                            return;
+                            break;
                         //TODO: item handler (case 'i':)
                         default:
                             continue;
