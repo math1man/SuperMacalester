@@ -19,9 +19,9 @@ public class Spell {
     private final int id;
     private final String name;
     private final float damageModifier;
-    private final float manaCost;
+    private final int manaCost;
 
-    protected Spell(int id, String name, float damageModifier, float manaCost) {
+    public Spell(int id, String name, float damageModifier, int manaCost) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
@@ -30,15 +30,15 @@ public class Spell {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        float damage = getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
-        int damageDone = (int) destination.modifyHealth(-damage);
+        int damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
+        destination.modifyHealth(-damage);
         String dialogue = source + " casts " + this + "!\n" +
-                damageDone + " damage done.";
+                damage + " damage done.";
         if (destination.isFainted()) {
             dialogue += "\n" + destination + " fell!";
         }
-        int mana = (int) source.modifyMana(manaCost);
-        dialogue += "<d>" + source + " used " + mana + " mana.";
+        source.modifyMana(manaCost);
+        dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
         if (source.isOutOfMana()) {
             dialogue += "\n" + source + " is out of mana...";
         }
@@ -97,7 +97,7 @@ public class Spell {
             } else {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
-                float manaCost = getFloat(object, "mana");
+                int manaCost = getInt(object, "mana");
                 return new Spell(id, name, modifier, manaCost);
             }
         }
@@ -108,7 +108,7 @@ public class Spell {
             addInt(json, "id", object.id);
             addString(json, "name", object.name);
             addFloat(json, "modifier", object.damageModifier);
-            addFloat(json, "mana", object.manaCost);
+            addInt(json, "mana", object.manaCost);
             return json;
         }
     }

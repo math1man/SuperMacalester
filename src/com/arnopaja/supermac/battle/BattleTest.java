@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.*;
+import com.arnopaja.supermac.inventory.Spell;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -60,7 +61,11 @@ public class BattleTest extends Battle {
         for (Hero h:mainParty.getActiveParty())
         {
             //System.out.println(h);
-            a = BattleAction.attack(h,enemyParty.getRandom());
+            if(h.getMana() > h.getSpell(0).getManaCost()){
+                a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
+            } else {
+                a = BattleAction.attack(h,enemyParty.getRandom());
+            }
             addAction(a);
             System.out.println(a);
         }
@@ -81,11 +86,16 @@ public class BattleTest extends Battle {
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-
+        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
         Hero smart4 = new Hero("Hero Comp Sci", BattleClass.COMP_SCI, 5);
+        smart.addSpells(yoloswag);
+        smart2.addSpells(yoloswag);
+        smart3.addSpells(yoloswag);
+        smart4.addSpells(yoloswag);
+        ArrayList<Hero> herolist = new ArrayList<Hero>();
         MainParty teamswag = new MainParty();
         teamswag.addCharacter(smart);
         teamswag.addCharacter(smart2);
@@ -100,7 +110,8 @@ public class BattleTest extends Battle {
             battle.update(delta);
             try {
                 // sleep for 1/60 of a second
-                Thread.sleep((int)(delta*1000));
+                //Thread.sleep((int)(delta*1000));
+                Thread.sleep(3000);
             } catch(InterruptedException e) {
             }
         }

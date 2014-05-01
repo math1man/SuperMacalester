@@ -84,8 +84,8 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             addString(json, "name", object.name);
             addObject(json, object.battleClass, BattleClass.class);
             addInt(json, "level", object.level);
-            addFloat(json, "health", object.fractionHealth);
-            addFloat(json, "mana", object.fractionMana);
+            addFloat(json, "health", object.currentHealth);
+            addFloat(json, "mana", object.currentMana);
             return json;
         }
     }
