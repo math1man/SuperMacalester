@@ -18,11 +18,11 @@ public class BattleTest extends Battle {
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                // subrun code for if the main party is defeated
+                // run code for if the main party is defeated
                 System.out.println("You have lost");
                 setOver();
             } else if (enemyParty.isDefeated()) {
-                // subrun code for if the enemy party is defeated'
+                // run code for if the enemy party is defeated'
                 System.out.println("You have won!");
                 setOver();
             } else {
@@ -52,7 +52,7 @@ public class BattleTest extends Battle {
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty())
         {
-            System.out.println(e.dump());
+//            System.out.println(e);
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
             System.out.println(a);
@@ -60,7 +60,7 @@ public class BattleTest extends Battle {
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty())
         {
-            System.out.println(h.dump());
+            //System.out.println(h);
             if(h.getMana() > h.getSpell(0).getManaCost()){
                 a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
             } else {
@@ -86,13 +86,14 @@ public class BattleTest extends Battle {
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-        Spell yoloswag = new Spell(1, "yoloswag69", 1, 3, true);
+        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3, true);
+        Spell smokeWeedEveryDay = new Spell(2, "Smoke Weed Erryday", 5, 3, false);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
         Hero smart4 = new Hero("Hero Comp Sci", BattleClass.COMP_SCI, 5);
         smart.addSpells(yoloswag);
-        smart2.addSpells(yoloswag);
+        smart2.addSpells(smokeWeedEveryDay);
         smart3.addSpells(yoloswag);
         smart4.addSpells(yoloswag);
         MainParty teamswag = new MainParty();
