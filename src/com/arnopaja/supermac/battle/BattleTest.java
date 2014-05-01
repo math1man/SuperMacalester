@@ -18,11 +18,11 @@ public class BattleTest extends Battle {
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                // run code for if the main party is defeated
+                // subrun code for if the main party is defeated
                 System.out.println("You have lost");
                 setOver();
             } else if (enemyParty.isDefeated()) {
-                // run code for if the enemy party is defeated'
+                // subrun code for if the enemy party is defeated'
                 System.out.println("You have won!");
                 setOver();
             } else {
@@ -52,7 +52,7 @@ public class BattleTest extends Battle {
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty())
         {
-//            System.out.println(e);
+            System.out.println(e.dump());
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
             System.out.println(a);
@@ -60,7 +60,7 @@ public class BattleTest extends Battle {
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty())
         {
-            //System.out.println(h);
+            System.out.println(h.dump());
             if(h.getMana() > h.getSpell(0).getManaCost()){
                 a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
             } else {
@@ -86,7 +86,7 @@ public class BattleTest extends Battle {
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3, true);
+        Spell yoloswag = new Spell(1, "yoloswag69", 1, 3, true);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
@@ -95,7 +95,6 @@ public class BattleTest extends Battle {
         smart2.addSpells(yoloswag);
         smart3.addSpells(yoloswag);
         smart4.addSpells(yoloswag);
-        ArrayList<Hero> herolist = new ArrayList<Hero>();
         MainParty teamswag = new MainParty();
         teamswag.addCharacter(smart);
         teamswag.addCharacter(smart2);
@@ -110,8 +109,7 @@ public class BattleTest extends Battle {
             battle.update(delta);
             try {
                 // sleep for 1/60 of a second
-                //Thread.sleep((int)(delta*1000));
-                Thread.sleep(3000);
+                Thread.sleep((int)(delta*1000));
             } catch(InterruptedException e) {
             }
         }

@@ -150,6 +150,14 @@ public abstract class BattleCharacter {
         maxMana = battleClass.getBaseMaxMana() + battleClass.getIntelligence() * statMultiplier;
     }
 
+    public String dump() {
+        return "BattleCharacter{" +
+                "name=" + name +
+                ", currentHealth=" + currentHealth +
+                ", currentMana=" + currentMana +
+                '}';
+    }
+
     @Override
     public String toString() {
         return getName();

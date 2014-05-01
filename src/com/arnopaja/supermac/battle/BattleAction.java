@@ -41,12 +41,20 @@ public abstract class BattleAction implements InteractionBuilder {
         this.item = item;
     }
 
-    public abstract Dialogue run(float delta); // delta needed for eventual action animations
+    public Dialogue run(float delta) {
+        if (source.isFainted()) {
+            return new DialogueText(source + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
+        } else {
+            return subrun(delta);
+        }
+    }
+
+    protected abstract Dialogue subrun(float delta); // delta needed for eventual action animations
 
     public static BattleAction attack(BattleCharacter source, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null, null) {
             @Override
-            public Dialogue run(float delta) {
+            public Dialogue subrun(float delta) {
                 int damage = (int) ((2 + Math.abs(random.nextGaussian())) * getSource().getAttack() / getDestination().getDefense());
                 getDestination().modifyHealth(-damage);
                 String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
@@ -62,7 +70,7 @@ public abstract class BattleAction implements InteractionBuilder {
     public static BattleAction spell(BattleCharacter source, Spell spell, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.SPELL, source.getSpeed(), spell, null) {
             @Override
-            public Dialogue run(float delta) {
+            public Dialogue subrun(float delta) {
                 return getSpell().use(getSource(), getDestination());
             }
         };
@@ -71,7 +79,7 @@ public abstract class BattleAction implements InteractionBuilder {
     public static BattleAction item(BattleCharacter source, Item item, BattleCharacter destination) {
         return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), null, item) {
             @Override
-            public Dialogue run(float delta) {
+            public Dialogue subrun(float delta) {
                 return getItem().use(getSource(), getDestination());
             }
         };
@@ -80,7 +88,7 @@ public abstract class BattleAction implements InteractionBuilder {
     public static BattleAction defend(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.DEFEND, DEFEND_PRIORITY, null, null) {
             @Override
-            public Dialogue run(float delta) {
+            public Dialogue subrun(float delta) {
                 //Sets defending to true, which will cause the character to return twice its normal defense value
                 //for the rest of the turn
                 getSource().setDefending(true);
@@ -93,7 +101,7 @@ public abstract class BattleAction implements InteractionBuilder {
     public static BattleAction flee(BattleCharacter source) {
         return new BattleAction(source, null, ActionType.FLEE, FLEE_PRIORITY, null, null) {
             @Override
-            public Dialogue run(float delta) {
+            public Dialogue subrun(float delta) {
                 // TODO: code for fleeing
                 String dialogue;
                 Hero h = (Hero) getSource();

@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class dictates how an interaction proceeds via its run method.
+ * This class dictates how an interaction proceeds via its subrun method.
  * It also provides various static utility methods.
  *
  * @author Ari Weiland
@@ -61,7 +61,7 @@ public abstract class Interaction implements InteractionBuilder {
 
     /**
      * Combines a group of InteractionBuilders into one new interaction that runs
-     * the run methods of each builder.toInteraction() in the order specified.
+     * the subrun methods of each builder.toInteraction() in the order specified.
      * This method runs no checks on the interactions, so it is the responsibility
      * of the user to not do anything stupid.
      *

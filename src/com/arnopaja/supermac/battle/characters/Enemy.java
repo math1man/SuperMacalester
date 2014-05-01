@@ -14,7 +14,7 @@ public class Enemy extends BattleCharacter {
     private final boolean isBoss;
 
     public Enemy(String name, BattleClass battleClass, int level, Item item, boolean isBoss) {
-        super(name, battleClass, level, 1, 1);
+        super(name, battleClass, level, -1, -1);
         this.item = item;
         this.isBoss = isBoss;
     }
