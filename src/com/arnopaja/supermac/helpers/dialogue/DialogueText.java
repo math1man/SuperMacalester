@@ -14,15 +14,15 @@ public class DialogueText extends Dialogue {
     private final DialogueMember member;
 
     public DialogueText(String rawDialogue, DialogueStyle style) {
-        this(rawDialogue, CLEAR_DIALOGUE, style);
+        this("", rawDialogue, style);
+    }
+
+    public DialogueText(String name, String rawDialogue, DialogueStyle style) {
+        this(name, rawDialogue, null, style);
     }
 
     public DialogueText(String rawDialogue, InteractionBuilder builder, DialogueStyle style) {
         this("", rawDialogue, builder, style);
-    }
-
-    public DialogueText(String name, String rawDialogue, DialogueStyle style) {
-        this(name, rawDialogue, CLEAR_DIALOGUE, style);
     }
 
     public DialogueText(String name, String rawDialogue, InteractionBuilder builder, DialogueStyle style) {
@@ -36,7 +36,7 @@ public class DialogueText extends Dialogue {
             member = new DialogueMember(text[0], new DialogueText(name, rawDialogue,
                     Arrays.copyOfRange(text, 1, text.length), builder, style).toInteraction());
         } else if (builder == null) {
-            member = new DialogueMember(text[0], CLEAR_DIALOGUE);
+            member = new DialogueMember(text[0]);
         } else {
             member = new DialogueMember(text[0], builder.toInteraction());
         }

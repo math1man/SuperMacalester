@@ -161,7 +161,7 @@ public class AssetLoader {
         //          Other
         //--------------------------
 
-        // TODO: battle backgrounds
+        // TODO: battle backgrounds (for now, we just use RenderGrids)
 
         itemHandle = getHandle("items.txt");
         spellHandle = getHandle("spells.txt");

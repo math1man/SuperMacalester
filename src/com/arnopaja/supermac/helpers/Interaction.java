@@ -120,6 +120,14 @@ public abstract class Interaction implements InteractionBuilder {
         return Collections.nCopies(size, builder.toInteraction());
     }
 
+    public Object getPrimary() {
+        return parameters.primary;
+    }
+
+    public Object getSecondary() {
+        return parameters.secondary;
+    }
+
     @Override
     public Interaction toInteraction() {
         return this;
@@ -214,7 +222,7 @@ public abstract class Interaction implements InteractionBuilder {
         @Override
         public JsonElement toJson(Interaction object) {
             JsonObject json = new JsonObject();
-            addToJson(json, object.parameters.primary);
+            addToJson(json, object.getPrimary());
             return json;
         }
 

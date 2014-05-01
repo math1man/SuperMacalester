@@ -15,7 +15,11 @@ public class DialogueMember {
 
     public DialogueMember(String text, Interaction interaction) {
         this.text = text;
-        this.interaction = interaction == null ? Interaction.NULL : interaction;
+        if (interaction != null && interaction.getPrimary() instanceof Dialogue) {
+            this.interaction = interaction;
+        } else {
+            this.interaction = Dialogue.CLEAR_DIALOGUE.attach(interaction);
+        }
     }
 
     public boolean hasInteraction() {

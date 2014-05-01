@@ -35,7 +35,7 @@ public class DialogueWindow {
         this(dialogue, style.getX(), style.getY(), style.getWidth(), getHeight(style.getRows()));
     }
 
-    public DialogueWindow(DialogueMember[][] dialogue, float x, float y, float width, float height) {
+    private DialogueWindow(DialogueMember[][] dialogue, float x, float y, float width, float height) {
         this.dialogue = dialogue;
         this.rows = dialogue[0].length;
         this.columns = dialogue.length;
@@ -129,7 +129,7 @@ public class DialogueWindow {
     }
 
     public static float getHeight(int rows) {
-        return 2 * FRAME_GAP - rows * AssetLoader.FONT_HEIGHT;
+        return 2 * FRAME_GAP + rows * AssetLoader.FONT_HEIGHT;
     }
 
     @Override

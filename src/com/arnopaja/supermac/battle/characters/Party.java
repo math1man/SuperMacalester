@@ -9,14 +9,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * TODO should this maybe implement a Collection?
- * Created by Nolan on 2/24/14.
+ * @author Nolan Varani
  */
 public abstract class Party<T extends BattleCharacter> {
 
     protected static final Random random = new Random();
-
-    protected static final int MAX_SIZE = 3;
 
     protected final List<T> characters;
 
@@ -51,22 +48,19 @@ public abstract class Party<T extends BattleCharacter> {
         return characters.size();
     }
 
-    public List<T> getActiveParty()
-    {
+    public List<T> getActiveParty() {
         ArrayList<T> h = new ArrayList<T>();
-        for(int i=0;i<4;i++){
-            T dumbass = characters.get(i);
-            if(!dumbass.isFainted()){
-                h.add(dumbass);
+        for(int i=0; i<4; i++) {
+            T character = characters.get(i);
+            if(!character.isFainted()){
+                h.add(character);
             }
         }
         return h;
     }
 
-    public void clearDefend()
-    {
-        for(BattleCharacter bc:characters)
-        {
+    public void clearDefend() {
+        for(BattleCharacter bc:characters) {
             bc.setDefending(false);
         }
     }

@@ -20,7 +20,8 @@ import java.util.Random;
 public abstract class BattleAction implements InteractionBuilder {
 
     private static final Random random = new Random();
-    public static final int DEFEND_PRIORITY = 255; // TODO: should this be higher?
+    public static final int DEFEND_PRIORITY = Integer.MAX_VALUE - 1;
+    // TODO: should fleeing go first?
     public static final int FLEE_PRIORITY = Integer.MAX_VALUE;
 
     public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
@@ -102,18 +103,14 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, null, ActionType.FLEE, FLEE_PRIORITY, null, null) {
             @Override
             public Dialogue subrun(float delta) {
-                // TODO: code for fleeing
                 String dialogue;
-                Hero h = (Hero) getSource();
-                if(random.nextInt(5) == 4)
-                {
-                    //Only heroes can flee #YOLOSWAG
+                // Only heroes can flee
+                if(random.nextInt(5) == 4 && getSource() instanceof Hero) {
+                    Hero h = (Hero) getSource();
                     h.setHasFled(true);
                     dialogue = h + " flees!";
-                }
-                else
-                {
-                    dialogue = h + " could not flee!";
+                } else {
+                    dialogue = getSource() + " could not flee!";
                 }
                 return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }

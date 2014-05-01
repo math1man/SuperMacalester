@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 public class Armor extends GenericItem {
 
     private final float defenseModifier;
-    //TODO: image definition
 
     protected Armor(int id, String name, int value, float defenseModifier) {
         super(id, name, value);

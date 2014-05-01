@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +19,12 @@ public class Grid {
 
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
+    public static final int RENDER_GRID_WIDTH = getRenderDimension(GameScreen.GAME_WIDTH);
+    public static final int RENDER_GRID_HEIGHT = getRenderDimension(GameScreen.GAME_HEIGHT);
+    public static final Vector2 RENDER_GRID_OFFSET = new Vector2(GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT)
+            .scl(-1.0f / Grid.GRID_PIXEL_DIMENSION)
+            .add(new Vector2(Grid.RENDER_GRID_WIDTH, Grid.RENDER_GRID_HEIGHT))
+            .scl(0.5f);
 
     protected final int gridWidth, gridHeight;
     private final String name;
@@ -153,14 +160,12 @@ public class Grid {
      * set as blank elements.
      *
      * @param position the coordinates of the center of the RenderGrid
-     * @param renderGridWidth the width of the RenderGrid
-     * @param renderGridHeight the height of the RenderGrid
      * @return the RenderGrid
      */
-    public RenderGrid getRenderGrid(Vector2 position, int renderGridWidth, int renderGridHeight) {
-        Vector2 corner = new Vector2(renderGridWidth, renderGridHeight)
+    public RenderGrid getRenderGrid(Vector2 position) {
+        Vector2 corner = new Vector2(RENDER_GRID_WIDTH, RENDER_GRID_HEIGHT)
                 .add(-1, -1).scl(-0.5f).add(position);
-        return new RenderGrid(getSubGrid(corner, renderGridWidth, renderGridHeight));
+        return new RenderGrid(getSubGrid(corner, RENDER_GRID_WIDTH, RENDER_GRID_HEIGHT));
     }
 
     /**
@@ -248,6 +253,16 @@ public class Grid {
 
     protected static int cast(float f) {
         return (int) f;
+    }
+
+    protected static int getRenderDimension(float gameDimension) {
+        int renderDimension = (int) Math.ceil(gameDimension / Grid.GRID_PIXEL_DIMENSION);
+        if (renderDimension % 2 == 0) {
+            renderDimension += 3;
+        } else {
+            renderDimension += 2;
+        }
+        return renderDimension;
     }
 
     public String getName() {

@@ -14,28 +14,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class WorldRenderer extends BaseRenderer<World> {
 
-    private final int renderGridWidth, renderGridHeight;
-    private final Vector2 renderOffset;
-
     public WorldRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         super(dialogueHandler, gameWidth, gameHeight);
-
-        this.renderGridWidth = getRenderDimension(gameWidth);
-        this.renderGridHeight = getRenderDimension(gameHeight);
-        this.renderOffset = new Vector2(gameWidth, gameHeight)
-                .scl(-1.0f / Grid.GRID_PIXEL_DIMENSION)
-                .add(new Vector2(renderGridWidth, renderGridHeight))
-                .scl(0.5f);
-    }
-
-    private static int getRenderDimension(float gameDimension) {
-        int renderDimension = (int) Math.ceil(gameDimension / Grid.GRID_PIXEL_DIMENSION);
-        if (renderDimension % 2 == 0) {
-            renderDimension += 3;
-        } else {
-            renderDimension += 2;
-        }
-        return renderDimension;
     }
 
     @Override
@@ -44,11 +24,11 @@ public class WorldRenderer extends BaseRenderer<World> {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         MainMapCharacter mainCharacter = getController().getMainCharacter();
-        RenderGrid renderGrid = mainCharacter.getLocation().getRenderGrid(renderGridWidth, renderGridHeight);
+        RenderGrid renderGrid = mainCharacter.getLocation().getRenderGrid();
 
         renderBackgroundColor();
 
-        Vector2 offset = renderOffset.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
+        Vector2 offset = Grid.RENDER_GRID_OFFSET.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
         renderGrid.render(batch, offset, runTime);
 
         dialogueHandler.render(shapeRenderer, batch);

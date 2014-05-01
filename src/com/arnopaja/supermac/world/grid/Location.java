@@ -28,8 +28,8 @@ public class Location {
         this.position = position;
     }
 
-    public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
-        return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
+    public RenderGrid getRenderGrid() {
+        return grid.getRenderGrid(position);
     }
 
     public Location getNearestValidLocation(Direction direction) {

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: add non-quest entities to the world
  * @author Ari Weiland
  */
 public class MapLoader {
