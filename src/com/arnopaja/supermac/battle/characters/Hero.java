@@ -21,11 +21,11 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
     }
 
     public Hero(String name, BattleClass battleClass, int level) {
-        this(name, battleClass, level, 1, 1);
+        this(name, battleClass, level, -1, -1);
     }
 
-    public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana) {
-        super(name, battleClass, level, fractionHealth, fractionMana);
+    public Hero(String name, BattleClass battleClass, int level, int health, int mana) {
+        super(name, battleClass, level, health, mana);
     }
 
     public void setHasFled(boolean a)
@@ -56,13 +56,15 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            float health = 1;
+            //TODO fix int here
+            int health = -1;
             if (object.has("health")) {
-                health = getFloat(object, "health");
+                health = getInt(object, "health");
             }
-            float mana = 1;
+            //TODO fix int here
+            int mana = -1;
             if (object.has("mana")) {
-                mana = getFloat(object, "mana");
+                mana = getInt(object, "mana");
             }
             return new Hero(name, battleClass, level, health, mana);
         }
