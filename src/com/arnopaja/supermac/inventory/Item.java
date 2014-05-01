@@ -9,11 +9,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
+ * TODO: Bitmasks and effects!
  * @author Nolan Varani
  */
 public class Item extends GenericItem {
-
-    // TODO: image definition
 
     protected Item(int id, String name, int value) {
         super(id, name, value);

@@ -9,8 +9,6 @@ import com.google.gson.JsonObject;
  */
 public class SpecialItem extends GenericItem {
 
-    // TODO: image definition
-
     protected SpecialItem(int id, String name) {
         super(id, name, 0);
     }
