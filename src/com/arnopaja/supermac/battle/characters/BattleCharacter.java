@@ -25,7 +25,7 @@ public abstract class BattleCharacter {
     protected List<Spell> spellsList;
     //TODO: image definitions
 
-    protected BattleCharacter(String name, BattleClass battleClass, int level, float currentHealth, float currentMana) {
+    protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;
         this.spellsList = new ArrayList<Spell>();
         this.battleClass = battleClass;
@@ -48,8 +48,6 @@ public abstract class BattleCharacter {
     public boolean isFainted() {
         return currentHealth == 0;
     }
-
-
 
     public void modifyMana(int amount) {
         currentMana += amount;
@@ -78,8 +76,8 @@ public abstract class BattleCharacter {
     }
     public int getSpecial() { return special; }
     public int getSpeed() { return speed; }
-    public float getHealth() { return currentHealth * maxHealth; }
-    public float getMana() { return currentMana * maxMana; }
+    public float getHealth() { return currentHealth; }
+    public float getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }

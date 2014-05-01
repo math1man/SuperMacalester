@@ -37,7 +37,7 @@ public class Spell {
         if (destination.isFainted()) {
             dialogue += "\n" + destination + " fell!";
         }
-        source.modifyMana(manaCost);
+        source.modifyMana(-manaCost);
         dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
         if (source.isOutOfMana()) {
             dialogue += "\n" + source + " is out of mana...";

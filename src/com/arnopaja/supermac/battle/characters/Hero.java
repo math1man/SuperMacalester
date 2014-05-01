@@ -26,11 +26,11 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
         this(name, battleClass, level, 1, 1);
     }
 
-    public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana) {
+    public Hero(String name, BattleClass battleClass, int level, int fractionHealth, int fractionMana) {
         this(name, battleClass, level, fractionHealth, fractionMana, null);
     }
 
-    public Hero(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana, MainMapCharacter character) {
+    public Hero(String name, BattleClass battleClass, int level, int fractionHealth, int fractionMana, MainMapCharacter character) {
         super(name, battleClass, level, fractionHealth, fractionMana);
         main = character;
     }
@@ -67,13 +67,15 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            float health = 1;
+            //TODO fix int here
+            int health = 1;
             if (object.has("health")) {
-                health = getFloat(object, "health");
+                health = getInt(object, "health");
             }
-            float mana = 1;
+            //TODO fix int here
+            int mana = 1;
             if (object.has("mana")) {
-                mana = getFloat(object, "mana");
+                mana = getInt(object, "mana");
             }
             return new Hero(name, battleClass, level, health, mana, world.getMainCharacter());
         }
