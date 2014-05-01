@@ -36,7 +36,7 @@ public class Spell {
         String dialogue;
         if(isBlack)
         {
-            damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
+            damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " damage done.";
