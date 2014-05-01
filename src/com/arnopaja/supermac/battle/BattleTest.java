@@ -94,7 +94,8 @@ public class BattleTest extends Battle {
                 Character userInput;
                 int index;
                 BattleAction.ActionType at;
-                while(true)
+                a = null;
+                while(a == null)
                 {
                     System.out.println("What will " + h.getName() + " do?");
                     System.out.println("a = ATTACK, d = DEFEND, s = SPELL, f = FLEE");
@@ -102,7 +103,7 @@ public class BattleTest extends Battle {
                     switch(userInput)
                     {
                         case 'a':
-                            while(true)
+                            while(a == null)
                             {
                                 System.out.println("Attack which character?");
                                 for(Enemy e:enemyParty.getActiveParty())
@@ -114,15 +115,14 @@ public class BattleTest extends Battle {
                                 if(enemyParty.get(index) != null && !enemyParty.get(index).isFainted())
                                 {
                                     a = BattleAction.attack(h,enemyParty.get(index));
-                                    return;
                                 }
                             }
                         case 'd':
                             a = BattleAction.defend(h);
-                            return;
+                            break;
                         case 's':
                             Spell spell;
-                            while(true)
+                            while(a == null)
                             {
                                 System.out.println("Use which spell?");
                                 for(Spell s:h.getSpellsList())
@@ -136,7 +136,7 @@ public class BattleTest extends Battle {
                                     spell = h.getSpell(index);
                                 }
                                 else continue;
-                                while(true)
+                                while(a == null)
                                 {
                                     Party p;
                                     if(spell.isBlack()) p = enemyParty;
@@ -152,7 +152,6 @@ public class BattleTest extends Battle {
                                     if(p.get(index) != null && (!p.get(index).isFainted() || spell.getDamageModifier() == Float.POSITIVE_INFINITY) ) //Don't allow for invalid characters. Allow ONLY resurrect spells on fainted characters
                                     {
                                         a = BattleAction.spell(h,spell,p.get(index));
-                                        return;
                                     }
                                 }
                             }
@@ -164,6 +163,7 @@ public class BattleTest extends Battle {
                             continue;
                     }
                 }
+                addAction(a);
             }
         }
     }
