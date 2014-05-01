@@ -259,6 +259,6 @@ public class GameScreen implements Screen {
 
     public void setBattle(Battle battle) {
         this.battle = battle;
-        this.battle.ready(party, this);
+        this.battle.ready(party, world.getMainCharacter().getLocation().getRenderGrid(), this);
     }
 }

@@ -8,6 +8,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,8 +32,13 @@ public class Battle implements Controller, InteractionBuilder {
     protected final Queue<BattleAction> actionQueue;
     protected boolean isOver = false;
     protected boolean isReady = false;
-    protected GameScreen screen;
     protected MainParty mainParty;
+    protected RenderGrid backgroundGrid;
+    protected GameScreen screen;
+
+    public Battle(EnemyParty enemyParty) {
+        this(enemyParty, "");
+    }
 
     public Battle(EnemyParty enemyParty, String backgroundName) {
         this.enemyParty = enemyParty;
@@ -50,10 +56,11 @@ public class Battle implements Controller, InteractionBuilder {
         );
     }
 
-    public void ready(MainParty mainParty, GameScreen screen) {
+    public void ready(MainParty mainParty, RenderGrid backgroundGrid, GameScreen screen) {
         if (!isReady) {
             isReady = true;
             this.mainParty = mainParty;
+            this.backgroundGrid = backgroundGrid;
             this.screen = screen;
         }
     }
@@ -62,11 +69,14 @@ public class Battle implements Controller, InteractionBuilder {
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                // subrun code for if the main party is defeated
+                // run code for if the main party is defeated
                 setOver();
             } else if (enemyParty.isDefeated()) {
-                // subrun code for if the enemy party is defeated
+                // run code for if the enemy party is defeated'
                 setOver();
+            } else if (mainParty.partyHasFled()) {
+                mainParty.clearHasFled();
+                this.setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -112,6 +122,10 @@ public class Battle implements Controller, InteractionBuilder {
 
     public TextureRegion getBackground() {
         return background;
+    }
+
+    public RenderGrid getBackgroundGrid() {
+        return backgroundGrid;
     }
 
     @Override
@@ -166,13 +180,15 @@ public class Battle implements Controller, InteractionBuilder {
         return new DialogueOptions("What spell do you want to use?", spells,
                 spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
-    // TODO: can items be used on friends? On self?
+
     private Interaction selectItem(Hero hero, Interaction interaction) {
         List<Item> items = Inventory.getMain().getAll(Item.class);
         List<Interaction> itemInteractions = new ArrayList<Interaction>(items.size());
+        List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
+        targets.addAll(enemyParty.getActiveParty());
         for (Item item : items) {
             itemInteractions.add(new DialogueOptions("Who do you want to use " + item + " on?",
-                    enemyParty.getActiveParty(),
+                    targets,
                     items(hero, item, interaction),
                     DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }

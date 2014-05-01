@@ -24,18 +24,16 @@ public class MainParty extends Party<Hero> {
 //        return characters.get(random.nextInt(4));
 ////        return characters.get(0);
 //    }
-    public boolean partyHasFled()
-    {
+    public boolean partyHasFled() {
         for(Hero h:characters)
         {
             if(h.getHasFled()) return true;
         }
         return false;
     }
-    public void clearHasFled()
-    {
-        for(Hero h:characters)
-        {
+
+    public void clearHasFled() {
+        for(Hero h:characters) {
             h.setHasFled(false);
         }
     }

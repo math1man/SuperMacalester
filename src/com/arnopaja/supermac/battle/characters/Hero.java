@@ -28,12 +28,11 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
         super(name, battleClass, level, health, mana);
     }
 
-    public void setHasFled(boolean a)
-    {
+    public void setHasFled(boolean a) {
         hasFled = a;
     }
-    public boolean getHasFled()
-    {
+
+    public boolean getHasFled() {
         return hasFled;
     }
 

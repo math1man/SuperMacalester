@@ -25,6 +25,9 @@ public class BattleTest extends Battle {
                 // run code for if the enemy party is defeated'
                 System.out.println("You have won!");
                 setOver();
+            } else if (mainParty.partyHasFled()) {
+                mainParty.clearHasFled();
+                this.setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -32,11 +35,6 @@ public class BattleTest extends Battle {
                     setTurnActions();
                 } else {
                     System.out.println(action.run(delta));
-                    if(mainParty.partyHasFled())
-                    {
-                        mainParty.clearHasFled();
-                        this.setOver();
-                    }
                 }
             }
         }
@@ -50,16 +48,14 @@ public class BattleTest extends Battle {
         Random r = new Random();
         //Set enemy actions
         BattleAction a;
-        for (Enemy e:enemyParty.getActiveParty())
-        {
+        for (Enemy e:enemyParty.getActiveParty()) {
 //            System.out.println(e);
             a = BattleAction.attack(e,mainParty.getRandom());
             addAction(a);
             System.out.println(a);
         }
         //Set friendly actions
-        for (Hero h:mainParty.getActiveParty())
-        {
+        for (Hero h:mainParty.getActiveParty()) {
             //System.out.println(h);
             if(h.getMana() > h.getSpell(0).getManaCost()){
                 a = BattleAction.spell(h, h.getSpell(0), enemyParty.getRandom());
@@ -74,7 +70,6 @@ public class BattleTest extends Battle {
     public static void main(String[] args) {
         //create enemy party
         //create main party
-        //Look into java timing.
         System.out.println("IT'S HAPPENING");
         Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, null, false);
         Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, null, false);
@@ -86,8 +81,8 @@ public class BattleTest extends Battle {
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3, true);
-        Spell smokeWeedEveryDay = new Spell(2, "Smoke Weed Erryday", 5, 3, false);
+        Spell yoloswag = new Spell(1, "Damage Spell", 2, 3, true);
+        Spell smokeWeedEveryDay = new Spell(2, "Healing Spell", 5, 3, false);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
@@ -103,7 +98,7 @@ public class BattleTest extends Battle {
         teamswag.addCharacter(smart4);
 
         BattleTest battle = new BattleTest(teamyolo, "teamyolo");
-        battle.ready(teamswag, null);
+        battle.ready(teamswag, null, null);
 
         while (!battle.isOver()) {
             float delta = 1f / 60;
@@ -111,7 +106,7 @@ public class BattleTest extends Battle {
             try {
                 // sleep for 1/60 of a second
                 Thread.sleep((int)(delta*1000));
-            } catch(InterruptedException e) {
+            } catch(InterruptedException ignored) {
             }
         }
         System.out.println("IT'S OVER");
