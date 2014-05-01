@@ -86,7 +86,7 @@ public class BattleTest extends Battle {
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3);
+        Spell yoloswag = new Spell(1, "yoloswag69", 10, 3, true);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);

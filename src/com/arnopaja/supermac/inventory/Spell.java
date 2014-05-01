@@ -20,27 +20,44 @@ public class Spell {
     private final String name;
     private final float damageModifier;
     private final int manaCost;
+    private boolean type; //TRUE = BLACK, FALSE = WHITE
 
-    public Spell(int id, String name, float damageModifier, int manaCost) {
+    public Spell(int id, String name, float damageModifier, int manaCost, boolean offensive) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
         this.manaCost = manaCost;
+        this.type = offensive;
         cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         int damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
-        destination.modifyHealth(-damage);
-        String dialogue = source + " casts " + this + "!\n" +
-                damage + " damage done.";
-        if (destination.isFainted()) {
-            dialogue += "\n" + destination + " fell!";
+        String dialogue;
+        if(type)
+        {
+            destination.modifyHealth(-damage);
+            dialogue = source + " casts " + this + "!\n" +
+                    damage + " damage done.";
+            if (destination.isFainted()) {
+                dialogue += "\n" + destination + " fell!";
+            }
+            source.modifyMana(-manaCost);
+            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
+            if (source.isOutOfMana()) {
+                dialogue += "\n" + source + " is out of mana...";
+            }
         }
-        source.modifyMana(-manaCost);
-        dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
-        if (source.isOutOfMana()) {
-            dialogue += "\n" + source + " is out of mana...";
+        else
+        {
+            destination.modifyHealth(damage);
+            dialogue = source + " casts " + this + "!\n" +
+                    damage + " health restored.";
+            source.modifyMana(-manaCost);
+            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
+            if (source.isOutOfMana()) {
+                dialogue += "\n" + source + " is out of mana...";
+            }
         }
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
@@ -98,7 +115,8 @@ public class Spell {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
-                return new Spell(id, name, modifier, manaCost);
+                boolean offensive = getBoolean(object, "type");
+                return new Spell(id, name, modifier, manaCost,offensive);
             }
         }
 
