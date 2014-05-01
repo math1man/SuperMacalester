@@ -17,21 +17,21 @@ public abstract class BattleCharacter {
     protected Boolean isDefending;
     protected final BattleClass battleClass;
     protected int level;
-    protected float maxHealth, maxMana;
+    protected int maxHealth, maxMana;
     protected int attack, defense, special, speed;
-    protected float fractionHealth, fractionMana;
+    protected int currentHealth, currentMana;
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
     protected List<Spell> spellsList;
     //TODO: image definitions
 
-    protected BattleCharacter(String name, BattleClass battleClass, int level, float fractionHealth, float fractionMana) {
+    protected BattleCharacter(String name, BattleClass battleClass, int level, float currentHealth, float currentMana) {
         this.name = name;
         this.spellsList = new ArrayList<Spell>();
         this.battleClass = battleClass;
         setLevel(level);
-        this.fractionHealth = (fractionHealth >= 0 && fractionHealth <= 1) ? fractionHealth : 1;
-        this.fractionMana = (fractionMana >= 0 && fractionMana <= 1) ? fractionMana : 1;
+        this.currentHealth = maxHealth;
+        this.currentMana = maxMana;
         this.isDefending = false;
     }
 
@@ -39,40 +39,30 @@ public abstract class BattleCharacter {
         this.spellsList.add(dspell);
     }
 
-    public float modifyHealth(float amount) {
-        float before = fractionHealth;
-        fractionHealth += amount / maxHealth;
-        if (fractionHealth > 1) {
-            fractionHealth = 1;
-        } else if (fractionHealth < 0) {
-            fractionHealth = 0;
-        }
-        return (fractionHealth - before) * maxHealth;
+    public void modifyHealth(int amount) {
+        currentHealth += amount;
+        if(currentHealth > maxHealth) currentHealth = maxHealth;
+        else if(currentHealth < 0) currentHealth = 0;
     }
 
     public boolean isFainted() {
-        return fractionHealth == 0;
+        return currentHealth == 0;
     }
 
 
 
-    public float modifyMana(float amount) {
-        float before = fractionMana;
-        fractionMana += amount / maxMana;
-        if (fractionMana > 1) {
-            fractionMana = 1;
-        } else if (fractionMana < 0) {
-            fractionMana = 0;
-        }
-        return (fractionMana - before) * maxMana;
+    public void modifyMana(int amount) {
+        currentMana += amount;
+        if(currentMana > maxMana) currentMana = maxMana;
+        else if(currentMana < 0) currentMana = 0;
     }
 
     public boolean isOutOfMana() {
-        return fractionMana == 0;
+        return currentMana == 0;
     }
 
     public boolean hasMana(float amount) {
-        return fractionMana >= amount / maxMana;
+        return currentMana >= amount / maxMana;
     }
 
     //GET
@@ -88,8 +78,8 @@ public abstract class BattleCharacter {
     }
     public int getSpecial() { return special; }
     public int getSpeed() { return speed; }
-    public float getHealth() { return fractionHealth * maxHealth; }
-    public float getMana() { return fractionMana * maxMana; }
+    public float getHealth() { return currentHealth * maxHealth; }
+    public float getMana() { return currentMana * maxMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }

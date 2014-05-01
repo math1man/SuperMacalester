@@ -47,11 +47,10 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null, null) {
             @Override
             public Dialogue run(float delta) {
-                float damage = (float) (getSource().getAttack() / getDestination().getDefense()
-                        * (2 + Math.abs(random.nextGaussian())));
-                int damageDone = -(int) getDestination().modifyHealth(-damage);
+                int damage = (int) ((2 + Math.abs(random.nextGaussian())) * getSource().getAttack() / getDestination().getDefense());
+                getDestination().modifyHealth(-damage);
                 String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
-                        damageDone + " damage done.";
+                        damage + " damage done.";
                 if(getDestination().isFainted()) {
                     dialogue += "\n" + getDestination() + " fell!";
                 }
