@@ -62,7 +62,7 @@ public abstract class Party<T extends BattleCharacter> {
     {
         for(BattleCharacter bc:characters)
         {
-            bc.setIsDefending(false);
+            bc.setDefending(false);
         }
     }
 

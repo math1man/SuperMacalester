@@ -71,8 +71,8 @@ public abstract class BattleCharacter {
     public float getMaxMana() { return maxMana; }
     public int getAttack() { return attack; }
     public int getDefense() {
-        if(!isDefending) return defense;
-        else return defense * 2;
+        if(isDefending) return defense * 2;
+        else return defense;
     }
     public int getSpecial() { return special; }
     public int getSpeed() { return speed; }
@@ -132,13 +132,11 @@ public abstract class BattleCharacter {
         updateStats();
     }
 
-    public void setIsDefending(Boolean a)
-    {
+    public void setDefending(boolean a) {
         this.isDefending = a;
     }
 
-    public Boolean getIsDefending()
-    {
+    public boolean isDefending() {
         return this.isDefending;
     }
 
