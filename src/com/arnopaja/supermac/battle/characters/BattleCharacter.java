@@ -49,6 +49,11 @@ public abstract class BattleCharacter {
         return currentHealth == 0;
     }
 
+    public void resurrect()
+    {
+        currentHealth = maxHealth;
+    }
+
     public void modifyMana(int amount) {
         currentMana += amount;
         if(currentMana > maxMana) currentMana = maxMana;
@@ -81,6 +86,10 @@ public abstract class BattleCharacter {
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }
+    public int getSpellIndex(Spell s)
+    {
+        return spellsList.indexOf(s);
+    }
 
     public Spell getSpell(int index) {
         return spellsList.get(index);

@@ -36,7 +36,7 @@ public class Spell {
         String dialogue;
         if(isBlack)
         {
-            damage = (int) getDamageModifier() / (destination.getSpecial() / 4) * source.getSpecial();
+            damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " damage done.";
@@ -51,11 +51,31 @@ public class Spell {
         }
         else
         {
-            //TODO: Make sure people can't come back from the dead
+            if(damageModifier == Float.POSITIVE_INFINITY) //Use this special value for resurrect spells
+            {
+                source.modifyMana(-manaCost);
+                if(destination.isFainted())
+                {
+                    destination.resurrect();
+                    dialogue = source + " casts " + this + "!\n" +
+                             destination.getName() + " has been resurrected!" ;
+                }
+                else
+                {
+                    dialogue = source + " casts " + this + "!\n" +
+                            "It had no effect on " + destination.getName() + "!" ;
+                }
+                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+            }
+            if(destination.isFainted())
+            {
+                dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
+                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+            }
             damage = (int) getDamageModifier() * source.getSpecial();
             destination.modifyHealth(damage);
             dialogue = source + " casts " + this + "!\n" +
-                    damage + " health restored.";
+                    damage + " health restored to " + destination + "." ;
             source.modifyMana(-manaCost);
             dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {
