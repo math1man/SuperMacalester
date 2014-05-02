@@ -26,63 +26,9 @@
             "interactable" : true,
             "interaction" : {
                 "class" : "Interaction",
-                "options" : {
+                "dialogue" : {
                     "class" : "Dialogue",
-                    "header" : "Do you want to fight?",
-                    "options" : [
-                        {
-                            "text" : "yes",
-                            "interaction" : {
-                                "class" : "Interaction",
-                                "battle" : {
-                                    "class" : "Battle",
-                                    "background" : "",
-                                    "enemy" : {
-                                        "class" : "EnemyParty",
-                                        "characters" : [
-                                            {
-                                                "class" : "Enemy",
-                                                "name" : "Dave",
-                                                "battleclass" : "COMP_SCI",
-                                                "level" : 1,
-                                                "item" : {
-                                                    "class" : "Item",
-                                                    "id" : 0
-                                                }
-                                            },
-                                            {
-                                                "class" : "Enemy",
-                                                "name" : "Joe",
-                                                "battleclass" : "Humanities",
-                                                "level" : 1,
-                                                "item" : {
-                                                    "class" : "Item",
-                                                    "id" : 1
-                                                }
-                                            },
-                                            {
-                                                "class" : "Enemy",
-                                                "name" : "Rachel",
-                                                "battleclass" : "Econ",
-                                                "level" : 1,
-                                                "item" : {
-                                                    "class" : "Item",
-                                                    "id" : 2
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "text" : "no",
-                            "interaction" : {
-                                "class" : "Interaction",
-                                "clear" : null
-                            }
-                        }
-                    ]
+                    "name" : "TestBattle"
                 }
             }
         },

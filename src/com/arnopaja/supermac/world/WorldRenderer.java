@@ -28,7 +28,7 @@ public class WorldRenderer extends BaseRenderer<World> {
 
         renderBackgroundColor();
 
-        Vector2 offset = Grid.RENDER_GRID_OFFSET.cpy().add(mainCharacter.getRenderOffset()).scl(-1);
+        Vector2 offset = Grid.RENDER_GRID_OFFSET.cpy().sub(mainCharacter.getRenderOffset());
         renderGrid.render(batch, offset, runTime);
 
         dialogueHandler.render(shapeRenderer, batch);

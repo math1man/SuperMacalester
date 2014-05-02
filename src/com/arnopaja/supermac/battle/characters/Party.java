@@ -45,7 +45,7 @@ public abstract class Party<T extends BattleCharacter> {
 
     public List<T> getActiveParty() {
         ArrayList<T> h = new ArrayList<T>();
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<Math.min(4, characters.size()); i++) {
             T character = characters.get(i);
             if(!character.isFainted()){
                 h.add(character);

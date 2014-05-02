@@ -15,7 +15,7 @@ public class DialogueMember {
 
     public DialogueMember(String text, Interaction interaction) {
         this.text = text;
-        if (interaction != null && interaction.getPrimary() instanceof Dialogue) {
+        if (interaction != null && interaction.getPrimary() instanceof Dialogue || interaction == Interaction.NULL) {
             this.interaction = interaction;
         } else {
             this.interaction = Dialogue.CLEAR_DIALOGUE.attach(interaction);

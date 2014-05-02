@@ -22,8 +22,8 @@ public class Grid {
     public static final int RENDER_GRID_WIDTH = getRenderDimension(GameScreen.GAME_WIDTH);
     public static final int RENDER_GRID_HEIGHT = getRenderDimension(GameScreen.GAME_HEIGHT);
     public static final Vector2 RENDER_GRID_OFFSET = new Vector2(GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT)
-            .scl(-1.0f / Grid.GRID_PIXEL_DIMENSION)
-            .add(new Vector2(Grid.RENDER_GRID_WIDTH, Grid.RENDER_GRID_HEIGHT))
+            .scl(1f / Grid.GRID_PIXEL_DIMENSION)
+            .sub(new Vector2(Grid.RENDER_GRID_WIDTH, Grid.RENDER_GRID_HEIGHT))
             .scl(0.5f);
 
     protected final int gridWidth, gridHeight;

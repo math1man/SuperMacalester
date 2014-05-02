@@ -24,6 +24,11 @@ public abstract class Dialogue implements InteractionBuilder {
         public void run(GameScreen screen) {
             screen.endDialogue();
         }
+
+        @Override
+        public String toString() {
+            return "CLEAR_DIALOGUE";
+        }
     };
 
     private final String name;

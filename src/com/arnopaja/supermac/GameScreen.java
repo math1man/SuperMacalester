@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-        Dialogue prologue = SuperParser.parse("Prologue", AssetLoader.dialogueHandle, Dialogue.class);
+        Dialogue prologue = AssetLoader.dialogues.get("Prologue");
         new DialogueText(prologue.getRaw(), DialogueStyle.FULL_SCEEN).toInteraction().run(this);
     }
 
@@ -94,8 +94,8 @@ public class GameScreen implements Screen {
                 currentInputHandler = worldInputHandler;
                 break;
             case BATTLE:
-                currentController = battle;
                 battleRenderer.setController(battle);
+                currentController = battle;
                 currentRenderer = battleRenderer;
                 currentInputHandler = battleInputHandler;
                 break;
@@ -181,8 +181,10 @@ public class GameScreen implements Screen {
     }
 
     public void goToBattle(Battle battle) {
+        System.out.println("going to battle");
         setBattle(battle);
         changeMode(GameMode.BATTLE);
+        System.out.println(state);
     }
 
     public boolean isWorld() {

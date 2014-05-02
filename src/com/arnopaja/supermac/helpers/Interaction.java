@@ -57,6 +57,16 @@ public abstract class Interaction implements InteractionBuilder {
     public static final Interaction NULL = new Interaction() {
         @Override
         public void run(GameScreen screen) {}
+
+        @Override
+        public Interaction attach(InteractionBuilder builder) {
+            return builder.toInteraction();
+        }
+
+        @Override
+        public String toString() {
+            return "NULL";
+        }
     };
 
     /**
@@ -145,8 +155,15 @@ public abstract class Interaction implements InteractionBuilder {
 
     @Override
     public String toString() {
+        String primary = null;
+        if (getPrimary() instanceof InteractionBuilder[]) {
+            primary = Arrays.toString((InteractionBuilder[]) getPrimary());
+        } else if (getPrimary() != null) {
+            primary = getPrimary().toString();
+        }
         return "Interaction{" +
-                "parameters=" + parameters +
+                "primary=" + primary +
+                ", secondary=" + getSecondary() +
                 '}';
     }
 
@@ -194,27 +211,24 @@ public abstract class Interaction implements InteractionBuilder {
         public Interaction fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Interaction interaction = NULL;
-            if (object.has("dialogue")) {
-                Dialogue dialogue = getObject(object, "dialogue", Dialogue.class);
-                return dialogue.toInteraction();
-            } else if (object.has("options")) {
-                Dialogue dialogue = getObject(object, "options", Dialogue.class);
+            if (has(object, Dialogue.class)) {
+                Dialogue dialogue = getObject(object, Dialogue.class);
                 return dialogue.toInteraction();
             }
             if (object.has("clear")) {
-                interaction.attach(Dialogue.CLEAR_DIALOGUE);
+                interaction = interaction.attach(Dialogue.CLEAR_DIALOGUE);
             }
             if (has(object, GenericItem.class)) {
                 GenericItem item = getObject(object, GenericItem.class);
-                interaction.attach(item);
+                interaction = interaction.attach(item);
             }
             if (has(object, Hero.class)) {
                 Hero hero = getObject(object, Hero.class);
-                interaction.attach(hero);
+                interaction = interaction.attach(hero);
             }
             if (has(object, Battle.class)) {
                 Battle battle = getObject(object, Battle.class);
-                interaction.attach(battle);
+                interaction = interaction.attach(battle);
             }
             return interaction;
         }

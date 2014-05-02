@@ -23,13 +23,12 @@ A sample interaction:
 
 "interaction" : {
     "dialogue" : { <a dialogue instance, initiates a dialogue> }
-    "options" : { <a dialogue options instance, initiates a dialogue> }
     "battle" : { <a battle instance, initiates a battle> }
     "item" : { <an item instance, adds the item to your inventory> }
     "hero" : { <a hero instance, adds the hero to your party> }
 }
 
-An interaction either may have dialogue, options, or any number of the other interactions.
+An interaction either may have a dialogue or any number of the other interactions.
 
 A sample goal:
 
@@ -68,7 +67,7 @@ A sample dialogue:
 
 A sample dialogue options:
 
-"options" : {
+"dialogue" : {
     "header" : "<the prompt for the options>",
     "options" : [
         {

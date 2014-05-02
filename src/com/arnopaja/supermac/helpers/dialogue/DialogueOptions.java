@@ -3,7 +3,6 @@ package com.arnopaja.supermac.helpers.dialogue;
 import com.arnopaja.supermac.helpers.Interaction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,14 +32,6 @@ public class DialogueOptions extends Dialogue {
         this(name, encapsulate(header, options, interactions), style);
     }
 
-    protected DialogueOptions(DialogueMember[] members, DialogueStyle style) {
-        this(Arrays.asList(members), style);
-    }
-
-    protected DialogueOptions(List<DialogueMember> members, DialogueStyle style) {
-        this("", members, style);
-    }
-
     protected DialogueOptions(String name, List<DialogueMember> members, DialogueStyle style) {
         super(name, style);
         this.members = members;
@@ -49,7 +40,7 @@ public class DialogueOptions extends Dialogue {
 
     private static List<DialogueMember> encapsulate(String header, List<?> options, List<Interaction> interactions) {
         List<DialogueMember> members = new ArrayList<DialogueMember>(options.size() + 1);
-        members.add(new DialogueMember(header));
+        members.add(new DialogueMember(header, Interaction.NULL));
         for (int i=0; i<options.size(); i++) {
             members.add(new DialogueMember(options.get(i).toString(),
                     interactions.size() > i ? interactions.get(i) : Interaction.NULL));

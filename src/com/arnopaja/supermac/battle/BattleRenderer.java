@@ -22,5 +22,6 @@ public class BattleRenderer extends BaseRenderer<Battle> {
         renderBackgroundColor();
 
         getController().getBackgroundGrid().render(batch, Grid.RENDER_GRID_OFFSET, runTime);
+        dialogueHandler.render(shapeRenderer, batch);
     }
 }

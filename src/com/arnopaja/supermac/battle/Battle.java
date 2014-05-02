@@ -104,9 +104,14 @@ public class Battle implements Controller, InteractionBuilder {
         return isReady;
     }
 
-    public boolean isOver() {return isOver;}
+    public void setOver() {
+        isOver = true;
+        // TODO: handle ending scenario
+    }
 
-    public void setOver()   {isOver = true;}
+    public boolean isOver() {
+        return isOver;
+    }
 
     public MainParty getMainParty() {
         return mainParty;
