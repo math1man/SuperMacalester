@@ -13,7 +13,7 @@ public enum DialogueStyle {
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP,
             3),
-    BATTLE_CONSOLE(Grid.GRID_PIXEL_DIMENSION / 2,
+    BATTLE_CONSOLE(Grid.GRID_PIXEL_DIMENSION / 2, // TODO: we need more space or something
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
             4),
