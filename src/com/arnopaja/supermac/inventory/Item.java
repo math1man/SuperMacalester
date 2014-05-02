@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.EffectParser;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
@@ -8,35 +9,38 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 /**
  * TODO: Bitmasks and effects! (parse in)
  * @author Nolan Varani
  */
 public class Item extends GenericItem {
 
-    public static enum ItemType
-    {
-        HEAL,DAMAGE,POWERUP_ATK,POWERUP_DEF,POWERUP_SPD,POWERUP_SPC; //Resurrect = HEAL w/ modifier = POSITIVE_INFINITY
-    }
-    private ItemType type;
-    public ItemType getType()
-    {
-        return type;
-    }
-    public int getModifier()
-    {
-        return modifier;
-    }
-    private int modifier; //The item's effective power, regardless of what ItemType it is
-    protected Item(int id, String name, int value,int m, ItemType t) {
+    private List<Effect> effects;
+
+    protected Item(int id, String name, int value, List<Effect> effects) {
         super(id, name, value);
-        this.type = t;
-        this.modifier = m;
+        this.effects = effects;
     }
+
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item. Add new methods and variables to BattleCharacter to enable temporary powerups to attack, defense, speed, special
         String dialogue = source + " uses " + this + " on " + destination + "!";
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+    }
+
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    public boolean isHealing() {
+        for (Effect effect : effects) {
+            if (effect.isHealing()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class Parser extends SuperParser<Item> {
@@ -49,9 +53,8 @@ public class Item extends GenericItem {
             }
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            int mod = getInt(object, "modifier");
-            //TODO: parse string version of ItemType to ItemType
-            Item item = new Item(id, name, value, mod, null); //REMOVE THE NULL FOR THE FINAL VERSION!
+            String effect = ""; // getString(object, "effects"); TODO: update items.txt with effects
+            Item item = new Item(id, name, value, EffectParser.parse(effect));
             cache(item);
             return item;
         }
@@ -62,8 +65,7 @@ public class Item extends GenericItem {
             addInt(json, "id", object.getId());
             addString(json, "name", object.getName());
             addInt(json, "value", object.getValue());
-            addInt(json, "modifier", object.getModifier());
-            addString(json, "type", object.getType().toString());
+            addString(json, "effects", EffectParser.toString(object.getEffects()));
             return json;
         }
     }

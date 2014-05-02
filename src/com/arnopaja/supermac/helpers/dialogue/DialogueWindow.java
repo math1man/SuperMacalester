@@ -3,6 +3,8 @@ package com.arnopaja.supermac.helpers.dialogue;
 import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -81,7 +83,10 @@ public class DialogueWindow {
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(1, 1, 1, 0.8f);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        shapeRenderer.setColor(1, 1, 1, 0.8f); // TODO: WHY AM I NOT TRANSPARENT
         shapeRenderer.rect(frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
         shapeRenderer.end();
 

@@ -42,11 +42,32 @@ public abstract class BattleAction implements InteractionBuilder {
         this.item = item;
     }
 
+    /**
+     * Runs this battle action. If the source is not fainted and any of
+     * the following conditions are met, it will properly run the battle
+     * action. If not, it will return a message detailing the conditions.
+     *
+     * Either:
+     *  - there is no destination (defend or flee actions)
+     *  - the destination is not fainted
+     *  - the action is a healing spell
+     *  - the action is a healing item
+     *
+     * @param delta
+     * @return
+     */
     public Dialogue run(float delta) {
         if (source.isFainted()) {
-            return new DialogueText(source + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
+            return new DialogueText(source + " is fainted!", DialogueStyle.BATTLE_CONSOLE);
         } else {
-            return subrun(delta);
+            if (getDestination() == null                                           // no destination
+                    || !getDestination().isFainted()                               // destination is not fainted
+                    || ((getType() == ActionType.SPELL && !getSpell().isBlack())   // healing spell
+                    || (getType() == ActionType.ITEM && getItem().isHealing()))) { // healing item
+                return subrun(delta);
+            } else {
+                return new DialogueText(source + "'s target " + destination + " is fainted!", DialogueStyle.BATTLE_CONSOLE);
+            }
         }
     }
 

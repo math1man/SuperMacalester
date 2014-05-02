@@ -29,10 +29,10 @@ public class GameScreen implements Screen {
 
     // TODO: allow for variable aspect ratios (i.e. below)
     public static final float ASPECT_RATIO = 5.0f / 3; // Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-    public static final float GAME_HEIGHT = 360;
+    public static final float GAME_HEIGHT = 352;
     public static final float GAME_WIDTH = GAME_HEIGHT * ASPECT_RATIO;
 
-    public static enum GameMode { WORLD, BATTLE, MENU }
+    public static enum GameMode { WORLD, BATTLE }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
@@ -98,9 +98,6 @@ public class GameScreen implements Screen {
                 currentController = battle;
                 currentRenderer = battleRenderer;
                 currentInputHandler = battleInputHandler;
-                break;
-            case MENU:
-                // TODO: implement menu stuff
                 break;
         }
         Gdx.input.setInputProcessor(currentInputHandler);
@@ -180,11 +177,14 @@ public class GameScreen implements Screen {
         Inventory.load();
     }
 
-    public void goToBattle(Battle battle) {
-        System.out.println("going to battle");
-        setBattle(battle);
+    public void battle(Battle battle) {
+        this.battle = battle;
+        this.battle.ready(party, world.getMainCharacter().getLocation().getRenderGrid(), this);
         changeMode(GameMode.BATTLE);
-        System.out.println(state);
+    }
+
+    public void world() {
+        changeMode(GameMode.WORLD);
     }
 
     public boolean isWorld() {
@@ -193,10 +193,6 @@ public class GameScreen implements Screen {
 
     public boolean isBattle() {
         return mode == GameMode.BATTLE;
-    }
-
-    public boolean isMenu() {
-        return mode == GameMode.MENU;
     }
 
     public boolean isRunning() {
@@ -257,10 +253,5 @@ public class GameScreen implements Screen {
 
     public Battle getBattle() {
         return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-        this.battle.ready(party, world.getMainCharacter().getLocation().getRenderGrid(), this);
     }
 }

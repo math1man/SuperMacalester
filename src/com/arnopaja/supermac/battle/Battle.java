@@ -139,7 +139,7 @@ public class Battle implements Controller, InteractionBuilder {
         return new Interaction(battle) {
             @Override
             public void run(GameScreen screen) {
-                screen.goToBattle(battle);
+                screen.battle(battle);
             }
         };
     }
@@ -165,7 +165,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectAttack(Hero hero, Interaction interaction) {
-        return new DialogueOptions("Who do you want to attack?", enemyParty.getActiveParty(),
+        return new DialogueOptions("Attack who?", enemyParty.getActiveParty(),
                 attacks(hero, interaction), DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
@@ -177,12 +177,12 @@ public class Battle implements Controller, InteractionBuilder {
         List<Spell> spells = hero.getSpellsList();
         List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
         for (Spell spell : spells) {
-            spellInteractions.add(new DialogueOptions("Who do you want to use " + spell + " on?",
+            spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
                     enemyParty.getActiveParty(),
                     spells(hero, spell, interaction),
                     DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("What spell do you want to use?", spells,
+        return new DialogueOptions("Which spell?", spells,
                 spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
@@ -192,12 +192,12 @@ public class Battle implements Controller, InteractionBuilder {
         List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
         targets.addAll(enemyParty.getActiveParty());
         for (Item item : items) {
-            itemInteractions.add(new DialogueOptions("Who do you want to use " + item + " on?",
+            itemInteractions.add(new DialogueOptions("Use " + item + " on who?",
                     targets,
                     items(hero, item, interaction),
                     DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("What item do you want to use?", items,
+        return new DialogueOptions("Which item?", items,
                 itemInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 

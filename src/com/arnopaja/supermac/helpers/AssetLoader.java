@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Spell;
@@ -70,7 +69,7 @@ public class AssetLoader {
     public static Map<String, Grid> grids = new HashMap<String, Grid>();
 
     // Font
-    public static final float FONT_HEIGHT = GameScreen.GAME_HEIGHT / 15; // 15 lines fit on the screen exactly
+    public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
     private static BitmapFont font, shadow;
 
     // Preferences

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * TODO: implement effects?
  * @author Nolan Varani
  */
 public class Spell {
@@ -35,7 +36,7 @@ public class Spell {
         int damage;
         String dialogue;
         if(isBlack)
-        {
+        {                           // TODO: I think this should no divide by four so the modifier is the only multiplier
             damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +

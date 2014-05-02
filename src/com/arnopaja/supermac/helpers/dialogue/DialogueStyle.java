@@ -2,7 +2,6 @@ package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.world.grid.Grid;
 
 /**
 * @author Ari Weiland
@@ -13,14 +12,18 @@ public enum DialogueStyle {
             GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(3) - DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP,
             3),
-    BATTLE_CONSOLE(Grid.GRID_PIXEL_DIMENSION / 2, // TODO: we need more space or something
-            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
-            GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
+    BATTLE_CONSOLE(0, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4),
+            GameScreen.GAME_WIDTH / 2,
             4),
-    BATTLE_STATUS(GameScreen.GAME_WIDTH / 2,
-            GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4) - DialogueWindow.FRAME_GAP,
-            GameScreen.GAME_WIDTH / 2 - DialogueWindow.FRAME_GAP,
+    BATTLE_STATUS(GameScreen.GAME_WIDTH / 2, GameScreen.GAME_HEIGHT - DialogueWindow.getHeight(4),
+            GameScreen.GAME_WIDTH / 2,
             4),
+    BATTLE_STATUS_LEFT(0, 0,
+            GameScreen.GAME_WIDTH / 3,
+            8),
+    BATTLE_STATUS_RIGHT(GameScreen.GAME_WIDTH * 2 / 3, 0,
+            GameScreen.GAME_WIDTH / 3,
+            8),
     FULL_SCEEN(DialogueWindow.FRAME_GAP,
             DialogueWindow.FRAME_GAP,
             GameScreen.GAME_WIDTH - 2 * DialogueWindow.FRAME_GAP,

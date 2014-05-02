@@ -72,8 +72,8 @@ public abstract class BattleCharacter {
     public String getName() { return name; }
     public BattleClass getBattleClass() { return battleClass; }
     public int getLevel() { return level; }
-    public float getMaxHealth() { return maxHealth; }
-    public float getMaxMana() { return maxMana; }
+    public int getMaxHealth() { return maxHealth; }
+    public int getMaxMana() { return maxMana; }
     public int getAttack() { return attack; }
     public int getDefense() {
         if(isDefending) return defense * 2;
@@ -81,8 +81,8 @@ public abstract class BattleCharacter {
     }
     public int getSpecial() { return special; }
     public int getSpeed() { return speed; }
-    public float getHealth() { return currentHealth; }
-    public float getMana() { return currentMana; }
+    public int getHealth() { return currentHealth; }
+    public int getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }

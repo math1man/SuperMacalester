@@ -65,6 +65,18 @@ public abstract class Party<T extends BattleCharacter> {
         }
     }
 
+    public String status() {
+        StringBuilder sb = new StringBuilder();
+        for (T bc : getActiveParty()) {
+            sb.append(bc).append(": HP: ").append(bc.getHealth())
+                    .append(", MP: ").append(bc.getMana()).append("\n");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
     public static abstract class Parser<U extends Party> extends SuperParser<U> {
         @Override
         public U fromJson(JsonElement element) {

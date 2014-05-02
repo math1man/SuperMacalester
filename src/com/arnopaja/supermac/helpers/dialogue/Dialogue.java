@@ -26,6 +26,15 @@ public abstract class Dialogue implements InteractionBuilder {
         }
 
         @Override
+        public Interaction attach(InteractionBuilder builder) {
+            if (builder == CLEAR_DIALOGUE) {
+                return CLEAR_DIALOGUE;
+            } else {
+                return super.attach(builder);
+            }
+        }
+
+        @Override
         public String toString() {
             return "CLEAR_DIALOGUE";
         }

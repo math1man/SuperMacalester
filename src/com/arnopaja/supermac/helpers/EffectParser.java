@@ -2,68 +2,40 @@ package com.arnopaja.supermac.helpers;
 
 import com.arnopaja.supermac.inventory.Effect;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Envy on 4/23/14.
+ * @author Nolan Varani
  */
-public class EffectParser
-{
-    public static LinkedList<Effect> parse(String parseString)
-    {
-        LinkedList<Effect> effectsList = new LinkedList<Effect>();
-        Effect.Type myType;
-        Effect.Target myTarget;
-        String parseStrings[] = parseString.split(",");
-        char c;
-        int myValue;
-        for (String s:parseStrings)
-        {
-            if(Character.isUpperCase(s.charAt(0))) myTarget = Effect.Target.SELF;
-            else myTarget = Effect.Target.OTHER;
-            c = Character.toLowerCase(s.charAt(0));
-            /*
-            M - mana self
-            m - mana other
-            H - health self
-            h - health other
-            S - speed self
-            s - speed other
-            A - attack self
-            a - attack other
-            D - defense self
-            d - defense other
-            Z - special self
-            z - special other
-            */
-            switch(c)
-            {
-                case 'm':
-                    myType = Effect.Type.MANA;
-                    break;
-                case 'h':
-                    myType = Effect.Type.HEALTH;
-                    break;
-                case 's':
-                    myType = Effect.Type.SPEED;
-                    break;
-                case 'a':
-                    myType = Effect.Type.ATTACK;
-                    break;
-                case 'd':
-                    myType = Effect.Type.DEFENSE;
-                    break;
-                case 'z':
-                    myType = Effect.Type.SPECIAL;
-                    break;
-                default:
-                    //ERROR
-                    myType = null;
-                    break;
+public class EffectParser {
+
+    public static List<Effect> parse(String parseString) {
+        List<Effect> effectsList = new ArrayList<Effect>();
+        if (parseString != null && !parseString.isEmpty()) {
+            String[] parseStrings = parseString.split(",");
+            for (String s : parseStrings) {
+                Effect.Type type = Effect.Type.get(s.substring(0, 1));
+                // upper case => self
+                // lower case => other
+                boolean self = Character.isUpperCase(s.charAt(0));
+                int value = Integer.parseInt(s.substring(1));
+                if (type != null) {
+                    effectsList.add(new Effect(type, self, value));
+                }
             }
-            myValue = Integer.parseInt(s.substring(1));
-            effectsList.push(new Effect(myType,myTarget,myValue));
         }
         return effectsList;
+    }
+
+    public static String toString(List<Effect> effects) {
+        StringBuilder sb = new StringBuilder();
+        for (Effect effect : effects) {
+            sb.append(effect).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
     }
 }

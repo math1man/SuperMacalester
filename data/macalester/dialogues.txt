@@ -38,26 +38,6 @@
                                         "class" : "Item",
                                         "id" : 0
                                     }
-                                },
-                                {
-                                    "class" : "Enemy",
-                                    "name" : "Joe",
-                                    "battleclass" : "Humanities",
-                                    "level" : 1,
-                                    "item" : {
-                                        "class" : "Item",
-                                        "id" : 1
-                                    }
-                                },
-                                {
-                                    "class" : "Enemy",
-                                    "name" : "Rachel",
-                                    "battleclass" : "Econ",
-                                    "level" : 1,
-                                    "item" : {
-                                        "class" : "Item",
-                                        "id" : 2
-                                    }
                                 }
                             ]
                         }
@@ -114,8 +94,8 @@
     "Slackathon" : {
         "class" : "Dialogue",
         "name" : "Slackathon",
-        "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious practice of apathetic
-        <d>indifference and willful ignorance.",
+        "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious
+        <d>practice of apathetic indifference and willful ignorance.",
         "interaction" : {
             "class" : "Interaction",
             "dialogue" : {
