@@ -117,7 +117,7 @@ public class BattleTest extends Battle {
                             while(a == null)
                             {
                                 System.out.println("Use which spell?");
-                                for(Spell s : h.getSpellsList())
+                                for(Spell s : h.getSpells())
                                 {
                                     System.out.println(h.getSpellIndex(s) + ": " + s.getName());
                                 }

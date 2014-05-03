@@ -170,7 +170,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectSpell(Hero hero, Interaction interaction) {
-        List<Spell> spells = hero.getSpellsList();
+        List<Spell> spells = hero.getSpells();
         List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
         for (Spell spell : spells) {
             spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",

@@ -21,7 +21,7 @@ public abstract class BattleCharacter {
     protected int currentHealth, currentMana;
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
-    protected List<Spell> spellsList;
+    protected List<Spell> spells;
     //TODO: image definitions
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
@@ -34,11 +34,11 @@ public abstract class BattleCharacter {
     }
 
     public void addSpell(Spell spell) {
-        spellsList.add(spell);
+        spells.add(spell);
     }
 
     public void addSpells(Collection<Spell> spells) {
-        spellsList.addAll(spells);
+        this.spells.addAll(spells);
     }
 
     public void modifyHealth(int amount) {
@@ -89,14 +89,14 @@ public abstract class BattleCharacter {
     public int getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
-    public List<Spell> getSpellsList() { return spellsList; }
+    public List<Spell> getSpells() { return spells; }
 
     public int getSpellIndex(Spell s) {
-        return spellsList.indexOf(s);
+        return spells.indexOf(s);
     }
 
     public Spell getSpell(int index) {
-        return spellsList.get(index);
+        return spells.get(index);
     }
 
     public boolean hasEquippedArmor() {

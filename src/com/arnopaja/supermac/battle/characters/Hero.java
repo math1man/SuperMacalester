@@ -93,7 +93,7 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             if (object.hasEquippedWeapon()) {
                 addObject(json, object.getEquippedWeapon(), Weapon.class);
             }
-            addList(json, "spells", object.getSpellsList(), Spell.class);
+            addList(json, "spells", object.getSpells(), Spell.class);
             return json;
         }
     }
