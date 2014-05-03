@@ -7,7 +7,6 @@ import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
 import com.arnopaja.supermac.helpers.*;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -35,6 +34,8 @@ public class GameScreen implements Screen {
     public static enum GameMode { WORLD, BATTLE }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
+    private final MacGame game;
+
     private final DialogueHandler dialogueHandler;
 
     private final WorldRenderer worldRenderer;
@@ -56,9 +57,10 @@ public class GameScreen implements Screen {
     private MainParty party;
     private Battle battle;
 
-    public GameScreen() {
-        AssetLoader.prefs.clear();
-        AssetLoader.prefs.flush();
+    public GameScreen(MacGame game) {
+        this.game = game;
+
+        RESET.run(this);
 
         Settings.load();
 
@@ -81,8 +83,8 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-        Dialogue prologue = AssetLoader.dialogues.get("Prologue");
-        new DialogueText(prologue.getRaw(), DialogueStyle.FULL_SCEEN).toInteraction().run(this);
+        new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN)
+                .toInteraction().run(this);
     }
 
     public void changeMode(GameMode mode) {
@@ -114,7 +116,6 @@ public class GameScreen implements Screen {
             runTime += delta;
             currentController.update(delta);
         }
-        // TODO: implement a pause menu for GameState.PAUSED
         currentRenderer.render(runTime);
     }
 
@@ -155,8 +156,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        save();
         Settings.save();
+        save();
         worldRenderer.dispose();
         battleRenderer.dispose();
     }
@@ -207,6 +208,10 @@ public class GameScreen implements Screen {
         return state == GameState.DIALOGUE;
     }
 
+    public MacGame getGame() {
+        return game;
+    }
+
     public DialogueHandler getDialogueHandler() {
         return dialogueHandler;
     }
@@ -254,4 +259,30 @@ public class GameScreen implements Screen {
     public Battle getBattle() {
         return battle;
     }
+
+    public static final Interaction RESET = new Interaction() {
+        @Override
+        public void run(GameScreen screen) {
+            AssetLoader.prefs.clear();
+            Settings.save(true); // resave Settings
+            screen.load(); // will load the default
+        }
+
+        @Override
+        public String toString() {
+            return "RESET";
+        }
+    };
+
+    public static final Interaction CLOSE = new Interaction() {
+        @Override
+        public void run(GameScreen screen) {
+            screen.getGame().dispose();
+        }
+
+        @Override
+        public String toString() {
+            return "CLOSE";
+        }
+    };
 }

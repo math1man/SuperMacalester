@@ -32,10 +32,6 @@ public class Location {
         return grid.getRenderGrid(position);
     }
 
-    public Location getNearestValidLocation(Direction direction) {
-        return grid.getNearestValidLocation(this, direction);
-    }
-
     /**
      * Gets the entity at this location.
      * In other words, gets the entity at this position in this grid.

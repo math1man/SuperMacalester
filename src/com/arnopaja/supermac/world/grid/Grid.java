@@ -118,42 +118,6 @@ public class Grid {
         entityMap.clear();
     }
 
-    public Location getNearestValidLocation(Location location, Direction direction) {
-        return getNearestValidLocation(location.getPosition(), direction);
-    }
-
-    /**
-     * Returns the nearest valid location to the specified position.
-     * If the position is off the grid, it tests the nearest position in the grid.
-     * If the position in the grid is blocked, it tests the next position
-     * @param position
-     * @param direction
-     * @return
-     */
-    public Location getNearestValidLocation(Vector2 position, Direction direction) {
-        if (isPathable(position)) {
-            // The current position is valid and pathable
-            return new Location(this, position);
-        } else if (position.x < 0) {
-            // These next four cases handle the position being invalid
-            return getNearestValidLocation(new Vector2(0, position.y), direction);
-        } else if (position.x >= gridWidth) {
-            return getNearestValidLocation(new Vector2(gridWidth - 1, position.y), direction);
-        } else if (position.y < 0) {
-            return getNearestValidLocation(new Vector2(position.x, 0), direction);
-        } else if (position.y >= gridHeight) {
-            return getNearestValidLocation(new Vector2(position.x, gridHeight - 1), direction);
-        } else {
-            // The current position is valid but not pathable
-            Vector2 newPosition = Direction.getAdjacent(position, direction);
-            if (!isInBounds(newPosition)) {
-                // This is the case that it has found no pathable position in the direction
-                return null; // TODO: is there a better way to handle this case?
-            }
-            return getNearestValidLocation(newPosition, direction);
-        }
-    }
-
     /**
      * Returns a RenderGrid of the calling grid centered at the given position.
      * If the RenderGrid covers spaces not in the calling grid, those spaces will be

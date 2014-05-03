@@ -19,29 +19,8 @@ import java.util.List;
  */
 public abstract class Dialogue implements InteractionBuilder {
 
-    public static final Interaction CLEAR_DIALOGUE = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            screen.endDialogue();
-        }
-
-        @Override
-        public Interaction attach(InteractionBuilder builder) {
-            if (builder == CLEAR_DIALOGUE) {
-                return CLEAR_DIALOGUE;
-            } else {
-                return super.attach(builder);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "CLEAR_DIALOGUE";
-        }
-    };
-
     private final String name;
-    private final DialogueStyle style;
+    private DialogueStyle style;
 
     protected Dialogue(String name, DialogueStyle style) {
         this.name = name;
@@ -72,6 +51,27 @@ public abstract class Dialogue implements InteractionBuilder {
         };
     }
 
+    public static final Interaction CLEAR_DIALOGUE = new Interaction() {
+        @Override
+        public void run(GameScreen screen) {
+            screen.endDialogue();
+        }
+
+        @Override
+        public Interaction attach(InteractionBuilder builder) {
+            if (builder == CLEAR_DIALOGUE) {
+                return CLEAR_DIALOGUE;
+            } else {
+                return super.attach(builder);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "CLEAR_DIALOGUE";
+        }
+    };
+
     public static class Parser extends SuperParser<Dialogue> {
         @Override
         public Dialogue fromJson(JsonElement element) {
@@ -90,7 +90,7 @@ public abstract class Dialogue implements InteractionBuilder {
                 if (has(object, Interaction.class)) {
                     interaction = getObject(object, Interaction.class);
                 }
-                return new DialogueText(dialogue, interaction, DialogueStyle.WORLD);
+                return new DialogueText(name, dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
                 List<DialogueMember> members = new ArrayList<DialogueMember>(array.size() + 1);

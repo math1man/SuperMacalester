@@ -137,7 +137,7 @@ public abstract class Entity implements Renderable, InteractionBuilder {
 
     private void putInGrid(Location location) {
         if (location != null) {
-            this.location = location; // TODO: getNearestValidLocation()?
+            this.location = location;
             if (isInGrid()) {
                 getGrid().putEntity(this);
             }

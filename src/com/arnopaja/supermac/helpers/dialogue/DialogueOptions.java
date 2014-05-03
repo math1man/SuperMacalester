@@ -84,7 +84,14 @@ public class DialogueOptions extends Dialogue {
             sb.append(member.getText());
             sb.append("\n");
         }
-        sb.deleteCharAt(sb.length() - 1);
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getRaw();
     }
 }

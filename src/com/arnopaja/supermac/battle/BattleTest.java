@@ -14,6 +14,7 @@ public class BattleTest extends Battle {
     //TRUE = Battle will set hero turns automatically (debug only)
     //FALSE = Prompt for user input
     public static final boolean autoBattle = true;
+    private boolean isOver = false;
 
     public BattleTest(EnemyParty enemyParty, String backgroundName) {
         super(enemyParty, backgroundName);
@@ -32,7 +33,7 @@ public class BattleTest extends Battle {
                 setOver();
             } else if (mainParty.partyHasFled()) {
                 mainParty.clearHasFled();
-                this.setOver();
+                setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -45,6 +46,10 @@ public class BattleTest extends Battle {
                 }
             }
         }
+    }
+
+    public void setOver() {
+        this.isOver = true;
     }
 
     @Override
@@ -199,5 +204,9 @@ public class BattleTest extends Battle {
             }
         }
         System.out.println("IT'S OVER");
+    }
+
+    public boolean isOver() {
+        return isOver;
     }
 }

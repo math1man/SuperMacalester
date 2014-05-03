@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 /**
- * TODO: Bitmasks and effects! (parse in)
  * @author Nolan Varani
  */
 public class Item extends GenericItem {

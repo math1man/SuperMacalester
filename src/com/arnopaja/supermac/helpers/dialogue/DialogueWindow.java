@@ -86,7 +86,7 @@ public class DialogueWindow {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        shapeRenderer.setColor(1, 1, 1, 0.8f); // TODO: WHY AM I NOT TRANSPARENT
+        shapeRenderer.setColor(1, 1, 1, 0.8f);
         shapeRenderer.rect(frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
         shapeRenderer.end();
 
@@ -129,16 +129,27 @@ public class DialogueWindow {
         return frame.getHeight();
     }
 
-    public Rectangle[][] getSectors() {
-        return sectors;
-    }
-
     public static float getHeight(int rows) {
         return 2 * FRAME_GAP + rows * AssetLoader.FONT_HEIGHT;
     }
 
     @Override
     public String toString() {
-        return ""; // TODO: implement me!
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<rows; i++) {
+            for (int j=0; j<columns; j++) {
+                if (dialogue[j][i] != null) {
+                    sb.append(dialogue[j][i]).append(", ");
+                }
+            }
+            if (sb.length() > 0) {
+                sb.delete(sb.length() - 2, sb.length());
+            }
+            sb.append("\n");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
     }
 }

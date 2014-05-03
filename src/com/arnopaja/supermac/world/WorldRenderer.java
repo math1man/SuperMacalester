@@ -32,5 +32,7 @@ public class WorldRenderer extends BaseRenderer<World> {
         renderGrid.render(batch, offset, runTime);
 
         dialogueHandler.render(shapeRenderer, batch);
+
+        // TODO: add a Pause Button, and handle it in the WorldInputHandler
     }
 }

@@ -30,7 +30,6 @@ public class Battle implements Controller, InteractionBuilder {
     protected final String backgroundName;
     protected final TextureRegion background;
     protected final Queue<BattleAction> actionQueue;
-    protected boolean isOver = false;
     protected boolean isReady = false;
     protected MainParty mainParty;
     protected RenderGrid backgroundGrid;
@@ -69,14 +68,15 @@ public class Battle implements Controller, InteractionBuilder {
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                // run code for if the main party is defeated
-                setOver();
+                // TODO: code specific to defeat
+                end();
             } else if (enemyParty.isDefeated()) {
-                // run code for if the enemy party is defeated'
-                setOver();
+                // TODO: code specific to victory
+                end();
             } else if (mainParty.partyHasFled()) {
+                // TODO: code specific to fleeing
                 mainParty.clearHasFled();
-                this.setOver();
+                this.end();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -104,13 +104,9 @@ public class Battle implements Controller, InteractionBuilder {
         return isReady;
     }
 
-    public void setOver() {
-        isOver = true;
-        // TODO: handle ending scenario
-    }
-
-    public boolean isOver() {
-        return isOver;
+    public void end() {
+        // TODO: general ending code
+        screen.world();
     }
 
     public MainParty getMainParty() {

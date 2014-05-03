@@ -21,8 +21,8 @@ public class Spell {
     private final String name;
     private final float damageModifier;
     private final int manaCost;
-    private boolean isBlack; //TRUE = BLACK, FALSE = WHITE
-
+    private boolean isBlack; // true = Black, false = White
+                             // TODO: why not just use +/- modifiers to signify healing and damage?
     public Spell(int id, String name, float damageModifier, int manaCost, boolean offensive) {
         this.id = id;
         this.name = name;
@@ -33,11 +33,10 @@ public class Spell {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        int damage;
         String dialogue;
         if(isBlack)
         {                           // TODO: I think this should no divide by four so the modifier is the only multiplier
-            damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
+            int damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " damage done.";
@@ -48,35 +47,24 @@ public class Spell {
             dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {
                 dialogue += "\n" + source + " is out of mana...";
+            }                            // 0 will be easier to parse, and no other spells should have a 0 modifier
+        } else if(damageModifier == 0) { // Use this special value for resurrect spells
+            source.modifyMana(-manaCost);
+            if(destination.isFainted()) {
+                destination.resurrect();
+                dialogue = source + " casts " + this + "!\n" +
+                         destination.getName() + " has been resurrected!" ;
+            } else {
+                dialogue = source + " casts " + this + "!\n" +
+                        "It has no effect on " + destination.getName() + "." ;
             }
-        }
-        else
-        {
-            if(damageModifier == Float.POSITIVE_INFINITY) //Use this special value for resurrect spells
-            {
-                source.modifyMana(-manaCost);
-                if(destination.isFainted())
-                {
-                    destination.resurrect();
-                    dialogue = source + " casts " + this + "!\n" +
-                             destination.getName() + " has been resurrected!" ;
-                }
-                else
-                {
-                    dialogue = source + " casts " + this + "!\n" +
-                            "It had no effect on " + destination.getName() + "!" ;
-                }
-                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
-            }
-            if(destination.isFainted())
-            {
-                dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
-                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
-            }
-            damage = (int) getDamageModifier() * source.getSpecial();
-            destination.modifyHealth(damage);
+        } else if(destination.isFainted()) {
+            dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
+        } else {
+            int healing = (int) getDamageModifier() * source.getSpecial();
+            destination.modifyHealth(healing);
             dialogue = source + " casts " + this + "!\n" +
-                    damage + " health restored to " + destination + "." ;
+                    healing + " health restored to " + destination + "." ;
             source.modifyMana(-manaCost);
             dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {
