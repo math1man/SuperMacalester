@@ -5,8 +5,7 @@ import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.Weapon;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Nolan Varani
@@ -27,7 +26,6 @@ public abstract class BattleCharacter {
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;
-        this.spellsList = new ArrayList<Spell>();
         this.battleClass = battleClass;
         setLevel(level);
         this.currentHealth = currentHealth == -1 ? maxHealth : currentHealth;
@@ -35,22 +33,28 @@ public abstract class BattleCharacter {
         this.isDefending = false;
     }
 
-    public void addSpells(Spell spell){
-        this.spellsList.add(spell);
+    public void addSpell(Spell spell) {
+        spellsList.add(spell);
+    }
+
+    public void addSpells(Collection<Spell> spells) {
+        spellsList.addAll(spells);
     }
 
     public void modifyHealth(int amount) {
         currentHealth += amount;
-        if(currentHealth > maxHealth) currentHealth = maxHealth;
-        else if(currentHealth < 0) currentHealth = 0;
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        } else if (currentHealth < 0) {
+            currentHealth = 0;
+        }
     }
 
     public boolean isFainted() {
         return currentHealth == 0;
     }
 
-    public void resurrect()
-    {
+    public void resurrect() {
         currentHealth = maxHealth;
     }
 
@@ -86,13 +90,17 @@ public abstract class BattleCharacter {
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
     public List<Spell> getSpellsList() { return spellsList; }
-    public int getSpellIndex(Spell s)
-    {
+
+    public int getSpellIndex(Spell s) {
         return spellsList.indexOf(s);
     }
 
     public Spell getSpell(int index) {
         return spellsList.get(index);
+    }
+
+    public boolean hasEquippedArmor() {
+        return equippedArmor != null;
     }
 
     /**
@@ -111,6 +119,10 @@ public abstract class BattleCharacter {
             return true;
         }
         return false;
+    }
+
+    public boolean hasEquippedWeapon() {
+        return equippedWeapon != null;
     }
 
     /**
@@ -162,8 +174,8 @@ public abstract class BattleCharacter {
     public String dump() {
         return "BattleCharacter{" +
                 "name=" + name +
-                ", currentHealth=" + currentHealth +
-                ", currentMana=" + currentMana +
+                ", health=" + currentHealth +
+                ", mana=" + currentMana +
                 '}';
     }
 

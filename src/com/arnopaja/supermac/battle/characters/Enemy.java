@@ -1,7 +1,10 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.inventory.Armor;
 import com.arnopaja.supermac.inventory.Item;
+import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.inventory.Weapon;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -42,7 +45,17 @@ public class Enemy extends BattleCharacter {
             if (object.has("boss")) {
                 isBoss = getBoolean(object, "boss");
             }
-            return new Enemy(name, battleClass, level, item, isBoss);
+            Enemy enemy = new Enemy(name, battleClass, level, item, isBoss);
+            if (has(object, Armor.class)) {
+                enemy.setEquippedArmor(getObject(object, Armor.class));
+            }
+            if (has(object, Weapon.class)) {
+                enemy.setEquippedWeapon(getObject(object, Weapon.class));
+            }
+            if (object.has("spells")) {
+                enemy.addSpells(getList(object, "spells", Spell.class));
+            }
+            return enemy;
         }
 
         @Override
@@ -53,6 +66,13 @@ public class Enemy extends BattleCharacter {
             addInt(json, "level", object.level);
             addObject(json, object.item, Item.class);
             addBoolean(json, "boss", object.isBoss);
+            if (object.hasEquippedArmor()) {
+                addObject(json, object.getEquippedArmor(), Armor.class);
+            }
+            if (object.hasEquippedWeapon()) {
+                addObject(json, object.getEquippedWeapon(), Weapon.class);
+            }
+            addList(json, "spells", object.getSpellsList(), Spell.class);
             return json;
         }
     }

@@ -117,7 +117,7 @@ public class BattleTest extends Battle {
                             while(a == null)
                             {
                                 System.out.println("Use which spell?");
-                                for(Spell s:h.getSpellsList())
+                                for(Spell s : h.getSpellsList())
                                 {
                                     System.out.println(h.getSpellIndex(s) + ": " + s.getName());
                                 }
@@ -181,10 +181,10 @@ public class BattleTest extends Battle {
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);
         Hero smart4 = new Hero("Hero Comp Sci", BattleClass.COMP_SCI, 5);
-        smart.addSpells(yoloswag);
-        smart2.addSpells(smokeWeedEveryDay);
-        smart3.addSpells(yoloswag);
-        smart4.addSpells(yoloswag);
+        smart.addSpell(yoloswag);
+        smart2.addSpell(smokeWeedEveryDay);
+        smart3.addSpell(yoloswag);
+        smart4.addSpell(yoloswag);
         MainParty teamswag = new MainParty();
         teamswag.addCharacter(smart);
         teamswag.addCharacter(smart2);

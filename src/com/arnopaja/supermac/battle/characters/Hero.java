@@ -6,6 +6,9 @@ import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.inventory.Armor;
+import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.inventory.Weapon;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -63,7 +66,17 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             if (object.has("mana")) {
                 mana = getInt(object, "mana");
             }
-            return new Hero(name, battleClass, level, health, mana);
+            Hero hero = new Hero(name, battleClass, level, health, mana);
+            if (has(object, Armor.class)) {
+                hero.setEquippedArmor(getObject(object, Armor.class));
+            }
+            if (has(object, Weapon.class)) {
+                hero.setEquippedWeapon(getObject(object, Weapon.class));
+            }
+            if (object.has("spells")) {
+                hero.addSpells(getList(object, "spells", Spell.class));
+            }
+            return hero;
         }
 
         @Override
@@ -74,6 +87,13 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             addInt(json, "level", object.level);
             addFloat(json, "health", object.currentHealth);
             addFloat(json, "mana", object.currentMana);
+            if (object.hasEquippedArmor()) {
+                addObject(json, object.getEquippedArmor(), Armor.class);
+            }
+            if (object.hasEquippedWeapon()) {
+                addObject(json, object.getEquippedWeapon(), Weapon.class);
+            }
+            addList(json, "spells", object.getSpellsList(), Spell.class);
             return json;
         }
     }
