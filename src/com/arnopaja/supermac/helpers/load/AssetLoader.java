@@ -63,6 +63,7 @@ public class AssetLoader {
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
     public static FileHandle entitiesHandle;
+    public static FileHandle charactersHandle;
 
     // Caches
     public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
@@ -77,7 +78,7 @@ public class AssetLoader {
 
     public static void load() {
 
-        tilesTexture = new Texture(getHandle("landscapetiles/tile_canvas.png"));
+        tilesTexture = new Texture(getHandle("canvas/landscape_tiles.png"));
         tilesTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         //--------------------------
@@ -140,7 +141,7 @@ public class AssetLoader {
         //        Entities
         //--------------------------
 
-        entitiesTexture = new Texture(getHandle("entities/entities_canvas.png"));
+        entitiesTexture = new Texture(getHandle("canvas/entities.png"));
         chestBrownClosed = SpriteUtils.makeSprite(tilesTexture, 0, 0);
         chestBrownOpen = SpriteUtils.makeSprite(tilesTexture, 0, 1);
         chestRedClosed = SpriteUtils.makeSprite(tilesTexture, 1, 0);
@@ -152,9 +153,10 @@ public class AssetLoader {
         //       Characters
         //--------------------------
 
-        loadCharacter("Tom", "entities/steven.png");
-        loadCharacter("Betsy", "entities/betsy.png");
-        loadCharacter("Jeff", "entities/beardguy.png");
+        charactersHandle = getHandle("characters");
+        for (FileHandle handle : charactersHandle.list()) {
+            loadCharacter(handle);
+        }
 
         //--------------------------
         //          Other
@@ -174,19 +176,20 @@ public class AssetLoader {
         dialogues = SuperParser.parseAll(AssetLoader.dialogueHandle, Dialogue.class);
         grids = MapLoader.generateGrids(AssetLoader.mapHandle);
 
-        font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-        shadow = new BitmapFont(Gdx.files.internal("data/shadow.fnt"));
+        font = new BitmapFont(getHandle("font/text.fnt"));
+        shadow = new BitmapFont(getHandle("font/shadow.fnt"));
         scaleFont(FONT_HEIGHT / AssetLoader.font.getLineHeight());
 
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
     }
 
-    public static void loadCharacter(String name, String path) {
+    public static void loadCharacter(FileHandle handle) {
         EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
         EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
-        characterTexture = new Texture(getHandle(path));
+        String name = handle.nameWithoutExtension();
+        characterTexture = new Texture(handle);
 
         TextureRegion[][] regions = SpriteUtils.split(characterTexture);
         for (int i=0; i<4; i++) {
@@ -233,7 +236,7 @@ public class AssetLoader {
     }
 
     public static CharacterAsset getCharacter(String name) {
-        return characterAssetMap.get(name);
+        return characterAssetMap.get(name.toLowerCase());
     }
 
     private static FileHandle getHandle(String path) {
