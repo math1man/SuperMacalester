@@ -1,8 +1,10 @@
 {
     "class" : "Plot",
-    "origin" : [0,0],
     "dependencies" : [
-
+        {
+            "quest" : 0,
+            "unlocks" : [ 1 ]
+        }
     ],
     "quests" : [
         {
@@ -11,200 +13,286 @@
             "goals" : [
                 {
                     "class" : "Goal",
-                    "entity" : {
-                        "class" : "QuestNpc",
-                        "name" : "John"
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "world",
-                            "x" : 40,
-                            "y" : 35
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Tom: What was that?
-                            <d>John: There was a bright flash in the sky. Something’s happening.
-                            <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
-                            <d>John: Quite possibly.
-                            <d>Tom: Either way, this seems serious. I’m going out for a look.
-                            <d>John: Be careful."
-                        }
-                    },
-                    "delay" : true
-                },
-                {
-                    "entity" : {
-                        "class" : "QuestNpc",
-                        "name" : "Brian Rosenberg",
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "world",
-                            "x" : 51,
-                            "y" : 55
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my diabolical plans for Macalester. This asteroid contains
-                            <d>Rosenberg: a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of control!
-                            <d>Rosenberg: My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
-                            <d>Tom: Wait, how did you make this asteroid fall here?
-                            <d>Rosenberg: Witchcraft.
-                            <d>Tom: What? How did you even get this thing?
-                            <d>Rosenberg: I found it.
-                            <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90’s.
-                            <d>Rosenberg: Just go with it."
-                        }
-                    },
-                    "delay" : true
-                },
-                {
-                    "entity" : {
-                        "class" : "QuestNpc",
-                        "name" : "SJW",
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "world",
-                            "x" : 40,
-                            "y" : 68
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
-                            <d>SJW 2: I bet the patriarchy did this.
-                               SJW 3: I smell cis-scum!
-                            <d>Tom: What are these words you’re using?
-                            <d>SJW 1: [incoherent rage]",
-                            "not an interaction" : {
-                                "class" : "Interaction",
-                                "battle" : "make a battle here"
-                            }
-                        }
-                    },
-                    "delay" : true
-                },
-                {
-                    "entity" : {
-                        "class" : "QuestNpc",
-                        "name" : "Baal Thrice",
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "world",
-                            "x" : 40,
-                            "y" : 65
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Baal Thrice: Whoooaa buddy. Looks like they went ham on you.
-                            <d>Tom: Who are you, and what the hell is going on?
-                            <d>Baal: I’m Baal Thrice, but my friends call me Baal G. Thrice.
-                            <d>Tom: What does the G stand for?
-                            <d>Baal: It’s just this thing. Anyway, you’re lucky I came in time. Those Social Justice Warriors are really going crazy.
-                            <d>Baal: Something’s in the air, alright.
-                            <d>Tom: Why didn’t they attack you?
-                            <d>Baal: Buddy, you need to learn how to become more powerful - How to get TURNT UP a bit - if you know what I mean.
-                            <d>Tom: What?
-                            <d>Baal: You know, living that young based lifestyle.
-                            <d>Tom: Seriously, I don’t know what anybody is talking about anymore.
-                            <d>Baal: Well, there’s no time to explain it all. Take this Fragrant Herb.
-                            <d>Tom: What is this? It smells like skunk!
-                            <d>Baal: That there is a power-up. Take that to make yourself stronger in battle.
-                            <d>Baal: You’ll also get stronger from the experience of battling a lot. You’ll figure it out. It’s a mediocre RPG, not rocket science.
-                            <d>Baal: Anyway, I’ll stick around in the meantime. Looks like you could use my help. We should probably start looking for clues
-                            <d>Baal: as to how we can stop all of this madness from happening. The Campus Center is probably a good place to start looking."
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "John"
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 40,
+                                "y" : 35
+                            },
                             "interaction" : {
                                 "class" : "Interaction",
-                                "item" : {
-                                    "class" : "Item",
-                                    "id" = 0,
-                                    "name" = "Fragrant Herb"
-                                },
-                                "hero" : {
-                                    "class" : "Hero",
-                                    "name" : "Baal Thrice",
-                                    "battleclass" : "ECON",
-                                    "level" : 2
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Tom: What was that?
+                                    <d>John: There was a bright flash in the sky. Something’s happening.
+                                    <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
+                                    <d>John: Quite possibly.
+                                    <d>Tom: Either way, this seems serious. I’m going out for a look.
+                                    <d>John: Be careful."
                                 }
-                            }
+                            },
+                            "primary" : true,
+                            "delay" : true
                         }
-                    },
-                    "delay" : false
+                    ]
                 },
                 {
-                    "entity" : {
-                        "class" : "QuestNpc",
-                        "name" : "Barry Willis",
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "Campus Center",
-                            "x" : 5,
-                            "y" : 5
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Barry Willis: I heard that Rosenberg’s forces are currently performing a coup in Olin-Rice hall.
-                            <d>Barry: Apparently, he’s trying to quash the rebellion occurring amongst the STEM majors.
-                            <d>Tom: We have to stop this! This may be our chance to confront Rosenberg!
-                            <d>Baal: Yeah, well we can’t. The mobile privilege checking stations won’t allow students with privilege levels as high as ours to enter.
-                            <d>Baal: Not without stealing an ID from a more politically correct student, anyway.
-                            <d>Barry: Wait, I’d like to join you and stop these guys. I think we can manage to score an ID, if we try hard enough."
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Brian Rosenberg",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 51,
+                                "y" : 55
+                            },
                             "interaction" : {
                                 "class" : "Interaction",
-                                "hero" : {
-                                    "class" : "Hero",
-                                    "name" : "Barry Willis",
-                                    "battleclass" : "NAT_SCI",
-                                    "level" : 1
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my diabolical plans for Macalester. This asteroid contains
+                                    <d>Rosenberg: a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of control!
+                                    <d>Rosenberg: My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
+                                    <d>Tom: Wait, how did you make this asteroid fall here?
+                                    <d>Rosenberg: Witchcraft.
+                                    <d>Tom: What? How did you even get this thing?
+                                    <d>Rosenberg: I found it.
+                                    <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90’s.
+                                    <d>Rosenberg: Just go with it."
                                 }
-                            }
+                            },
+                            "delay" : true
                         }
-                    },
-                    "delay" : false
+                    ]
                 },
                 {
-                    "entity" : {
-                        "class" : "NonRenderedQuestEntity",
-                        "name" : "Garbage Can",
-                        "location" : {
-                            "class" : "Location",
-                            "grid" : "Campus Center",
-                            "x" : 8,
-                            "y" : 8
-                        }
-                    },
-                    "interaction" : {
-                        "class" : "Interaction",
-                        "dialogue" : {
-                            "class" : "Dialogue",
-                            "text" : "Tom: You’re not going to believe this. I found an ID in the can!
-                            <d>Barry: Jackpot!
-                            <d>Baal: Well how about that. Let me see. “Bolivia Spurdo”. Yup, this chick is in the American Studies department.
-                            <d>Baal: Her privilege level is definitely low enough to get us into Olin Rice.
+                    "class" : "Goal",
+                    "entities" :
+                    [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "SJW",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 39,
+                                "y" : 68
+                            },
                             "interaction" : {
                                 "class" : "Interaction",
-                                "item" : {
-                                    "class" : "Item",
-                                    "id" : 1000,
-                                    "name" : "Bolivia Spurdo's ID card"
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    <d>SJW 2: I bet the patriarchy did this.
+                                       SJW 3: I smell cis-scum!
+                                    <d>Tom: What are these words you’re using?
+                                    <d>SJW 1: [incoherent rage]",
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "battle" : {
+                                            TODO: make a battle
+                                        }
+                                    }
                                 }
-                            }
+                            },
+                            "primary" : true,
+                            "delay" : true
+                        },
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "SJW",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 40,
+                                "y" : 68
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    <d>SJW 2: I bet the patriarchy did this.
+                                       SJW 3: I smell cis-scum!
+                                    <d>Tom: What are these words you’re using?
+                                    <d>SJW 1: [incoherent rage]",
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "battle" : {
+                                            TODO: make a battle
+                                        }
+                                    }
+                                }
+                            },
+                            "primary" : true,
+                            "delay" : true
+                        },
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "SJW",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 41,
+                                "y" : 68
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    <d>SJW 2: I bet the patriarchy did this.
+                                       SJW 3: I smell cis-scum!
+                                    <d>Tom: What are these words you’re using?
+                                    <d>SJW 1: [incoherent rage]",
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "battle" : {
+                                            TODO: make a battle
+                                        }
+                                    }
+                                }
+                            },
+                            "primary" : true,
+                            "delay" : true
                         }
-                    },
-                    "delay" : false
+                    ]
+                },
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Baal Thrice",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 40,
+                                "y" : 65
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Baal Thrice: Whoooaa buddy. Looks like they went ham on you.
+                                    <d>Tom: Who are you, and what the hell is going on?
+                                    <d>Baal: I’m Baal Thrice, but my friends call me Baal G. Thrice.
+                                    <d>Tom: What does the G stand for?
+                                    <d>Baal: It’s just this thing. Anyway, you’re lucky I came in time. Those Social Justice Warriors are really going crazy.
+                                    <d>Baal: Something’s in the air, alright.
+                                    <d>Tom: Why didn’t they attack you?
+                                    <d>Baal: Buddy, you need to learn how to become more powerful - How to get TURNT UP a bit - if you know what I mean.
+                                    <d>Tom: What?
+                                    <d>Baal: You know, living that young based lifestyle.
+                                    <d>Tom: Seriously, I don’t know what anybody is talking about anymore.
+                                    <d>Baal: Well, there’s no time to explain it all. Take this Fragrant Herb.
+                                    <d>Tom: What is this? It smells like skunk!
+                                    <d>Baal: That there is a power-up. Take that to make yourself stronger in battle.
+                                    <d>Baal: You’ll also get stronger from the experience of battling a lot. You’ll figure it out. It’s a mediocre RPG, not rocket science.
+                                    <d>Baal: Anyway, I’ll stick around in the meantime. Looks like you could use my help. We should probably start looking for clues
+                                    <d>Baal: as to how we can stop all of this madness from happening. The Campus Center is probably a good place to start looking."
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "item" : {
+                                            "class" : "Item",
+                                            "id" = 0,
+                                            "name" = "Fragrant Herb"
+                                        },
+                                        "hero" : {
+                                            "class" : "Hero",
+                                            "name" : "Baal Thrice",
+                                            "battleclass" : "ECON",
+                                            "level" : 2
+                                        }
+                                    }
+                                }
+                            },
+                            "delay" : false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class" : "Quest",
+            "id" : 1,
+            "goals" : [
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Barry Willis",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "Campus Center",
+                                "x" : 5,
+                                "y" : 5
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Barry Willis: I heard that Rosenberg’s forces are currently performing a coup in Olin-Rice hall.
+                                    <d>Barry: Apparently, he’s trying to quash the rebellion occurring amongst the STEM majors.
+                                    <d>Tom: We have to stop this! This may be our chance to confront Rosenberg!
+                                    <d>Baal: Yeah, well we can’t. The mobile privilege checking stations won’t allow students with privilege levels as high as ours to enter.
+                                    <d>Baal: Not without stealing an ID from a more politically correct student, anyway.
+                                    <d>Barry: Wait, I’d like to join you and stop these guys. I think we can manage to score an ID, if we try hard enough."
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "hero" : {
+                                            "class" : "Hero",
+                                            "name" : "Barry Willis",
+                                            "battleclass" : "NAT_SCI",
+                                            "level" : 1
+                                        }
+                                    }
+                                }
+                            },
+                            "delay" : false
+                        }
+                    ]
+                },
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Garbage Can",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "Campus Center",
+                                "x" : 8,
+                                "y" : 8
+                            }
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "text" : "Tom: You’re not going to believe this. I found an ID in the can!
+                                    <d>Barry: Jackpot!
+                                    <d>Baal: Well how about that. Let me see. “Bolivia Spurdo”. Yup, this chick is in the American Studies department.
+                                    <d>Baal: Her privilege level is definitely low enough to get us into Olin Rice.
+                                    "interaction" : {
+                                        "class" : "Interaction",
+                                        "item" : {
+                                            "class" : "Item",
+                                            "id" : 1000,
+                                            "name" : "Bolivia Spurdo's ID card"
+                                        }
+                                    }
+                                }
+                            },
+                            "delay" : false
+                        }
+                    ]
                 }
             ]
         }
