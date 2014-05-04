@@ -1,9 +1,6 @@
 package com.arnopaja.supermac.battle.characters;
 
-import com.arnopaja.supermac.inventory.Armor;
-import com.arnopaja.supermac.inventory.Inventory;
-import com.arnopaja.supermac.inventory.Spell;
-import com.arnopaja.supermac.inventory.Weapon;
+import com.arnopaja.supermac.inventory.*;
 
 import java.util.*;
 
@@ -13,7 +10,6 @@ import java.util.*;
 public abstract class BattleCharacter {
 
     protected final String name;
-    protected Boolean isDefending;
     protected final BattleClass battleClass;
     protected int level;
     protected int maxHealth, maxMana;
@@ -21,7 +17,8 @@ public abstract class BattleCharacter {
     protected int currentHealth, currentMana;
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
-    protected List<Spell> spells;
+    protected SpellBook spellBook;
+    protected boolean isDefending;
     //TODO: image definitions
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
@@ -31,14 +28,15 @@ public abstract class BattleCharacter {
         this.currentHealth = currentHealth == -1 ? maxHealth : currentHealth;
         this.currentMana = currentMana == -1 ? maxMana : currentMana;
         this.isDefending = false;
+        this.spellBook = new SpellBook();
     }
 
     public void addSpell(Spell spell) {
-        spells.add(spell);
+        spellBook.add(spell);
     }
 
     public void addSpells(Collection<Spell> spells) {
-        this.spells.addAll(spells);
+        spellBook.addAll(spells);
     }
 
     public void modifyHealth(int amount) {
@@ -89,14 +87,10 @@ public abstract class BattleCharacter {
     public int getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
     public Weapon getEquippedWeapon() { return equippedWeapon; }
-    public List<Spell> getSpells() { return spells; }
+    public SpellBook getSpellBook() { return spellBook; }
 
-    public int getSpellIndex(Spell s) {
-        return spells.indexOf(s);
-    }
-
-    public Spell getSpell(int index) {
-        return spells.get(index);
+    public Spell getSpell(int id) {
+        return spellBook.get(id);
     }
 
     public boolean hasEquippedArmor() {

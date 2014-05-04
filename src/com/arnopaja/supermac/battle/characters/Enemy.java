@@ -72,7 +72,7 @@ public class Enemy extends BattleCharacter {
             if (object.hasEquippedWeapon()) {
                 addObject(json, object.getEquippedWeapon(), Weapon.class);
             }
-            addList(json, "spells", object.getSpells(), Spell.class);
+            addList(json, "spells", object.getSpellBook().asList(), Spell.class);
             return json;
         }
     }

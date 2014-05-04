@@ -10,6 +10,7 @@ import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.inventory.SpellBook;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
@@ -172,7 +173,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectSpell(Hero hero, Interaction interaction) {
-        List<Spell> spells = hero.getSpells();
+        SpellBook spells = hero.getSpellBook();
         List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
         for (Spell spell : spells) {
             spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
@@ -180,7 +181,7 @@ public class Battle implements Controller, InteractionBuilder {
                     spells(hero, spell, interaction),
                     DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("Which spell?", spells,
+        return new DialogueOptions("Which spell?", spells.asList(),
                 spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
