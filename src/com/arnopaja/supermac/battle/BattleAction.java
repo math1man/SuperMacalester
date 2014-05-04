@@ -93,6 +93,7 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, destination, ActionType.SPELL, source.getSpeed(), spell, null) {
             @Override
             public Dialogue subrun(float delta) {
+                getSource().getBattleClass().getMagicSound().play();
                 return getSpell().use(getSource(), getDestination());
             }
         };

@@ -14,6 +14,7 @@ import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
+import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
@@ -186,8 +187,9 @@ public class GameScreen implements Screen {
     public void load() {
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
-        party = SaverLoader.load(MainParty.class, new MainParty(
-                Collections.singletonList(new Hero("Tom", BattleClass.COMP_SCI, 1))));
+        Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
+        hero.addSpell(Spell.getCached(0));
+        party = SaverLoader.load(MainParty.class, new MainParty(Collections.singletonList(hero)));
         Inventory.load();
     }
 
