@@ -71,7 +71,8 @@ public class AssetLoader {
     public static Map<String, Grid> grids = new HashMap<String, Grid>();
 
     // Sounds
-    public static Sound sound;
+    public static Sound overWorld;
+    public static Sound battleMusic;
 
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
@@ -89,7 +90,9 @@ public class AssetLoader {
         //          Tiles
         //--------------------------
 
-        sound = Gdx.audio.newSound(getHandle("sounds/compscimagic.mp3"));
+        overWorld = Gdx.audio.newSound(getHandle("Music/Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3"));
+        battleMusic = Gdx.audio.newSound(getHandle("Music/Rolemusic_-_04_-_Scape_from_the_city.mp3"));
+
         treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
         treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
         grass0 = SpriteUtils.makeSprite(tilesTexture, 3, 0);
