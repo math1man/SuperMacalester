@@ -23,6 +23,7 @@ public class Plot {
 
     public Plot(Map<Integer, Quest> quests) {
         this.quests = quests;
+        quests.get(0).activate();
     }
 
     public static class Parser extends SuperParser<Plot> {
