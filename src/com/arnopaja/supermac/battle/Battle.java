@@ -236,15 +236,15 @@ public class Battle implements Controller, InteractionBuilder {
         public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
-            String background = getString(object, "background");
-            return new Battle(enemy, background);
+//            String background = getString(object, "background");
+            return new Battle(enemy);
         }
 
         @Override
         public JsonElement toJson(Battle object) {
             JsonObject json = new JsonObject();
             addObject(json, "enemy", object.enemyParty, EnemyParty.class);
-            addString(json, "background", object.backgroundName);
+//            addString(json, "background", object.backgroundName);
             return json;
         }
     }

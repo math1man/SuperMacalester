@@ -96,7 +96,30 @@
                                     "interaction" : {
                                         "class" : "Interaction",
                                         "battle" : {
-                                            TODO: make a battle
+                                            "class" : "Battle",
+                                            "enemy" : {
+                                                "class" : "EnemyParty",
+                                                "characters" : [
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW1",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW2",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW3",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    }
+                                                ]
+                                            }
                                         }
                                     }
                                 }
@@ -125,7 +148,30 @@
                                     "interaction" : {
                                         "class" : "Interaction",
                                         "battle" : {
-                                            TODO: make a battle
+                                            "class" : "Battle",
+                                            "enemy" : {
+                                                "class" : "EnemyParty",
+                                                "characters" : [
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW1",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW2",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW3",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    }
+                                                ]
+                                            }
                                         }
                                     }
                                 }
@@ -154,7 +200,30 @@
                                     "interaction" : {
                                         "class" : "Interaction",
                                         "battle" : {
-                                            TODO: make a battle
+                                            "class" : "Battle",
+                                            "enemy" : {
+                                                "class" : "EnemyParty",
+                                                "characters" : [
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW1",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW2",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    },
+                                                    {
+                                                        "class" : "Enemy",
+                                                        "name" : "SJW3",
+                                                        "battleclass" : "humanities",
+                                                        "level" : 1
+                                                    }
+                                                ]
+                                            }
                                         }
                                     }
                                 }
