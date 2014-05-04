@@ -2,7 +2,7 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.battle.characters.EnemyParty;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.BaseRenderer;
+import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.GL10;
 /**
  * @author Ari Weiland
  */
-public class BattleRenderer extends BaseRenderer<Battle> {
+public class BattleRenderer extends Renderer<Battle> {
 
     public BattleRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         super(dialogueHandler, gameWidth, gameHeight);

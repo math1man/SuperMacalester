@@ -47,8 +47,8 @@ public class GameScreen implements Screen {
     private final BattleRenderer battleRenderer;
     private final BattleInputHandler battleInputHandler;
 
-    private BaseRenderer currentRenderer;
-    private BaseInputHandler currentInputHandler;
+    private Renderer currentRenderer;
+    private InputHandler currentInputHandler;
     private Controller currentController;
 
     private GameMode mode;
@@ -235,11 +235,11 @@ public class GameScreen implements Screen {
         return battleInputHandler;
     }
 
-    public BaseRenderer getCurrentRenderer() {
+    public Renderer getCurrentRenderer() {
         return currentRenderer;
     }
 
-    public BaseInputHandler getCurrentInputHandler() {
+    public InputHandler getCurrentInputHandler() {
         return currentInputHandler;
     }
 

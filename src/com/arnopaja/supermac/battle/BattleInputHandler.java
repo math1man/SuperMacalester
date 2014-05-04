@@ -1,12 +1,12 @@
 package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.helpers.BaseInputHandler;
+import com.arnopaja.supermac.helpers.InputHandler;
 import com.arnopaja.supermac.GameScreen;
 
 /**
  * @author Ari Weiland
  */
-public class BattleInputHandler extends BaseInputHandler {
+public class BattleInputHandler extends InputHandler {
 
     public BattleInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                               float scaleFactorX, float scaleFactorY) {

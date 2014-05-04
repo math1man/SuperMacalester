@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 /**
  * @author Ari Weiland
  */
-public abstract class BaseRenderer<T extends Controller> {
+public abstract class Renderer<T extends Controller> {
 
     protected final DialogueHandler dialogueHandler;
     protected final ShapeRenderer shapeRenderer;
@@ -17,7 +17,7 @@ public abstract class BaseRenderer<T extends Controller> {
 
     private T controller;
 
-    public BaseRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
+    public Renderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         this.dialogueHandler = dialogueHandler;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;

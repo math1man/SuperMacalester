@@ -6,15 +6,15 @@ import com.badlogic.gdx.InputProcessor;
 /**
  * @author Ari Weiland
  */
-public abstract class BaseInputHandler implements InputProcessor {
+public abstract class InputHandler implements InputProcessor {
 
     protected final GameScreen screen;
     protected final float gameWidth, gameHeight;
     protected final float scaleFactorX, scaleFactorY;
 
 
-    public BaseInputHandler(GameScreen screen, float gameWidth, float gameHeight,
-                             float scaleFactorX, float scaleFactorY) {
+    public InputHandler(GameScreen screen, float gameWidth, float gameHeight,
+                        float scaleFactorX, float scaleFactorY) {
         this.screen = screen;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
