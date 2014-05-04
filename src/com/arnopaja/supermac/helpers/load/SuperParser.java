@@ -1,7 +1,8 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.characters.*;
+import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;

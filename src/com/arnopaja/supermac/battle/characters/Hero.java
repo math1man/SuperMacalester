@@ -3,7 +3,7 @@ package com.arnopaja.supermac.battle.characters;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Armor;

@@ -5,6 +5,8 @@ import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;

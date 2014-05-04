@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.world.grid.Direction;
 import com.badlogic.gdx.graphics.g2d.Animation;

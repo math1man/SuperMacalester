@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.plot.QuestEntity;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Entity;

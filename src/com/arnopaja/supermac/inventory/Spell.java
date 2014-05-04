@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;

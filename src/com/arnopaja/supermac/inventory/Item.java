@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.EffectParser;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.EffectParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -64,7 +64,7 @@ public class Item extends GenericItem {
             addInt(json, "id", object.getId());
             addString(json, "name", object.getName());
             addInt(json, "value", object.getValue());
-            addString(json, "effects", EffectParser.toString(object.getEffects()));
+            addString(json, "effects", EffectParser.parse(object.getEffects()));
             return json;
         }
     }

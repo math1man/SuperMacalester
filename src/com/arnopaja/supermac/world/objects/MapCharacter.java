@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.CharacterAsset;
+import com.arnopaja.supermac.helpers.load.CharacterAsset;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

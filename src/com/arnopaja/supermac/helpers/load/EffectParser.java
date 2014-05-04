@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.inventory.Effect;
 
@@ -28,7 +28,7 @@ public class EffectParser {
         return effectsList;
     }
 
-    public static String toString(List<Effect> effects) {
+    public static String parse(List<Effect> effects) {
         StringBuilder sb = new StringBuilder();
         for (Effect effect : effects) {
             sb.append(effect).append(",");

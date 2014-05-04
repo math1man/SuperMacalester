@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.helpers;
+package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.GenericItem;

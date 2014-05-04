@@ -1,10 +1,10 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

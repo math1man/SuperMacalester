@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
