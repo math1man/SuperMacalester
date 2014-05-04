@@ -7,6 +7,7 @@ import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -68,6 +69,9 @@ public class AssetLoader {
     public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
     public static Map<String, Grid> grids = new HashMap<String, Grid>();
 
+    // Sounds
+    public static Sound sound;
+
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
     private static BitmapFont font, shadow;
@@ -84,6 +88,7 @@ public class AssetLoader {
         //          Tiles
         //--------------------------
 
+        sound = Gdx.audio.newSound(getHandle("sounds/compscimagic.mp3"));
         treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
         treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
         grass0 = SpriteUtils.makeSprite(tilesTexture, 3, 0);

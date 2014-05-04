@@ -83,6 +83,7 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
+        AssetLoader.sound.loop();
         new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN)
                 .toInteraction().run(this);
     }
