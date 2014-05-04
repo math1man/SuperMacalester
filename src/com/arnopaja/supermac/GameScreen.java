@@ -185,8 +185,8 @@ public class GameScreen implements Screen {
     }
 
     public void load() {
-        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
+        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
         hero.addSpell(Spell.getCached(0));
         party = SaverLoader.load(MainParty.class, new MainParty(Collections.singletonList(hero)));

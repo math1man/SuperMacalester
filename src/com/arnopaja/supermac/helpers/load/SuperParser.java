@@ -25,6 +25,7 @@ import java.util.*;
  */
 public abstract class SuperParser<T> {
 
+    private static final Gson gson = new Gson();
     private static final JsonParser parser = new JsonParser();
     private static final Map<String, SuperParser> parsers = new HashMap<String, SuperParser>();
     static {
@@ -124,6 +125,10 @@ public abstract class SuperParser<T> {
             addClass(json, element.getClass());
             return json;
         }
+    }
+
+    public static <U> String toJsonString(U element, Class<U> clazz) {
+        return gson.toJson(toJson(element, clazz));
     }
 
     /**

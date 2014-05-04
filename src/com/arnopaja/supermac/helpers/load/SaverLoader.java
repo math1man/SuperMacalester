@@ -1,23 +1,16 @@
 package com.arnopaja.supermac.helpers.load;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
 /**
  * @author Ari Weiland
  */
 public class SaverLoader {
-
-    private static final Gson gson = new Gson();
-    private static final JsonParser parser = new JsonParser();
 
     public static <T> void save(T savable, Class<T> clazz) {
         save(savable, clazz.getName(), clazz);
     }
 
     public static <T> void save(T savable, String name, Class<T> clazz) {
-        AssetLoader.prefs.putString(name, gson.toJson(SuperParser.toJson(savable, clazz)));
+        AssetLoader.prefs.putString(name, SuperParser.toJsonString(savable, clazz));
     }
 
     public static <T> T load(Class<T> clazz) {
@@ -34,8 +27,7 @@ public class SaverLoader {
 
     public static <T> T load(String name, Class<T> clazz, T defVal) {
         if (isSaved(name)) {
-            JsonElement me = parser.parse(AssetLoader.prefs.getString(name));
-            return SuperParser.fromJson(me, clazz);
+            return SuperParser.parse(AssetLoader.prefs.getString(name), clazz);
         } else if (defVal != null) {
             save(defVal, name, clazz);
         }

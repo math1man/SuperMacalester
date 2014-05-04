@@ -36,15 +36,19 @@ public class Quest implements InteractionBuilder {
         }
     }
 
+    public void activate() {
+        if (isInactive() && prereqs.isEmpty()) {
+            reset();
+            state = QuestState.ACTIVE;
+            currentGoal = 0;
+            activateCurrentGoal();
+        }
+    }
+
     public void activate(Quest quest) {
         if (isInactive()) {
             prereqs.remove(quest);
-            if (prereqs.isEmpty()) {
-                reset();
-                state = QuestState.ACTIVE;
-                currentGoal = 0;
-                activateCurrentGoal();
-            }
+            activate();
         }
     }
 

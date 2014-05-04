@@ -18,8 +18,8 @@
             "location" : {
                 "class" : "Location",
                 "grid" : "world",
-                "x" : 40,
-                "y" : 36
+                "x" : 33,
+                "y" : 33
             },
             "direction" : "West",
             "canMove" : false,

@@ -165,10 +165,10 @@ public class BattleTest extends Battle {
         //create enemy party
         //create main party
         System.out.println("IT'S HAPPENING");
-        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, null, false);
-        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, null, false);
-        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, null, false);
-        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, null, false);
+        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, false, null);
+        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, false, null);
+        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, false, null);
+        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, false, null);
         ArrayList<Enemy> enemlist = new ArrayList<Enemy>();
         enemlist.add(dumb);
         enemlist.add(dumb2);

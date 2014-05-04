@@ -16,6 +16,7 @@ public class QuestNpc extends MapNpc {
     private final Location location;
     private final boolean isPrimary;
     private final boolean delay;
+    private Interaction netInteraction;
 
     /**
      * Constructs a non-rendered QuestNpc
@@ -38,7 +39,7 @@ public class QuestNpc extends MapNpc {
      * @param delay
      */
     public QuestNpc(String name, Location location, Direction direction, Interaction interaction, boolean isPrimary, boolean delay) {
-        super(name, null, direction, true, interaction);
+        super(name, null, direction, true, interaction, false);
         this.location = location;
         this.isPrimary = isPrimary;
         this.delay = delay;
@@ -46,7 +47,7 @@ public class QuestNpc extends MapNpc {
 
     public void activate(Quest quest) {
         if (isPrimary) {
-            interaction = interaction.attach(quest);
+            netInteraction = interaction.attach(quest);
         }
         forceChangeGrid(location);
     }
@@ -54,6 +55,11 @@ public class QuestNpc extends MapNpc {
     public void deactivate() {
         setInteractable(false);
         removeFromGrid(delay);
+    }
+
+    @Override
+    public Interaction toInteraction() {
+        return netInteraction;
     }
 
     public static class Parser extends SuperParser<QuestNpc> {
