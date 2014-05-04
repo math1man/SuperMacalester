@@ -1,12 +1,12 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.plot.QuestEntity;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
+import com.arnopaja.supermac.world.objects.QuestNpc;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -106,7 +106,7 @@ public class World implements Controller {
             JsonArray array = new JsonArray();
             for (Grid map : object.getGrids()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!(entity instanceof QuestEntity)) {
+                    if (!(entity instanceof QuestNpc)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }

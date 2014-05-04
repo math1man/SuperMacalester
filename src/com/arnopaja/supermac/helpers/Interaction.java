@@ -4,6 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

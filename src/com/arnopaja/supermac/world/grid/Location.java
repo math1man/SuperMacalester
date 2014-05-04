@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.JsonElement;

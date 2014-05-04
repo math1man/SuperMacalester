@@ -10,6 +10,9 @@ import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SaverLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
@@ -44,8 +47,8 @@ public class GameScreen implements Screen {
     private final BattleRenderer battleRenderer;
     private final BattleInputHandler battleInputHandler;
 
-    private BaseRenderer currentRenderer;
-    private BaseInputHandler currentInputHandler;
+    private Renderer currentRenderer;
+    private InputHandler currentInputHandler;
     private Controller currentController;
 
     private GameMode mode;
@@ -233,11 +236,11 @@ public class GameScreen implements Screen {
         return battleInputHandler;
     }
 
-    public BaseRenderer getCurrentRenderer() {
+    public Renderer getCurrentRenderer() {
         return currentRenderer;
     }
 
-    public BaseInputHandler getCurrentInputHandler() {
+    public InputHandler getCurrentInputHandler() {
         return currentInputHandler;
     }
 

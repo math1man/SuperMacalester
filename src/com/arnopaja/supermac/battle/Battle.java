@@ -5,9 +5,12 @@ import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.inventory.SpellBook;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
@@ -170,7 +173,7 @@ public class Battle implements Controller, InteractionBuilder {
     }
 
     private Interaction selectSpell(Hero hero, Interaction interaction) {
-        List<Spell> spells = hero.getSpellsList();
+        SpellBook spells = hero.getSpellBook();
         List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
         for (Spell spell : spells) {
             spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
@@ -178,7 +181,7 @@ public class Battle implements Controller, InteractionBuilder {
                     spells(hero, spell, interaction),
                     DialogueStyle.BATTLE_CONSOLE).toInteraction());
         }
-        return new DialogueOptions("Which spell?", spells,
+        return new DialogueOptions("Which spell?", spells.asList(),
                 spellInteractions, DialogueStyle.BATTLE_CONSOLE).toInteraction();
     }
 
@@ -233,15 +236,15 @@ public class Battle implements Controller, InteractionBuilder {
         public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
-            String background = getString(object, "background");
-            return new Battle(enemy, background);
+//            String background = getString(object, "background");
+            return new Battle(enemy);
         }
 
         @Override
         public JsonElement toJson(Battle object) {
             JsonObject json = new JsonObject();
             addObject(json, "enemy", object.enemyParty, EnemyParty.class);
-            addString(json, "background", object.backgroundName);
+//            addString(json, "background", object.backgroundName);
             return json;
         }
     }

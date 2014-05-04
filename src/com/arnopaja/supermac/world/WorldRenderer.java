@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.BaseRenderer;
+import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.RenderGrid;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Ari Weiland
  */
-public class WorldRenderer extends BaseRenderer<World> {
+public class WorldRenderer extends Renderer<World> {
 
     public WorldRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
         super(dialogueHandler, gameWidth, gameHeight);

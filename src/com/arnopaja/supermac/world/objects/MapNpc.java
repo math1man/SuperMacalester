@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;

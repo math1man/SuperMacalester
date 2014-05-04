@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.inventory;
 
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

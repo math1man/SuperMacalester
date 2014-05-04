@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.BaseInputHandler;
+import com.arnopaja.supermac.helpers.InputHandler;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.Input.Keys;
 /**
  * @author Ari Weiland
  */
-public class WorldInputHandler extends BaseInputHandler {
+public class WorldInputHandler extends InputHandler {
 
     public static final float SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2f;
 
