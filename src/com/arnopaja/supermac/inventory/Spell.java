@@ -36,7 +36,7 @@ public class Spell {
         String dialogue;
         if(isBlack)
         {                           // TODO: I think this should no divide by four so the modifier is the only multiplier
-            int damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
+            int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
             destination.modifyHealth(-damage);
             dialogue = source + " casts " + this + "!\n" +
                     damage + " damage done.";
@@ -48,6 +48,7 @@ public class Spell {
             if (source.isOutOfMana()) {
                 dialogue += "\n" + source + " is out of mana...";
             }                            // 0 will be easier to parse, and no other spells should have a 0 modifier
+
         } else if(damageModifier == 0) { // Use this special value for resurrect spells
             source.modifyMana(-manaCost);
             if(destination.isFainted()) {

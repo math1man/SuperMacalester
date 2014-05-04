@@ -73,6 +73,9 @@ public class AssetLoader {
     // Sounds
     public static Sound overWorld;
     public static Sound battleMusic;
+    public static Sound compscimagic;
+    public static Sound natscimagic;
+    public static Sound healingmagic;
 
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
@@ -90,8 +93,11 @@ public class AssetLoader {
         //          Tiles
         //--------------------------
 
-        overWorld = Gdx.audio.newSound(getHandle("Music/Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3"));
-        battleMusic = Gdx.audio.newSound(getHandle("Music/Rolemusic_-_04_-_Scape_from_the_city.mp3"));
+        overWorld = Gdx.audio.newSound(getHandle("music/Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3"));
+        battleMusic = Gdx.audio.newSound(getHandle("music/Rolemusic_-_04_-_Scape_from_the_city.mp3"));
+        compscimagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
+        natscimagic = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
+        healingmagic = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
 
         treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
         treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
