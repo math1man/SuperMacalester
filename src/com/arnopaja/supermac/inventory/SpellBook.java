@@ -22,38 +22,48 @@ public class SpellBook implements Iterable<Spell> {
         spellBook = spells;
     }
 
-    public void add(Spell spell) {
-        spellBook.put(spell.getId(), spell);
+    public boolean add(Spell spell) {
+        return spellBook.put(spell.getId(), spell) != spell;
     }
 
-    public void addAll(Collection<Spell> spells) {
+    public boolean addAll(Collection<? extends Spell> spells) {
+        boolean changed = false;
         for (Spell spell : spells) {
-            add(spell);
+            changed = add(spell) || changed;
         }
+        return changed;
     }
 
     public Spell get(int id) {
         return spellBook.get(id);
     }
 
-    public boolean contains(Spell spell) {
-        return spellBook.containsValue(spell);
+    public boolean contains(Object spell) {
+        return spell instanceof Spell && spellBook.containsValue(spell);
     }
 
     public Spell remove(int id) {
         return spellBook.remove(id);
     }
 
-    public boolean remove(Spell spell) {
-        return spellBook.remove(spell.getId()) != null;
+    public boolean remove(Object spell) {
+        return spell instanceof Spell && remove(((Spell) spell).getId()) != null;
+    }
+
+    public void clear() {
+        spellBook.clear();
     }
 
     public int size() {
         return spellBook.size();
     }
 
+    public boolean isEmpty() {
+        return spellBook.isEmpty();
+    }
+
     public List<Spell> asList() {
-        return new ArrayList<Spell>(spellBook.values());
+        return Collections.unmodifiableList(new ArrayList<Spell>(spellBook.values()));
     }
 
     @Override

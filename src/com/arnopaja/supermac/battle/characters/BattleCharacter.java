@@ -147,12 +147,12 @@ public abstract class BattleCharacter {
         updateStats();
     }
 
-    public void setDefending(boolean a) {
-        this.isDefending = a;
+    public void defend() {
+        isDefending = true;
     }
 
-    public boolean isDefending() {
-        return this.isDefending;
+    public void clearDefend() {
+        isDefending = false;
     }
 
     private void updateStats() {

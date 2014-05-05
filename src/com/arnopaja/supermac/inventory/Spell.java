@@ -33,43 +33,36 @@ public class Spell {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        String dialogue;
-        if(isBlack)
-        {                           // TODO: I think this should no divide by four so the modifier is the only multiplier
+        // TODO: we need to check that source has enough mana
+        String dialogue = source + " casts " + this + " on " + destination + "!\n";
+        if(isBlack) {
             int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
             destination.modifyHealth(-damage);
-            dialogue = source + " casts " + this + "!\n" +
-                    damage + " damage done.";
+            dialogue += damage + " damage done.";
             if (destination.isFainted()) {
                 dialogue += "\n" + destination + " fell!";
             }
             source.modifyMana(-manaCost);
-            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {
-                dialogue += "\n" + source + " is out of mana...";
-            }                            // 0 will be easier to parse, and no other spells should have a 0 modifier
-
+                dialogue += "<d>" + source + " is out of mana...";
+            }
         } else if(damageModifier == 0) { // Use this special value for resurrect spells
             source.modifyMana(-manaCost);
             if(destination.isFainted()) {
                 destination.resurrect();
-                dialogue = source + " casts " + this + "!\n" +
-                         destination.getName() + " has been resurrected!" ;
+                dialogue += destination + " has been resurrected!" ;
             } else {
-                dialogue = source + " casts " + this + "!\n" +
-                        "It has no effect on " + destination.getName() + "." ;
+                dialogue += "It has no effect on " + destination + "." ;
             }
         } else if(destination.isFainted()) {
             dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
         } else {
             int healing = (int) getDamageModifier() * source.getSpecial();
             destination.modifyHealth(healing);
-            dialogue = source + " casts " + this + "!\n" +
-                    healing + " health restored to " + destination + "." ;
+            dialogue += healing + " health restored." ;
             source.modifyMana(-manaCost);
-            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
             if (source.isOutOfMana()) {
-                dialogue += "\n" + source + " is out of mana...";
+                dialogue += "<d>" + source + " is out of mana...";
             }
         }
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
@@ -79,7 +72,9 @@ public class Spell {
         return id;
     }
 
-    public boolean isBlack() { return isBlack; }
+    public boolean isBlack() {
+        return isBlack;
+    }
 
     public String getName() {
         return name;
@@ -131,7 +126,7 @@ public class Spell {
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
                 boolean offensive = getBoolean(object, "type");
-                return new Spell(id, name, modifier, manaCost,offensive);
+                return new Spell(id, name, modifier, manaCost, offensive);
             }
         }
 

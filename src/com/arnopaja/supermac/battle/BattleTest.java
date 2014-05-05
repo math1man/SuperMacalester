@@ -4,7 +4,6 @@ import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.inventory.Spell;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 /**
  * @author Ari Weiland
@@ -56,19 +55,15 @@ public class BattleTest extends Battle {
     protected void setTurnActions() {
         enemyParty.clearDefend();
         mainParty.clearDefend();
-        // implement me!
-        Random r = new Random();
         //Set enemy actions
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty()) {
-//            System.out.println(e);
             a = BattleAction.attack(e, mainParty.getRandom());
             addAction(a);
             System.out.println(a);
         }
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty()) {
-            //System.out.println(h);
             if(autoBattle)
             {
                 if(h.getMana() > h.getSpell(0).getManaCost()){

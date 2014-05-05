@@ -49,19 +49,19 @@ public abstract class Party<T extends BattleCharacter> {
     }
 
     public List<T> getActiveParty() {
-        ArrayList<T> h = new ArrayList<T>();
+        List<T> active = new ArrayList<T>();
         for(int i=0; i<Math.min(4, characters.size()); i++) {
             T character = characters.get(i);
             if(!character.isFainted()){
-                h.add(character);
+                active.add(character);
             }
         }
-        return h;
+        return active;
     }
 
     public void clearDefend() {
-        for(BattleCharacter bc:characters) {
-            bc.setDefending(false);
+        for (T bc : characters) {
+            bc.clearDefend();
         }
     }
 
