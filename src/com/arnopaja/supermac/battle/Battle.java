@@ -162,7 +162,7 @@ public class Battle implements Controller, Interaction {
                 Arrays.asList(selectAttack(hero, interaction),
                         selectDefend(hero, interaction),
                         selectSpell(hero, interaction),
-                        Interactions.NULL, // selectItem(hero, heroes, interaction), TODO: eventually put this back when items work
+                        Interactions.NULL, // selectItem(hero, interaction), TODO: eventually put this back when items work
                         selectFlee(hero, interaction)),
                 DialogueStyle.BATTLE_CONSOLE);
     }
@@ -194,7 +194,7 @@ public class Battle implements Controller, Interaction {
         }
     }
 
-    private Interaction selectItem(Hero hero, Iterator<Hero> heroes, Interaction interaction) {
+    private Interaction selectItem(Hero hero, Interaction interaction) {
         List<Item> items = Inventory.getMain().getAll(Item.class);
         List<Interaction> itemInteractions = new ArrayList<Interaction>(items.size());
         List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
