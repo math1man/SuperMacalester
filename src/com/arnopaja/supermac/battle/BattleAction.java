@@ -3,10 +3,10 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.Hero;
-import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
@@ -77,6 +77,12 @@ public abstract class BattleAction implements Interaction {
         return new BattleAction(source, destination, ActionType.ATTACK, source.getSpeed(), null, null) {
             @Override
             public Dialogue subrun(float delta) {
+                if(random.nextInt(256) / getDestination().getLevel() < random.nextInt(128) / getSource().getLevel())
+                {
+                    //MISS
+                    String dialogue = getSource() + " tried to attack " + getDestination() + " and missed!";
+                    return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+                }
                 int damage = (int) ((2 + Math.abs(random.nextGaussian())) * getSource().getAttack() / getDestination().getDefense());
                 getDestination().modifyHealth(-damage);
                 String dialogue = getSource() + " attacks " + getDestination() + "!\n" +
