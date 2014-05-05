@@ -11,6 +11,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.plot.Settings;
 
 import java.util.Random;
 
@@ -93,7 +94,7 @@ public abstract class BattleAction implements InteractionBuilder {
         return new BattleAction(source, destination, ActionType.SPELL, source.getSpeed(), spell, null) {
             @Override
             public Dialogue subrun(float delta) {
-                getSource().getBattleClass().getMagicSound().play();
+                getSource().getBattleClass().getMagicSound().play(Settings.getVolume());
                 return getSpell().use(getSource(), getDestination());
             }
         };

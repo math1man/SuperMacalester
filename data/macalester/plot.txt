@@ -81,6 +81,7 @@
                                 "x" : 39,
                                 "y" : 68
                             },
+                            "direction" : east,
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -126,13 +127,14 @@
                         },
                         {
                             "class" : "QuestNpc",
-                            "name" : "SJW",
+                            "name" : "Betsy",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 40,
                                 "y" : 68
                             },
+                            "direction" : east,
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -178,13 +180,14 @@
                         },
                         {
                             "class" : "QuestNpc",
-                            "name" : "SJW",
+                            "name" : "Betsy",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 41,
                                 "y" : 68
                             },
+                            "direction" : east,
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {

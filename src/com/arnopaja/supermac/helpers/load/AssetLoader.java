@@ -7,6 +7,7 @@ import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -70,12 +71,14 @@ public class AssetLoader {
     public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
     public static Map<String, Grid> grids = new HashMap<String, Grid>();
 
+    // Music
+    public static Music worldMusic;
+    public static Music battleMusic;
+
     // Sounds
-    public static Sound overWorld;
-    public static Sound battleMusic;
-    public static Sound compscimagic;
-    public static Sound natscimagic;
-    public static Sound healingmagic;
+    public static Sound compSciMagic;
+    public static Sound natSciMagic;
+    public static Sound healingMagic;
 
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
@@ -92,12 +95,6 @@ public class AssetLoader {
         //--------------------------
         //          Tiles
         //--------------------------
-
-        overWorld = Gdx.audio.newSound(getHandle("music/Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3"));
-        battleMusic = Gdx.audio.newSound(getHandle("music/Rolemusic_-_04_-_Scape_from_the_city.mp3"));
-        compscimagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
-        natscimagic = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
-        healingmagic = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
 
         treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
         treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
@@ -173,10 +170,8 @@ public class AssetLoader {
         }
 
         //--------------------------
-        //          Other
+        //    Handles and Caches
         //--------------------------
-
-        // TODO: battle backgrounds (for now, we just use RenderGrids)
 
         itemHandle = getHandle("items.txt");
         spellHandle = getHandle("spells.txt");
@@ -189,6 +184,21 @@ public class AssetLoader {
         SuperParser.parseAll(AssetLoader.spellHandle, Spell.class);
         dialogues = SuperParser.parseAll(AssetLoader.dialogueHandle, Dialogue.class);
         grids = MapLoader.generateGrids(AssetLoader.mapHandle);
+
+        //--------------------------
+        //     Music and Sounds
+        //--------------------------
+
+        worldMusic = loadMusic("Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3");
+        battleMusic = loadMusic("Rolemusic_-_04_-_Scape_from_the_city.mp3");
+
+        compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
+        natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
+        healingMagic = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
+
+        //--------------------------
+        //          Other
+        //--------------------------
 
         font = new BitmapFont(getHandle("font/text.fnt"));
         shadow = new BitmapFont(getHandle("font/shadow.fnt"));
@@ -224,25 +234,21 @@ public class AssetLoader {
         characterAssetMap.put(name, new CharacterAsset(person, personAnim));
     }
 
+    public static Music loadMusic(String file) {
+        Music music = Gdx.audio.newMusic(getHandle("music/" + file));
+        music.setLooping(true);
+        return music;
+    }
+
     public static void scaleFont(float scale) {
         font.setScale(scale, -scale);
         shadow.setScale(scale, -scale);
-    }
-
-    public static void drawFont(SpriteBatch batch, String string, float x, float y) {
-        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
-        AssetLoader.shadow.drawMultiLine(batch, string, x + shadowOffset, y + shadowOffset);
-        AssetLoader.font.drawMultiLine(batch, string, x, y);
     }
 
     public static void drawWrappedFont(SpriteBatch batch, String string, float x, float y, float width) {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
         AssetLoader.shadow.drawWrapped(batch, string, x + shadowOffset, y + shadowOffset, width);
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
-    }
-
-    public static String getMap(String name) {
-        return mapHandle.child(name + ".txt").readString();
     }
 
     public static TextureRegion getBackground(String name) {
@@ -261,6 +267,9 @@ public class AssetLoader {
         tilesTexture.dispose();
         entitiesTexture.dispose();
         characterTexture.dispose();
+        worldMusic.dispose();
+        battleMusic.dispose();
+        compSciMagic.dispose();
         font.dispose();
         shadow.dispose();
     }

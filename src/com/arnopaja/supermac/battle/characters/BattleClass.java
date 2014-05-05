@@ -7,9 +7,9 @@ import com.badlogic.gdx.audio.Sound;
  * @author Nolan Varani
  */
 public enum BattleClass {     // hp  m   a   d   s   speed
-    COMP_SCI(SpecialType.BLACK,  30, 10, 5,  10, 25, 15, AssetLoader.compscimagic),
-    ECON(SpecialType.WHITE,      40, 5,  20, 15, 10, 5,  AssetLoader.healingmagic),
-    NAT_SCI(SpecialType.RED,     35, 5,  10, 10, 15, 10, AssetLoader.natscimagic),
+    COMP_SCI(SpecialType.BLACK,  30, 10, 5,  10, 25, 15, AssetLoader.compSciMagic),
+    ECON(SpecialType.WHITE,      40, 5,  20, 15, 10, 5,  AssetLoader.healingMagic),
+    NAT_SCI(SpecialType.RED,     35, 5,  10, 10, 15, 10, AssetLoader.natSciMagic),
     HUMANITIES(SpecialType.NONE, 30, 0,  20, 10, 5,  20, null);
 
     public static enum SpecialType { BLACK, WHITE, RED, NONE }

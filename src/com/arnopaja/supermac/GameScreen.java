@@ -22,7 +22,7 @@ import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 
 import java.util.Collections;
 
@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
     private Renderer currentRenderer;
     private InputHandler currentInputHandler;
     private Controller currentController;
-    private Sound currentSound;
+    private Music currentMusic;
 
     private GameMode mode;
     private GameState state;
@@ -96,8 +96,8 @@ public class GameScreen implements Screen {
     }
 
     public void changeMode(GameMode mode) {
-        if(currentSound != null){
-            currentSound.stop();
+        if(currentMusic != null){
+            currentMusic.stop();
         }
         this.mode = mode;
         switch (this.mode) {
@@ -105,18 +105,18 @@ public class GameScreen implements Screen {
                 currentController = world;
                 currentRenderer = worldRenderer;
                 currentInputHandler = worldInputHandler;
-                currentSound = AssetLoader.overWorld;
+                currentMusic = AssetLoader.worldMusic;
                 break;
             case BATTLE:
                 battleRenderer.setController(battle);
                 currentController = battle;
                 currentRenderer = battleRenderer;
                 currentInputHandler = battleInputHandler;
-                currentSound = AssetLoader.battleMusic;
+                currentMusic = AssetLoader.battleMusic;
                 break;
         }
         Gdx.input.setInputProcessor(currentInputHandler);
-        currentSound.loop();
+        currentMusic.play();
     }
 
     @Override
