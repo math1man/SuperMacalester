@@ -20,7 +20,7 @@ import java.util.List;
 public abstract class Dialogue implements Interaction {
 
     private final String name;
-    private DialogueStyle style;
+    private final DialogueStyle style;
 
     protected Dialogue(String name, DialogueStyle style) {
         this.name = name;
