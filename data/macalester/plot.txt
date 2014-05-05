@@ -31,8 +31,7 @@
                                     <d>Tom: Either way, this seems serious. I'm going out for a look.
                                     <d>John: Be careful."
                                 }
-                            },
-                            "delay" : true
+                            }
                         }
                     ]
                 },
@@ -63,8 +62,7 @@
                                     <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90's.
                                     <d>Rosenberg: Just go with it."
                                 }
-                            },
-                            "delay" : true
+                            }
                         }
                     ]
                 },
@@ -122,8 +120,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         },
                         {
                             "class" : "QuestNpc",
@@ -175,8 +172,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         },
                         {
                             "class" : "QuestNpc",
@@ -228,8 +224,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         }
                     ]
                 },
@@ -281,8 +276,7 @@
                                         }
                                     }
                                 }
-                            },
-                            "delay" : false
+                            }
                         }
                     ]
                 }
