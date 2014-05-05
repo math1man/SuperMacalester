@@ -17,7 +17,9 @@ public class DialogueMember {
 
     public DialogueMember(String text, Interaction interaction) {
         this.text = text;
-        if (interaction != null && interaction instanceof Dialogue || interaction == Interactions.NULL) {
+        if (interaction == null) {
+            this.interaction = Interactions.END_DIALOGUE; // Either NULL or END_DIALOGUE
+        } else if (interaction instanceof Dialogue || interaction instanceof Interactions) {
             this.interaction = interaction;
         } else {
             this.interaction = new MultiInteraction(Interactions.END_DIALOGUE, interaction);
