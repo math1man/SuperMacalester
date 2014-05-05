@@ -1,11 +1,11 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.load.EffectParser;
-import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.EffectParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -26,6 +26,26 @@ public class Item extends GenericItem {
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         // TODO: use item. Add new methods and variables to BattleCharacter to enable temporary powerups to attack, defense, speed, special
         String dialogue = source + " uses " + this + " on " + destination + "!";
+        for(Effect e:this.effects)
+        {
+            switch(e.type)
+            {
+                //TODO: Implement temporary powerups in BattleCharacter, then include here
+                case HEALTH:
+                    source.modifyHealth(e.value);
+                    if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
+                    else dialogue += "\n" + e.value + " damage done!";
+                    break;
+                case MANA:
+                    source.modifyMana(e.value);
+                    if(e.value > 0) dialogue += "\n"  + e.value + " mana restored!";
+                    else dialogue += "\n" + e.value + " mana burned!";
+                    break;
+                default:
+                    dialogue += "\nNothing happened, because this isn't even a real item (yet)!";
+                    break;
+            }
+        }
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
