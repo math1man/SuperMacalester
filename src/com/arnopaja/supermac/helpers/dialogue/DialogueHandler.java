@@ -48,8 +48,6 @@ public class DialogueHandler {
             for (DialogueWindow window : windows.values()) {
                 Interaction interaction = window.onClick(x, y);
                 if (interaction != null && interaction != Interactions.NULL) {
-                    System.out.println(window);
-                    System.out.println(interaction);
                     return interaction;
                 }
             }
