@@ -39,7 +39,7 @@ public class DialogueText extends Dialogue {
         if (text.length > 1) {
             member = new DialogueMember(text[0], new DialogueText(name, rawDialogue,
                     Arrays.copyOfRange(text, 1, text.length), interaction, style));
-        } else if (interaction == null || interaction == Interactions.NULL) {
+        } else if (interaction == null) {
             member = new DialogueMember(text[0], Interactions.END_DIALOGUE);
         } else {
             member = new DialogueMember(text[0], interaction);
