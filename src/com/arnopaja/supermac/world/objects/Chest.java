@@ -1,8 +1,10 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
+import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
@@ -79,42 +81,37 @@ public class Chest extends Container {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final Chest chest = this;
-        return new Interaction(chest) {
-            public void run(GameScreen screen) {
-                chest.open();
-                Dialogue dialogue;
-                if (chest.isEmpty()) {
-                    dialogue = new DialogueText("This chest is empty", chest.closeInteraction(), DialogueStyle.WORLD);
-                } else {
-                    // Items go into inventory from chest
-                    List<GenericItem> items = chest.getContents().getAll();
-                    List<Object> objects = new ArrayList<Object>(items);
-                    objects.add("All");
-                    objects.add("Close");
+    public void run(GameScreen screen) {
+        open();
+        Dialogue dialogue;
+        if (isEmpty()) {
+            dialogue = new DialogueText("This chest is empty", closeInteraction(), DialogueStyle.WORLD);
+        } else {
+            // Items go into inventory from chest
+            List<GenericItem> items = getContents().getAll();
+            List<Object> objects = new ArrayList<Object>(items);
+            objects.add("All");
+            objects.add("Close");
 
-                    List<Interaction> interactions = new ArrayList<Interaction>(objects.size());
-                    Interaction all = NULL;
-                    for (GenericItem item : items) {
-                        Interaction temp = chest.takeItemInteraction(item);
-                        interactions.add(temp.attach(chest));
-                        all.attach(temp);
-                    }
-                    interactions.add(all);
-                    interactions.add(chest.closeInteraction());
-                    dialogue = new DialogueOptions("Take items?", objects, interactions, DialogueStyle.WORLD);
-                }
-                dialogue.toInteraction().run(screen);
+            List<Interaction> interactions = new ArrayList<Interaction>(objects.size());
+            MultiInteraction all = new MultiInteraction();
+            for (GenericItem item : items) {
+                Interaction temp = takeItemInteraction(item);
+                interactions.add(new MultiInteraction(temp, this));
+                all.attach(temp);
             }
-        };
+            interactions.add(all);
+            interactions.add(closeInteraction());
+            dialogue = new DialogueOptions("Take items?", objects, interactions, DialogueStyle.WORLD);
+        }
+        dialogue.run(screen);
     }
 
     private Interaction closeInteraction() {
         final Chest chest = this;
-        return new Interaction(chest) {
+        return new Interaction() {
             public void run(GameScreen screen) {
-                Dialogue.CLEAR_DIALOGUE.run(screen);
+                Interactions.END_DIALOGUE.run(screen);
                 chest.close();
             }
         };

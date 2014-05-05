@@ -10,6 +10,7 @@ import com.arnopaja.supermac.helpers.*;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
@@ -68,7 +69,7 @@ public class GameScreen implements Screen {
     public GameScreen(MacGame game) {
         this.game = game;
 
-        RESET.run(this);
+        Interactions.RESET.run(this);
 
         Settings.load();
 
@@ -91,8 +92,7 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-        new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN)
-                .toInteraction().run(this);
+        new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN).run(this);
     }
 
     public void changeMode(GameMode mode) {
@@ -274,30 +274,4 @@ public class GameScreen implements Screen {
     public Battle getBattle() {
         return battle;
     }
-
-    public static final Interaction RESET = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            AssetLoader.prefs.clear();
-            Settings.save(true); // resave Settings
-            screen.load(); // will load the default
-        }
-
-        @Override
-        public String toString() {
-            return "RESET";
-        }
-    };
-
-    public static final Interaction CLOSE = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            screen.getGame().dispose();
-        }
-
-        @Override
-        public String toString() {
-            return "CLOSE";
-        }
-    };
 }

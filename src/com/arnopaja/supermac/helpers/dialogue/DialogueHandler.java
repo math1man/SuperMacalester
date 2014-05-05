@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -46,12 +47,12 @@ public class DialogueHandler {
         if (isDisplaying) {
             for (DialogueWindow window : windows.values()) {
                 Interaction interaction = window.onClick(x, y);
-                if (interaction != null && interaction != Interaction.NULL) {
+                if (interaction != null && interaction != Interactions.NULL) {
                     return interaction;
                 }
             }
         }
-        return Interaction.NULL;
+        return Interactions.NULL;
     }
 
     public void clear() {

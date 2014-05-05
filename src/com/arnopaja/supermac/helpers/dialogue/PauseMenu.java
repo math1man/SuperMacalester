@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 
 import java.util.Arrays;
 
@@ -17,16 +17,16 @@ public class PauseMenu extends DialogueOptions {
                 // TODO: Party manipulation
                 // TODO: Inventory manipulation
 //                new DialogueMember("Settings"),
-                new DialogueMember("Reset", RESET_DIALOGUE.toInteraction()),
-                new DialogueMember("Exit", EXIT_DIALOGUE.toInteraction())),
+                new DialogueMember("Reset", RESET_DIALOGUE),
+                new DialogueMember("Exit", EXIT_DIALOGUE)),
                 DialogueStyle.FULL_SCEEN); // TODO: maybe make a new style?
     }
 
     private static final DialogueOptions RESET_DIALOGUE = new DialogueOptions(
             "Are you sure you want to reset your game?",
             Arrays.asList(
-                    new DialogueMember("Yes", GameScreen.RESET),
-                    new DialogueMember("No", INSTANCE.toInteraction())
+                    new DialogueMember("Yes", Interactions.RESET),
+                    new DialogueMember("No", INSTANCE)
             ),
             DialogueStyle.FULL_SCEEN
     );
@@ -34,8 +34,8 @@ public class PauseMenu extends DialogueOptions {
     private static final DialogueOptions EXIT_DIALOGUE = new DialogueOptions(
             "Are you sure you want to exit?",
             Arrays.asList(
-                    new DialogueMember("Yes", GameScreen.CLOSE),
-                    new DialogueMember("No", INSTANCE.toInteraction())
+                    new DialogueMember("Yes", Interactions.CLOSE),
+                    new DialogueMember("No", INSTANCE)
             ),
             DialogueStyle.FULL_SCEEN
     );

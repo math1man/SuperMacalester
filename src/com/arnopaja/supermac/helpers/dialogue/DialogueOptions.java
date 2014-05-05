@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +41,10 @@ public class DialogueOptions extends Dialogue {
 
     private static List<DialogueMember> encapsulate(String header, List<?> options, List<Interaction> interactions) {
         List<DialogueMember> members = new ArrayList<DialogueMember>(options.size() + 1);
-        members.add(new DialogueMember(header, Interaction.NULL));
+        members.add(new DialogueMember(header, Interactions.NULL));
         for (int i=0; i<options.size(); i++) {
             members.add(new DialogueMember(options.get(i).toString(),
-                    interactions.size() > i ? interactions.get(i) : Interaction.NULL));
+                    interactions.size() > i ? interactions.get(i) : Interactions.NULL));
         }
         return members;
     }
@@ -64,7 +65,7 @@ public class DialogueOptions extends Dialogue {
         if (i < count) {
             return members.get(i + 1).getInteraction();
         } else {
-            return Interaction.NULL;
+            return Interactions.NULL;
         }
     }
 

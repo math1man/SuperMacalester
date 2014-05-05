@@ -1,11 +1,10 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Armor;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.Weapon;
@@ -15,7 +14,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Nolan Varani
  */
-public class Hero extends BattleCharacter implements InteractionBuilder {
+public class Hero extends BattleCharacter implements Interaction {
 
     protected boolean hasFled = false;
 
@@ -40,15 +39,9 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final Hero hero = this;
-        return new Interaction(hero) {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getParty().addCharacter(hero);
-                new DialogueText(hero.name + " has joined the party!", DialogueStyle.WORLD).toInteraction().run(screen);
-            }
-        };
+    public void run(GameScreen screen) {
+        screen.getParty().addCharacter(this);
+        new DialogueText(this + " has joined the party!", DialogueStyle.WORLD).run(screen);
     }
 
     public static class Parser extends SuperParser<Hero> {
@@ -58,14 +51,8 @@ public class Hero extends BattleCharacter implements InteractionBuilder {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            int health = -1;
-            if (object.has("health")) {
-                health = getInt(object, "health");
-            }
-            int mana = -1;
-            if (object.has("mana")) {
-                mana = getInt(object, "mana");
-            }
+            int health = getInt(object, "health", -1);
+            int mana = getInt(object, "mana", -1);
             Hero hero = new Hero(name, battleClass, level, health, mana);
             if (has(object, Armor.class)) {
                 hero.setEquippedArmor(getObject(object, Armor.class));

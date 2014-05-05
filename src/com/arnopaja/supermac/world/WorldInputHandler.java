@@ -82,7 +82,7 @@ public class WorldInputHandler extends InputHandler {
 
     private void move(Direction direction) {
         if (!character.move(direction)) {
-            character.toInteraction().run(screen);
+            character.run(screen);
         }
     }
 

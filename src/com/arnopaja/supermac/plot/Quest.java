@@ -1,8 +1,7 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,7 +14,7 @@ import java.util.Set;
 /**
  * @author Ari Weiland
  */
-public class Quest implements InteractionBuilder {
+public class Quest implements Interaction {
 
     public static enum QuestState { INACTIVE, ACTIVE, COMPLETE }
 
@@ -137,14 +136,8 @@ public class Quest implements InteractionBuilder {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final Quest quest = this;
-        return new Interaction(quest) {
-            @Override
-            public void run(GameScreen screen) {
-                quest.nextGoal();
-            }
-        };
+    public void run(GameScreen screen) {
+        nextGoal();
     }
 
     @Override

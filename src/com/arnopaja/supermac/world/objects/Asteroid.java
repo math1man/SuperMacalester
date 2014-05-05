@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,8 +18,8 @@ public class Asteroid extends NonRenderedEntity {
     }
 
     @Override
-    public Interaction toInteraction() {
-        return new DialogueText("This asteroid seems to be pulsing with a strange energy", DialogueStyle.WORLD).toInteraction();
+    public void run(GameScreen screen) {
+        new DialogueText("This asteroid seems to be pulsing with a strange energy", DialogueStyle.WORLD).run(screen);
     }
 
     public static class Parser extends SuperParser<Asteroid> {

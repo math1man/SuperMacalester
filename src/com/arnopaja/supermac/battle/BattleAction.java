@@ -3,8 +3,7 @@ package com.arnopaja.supermac.battle;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.Hero;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -18,7 +17,7 @@ import java.util.Random;
 /**
  * @author Nolan Varani
  */
-public abstract class BattleAction implements InteractionBuilder {
+public abstract class BattleAction implements Interaction {
 
     private static final Random random = new Random();
     public static final int DEFEND_PRIORITY = Integer.MAX_VALUE - 1;
@@ -165,20 +164,13 @@ public abstract class BattleAction implements InteractionBuilder {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final BattleAction action = this;
-        return new Interaction(action) {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getBattle().addAction(action);
-                if (action.getType() == BattleAction.ActionType.ITEM) {
-                    // Removes the item from Inventory when the battle
-                    // action is put into the action queue
-                    Inventory.getMain().take(action.getItem());
-                }
-            }
-        };
-
+    public void run(GameScreen screen) {
+        screen.getBattle().addAction(this);
+        if (getType() == BattleAction.ActionType.ITEM) {
+            // Removes the item from Inventory when the battle
+            // action is put into the action queue
+            Inventory.getMain().take(getItem());
+        }
     }
 
     @Override

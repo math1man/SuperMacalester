@@ -1,7 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;
@@ -29,7 +31,7 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(String name, Location location, Direction direction) {
-        this(name, location, direction, false, Interaction.NULL);
+        this(name, location, direction, false, Interactions.NULL);
     }
 
     public MapNpc(String name, Location location, Direction direction, boolean isInteractable, Interaction interaction) {
@@ -68,8 +70,8 @@ public class MapNpc extends MapCharacter {
     }
 
     @Override
-    public Interaction toInteraction() {
-        return interaction;
+    public void run(GameScreen screen) {
+        interaction.run(screen);
     }
 
     @Override
@@ -86,30 +88,12 @@ public class MapNpc extends MapCharacter {
         @Override
         public MapNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            String name = null;
-            if (object.has("name")) {
-                name = getString(object, "name");
-            }
-            Location location = null;
-            if (has(object, Location.class)) {
-                location = getObject(object, Location.class);
-            }
-            Direction direction = Direction.WEST;
-            if (has(object, Direction.class)) {
-                direction = getObject(object, Direction.class);
-            }
-            boolean isInteractable = false;
-            if (object.has("interactable")) {
-                isInteractable = getBoolean(object, "interactable");
-            }
-            Interaction interaction = Interaction.NULL;
-            if (has(object, Interaction.class)) {
-                interaction = getObject(object, Interaction.class);
-            }
-            boolean canMove = MapNpc.DEFAULT_CAN_MOVE;
-            if (object.has("canMove")) {
-                canMove = getBoolean(object, "canMove");
-            }
+            String name = getString(object, "name", null);
+            Location location = getObject(object, Location.class, null);
+            Direction direction = getObject(object, Direction.class, Direction.WEST);
+            boolean isInteractable = getBoolean(object, "interactable", false);
+            Interaction interaction = getObject(object, Interaction.class, Interactions.NULL);
+            boolean canMove = getBoolean(object, "canMove", MapNpc.DEFAULT_CAN_MOVE);
             return new MapNpc(name, location, direction, isInteractable, interaction, canMove);
         }
 

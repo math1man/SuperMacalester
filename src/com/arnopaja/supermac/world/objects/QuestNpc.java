@@ -1,6 +1,9 @@
 package com.arnopaja.supermac.world.objects;
 
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
+import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.world.grid.Direction;
@@ -16,7 +19,7 @@ public class QuestNpc extends MapNpc {
     private final Location location;
     private final boolean isPrimary;
     private final boolean delay;
-    private Interaction netInteraction;
+    private final MultiInteraction netInteraction = new MultiInteraction();
 
     /**
      * Constructs a non-rendered QuestNpc
@@ -43,11 +46,12 @@ public class QuestNpc extends MapNpc {
         this.location = location;
         this.isPrimary = isPrimary;
         this.delay = delay;
+        netInteraction.attach(interaction);
     }
 
     public void activate(Quest quest) {
         if (isPrimary) {
-            netInteraction = interaction.attach(quest);
+            netInteraction.attach(quest);
         }
         forceChangeGrid(location);
     }
@@ -58,35 +62,20 @@ public class QuestNpc extends MapNpc {
     }
 
     @Override
-    public Interaction toInteraction() {
-        return netInteraction;
+    public void run(GameScreen screen) {
+        netInteraction.run(screen);
     }
 
     public static class Parser extends SuperParser<QuestNpc> {
         @Override
         public QuestNpc fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            String name = null;
-            if (object.has("name")) {
-                name = getString(object, "name");
-            }
+            String name = getString(object, "name", null);
             Location location = getObject(object, Location.class);
-            Direction direction = Direction.WEST;
-            if (has(object, Direction.class)) {
-                direction = getObject(object, Direction.class);
-            }
-            Interaction interaction = Interaction.NULL;
-            if (has(object, Interaction.class)) {
-                interaction = getObject(object, Interaction.class);
-            }
-            boolean isPrimary = true;
-            if (object.has("primary")) {
-                isPrimary = getBoolean(object, "primary");
-            }
-            boolean delay = true;
-            if (object.has("delay")) {
-                delay = getBoolean(object, "delay");
-            }
+            Direction direction = getObject(object, Direction.class, Direction.WEST);
+            Interaction interaction = getObject(object, Interaction.class, Interactions.NULL);
+            boolean isPrimary = getBoolean(object, "primary", true);
+            boolean delay = getBoolean(object, "delay", true);
             return new QuestNpc(name, location, direction, interaction, isPrimary, delay);
         }
 

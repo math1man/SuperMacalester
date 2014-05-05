@@ -1,11 +1,10 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.world.grid.Location;
@@ -25,26 +24,20 @@ public class GarbageCan extends Container {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final GarbageCan can = this;
-        return new Interaction(can) {
-            @Override
-            public void run(GameScreen screen) {
-                List<GenericItem> items = can.getContents().getAll();
-                for (GenericItem item : items) {
-                    can.takeItemInteraction(item);
-                }
-                DialogueText dialogue;
-                if (items.isEmpty()) {
-                    dialogue = new DialogueText("This garbage can is empty.", DialogueStyle.WORLD);
-                } else if (items.size() == 1) {
-                    dialogue = new DialogueText("You find a " + items.get(0) + ".", DialogueStyle.WORLD);
-                } else {
-                    dialogue = new DialogueText("You find a lot of items!", DialogueStyle.WORLD);
-                }
-                dialogue.toInteraction().run(screen);
-            }
-        };
+    public void run(GameScreen screen) {
+        List<GenericItem> items = getContents().getAll();
+        for (GenericItem item : items) {
+            takeItemInteraction(item);
+        }
+        DialogueText dialogue;
+        if (items.isEmpty()) {
+            dialogue = new DialogueText("This garbage can is empty.", DialogueStyle.WORLD);
+        } else if (items.size() == 1) {
+            dialogue = new DialogueText("You find a " + items.get(0) + ".", DialogueStyle.WORLD);
+        } else {
+            dialogue = new DialogueText("You find a lot of items!", DialogueStyle.WORLD);
+        }
+        dialogue.run(screen);
     }
 
     @Override

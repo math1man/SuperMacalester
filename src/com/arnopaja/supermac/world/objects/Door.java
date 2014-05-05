@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -24,19 +23,14 @@ public class Door extends NonRenderedEntity {
     }
 
     @Override
-    public Interaction toInteraction() {
-        return new Interaction(destination) {
-            @Override
-            public void run(GameScreen screen) {
-                MainMapCharacter main = screen.getWorld().getMainCharacter();
-                for (Entity e : main.getGrid().getEntities()) {
-                    if (e.isDelayed()) {
-                        e.forceChangeGrid();
-                    }
-                }
-                main.changeGrid(destination);
+    public void run(GameScreen screen) {
+        MainMapCharacter main = screen.getWorld().getMainCharacter();
+        for (Entity e : main.getGrid().getEntities()) {
+            if (e.isDelayed()) {
+                e.forceChangeGrid();
             }
-        };
+        }
+        main.changeGrid(destination);
     }
 
     public static class Parser extends SuperParser<Door> {

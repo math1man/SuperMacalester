@@ -41,14 +41,8 @@ public class Enemy extends BattleCharacter {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            Item item = null;
-            if (has(object, Item.class)) {
-                item = getObject(object, Item.class);
-            }
-            boolean isBoss = false;
-            if (object.has("boss")) {
-                isBoss = getBoolean(object, "boss");
-            }
+            Item item = getObject(object, Item.class, null);
+            boolean isBoss = getBoolean(object, "boss", false);
             Enemy enemy = new Enemy(name, battleClass, level, isBoss, item);
             if (has(object, Armor.class)) {
                 enemy.setEquippedArmor(getObject(object, Armor.class));
