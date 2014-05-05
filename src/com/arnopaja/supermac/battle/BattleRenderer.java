@@ -32,7 +32,6 @@ public class BattleRenderer extends Renderer<Battle> {
 
         Dialogue status = new DialogueText(mainParty.status(), Interactions.NULL, DialogueStyle.BATTLE_STATUS);
         dialogueHandler.display(status);
-        // TODO: display enemy status?
         dialogueHandler.render(shapeRenderer, batch);
     }
 }
