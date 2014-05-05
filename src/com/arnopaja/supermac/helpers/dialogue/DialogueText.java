@@ -13,10 +13,6 @@ public class DialogueText extends Dialogue {
     private final String rawDialogue;
     private final DialogueMember member;
 
-    public DialogueText(Dialogue dialogue, DialogueStyle style) {
-        this(dialogue.getName(), dialogue.getRaw(), style);
-    }
-
     public DialogueText(String rawDialogue, DialogueStyle style) {
         this("", rawDialogue, style);
     }

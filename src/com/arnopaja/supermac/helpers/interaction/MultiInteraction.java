@@ -32,10 +32,6 @@ public class MultiInteraction implements Interaction {
         }
     }
 
-    public void attach(MultiInteraction multi) {
-        attach(multi.interactions);
-    }
-
     public void attach(Interaction... interactions) {
         attach(Arrays.asList(interactions));
     }
