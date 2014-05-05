@@ -25,10 +25,10 @@
                                 "dialogue" : {
                                     "class" : "Dialogue",
                                     "text" : "Tom: What was that?
-                                    <d>John: There was a bright flash in the sky. Something’s happening.
+                                    <d>John: There was a bright flash in the sky. Something's happening.
                                     <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
                                     <d>John: Quite possibly.
-                                    <d>Tom: Either way, this seems serious. I’m going out for a look.
+                                    <d>Tom: Either way, this seems serious. I'm going out for a look.
                                     <d>John: Be careful."
                                 }
                             },
@@ -54,13 +54,13 @@
                                 "dialogue" : {
                                     "class" : "Dialogue",
                                     "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my diabolical plans for Macalester. This asteroid contains
-                                    <d>Rosenberg: a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go
-                                    <d>Rosenberg: out of control! My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahaha!
+                                    <d>a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of
+                                    <d>control! My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
                                     <d>Tom: Wait, how did you make this asteroid fall here?
                                     <d>Rosenberg: Witchcraft.
                                     <d>Tom: What? How did you even get this thing?
                                     <d>Rosenberg: I found it.
-                                    <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90’s.
+                                    <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90's.
                                     <d>Rosenberg: Just go with it."
                                 }
                             },
@@ -86,10 +86,10 @@
                                 "class" : "Interaction",
                                 "dialogue" : {
                                     "class" : "Dialogue",
-                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don't think this one has checked his privilege today!
                                     <d>SJW 2: I bet the patriarchy did this.
                                        SJW 3: I smell cis-scum!
-                                    <d>Tom: What are these words you’re using?
+                                    <d>Tom: What are these words you're using?
                                     <d>SJW 1: [incoherent rage]",
                                     "interaction" : {
                                         "class" : "Interaction",
@@ -139,10 +139,10 @@
                                 "class" : "Interaction",
                                 "dialogue" : {
                                     "class" : "Dialogue",
-                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don't think this one has checked his privilege today!
                                     <d>SJW 2: I bet the patriarchy did this.
                                        SJW 3: I smell cis-scum!
-                                    <d>Tom: What are these words you’re using?
+                                    <d>Tom: What are these words you're using?
                                     <d>SJW 1: [incoherent rage]",
                                     "interaction" : {
                                         "class" : "Interaction",
@@ -192,10 +192,10 @@
                                 "class" : "Interaction",
                                 "dialogue" : {
                                     "class" : "Dialogue",
-                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don’t think this one has checked his privilege today!
+                                    "text" : "Social Justice Warrior 1: Hey! I found one! I don't think this one has checked his privilege today!
                                     <d>SJW 2: I bet the patriarchy did this.
                                        SJW 3: I smell cis-scum!
-                                    <d>Tom: What are these words you’re using?
+                                    <d>Tom: What are these words you're using?
                                     <d>SJW 1: [incoherent rage]",
                                     "interaction" : {
                                         "class" : "Interaction",
@@ -243,7 +243,7 @@
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 40,
-                                "y" : 65
+                                "y" : 61
                             },
                             "interaction" : {
                                 "class" : "Interaction",
@@ -251,21 +251,21 @@
                                     "class" : "Dialogue",
                                     "text" : "Baal Thrice: Whoooaa buddy. Looks like they went ham on you.
                                     <d>Tom: Who are you, and what the hell is going on?
-                                    <d>Baal: I’m Baal Thrice, but my friends call me Baal G. Thrice.
+                                    <d>Baal: I'm Baal Thrice, but my friends call me Baal G. Thrice.
                                     <d>Tom: What does the G stand for?
-                                    <d>Baal: It’s just this thing. Anyway, you’re lucky I came in time. Those Social Justice Warriors are really going crazy.
-                                    <d>Baal: Something’s in the air, alright.
-                                    <d>Tom: Why didn’t they attack you?
+                                    <d>Baal: It's just this thing. Anyway, you're lucky I came in time. Those Social Justice Warriors are really going crazy.
+                                    <d>Something's in the air, alright.
+                                    <d>Tom: Why didn't they attack you?
                                     <d>Baal: Buddy, you need to learn how to become more powerful - How to get TURNT UP a bit - if you know what I mean.
                                     <d>Tom: What?
                                     <d>Baal: You know, living that young based lifestyle.
-                                    <d>Tom: Seriously, I don’t know what anybody is talking about anymore.
-                                    <d>Baal: Well, there’s no time to explain it all. Take this Fragrant Herb.
+                                    <d>Tom: Seriously, I don't know what anybody is talking about anymore.
+                                    <d>Baal: Well, there's no time to explain it all. Take this Fragrant Herb.
                                     <d>Tom: What is this? It smells like skunk!
-                                    <d>Baal: That there is a power-up. Take that to make yourself stronger in battle.
-                                    <d>Baal: You’ll also get stronger from the experience of battling a lot. You’ll figure it out. It’s a mediocre RPG, not rocket science.
-                                    <d>Baal: Anyway, I’ll stick around in the meantime. Looks like you could use my help. We should probably start looking for clues
-                                    <d>Baal: as to how we can stop all of this madness from happening. The Campus Center is probably a good place to start looking.",
+                                    <d>Baal: That there is a power-up. Take that to make yourself stronger in battle. You'll also get stronger from the experience of
+                                    <d>battling a lot. You'll figure it out. It's a mediocre RPG, not rocket science. Anyway, I'll stick around in the meantime. Looks
+                                    <d>like you could use my help. We should probably start looking for clues as to how we can stop all of this madness from
+                                    <d>happening. The Campus Center is probably a good place to start looking.",
                                     "interaction" : {
                                         "class" : "Interaction",
                                         "item" : {

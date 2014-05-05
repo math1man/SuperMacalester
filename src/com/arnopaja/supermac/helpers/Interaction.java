@@ -45,7 +45,7 @@ public abstract class Interaction implements InteractionBuilder {
      * @return
      */
     public Interaction attach(InteractionBuilder builder) {
-        if (builder == null) {
+        if (builder == null || builder == NULL || builder == this) {
             return this;
         } else {
             return combine(this, builder);
