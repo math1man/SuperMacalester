@@ -53,7 +53,7 @@
                                 "class" : "Interaction",
                                 "dialogue" : {
                                     "class" : "Dialogue",
-                                    "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my diabolical plans for Macalester. This asteroid contains
+                                    "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my righteous plans for Macalester. This asteroid contains
                                     <d>a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of
                                     <d>control! My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
                                     <d>Tom: Wait, how did you make this asteroid fall here?
