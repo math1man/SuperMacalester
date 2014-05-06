@@ -270,7 +270,7 @@
                                         },
                                         "hero" : {
                                             "class" : "Hero",
-                                            "name" : "Baal Thrice",
+                                            "name" : "Baal",
                                             "battleclass" : "ECON",
                                             "level" : 2
                                         },
