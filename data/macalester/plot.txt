@@ -54,7 +54,8 @@
                                     "class" : "Dialogue",
                                     "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my righteous plans for Macalester. This asteroid contains
                                     <d>a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of
-                                    <d>control! My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
+                                    <d>control! My Social Justice Warriors and I shall use this chaos to finally quell the resistance and bring equality to
+                                    <d>Macalester! Hahahahahaha!
                                     <d>Tom: Wait, how did you make this asteroid fall here?
                                     <d>Rosenberg: Witchcraft.
                                     <d>Tom: What? How did you even get this thing?
