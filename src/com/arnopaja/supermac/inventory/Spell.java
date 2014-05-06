@@ -57,7 +57,7 @@ public class Spell {
         } else if(destination.isFainted()) {
             dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
         } else {
-            int healing = (int) getDamageModifier() * source.getSpecial();
+            int healing = (int) getDamageModifier() * source.getSpecial() / 10; // This way modifiers aren't ridiculous
             destination.modifyHealth(healing);
             dialogue += healing + " health restored." ;
             source.modifyMana(-manaCost);
@@ -125,7 +125,7 @@ public class Spell {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
-                boolean offensive = getBoolean(object, "type");
+                boolean offensive = getBoolean(object, "black");
                 return new Spell(id, name, modifier, manaCost, offensive);
             }
         }
@@ -137,6 +137,7 @@ public class Spell {
             addString(json, "name", object.name);
             addFloat(json, "modifier", object.damageModifier);
             addInt(json, "mana", object.manaCost);
+            addBoolean(json, "black", object.isBlack);
             return json;
         }
     }

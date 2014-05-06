@@ -41,6 +41,7 @@ public interface Interaction {
                 int i=0;
                 for (Interaction interaction : ((MultiInteraction) object).getInteractions()) {
                     addObject(json, "element_" + i, interaction, Interaction.class);
+                    i++;
                 }
             } else if (object instanceof Interactions) {
                 addObject(json, "element", (Interactions) object, Interactions.class);

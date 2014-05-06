@@ -17,6 +17,10 @@ public class MultiInteraction implements Interaction {
         this(new ArrayList<Interaction>());
     }
 
+    public MultiInteraction(MultiInteraction multi) {
+        this(multi.getInteractions());
+    }
+
     public MultiInteraction(Interaction... interactions) {
         this(Arrays.asList(interactions));
     }

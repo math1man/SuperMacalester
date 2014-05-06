@@ -70,6 +70,11 @@ public abstract class BattleCharacter {
         return currentMana >= amount / maxMana;
     }
 
+    public void fullRestore() {
+        currentHealth = maxHealth;
+        currentMana = maxMana;
+    }
+
     //GET
     public String getName() { return name; }
     public BattleClass getBattleClass() { return battleClass; }
