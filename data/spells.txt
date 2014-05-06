@@ -3,8 +3,8 @@
         "class" : "Spell",
         "id" : 0,
         "name" : "CompSciMagic",
-        "modifier" : 2,
-        "mana" : 3,
+        "modifier" : 20,
+        "mana" : 1,
         "type" : true
     }
 }
