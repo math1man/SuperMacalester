@@ -2,7 +2,7 @@
     "CompSci" : {
         "class" : "Spell",
         "id" : 0,
-        "name" : "CompSciMagic",
+        "name" : "NullPointer",
         "modifier" : 20,
         "mana" : 1,
         "type" : true
