@@ -2,10 +2,9 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.*;
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
@@ -179,8 +178,7 @@ public class Battle implements Controller, Interaction {
     private Interaction selectSpell(Hero hero, Interaction interaction) {
         SpellBook spells = hero.getSpellBook();
         if (spells.isEmpty()) {
-            return new DialogueText(hero + " has no spells!", createOptions(hero, interaction),
-                    DialogueStyle.BATTLE_CONSOLE);
+            return Interactions.NULL;
         } else {
             List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
             for (Spell spell : spells) {
