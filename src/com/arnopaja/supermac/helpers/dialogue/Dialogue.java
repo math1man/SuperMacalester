@@ -20,7 +20,7 @@ import java.util.List;
 public abstract class Dialogue implements Interaction {
 
     private final String name;
-    private DialogueStyle style;
+    private final DialogueStyle style;
 
     protected Dialogue(String name, DialogueStyle style) {
         this.name = name;
@@ -63,14 +63,14 @@ public abstract class Dialogue implements Interaction {
                 return new DialogueText(name, dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
+                String header = getString(object, "header");
                 List<DialogueMember> members = new ArrayList<DialogueMember>(array.size() + 1);
-                members.add(new DialogueMember(getString(object, "header")));
                 for (int i=0; i<array.size(); i++) {
                     JsonObject member = array.get(i).getAsJsonObject();
                     Interaction interaction = getObject(member, Interaction.class, Interactions.END_DIALOGUE);
                     members.add(new DialogueMember(getString(member, "text"), interaction));
                 }
-                return new DialogueOptions(name, members, DialogueStyle.WORLD);
+                return new DialogueOptions(name, header, members, DialogueStyle.WORLD);
             }
             return null;
         }

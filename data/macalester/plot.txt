@@ -31,8 +31,7 @@
                                     <d>Tom: Either way, this seems serious. I'm going out for a look.
                                     <d>John: Be careful."
                                 }
-                            },
-                            "delay" : true
+                            }
                         }
                     ]
                 },
@@ -53,9 +52,10 @@
                                 "class" : "Interaction",
                                 "dialogue" : {
                                     "class" : "Dialogue",
-                                    "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my diabolical plans for Macalester. This asteroid contains
+                                    "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my righteous plans for Macalester. This asteroid contains
                                     <d>a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of
-                                    <d>control! My Social Justice Warriors and I shall use this chaos to take over the world! Hahahahahaha!
+                                    <d>control! My Social Justice Warriors and I shall use this chaos to finally quell the resistance and bring equality to
+                                    <d>Macalester! Hahahahahaha!
                                     <d>Tom: Wait, how did you make this asteroid fall here?
                                     <d>Rosenberg: Witchcraft.
                                     <d>Tom: What? How did you even get this thing?
@@ -63,8 +63,7 @@
                                     <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90's.
                                     <d>Rosenberg: Just go with it."
                                 }
-                            },
-                            "delay" : true
+                            }
                         }
                     ]
                 },
@@ -79,7 +78,7 @@
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 39,
-                                "y" : 68
+                                "y" : 69
                             },
                             "direction" : east,
                             "interaction" : {
@@ -122,8 +121,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         },
                         {
                             "class" : "QuestNpc",
@@ -132,7 +130,7 @@
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 40,
-                                "y" : 68
+                                "y" : 69
                             },
                             "direction" : east,
                             "interaction" : {
@@ -175,8 +173,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         },
                         {
                             "class" : "QuestNpc",
@@ -185,7 +182,7 @@
                                 "class" : "Location",
                                 "grid" : "world",
                                 "x" : 41,
-                                "y" : 68
+                                "y" : 69
                             },
                             "direction" : east,
                             "interaction" : {
@@ -228,8 +225,7 @@
                                     }
                                 }
                             },
-                            "primary" : true,
-                            "delay" : true
+                            "primary" : true
                         }
                     ]
                 },
@@ -275,14 +271,26 @@
                                         },
                                         "hero" : {
                                             "class" : "Hero",
-                                            "name" : "Baal Thrice",
+                                            "name" : "Baal",
                                             "battleclass" : "ECON",
-                                            "level" : 2
-                                        }
+                                            "level" : 2,
+                                            "spells" : [
+                                                {
+                                                    "class" : "Spell",
+                                                    "id" : 1
+                                                }
+                                            ]
+                                        },
+                                        "remove" : {
+                                            "class" : "Location",
+                                            "grid" : "world",
+                                            "x" : 40,
+                                            "y" : 61
+                                        },
+                                        "heal" : "HEAL"
                                     }
                                 }
-                            },
-                            "delay" : false
+                            }
                         }
                     ]
                 }

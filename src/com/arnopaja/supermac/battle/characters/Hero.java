@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Armor;
 import com.arnopaja.supermac.inventory.Spell;
@@ -17,6 +17,8 @@ import com.google.gson.JsonObject;
 public class Hero extends BattleCharacter implements Interaction {
 
     protected boolean hasFled = false;
+    private int experience;
+    private int nextExp;
 
     public Hero(String name, BattleClass battleClass) {
         this(name, battleClass, 1);
@@ -28,6 +30,8 @@ public class Hero extends BattleCharacter implements Interaction {
 
     public Hero(String name, BattleClass battleClass, int level, int health, int mana) {
         super(name, battleClass, level, health, mana);
+        this.experience = 0;
+        this.nextExp = 16;
     }
 
     public void setHasFled(boolean a) {
@@ -36,6 +40,21 @@ public class Hero extends BattleCharacter implements Interaction {
 
     public boolean getHasFled() {
         return hasFled;
+    }
+
+    public void incExp(int i) {experience += i;}
+
+    public int getExperience() {return experience;}
+
+    public int getNextExp() {return nextExp;}
+
+    @Override
+    public void levelUp()
+    {
+        experience = 0;
+        nextExp *= 2;
+        level++;
+        updateStats();
     }
 
     @Override

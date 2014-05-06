@@ -31,5 +31,11 @@ public enum Interactions implements Interaction {
         public void run(GameScreen screen) {
             screen.getGame().dispose();
         }
+    },
+    HEAL {
+        @Override
+        public void run(GameScreen screen) {
+            screen.getParty().restoreAll();
+        }
     }
 }

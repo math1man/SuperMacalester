@@ -92,7 +92,7 @@ public class GameScreen implements Screen {
         state = GameState.RUNNING;
         runTime = 0;
 
-        new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN).run(this);
+        new DialogueText(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
     }
 
     public void changeMode(GameMode mode) {

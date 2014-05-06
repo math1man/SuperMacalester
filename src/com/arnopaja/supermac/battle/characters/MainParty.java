@@ -49,6 +49,12 @@ public class MainParty extends Party<Hero> {
         characters.set(index2,temp);
     }
 
+    public void restoreAll() {
+        for (Hero hero : characters) {
+            hero.fullRestore();
+        }
+    }
+
     public static class Parser extends Party.Parser<MainParty> {
         @Override
         protected MainParty construct(JsonObject object) {

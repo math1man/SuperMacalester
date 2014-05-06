@@ -32,12 +32,25 @@ public class Item extends GenericItem {
             {
                 //TODO: Implement temporary powerups in BattleCharacter, then include here
                 case HEALTH:
-                    source.modifyHealth(e.value);
+                    if(e.value == 0)
+                    {
+                        if(destination.isFainted())
+                        {
+                            destination.resurrect();
+                            dialogue += "\n" + destination + " has been resurrected!";
+                        }
+                        else
+                        {
+                            dialogue += "\nIt had no effect!";
+                        }
+                        break;
+                    }
+                    destination.modifyHealth(e.value);
                     if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
                     else dialogue += "\n" + e.value + " damage done!";
                     break;
                 case MANA:
-                    source.modifyMana(e.value);
+                    destination.modifyMana(e.value);
                     if(e.value > 0) dialogue += "\n"  + e.value + " mana restored!";
                     else dialogue += "\n" + e.value + " mana burned!";
                     break;

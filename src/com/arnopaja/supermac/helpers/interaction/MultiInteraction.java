@@ -17,6 +17,10 @@ public class MultiInteraction implements Interaction {
         this(new ArrayList<Interaction>());
     }
 
+    public MultiInteraction(MultiInteraction multi) {
+        this(multi.getInteractions());
+    }
+
     public MultiInteraction(Interaction... interactions) {
         this(Arrays.asList(interactions));
     }
@@ -30,10 +34,6 @@ public class MultiInteraction implements Interaction {
         if (interaction != null && interaction != Interactions.NULL) {
             interactions.add(interaction);
         }
-    }
-
-    public void attach(MultiInteraction multi) {
-        attach(multi.interactions);
     }
 
     public void attach(Interaction... interactions) {

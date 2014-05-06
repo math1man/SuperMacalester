@@ -2,7 +2,7 @@ package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.inventory.*;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * @author Nolan Varani
@@ -70,6 +70,11 @@ public abstract class BattleCharacter {
         return currentMana >= amount / maxMana;
     }
 
+    public void fullRestore() {
+        currentHealth = maxHealth;
+        currentMana = maxMana;
+    }
+
     //GET
     public String getName() { return name; }
     public BattleClass getBattleClass() { return battleClass; }
@@ -91,6 +96,10 @@ public abstract class BattleCharacter {
 
     public Spell getSpell(int id) {
         return spellBook.get(id);
+    }
+
+    public boolean hasSpells() {
+        return !spellBook.isEmpty();
     }
 
     public boolean hasEquippedArmor() {
@@ -155,7 +164,7 @@ public abstract class BattleCharacter {
         isDefending = false;
     }
 
-    private void updateStats() {
+    protected void updateStats() {
         int statMultiplier = level - 1; // the starting level is level 1, but this should not increase stats
         attack = battleClass.getBaseAttack() + statMultiplier;
         defense = battleClass.getBaseDefense() + statMultiplier;

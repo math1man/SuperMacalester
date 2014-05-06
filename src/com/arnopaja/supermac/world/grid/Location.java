@@ -1,5 +1,7 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
@@ -10,7 +12,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Ari Weiland
  */
-public class Location {
+public class Location implements Interaction {
 
     private final Grid grid;
     private Vector2 position;
@@ -56,6 +58,13 @@ public class Location {
 
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    @Override
+    public void run(GameScreen screen) {
+        if (getEntity() != null) {
+            getEntity().forceChangeGrid(null);
+        }
     }
 
     @Override

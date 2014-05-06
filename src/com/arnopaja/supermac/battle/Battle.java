@@ -2,10 +2,10 @@ package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.*;
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.dialogue.DialogueMember;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
@@ -78,7 +78,23 @@ public class Battle implements Controller, Interaction {
                 // TODO: code specific to defeat
                 end();
             } else if (enemyParty.isDefeated()) {
-                // TODO: code specific to victory
+                // TODO: text for victory
+                //Calculate experience earned from battle
+                int earnedExp = 0;
+                for(int i=0;i<enemyParty.size();i++)
+                    earnedExp += enemyParty.get(i).getLevel() * 2;
+                //Apply this to each surviving character, checking for levelup
+                for(Hero h:mainParty.getActiveParty())
+                {
+                    h.incExp(earnedExp);
+                    System.out.println(h + " earned " + earnedExp + " exp!");
+                    if(h.getExperience() >= h.getNextExp())
+                    {
+                        int d = h.getExperience() - h.getNextExp();
+                        h.levelUp();
+                        h.incExp(d);
+                    }
+                }
                 end();
             } else if (mainParty.partyHasFled()) {
                 // TODO: code specific to fleeing
@@ -158,13 +174,19 @@ public class Battle implements Controller, Interaction {
     }
 
     private DialogueOptions createOptions(Hero hero, Interaction interaction) {
-        return new DialogueOptions("What should " + hero + " do?", BATTLE_OPTIONS,
-                Arrays.asList(selectAttack(hero, interaction),
-                        selectDefend(hero, interaction),
-                        selectSpell(hero, interaction),
-                        Interactions.NULL, // selectItem(hero, interaction), TODO: eventually put this back when items work
-                        selectFlee(hero, interaction)),
-                DialogueStyle.BATTLE_CONSOLE);
+        List<DialogueMember> members = new ArrayList<DialogueMember>();
+        members.add(new DialogueMember("Attack", selectAttack(hero, interaction)));
+        members.add(new DialogueMember("Defend", selectDefend(hero, interaction)));
+        if (hero.hasSpells()) {
+            members.add(new DialogueMember("Spell", selectSpell(hero, interaction)));
+        }
+        // TODO: eventually put this back when items work
+//        if (!Inventory.getMain().getAll(Item.class).isEmpty()) {
+//            members.add(new DialogueMember("Item", selectItem(hero, interaction)));
+//        }
+        members.add(new DialogueMember("Flee", selectFlee(hero, interaction)));
+        return new DialogueOptions("Action Menu", "What should " + hero + " do?",
+                members, DialogueStyle.BATTLE_CONSOLE);
     }
 
     private Interaction selectAttack(Hero hero, Interaction interaction) {
@@ -179,15 +201,17 @@ public class Battle implements Controller, Interaction {
     private Interaction selectSpell(Hero hero, Interaction interaction) {
         SpellBook spells = hero.getSpellBook();
         if (spells.isEmpty()) {
-            return new DialogueText(hero + " has no spells!", createOptions(hero, interaction),
-                    DialogueStyle.BATTLE_CONSOLE);
+            return Interactions.NULL;
         } else {
             List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
             for (Spell spell : spells) {
-                spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
+                if(spell.getManaCost() <= hero.getMana())
+                {
+                    spellInteractions.add(new DialogueOptions("Cast on who?",
                         enemyParty.getActiveParty(),
                         spells(hero, spell, interaction),
                         DialogueStyle.BATTLE_CONSOLE));
+                }
             }
             return new DialogueOptions("Which spell?", spells.asList(),
                     spellInteractions, DialogueStyle.BATTLE_CONSOLE);
@@ -200,7 +224,7 @@ public class Battle implements Controller, Interaction {
         List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
         targets.addAll(enemyParty.getActiveParty());
         for (Item item : items) {
-            itemInteractions.add(new DialogueOptions("Use " + item + " on who?",
+            itemInteractions.add(new DialogueOptions("Use on who?",
                     targets,
                     items(hero, item, interaction),
                     DialogueStyle.BATTLE_CONSOLE));

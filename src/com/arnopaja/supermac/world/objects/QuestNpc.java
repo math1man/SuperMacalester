@@ -18,18 +18,16 @@ public class QuestNpc extends MapNpc {
 
     private final Location location;
     private final boolean isPrimary;
-    private final boolean delay;
-    private final MultiInteraction netInteraction = new MultiInteraction();
+    private final MultiInteraction netInteraction;
 
     /**
      * Constructs a non-rendered QuestNpc
      * @param location
      * @param interaction
      * @param isPrimary
-     * @param delay
      */
-    public QuestNpc(Location location, Interaction interaction, boolean isPrimary, boolean delay) {
-        this(null, location, Direction.WEST, interaction, isPrimary, delay);
+    public QuestNpc(Location location, Interaction interaction, boolean isPrimary) {
+        this(null, location, Direction.WEST, interaction, isPrimary);
     }
 
     /**
@@ -39,14 +37,12 @@ public class QuestNpc extends MapNpc {
      * @param direction
      * @param interaction
      * @param isPrimary
-     * @param delay
      */
-    public QuestNpc(String name, Location location, Direction direction, Interaction interaction, boolean isPrimary, boolean delay) {
+    public QuestNpc(String name, Location location, Direction direction, Interaction interaction, boolean isPrimary) {
         super(name, null, direction, true, interaction, false);
         this.location = location;
         this.isPrimary = isPrimary;
-        this.delay = delay;
-        netInteraction.attach(interaction);
+        netInteraction = new MultiInteraction(interaction);
     }
 
     public void activate(Quest quest) {
@@ -58,7 +54,7 @@ public class QuestNpc extends MapNpc {
 
     public void deactivate() {
         setInteractable(false);
-        removeFromGrid(delay);
+        removeFromGrid(true);
     }
 
     @Override
@@ -75,8 +71,7 @@ public class QuestNpc extends MapNpc {
             Direction direction = getObject(object, Direction.class, Direction.WEST);
             Interaction interaction = getObject(object, Interaction.class, Interactions.NULL);
             boolean isPrimary = getBoolean(object, "primary", true);
-            boolean delay = getBoolean(object, "delay", true);
-            return new QuestNpc(name, location, direction, interaction, isPrimary, delay);
+            return new QuestNpc(name, location, direction, interaction, isPrimary);
         }
 
         @Override
@@ -87,7 +82,6 @@ public class QuestNpc extends MapNpc {
             addObject(json, object.getDirection(), Direction.class);
             addObject(json, object.interaction, Interaction.class);
             addBoolean(json, "primary", object.isPrimary);
-            addBoolean(json, "delay", object.delay);
             return json;
         }
     }
