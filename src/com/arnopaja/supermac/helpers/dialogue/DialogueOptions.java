@@ -30,22 +30,30 @@ public class DialogueOptions extends Dialogue {
     }
 
     public DialogueOptions(String name, String header, List<?> options, List<Interaction> interactions, DialogueStyle style) {
-        this(name, encapsulate(header, options, interactions), style);
+        this(name, header, encapsulate(options, interactions), style);
     }
 
-    protected DialogueOptions(String name, List<DialogueMember> members, DialogueStyle style) {
+    public DialogueOptions(String name, String header, List<DialogueMember> members, DialogueStyle style) {
+        this(name, addHeader(header, members), style);
+    }
+
+    private DialogueOptions(String name, List<DialogueMember> members, DialogueStyle style) {
         super(name, style);
         this.members = members;
         count = members.size() - 1;
     }
 
-    private static List<DialogueMember> encapsulate(String header, List<?> options, List<Interaction> interactions) {
-        List<DialogueMember> members = new ArrayList<DialogueMember>(options.size() + 1);
-        members.add(new DialogueMember(header, Interactions.NULL));
+    private static List<DialogueMember> encapsulate(List<?> options, List<Interaction> interactions) {
+        List<DialogueMember> members = new ArrayList<DialogueMember>(options.size());
         for (int i=0; i<options.size(); i++) {
             members.add(new DialogueMember(options.get(i).toString(),
                     interactions.size() > i ? interactions.get(i) : Interactions.NULL));
         }
+        return members;
+    }
+
+    private static List<DialogueMember> addHeader(String header, List<DialogueMember> members) {
+        members.add(0, new DialogueMember(header));
         return members;
     }
 

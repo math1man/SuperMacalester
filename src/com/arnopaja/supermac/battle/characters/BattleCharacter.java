@@ -93,6 +93,10 @@ public abstract class BattleCharacter {
         return spellBook.get(id);
     }
 
+    public boolean hasSpells() {
+        return !spellBook.isEmpty();
+    }
+
     public boolean hasEquippedArmor() {
         return equippedArmor != null;
     }
