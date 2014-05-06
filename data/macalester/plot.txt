@@ -275,13 +275,10 @@
                                             "level" : 2
                                         },
                                         "remove" : {
-                                            "class" : "RemoveEntity",
-                                            "location" : {
-                                                "class" : "Location",
-                                                "grid" : "world",
-                                                "x" : 40,
-                                                "y" : 61
-                                            }
+                                            "class" : "Location",
+                                            "grid" : "world",
+                                            "x" : 40,
+                                            "y" : 61
                                         }
                                     }
                                 }

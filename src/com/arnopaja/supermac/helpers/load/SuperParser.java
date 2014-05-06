@@ -2,12 +2,11 @@ package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.characters.*;
+import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
-import com.arnopaja.supermac.helpers.interaction.RemoveEntity;
 import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;
 import com.arnopaja.supermac.plot.Plot;
@@ -60,7 +59,6 @@ public abstract class SuperParser<T> {
         addParser(Plot.class,             new Plot.Parser());
         addParser(Quest.class,            new Quest.Parser());
         addParser(QuestNpc.class,         new QuestNpc.Parser());
-        addParser(RemoveEntity.class,     new RemoveEntity.Parser());
         addParser(Settings.class,         new Settings.Parser());
         addParser(SpecialItem.class,      new SpecialItem.Parser());
         addParser(Spell.class,            new Spell.Parser());
