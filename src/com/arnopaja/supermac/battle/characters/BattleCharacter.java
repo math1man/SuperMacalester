@@ -2,7 +2,7 @@ package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.inventory.*;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * @author Nolan Varani
@@ -155,7 +155,7 @@ public abstract class BattleCharacter {
         isDefending = false;
     }
 
-    private void updateStats() {
+    protected void updateStats() {
         int statMultiplier = level - 1; // the starting level is level 1, but this should not increase stats
         attack = battleClass.getBaseAttack() + statMultiplier;
         defense = battleClass.getBaseDefense() + statMultiplier;

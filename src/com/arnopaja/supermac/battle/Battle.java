@@ -77,7 +77,23 @@ public class Battle implements Controller, Interaction {
                 // TODO: code specific to defeat
                 end();
             } else if (enemyParty.isDefeated()) {
-                // TODO: code specific to victory
+                // TODO: text for victory
+                //Calculate experience earned from battle
+                int earnedExp = 0;
+                for(int i=0;i<enemyParty.size();i++)
+                    earnedExp += enemyParty.get(i).getLevel() * 2;
+                //Apply this to each surviving character, checking for levelup
+                for(Hero h:mainParty.getActiveParty())
+                {
+                    h.incExp(earnedExp);
+                    System.out.println(h + " earned " + earnedExp + " exp!");
+                    if(h.getExperience() >= h.getNextExp())
+                    {
+                        int d = h.getExperience() - h.getNextExp();
+                        h.levelUp();
+                        h.incExp(d);
+                    }
+                }
                 end();
             } else if (mainParty.partyHasFled()) {
                 // TODO: code specific to fleeing
@@ -182,10 +198,18 @@ public class Battle implements Controller, Interaction {
         } else {
             List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
             for (Spell spell : spells) {
-                spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
+                if(spell.getManaCost() <= hero.getMana())
+                {
+                    spellInteractions.add(new DialogueOptions("Use " + spell + " on who?",
                         enemyParty.getActiveParty(),
                         spells(hero, spell, interaction),
                         DialogueStyle.BATTLE_CONSOLE));
+                }
+            }
+            if(spellInteractions.isEmpty())
+            {
+                return new DialogueText(hero + " doesn't have enough mana to use any spells!", createOptions(hero, interaction),
+                        DialogueStyle.BATTLE_CONSOLE);
             }
             return new DialogueOptions("Which spell?", spells.asList(),
                     spellInteractions, DialogueStyle.BATTLE_CONSOLE);
