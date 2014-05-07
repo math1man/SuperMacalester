@@ -77,10 +77,10 @@
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
-                                "x" : 39,
-                                "y" : 69
+                                "x" : 44,
+                                "y" : 55
                             },
-                            "direction" : east,
+                            "direction" : "south",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -129,10 +129,10 @@
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
-                                "x" : 40,
-                                "y" : 69
+                                "x" : 44,
+                                "y" : 56
                             },
-                            "direction" : east,
+                            "direction" : "south",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -181,10 +181,10 @@
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
-                                "x" : 41,
-                                "y" : 69
+                                "x" : 44,
+                                "y" : 57
                             },
-                            "direction" : east,
+                            "direction" : "south",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -238,8 +238,8 @@
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
-                                "x" : 40,
-                                "y" : 61
+                                "x" : 45,
+                                "y" : 48
                             },
                             "interaction" : {
                                 "class" : "Interaction",
@@ -284,8 +284,8 @@
                                         "remove" : {
                                             "class" : "Location",
                                             "grid" : "world",
-                                            "x" : 40,
-                                            "y" : 61
+                                            "x" : 45,
+                                            "y" : 48
                                         },
                                         "heal" : "HEAL"
                                     }
