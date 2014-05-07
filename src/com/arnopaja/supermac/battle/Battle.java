@@ -30,8 +30,6 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class Battle implements Controller, Interaction {
 
-    public static final List<String> BATTLE_OPTIONS = Arrays.asList("Attack", "Defend", "Spell", "Item", "Flee");
-
     protected final EnemyParty enemyParty;
     protected final boolean isBossFight;
     protected final String backgroundName;
@@ -177,7 +175,7 @@ public class Battle implements Controller, Interaction {
         List<DialogueMember> members = new ArrayList<DialogueMember>();
         members.add(new DialogueMember("Attack", selectAttack(hero, interaction)));
         members.add(new DialogueMember("Defend", selectDefend(hero, interaction)));
-        if (hero.hasSpells()) {
+        if (!hero.isOutOfMana() && hero.hasSpells()) {
             members.add(new DialogueMember("Spell", selectSpell(hero, interaction)));
         }
         // TODO: eventually put this back when items work

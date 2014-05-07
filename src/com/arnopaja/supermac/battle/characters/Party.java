@@ -38,6 +38,10 @@ public abstract class Party<T extends BattleCharacter> {
         return characters.get(index);
     }
 
+    /**
+     * Returns a random member of the active party
+     * @return
+     */
     public T getRandom() {
         List<T> charlist = getActiveParty();
         int i = random.nextInt(charlist.size());
@@ -48,15 +52,30 @@ public abstract class Party<T extends BattleCharacter> {
         return characters.size();
     }
 
+    /**
+     * Returns a list of all members of the battle party that are not fainted.
+     * @return
+     */
     public List<T> getActiveParty() {
         List<T> active = new ArrayList<T>();
-        for(int i=0; i<Math.min(4, characters.size()); i++) {
-            T character = characters.get(i);
+        for(T character : getBattleParty()) {
             if(!character.isFainted()){
                 active.add(character);
             }
         }
         return active;
+    }
+
+    /**
+     * Returns up to the first four members of the party.
+     * @return
+     */
+    public List<T> getBattleParty() {
+        List<T> battle = new ArrayList<T>();
+        for(int i=0; i<Math.min(4, characters.size()); i++) {
+            battle.add(characters.get(i));
+        }
+        return battle;
     }
 
     public void clearDefend() {
@@ -67,9 +86,14 @@ public abstract class Party<T extends BattleCharacter> {
 
     public String status() {
         StringBuilder sb = new StringBuilder();
-        for (T bc : getActiveParty()) {
-            sb.append(bc).append(": HP: ").append(bc.getHealth())
-                    .append(", MP: ").append(bc.getMana()).append("\n");
+        for (T bc : getBattleParty()) {
+            sb.append(bc);
+            if (bc.isFainted()) {
+                sb.append(": Fainted!");
+            } else {
+                sb.append(": HP: ").append(bc.getHealth())
+                        .append(", MP: ").append(bc.getMana()).append("\n");
+            }
         }
         if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
