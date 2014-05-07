@@ -69,6 +69,142 @@
                     "name" : "Slackathon"
                 }
             }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 50,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 56
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 50,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 56
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
         }
     ]
 }

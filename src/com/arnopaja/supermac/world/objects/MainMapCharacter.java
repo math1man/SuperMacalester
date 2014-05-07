@@ -56,7 +56,7 @@ public class MainMapCharacter extends MapCharacter {
         Entity entity = getLocation().getAdjacent(getDirection()).getEntity();
         if (entity != null) {
             Interaction interaction = entity.interact();
-            if (!interaction.equals(Interactions.NULL) && entity instanceof MapCharacter) {
+            if (interaction != Interactions.NULL && entity instanceof MapCharacter) {
                 ((MapCharacter) entity).setDirection(entity.getDirectionToward(getPosition()));
             }
             interaction.run(screen);

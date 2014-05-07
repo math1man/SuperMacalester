@@ -135,5 +135,10 @@
                 ]
             }
         }
+    },
+    "Asteroid" : {
+        "class" : "Dialogue",
+        "name" : "Asteroid",
+        "text" : "This asteroid seems to be pulsating with a strange energy."
     }
 }

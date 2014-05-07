@@ -26,7 +26,13 @@ public class WorldInputHandler extends InputHandler {
     @Override
     public boolean keyDown(int keycode) {
         if (screen.isRunning()) {
-            move(getDirection(keycode));
+            if (getDirection(keycode) != null) {
+                move(getDirection(keycode));
+            } else {
+                if (keycode == Keys.SPACE) {
+                    character.run(screen);
+                }
+            }
         } else if (screen.isDialogue() && keycode == Keys.SPACE) {
             dialogueInput(0, 0);
         } else {

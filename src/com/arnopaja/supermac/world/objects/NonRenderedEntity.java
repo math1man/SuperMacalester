@@ -30,7 +30,7 @@ public class NonRenderedEntity extends StaticEntity {
     }
 
     @Override
-    public void delay() {
+    public final void delay() {
         // there is no point delaying the removal of an entity that is not rendered
     }
 
