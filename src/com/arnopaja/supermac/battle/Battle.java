@@ -208,7 +208,7 @@ public class Battle implements Controller, Interaction {
                 if(hero.hasMana(spell.getManaCost())) {
                     spellInteractions.add(new DialogueOptions("Cast on who?",
                         targets,
-                        spells(hero, spell, interaction),
+                        spells(hero, spell, targets, interaction),
                         DialogueStyle.BATTLE_CONSOLE));
                 }
             }
@@ -228,7 +228,7 @@ public class Battle implements Controller, Interaction {
         for (Item item : items) {
             itemInteractions.add(new DialogueOptions("Use on who?",
                     targets,
-                    items(hero, item, interaction),
+                    items(hero, item, targets, interaction),
                     DialogueStyle.BATTLE_CONSOLE));
         }
         return new DialogueOptions("Which item?", items,
@@ -248,10 +248,7 @@ public class Battle implements Controller, Interaction {
         return attacks;
     }
 
-    private List<Interaction> spells(Hero hero, Spell spell, Interaction interaction) {
-        List<BattleCharacter> targets = new ArrayList<BattleCharacter>();
-        targets.addAll(enemyParty.getActiveParty());
-        targets.addAll(mainParty.getActiveParty());
+    private List<Interaction> spells(Hero hero, Spell spell, List<BattleCharacter> targets, Interaction interaction) {
         List<Interaction> spells = new ArrayList<Interaction>(targets.size());
         for (BattleCharacter target : targets) {
             spells.add(new MultiInteraction(BattleAction.spell(hero, spell, target), interaction));
@@ -259,10 +256,7 @@ public class Battle implements Controller, Interaction {
         return spells;
     }
 
-    private List<Interaction> items(Hero hero, Item item, Interaction interaction) {
-        List<BattleCharacter> targets = new ArrayList<BattleCharacter>();
-        targets.addAll(enemyParty.getActiveParty());
-        targets.addAll(mainParty.getActiveParty());
+    private List<Interaction> items(Hero hero, Item item, List<BattleCharacter> targets, Interaction interaction) {
         List<Interaction> items = new ArrayList<Interaction>(targets.size());
         for (BattleCharacter target : targets) {
             items.add(new MultiInteraction(BattleAction.item(hero, item, target), interaction));
