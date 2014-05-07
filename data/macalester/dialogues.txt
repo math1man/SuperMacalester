@@ -140,5 +140,16 @@
         "class" : "Dialogue",
         "name" : "Asteroid",
         "text" : "This asteroid seems to be pulsating with a strange energy."
+    },
+    "Bell" : {
+        "class" : "Dialogue",
+        "name" : "Bell",
+        "text" : "You ring the old bell...
+                  <d>DONG!
+                  <d>You and your party feel completely rejuvenated.",
+        "interaction" : {
+            "class" : "interaction",
+            "heal" : "HEAL"
+        }
     }
 }

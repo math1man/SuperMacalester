@@ -205,6 +205,74 @@
                     "name" : "Asteroid"
                 }
             }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 48,
+                "y" : 67
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 67
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 48,
+                "y" : 68
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 68
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
         }
     ]
 }
