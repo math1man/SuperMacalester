@@ -50,6 +50,12 @@
                             "direction" : "North",
                             "interaction" : {
                                 "class" : "Interaction",
+                                "remove" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 41,
+                                    "y" : 35
+                                },
                                 "dialogue" : {
                                     "class" : "Dialogue",
                                     "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my righteous plans for Macalester. This asteroid contains
@@ -243,31 +249,30 @@
                             },
                             "interaction" : {
                                 "class" : "Interaction",
-                                "remove" : {
+                                "remove1" : {
                                     "class" : "Location",
                                     "grid" : "world",
                                     "x" : 44,
                                     "y" : 55
                                 },
-                                "remove" : {
+                                "remove2" : {
                                     "class" : "Location",
                                     "grid" : "world",
                                     "x" : 44,
                                     "y" : 56
                                 },
-                                "remove" : {
+                                "remove3" : {
                                     "class" : "Location",
                                     "grid" : "world",
                                     "x" : 47,
                                     "y" : 56
                                 },
-                                "remove" : {
+                                "remove4" : {
                                     "class" : "Location",
                                     "grid" : "world",
                                     "x" : 44,
                                     "y" : 57
                                 },
-
                                 "dialogue" : {
                                     "class" : "Dialogue",
                                     "text" : "Baal Thrice: Whoooaa buddy. Looks like they went ham on you.
