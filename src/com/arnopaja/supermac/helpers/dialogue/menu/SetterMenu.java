@@ -11,16 +11,16 @@ import java.util.List;
 * @author Ari Weiland
 */
 public class SetterMenu<T> extends Menu {
+
     public SetterMenu(String header, List<T> values, Setter<T> setter, Interaction interaction) {
-        super(members(header, values, setter, interaction));
+        super(header, members(values, setter, interaction));
     }
 
-    private static <T> DialogueMember[] members(String header, List<T> values, final Setter<T> setter, final Interaction interaction) {
-        DialogueMember[] members = new DialogueMember[values.size() + 1];
-        members[0] = new DialogueMember(header);
+    private static <T> DialogueMember[] members(List<T> values, final Setter<T> setter, final Interaction interaction) {
+        DialogueMember[] members = new DialogueMember[values.size()];
         for (int i=0; i<values.size(); i++) {
             final T value = values.get(i);
-            members[i+1] = new DialogueMember(value.toString(), new Interaction() {
+            members[i] = new DialogueMember(value.toString(), new Interaction() {
                 @Override
                 public void run(GameScreen screen) {
                     setter.set(value);

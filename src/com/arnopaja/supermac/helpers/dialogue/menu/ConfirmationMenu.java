@@ -7,9 +7,9 @@ import com.arnopaja.supermac.helpers.interaction.Interaction;
 * @author Ari Weiland
 */
 public class ConfirmationMenu extends Menu {
-    public ConfirmationMenu(String header, Interaction confirmed) {
-        super(new DialogueMember(header),
+    public ConfirmationMenu(String header, Interaction confirmed, Interaction rejected) {
+        super(header,
                 new DialogueMember("Yes", confirmed),
-                new DialogueMember("No", new PauseMenu()));
+                new DialogueMember("No", rejected));
     }
 }

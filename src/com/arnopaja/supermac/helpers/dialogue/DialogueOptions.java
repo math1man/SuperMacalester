@@ -53,8 +53,9 @@ public class DialogueOptions extends Dialogue {
     }
 
     private static List<DialogueMember> addHeader(String header, List<DialogueMember> members) {
-        members.add(0, new DialogueMember(header));
-        return members;
+        List<DialogueMember> list = new ArrayList<DialogueMember>(members);
+        list.add(0, new DialogueMember(header));
+        return list;
     }
 
     public String getHeader() {

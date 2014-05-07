@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.InputHandler;
+import com.arnopaja.supermac.helpers.dialogue.menu.PauseMenu;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
@@ -49,7 +50,11 @@ public class WorldInputHandler extends InputHandler {
         float gameX = scaleX(screenX);
         float gameY = scaleY(screenY);
         if (screen.isRunning()) {
-            move(getDirection(gameX, gameY));
+            if (gameX < SIDE_BUTTON_WIDTH && gameY < SIDE_BUTTON_WIDTH) {
+                new PauseMenu().run(screen);
+            } else {
+                move(getDirection(gameX, gameY));
+            }
         } else if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {

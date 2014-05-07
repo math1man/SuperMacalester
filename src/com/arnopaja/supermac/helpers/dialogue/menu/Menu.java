@@ -10,8 +10,8 @@ import java.util.Arrays;
  * @author Ari Weiland
  */
 public abstract class Menu extends DialogueOptions {
-    protected Menu(DialogueMember... members) {
-        super("menu", Arrays.asList(members), DialogueStyle.FULL_SCEEN);
+    protected Menu(String header, DialogueMember... members) {
+        super("menu", header, Arrays.asList(members), DialogueStyle.FULL_SCEEN);
     }
 
 }
