@@ -247,19 +247,23 @@ public class Battle implements Controller, Interaction {
     }
 
     private List<Interaction> spells(Hero hero, Spell spell, Interaction interaction) {
-        List<Enemy> enemies = enemyParty.getActiveParty();
-        List<Interaction> spells = new ArrayList<Interaction>(enemies.size());
-        for (Enemy enemy : enemies) {
-            spells.add(new MultiInteraction(BattleAction.spell(hero, spell, enemy), interaction));
+        List<BattleCharacter> targets = new ArrayList<BattleCharacter>();
+        targets.addAll(enemyParty.getActiveParty());
+        targets.addAll(mainParty.getActiveParty());
+        List<Interaction> spells = new ArrayList<Interaction>(targets.size());
+        for (BattleCharacter target : targets) {
+            spells.add(new MultiInteraction(BattleAction.spell(hero, spell, target), interaction));
         }
         return spells;
     }
 
     private List<Interaction> items(Hero hero, Item item, Interaction interaction) {
-        List<Enemy> enemies = enemyParty.getActiveParty();
-        List<Interaction> items = new ArrayList<Interaction>(enemies.size());
-        for (Enemy enemy : enemies) {
-            items.add(new MultiInteraction(BattleAction.item(hero, item, enemy), interaction));
+        List<BattleCharacter> targets = new ArrayList<BattleCharacter>();
+        targets.addAll(enemyParty.getActiveParty());
+        targets.addAll(mainParty.getActiveParty());
+        List<Interaction> items = new ArrayList<Interaction>(targets.size());
+        for (BattleCharacter target : targets) {
+            items.add(new MultiInteraction(BattleAction.item(hero, item, target), interaction));
         }
         return items;
     }
