@@ -31,7 +31,6 @@ public interface Interaction {
                     }
                 }
             }
-            System.out.println(interaction);
             return interaction;
         }
 
