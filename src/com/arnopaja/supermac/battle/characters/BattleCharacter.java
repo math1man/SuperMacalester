@@ -66,8 +66,8 @@ public abstract class BattleCharacter {
         return currentMana == 0;
     }
 
-    public boolean hasMana(float amount) {
-        return currentMana >= amount / maxMana;
+    public boolean hasMana(int amount) {
+        return currentMana >= amount;
     }
 
     public void fullRestore() {

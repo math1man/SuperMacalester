@@ -30,8 +30,6 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class Battle implements Controller, Interaction {
 
-    public static final List<String> BATTLE_OPTIONS = Arrays.asList("Attack", "Defend", "Spell", "Item", "Flee");
-
     protected final EnemyParty enemyParty;
     protected final boolean isBossFight;
     protected final String backgroundName;
@@ -177,7 +175,7 @@ public class Battle implements Controller, Interaction {
         List<DialogueMember> members = new ArrayList<DialogueMember>();
         members.add(new DialogueMember("Attack", selectAttack(hero, interaction)));
         members.add(new DialogueMember("Defend", selectDefend(hero, interaction)));
-        if (hero.hasSpells()) {
+        if (!hero.isOutOfMana() && hero.hasSpells()) {
             members.add(new DialogueMember("Spell", selectSpell(hero, interaction)));
         }
         // TODO: eventually put this back when items work
@@ -204,14 +202,18 @@ public class Battle implements Controller, Interaction {
             return Interactions.NULL;
         } else {
             List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
+            List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
+            targets.addAll(enemyParty.getActiveParty());
             for (Spell spell : spells) {
-                if(spell.getManaCost() <= hero.getMana())
-                {
+                if(hero.hasMana(spell.getManaCost())) {
                     spellInteractions.add(new DialogueOptions("Cast on who?",
-                        enemyParty.getActiveParty(),
+                        targets,
                         spells(hero, spell, interaction),
                         DialogueStyle.BATTLE_CONSOLE));
                 }
+            }
+            if (spellInteractions.isEmpty()) {
+                return Interactions.NULL;
             }
             return new DialogueOptions("Which spell?", spells.asList(),
                     spellInteractions, DialogueStyle.BATTLE_CONSOLE);

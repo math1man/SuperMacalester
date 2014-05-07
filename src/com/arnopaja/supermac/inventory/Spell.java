@@ -84,7 +84,7 @@ public class Spell {
         return damageModifier;
     }
 
-    public float getManaCost() {
+    public int getManaCost() {
         return manaCost;
     }
 
