@@ -204,14 +204,18 @@ public class Battle implements Controller, Interaction {
             return Interactions.NULL;
         } else {
             List<Interaction> spellInteractions = new ArrayList<Interaction>(spells.size());
+            List<BattleCharacter> targets = new ArrayList<BattleCharacter>(mainParty.getActiveParty());
+            targets.addAll(enemyParty.getActiveParty());
             for (Spell spell : spells) {
-                if(spell.getManaCost() <= hero.getMana())
-                {
+                if(hero.hasMana(spell.getManaCost())) {
                     spellInteractions.add(new DialogueOptions("Cast on who?",
-                        enemyParty.getActiveParty(),
+                        targets,
                         spells(hero, spell, interaction),
                         DialogueStyle.BATTLE_CONSOLE));
                 }
+            }
+            if (spellInteractions.isEmpty()) {
+                return Interactions.NULL;
             }
             return new DialogueOptions("Which spell?", spells.asList(),
                     spellInteractions, DialogueStyle.BATTLE_CONSOLE);
