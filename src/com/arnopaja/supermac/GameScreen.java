@@ -64,8 +64,6 @@ public class GameScreen implements Screen {
     private MainParty party;
     private Battle battle;
 
-
-
     public GameScreen(MacGame game) {
         this.game = game;
 

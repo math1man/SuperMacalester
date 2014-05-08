@@ -89,7 +89,7 @@ public abstract class Party<T extends BattleCharacter> {
         for (T bc : getBattleParty()) {
             sb.append(bc);
             if (bc.isFainted()) {
-                sb.append(": Fainted!");
+                sb.append(": Fainted!\n");
             } else {
                 sb.append(": HP: ").append(bc.getHealth())
                         .append(", MP: ").append(bc.getMana()).append("\n");
