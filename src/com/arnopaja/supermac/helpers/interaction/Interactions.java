@@ -3,6 +3,7 @@ package com.arnopaja.supermac.helpers.interaction;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.plot.Settings;
+import com.badlogic.gdx.Gdx;
 
 /**
  * @author Ari Weiland
@@ -23,13 +24,17 @@ public enum Interactions implements Interaction {
         public void run(GameScreen screen) {
             AssetLoader.prefs.clear();
             Settings.save(true); // resave Settings
+//            if (screen.getWorld() != null) {
+//                screen.getWorld().clear();
+//            }
             screen.load(); // will load the default
+            END_DIALOGUE.run(screen);
         }
     },
     CLOSE {
         @Override
         public void run(GameScreen screen) {
-            screen.getGame().dispose();
+            Gdx.app.exit();
         }
     },
     HEAL {

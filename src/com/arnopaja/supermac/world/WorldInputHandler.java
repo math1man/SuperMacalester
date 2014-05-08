@@ -15,12 +15,9 @@ public class WorldInputHandler extends InputHandler {
 
     public static final float SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2f;
 
-    private final MainMapCharacter character;
-
     public WorldInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
         super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
-        this.character = this.screen.getWorld().getMainCharacter();
     }
 
     @Override
@@ -30,7 +27,7 @@ public class WorldInputHandler extends InputHandler {
                 move(getDirection(keycode));
             } else {
                 if (keycode == Keys.SPACE) {
-                    character.run(screen);
+                    screen.getMainCharacter().run(screen);
                 }
             }
         } else if (screen.isDialogue() && keycode == Keys.SPACE) {
@@ -92,12 +89,13 @@ public class WorldInputHandler extends InputHandler {
     }
 
     private void move(Direction direction) {
-        if (!character.move(direction)) {
-            character.run(screen);
+        if (!screen.getMainCharacter().move(direction)) {
+            screen.getMainCharacter().run(screen);
         }
     }
 
     private boolean stop(Direction direction) {
+        MainMapCharacter character = screen.getMainCharacter();
         if (character.continueMoving() && character.getMovingDirection() == direction) {
             character.stop();
             return true;

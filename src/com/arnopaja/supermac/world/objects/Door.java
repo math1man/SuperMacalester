@@ -38,7 +38,7 @@ public class Door extends NonRenderedEntity {
         return new Interaction() {
             @Override
             public void run(GameScreen screen) {
-                MainMapCharacter main = screen.getWorld().getMainCharacter();
+                MainMapCharacter main = screen.getMainCharacter();
                 for (Entity e : main.getGrid().getEntities()) {
                     if (e.isDelayed()) {
                         e.forceChangeGrid();

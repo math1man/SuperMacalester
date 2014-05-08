@@ -21,6 +21,7 @@ import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
+import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -67,24 +68,23 @@ public class GameScreen implements Screen {
     public GameScreen(MacGame game) {
         this.game = game;
 
-        Interactions.RESET.run(this);
-
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
-
-        load();
 
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
 
         worldRenderer = new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
-        worldRenderer.setController(world);
         worldInputHandler = new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
 
         battleRenderer = new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
         battleInputHandler = new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT,
                 scaleFactorX, scaleFactorY);
+
+        Interactions.RESET.run(this);
+
+        load();
 
         changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
@@ -184,6 +184,7 @@ public class GameScreen implements Screen {
 
     public void load() {
         world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
+        worldRenderer.setController(world);
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
         hero.addSpell(Spell.getCached(0));
@@ -263,6 +264,10 @@ public class GameScreen implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    public MainMapCharacter getMainCharacter() {
+        return getWorld().getMainCharacter();
     }
 
     public MainParty getParty() {
