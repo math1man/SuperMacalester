@@ -72,7 +72,7 @@ public enum BattleClass {     // hp  m   a   d   s   speed
 
     public static void init() {
         COMP_SCI.magicSound = AssetLoader.compSciMagic;
-        ECON.magicSound = AssetLoader.healingMagic;
+        ECON.magicSound = AssetLoader.healingSound;
         NAT_SCI.magicSound = AssetLoader.natSciMagic;
         HUMANITIES.magicSound = null;
     }

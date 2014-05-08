@@ -7,6 +7,7 @@ import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
@@ -109,6 +110,8 @@ public abstract class BattleAction implements Interaction {
         return new BattleAction(source, destination, ActionType.ITEM, source.getSpeed(), null, item) {
             @Override
             public Dialogue subrun(float delta) {
+                if(getItem().isHealing()) AssetLoader.healingSound.play(Settings.getVolume());
+                else AssetLoader.powerupSound.play(Settings.getVolume());
                 return getItem().use(getSource(), getDestination());
             }
         };

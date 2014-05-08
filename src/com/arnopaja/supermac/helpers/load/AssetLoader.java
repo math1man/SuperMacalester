@@ -81,7 +81,8 @@ public class AssetLoader {
     // Sounds
     public static Sound compSciMagic;
     public static Sound natSciMagic;
-    public static Sound healingMagic;
+    public static Sound healingSound;
+    public static Sound powerupSound;
 
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
@@ -200,7 +201,7 @@ public class AssetLoader {
 
         compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
         natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
-        healingMagic = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
+        healingSound = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
 
         BattleClass.init(); // needed to init the magic sounds
 
