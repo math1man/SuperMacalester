@@ -47,7 +47,7 @@ public class Spell {
         switch (type) {
             case BLACK:
                 int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
-                destination.modifyHealth(-damage);
+                destination.modifyHealth(damage);
                 dialogue += damage + " damage done.";
                 if (destination.isFainted()) {
                     dialogue += "\n" + destination + " fell!";
