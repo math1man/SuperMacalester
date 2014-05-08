@@ -34,7 +34,8 @@
                                     "level" : 1,
                                     "item" : {
                                         "class" : "Item",
-                                        "id" : 0
+                                        "id" : 0,
+                                        "boss" : true
                                     }
                                 }
                             ]

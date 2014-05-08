@@ -76,6 +76,7 @@ public class AssetLoader {
     // Music
     public static Music worldMusic;
     public static Music battleMusic;
+    public static Music bossMusic;
 
     // Sounds
     public static Sound compSciMagic;
@@ -190,9 +191,12 @@ public class AssetLoader {
         //--------------------------
         //     Music and Sounds
         //--------------------------
-
+        //TODO: Give credit to Rolemusic for the music under the Creative Commons Attribution License
+        //Artist: Rolemusic
+        //Album: gigs n' contest
         worldMusic = loadMusic("Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3");
         battleMusic = loadMusic("Rolemusic_-_04_-_Scape_from_the_city.mp3");
+        bossMusic = loadMusic("Rolemusic_-_05_-_Death_on_the_battlefield.mp3");
 
         compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
         natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
