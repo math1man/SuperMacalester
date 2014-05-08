@@ -50,6 +50,22 @@ public class Item extends GenericItem {
                     if(e.value > 0) dialogue += "\n"  + e.value + " mana restored!";
                     else dialogue += "\n" + e.value + " mana burned!";
                     break;
+                case ATTACK:
+                    dialogue += "\nAttack Up!";
+                    destination.setPowerup(e);
+                    break;
+                case DEFENSE:
+                    dialogue += "\nDefense Up!";
+                    destination.setPowerup(e);
+                    break;
+                case SPEED:
+                    dialogue += "\nSpeed Up!";
+                    destination.setPowerup(e);
+                    break;
+                case SPECIAL:
+                    dialogue += "\nSpecial Up!";
+                    destination.setPowerup(e);
+                    break;
                 default:
                     dialogue += "\nNothing happened, because this isn't even a real item (yet)!";
                     break;
