@@ -195,9 +195,9 @@ public class Battle implements Controller, Interaction {
             members.add(new DialogueMember("Spell", selectSpell(hero, interaction)));
         }
         // TODO: eventually put this back when items work
-//        if (!Inventory.getMain().getAll(Item.class).isEmpty()) {
-//            members.add(new DialogueMember("Item", selectItem(hero, interaction)));
-//        }
+        if (!Inventory.getMain().getAll(Item.class).isEmpty()) {
+            members.add(new DialogueMember("Item", selectItem(hero, interaction)));
+        }
         if(isFleeable) members.add(new DialogueMember("Flee", selectFlee(hero, interaction)));
         return new DialogueOptions("Action Menu", "What should " + hero + " do?",
                 members, DialogueStyle.BATTLE_CONSOLE);
@@ -249,7 +249,6 @@ public class Battle implements Controller, Interaction {
         }
         return new DialogueOptions("Which item?", items,
                 itemInteractions, DialogueStyle.BATTLE_CONSOLE);
-        // TEST
     }
 
     private Interaction selectFlee(Hero hero, Interaction interaction) {

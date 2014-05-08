@@ -35,8 +35,7 @@
                                     "item" : {
                                         "class" : "Item",
                                         "id" : 0
-                                    },
-                                    "boss" : true
+                                    }
                                 }
                             ]
                         }

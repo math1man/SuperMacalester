@@ -87,10 +87,10 @@ public abstract class BattleCharacter {
         else return attack;
     }
     public int getDefense() {
-        if(this.isPoweredUp() && powerup.isDefense() && isDefending) return (defense * 2) + powerup.value;
-        else if(this.isPoweredUp() && powerup.isDefense()) return defense + powerup.value;
-        else if(isDefending) return defense * 2;
-        else return defense;
+        int modifiedDefense = defense;
+        if (isDefending) modifiedDefense *= 2;
+        if (this.isPoweredUp() && powerup.isDefense()) modifiedDefense += powerup.value;
+        return modifiedDefense;
     }
     public int getSpecial() {
         if(this.isPoweredUp() && powerup.isSpecial()) return special + powerup.value;

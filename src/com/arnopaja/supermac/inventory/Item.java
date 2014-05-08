@@ -32,22 +32,18 @@ public class Item extends GenericItem {
             {
                 //TODO: Implement temporary powerups in BattleCharacter, then include here
                 case HEALTH:
-                    if(e.value == 0)
-                    {
-                        if(destination.isFainted())
-                        {
+                    if(e.value == 0) {
+                        if(destination.isFainted()) {
                             destination.resurrect();
                             dialogue += "\n" + destination + " has been resurrected!";
-                        }
-                        else
-                        {
+                        } else {
                             dialogue += "\nIt had no effect!";
                         }
-                        break;
+                    } else {
+                        destination.modifyHealth(e.value);
+                        if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
+                        else dialogue += "\n" + e.value + " damage done!";
                     }
-                    destination.modifyHealth(e.value);
-                    if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
-                    else dialogue += "\n" + e.value + " damage done!";
                     break;
                 case MANA:
                     destination.modifyMana(e.value);
@@ -101,7 +97,7 @@ public class Item extends GenericItem {
             }
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            String effect = ""; // getString(object, "effects"); TODO: update items.txt with effects
+            String effect = getString(object, "effects", "");
             Item item = new Item(id, name, value, EffectParser.parse(effect));
             cache(item);
             return item;
