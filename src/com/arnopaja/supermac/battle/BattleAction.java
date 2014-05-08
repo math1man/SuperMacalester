@@ -22,10 +22,10 @@ public abstract class BattleAction implements Interaction {
 
     private static final Random random = new Random();
 
-    public static final int DEFEND_PRIORITY = Integer.MAX_VALUE - 1;
+    public static final int DEFEND_PRIORITY = Integer.MAX_VALUE;
     // TODO: should fleeing go first?
-    public static final int FLEE_PRIORITY = Integer.MAX_VALUE;
     public static final double AVG_MISS_CHANCE = 1.0 / 3.0;
+    public static final double FLEE_CHANCE = 1.0 / 5.0;
 
     public static enum ActionType { ATTACK, SPELL, ITEM, DEFEND, FLEE }
 
@@ -133,12 +133,12 @@ public abstract class BattleAction implements Interaction {
     }
 
     public static BattleAction flee(BattleCharacter source) {
-        return new BattleAction(source, null, ActionType.FLEE, FLEE_PRIORITY, null, null) {
+        return new BattleAction(source, null, ActionType.FLEE, source.getSpeed(), null, null) {
             @Override
             public Dialogue subrun(float delta) {
                 String dialogue;
                 // Only heroes can flee
-                if(random.nextInt(5) == 4 && getSource() instanceof Hero) {
+                if(random.nextDouble() < FLEE_CHANCE && getSource() instanceof Hero) {
                     Hero h = (Hero) getSource();
                     h.setHasFled(true);
                     dialogue = h + " flees!";
