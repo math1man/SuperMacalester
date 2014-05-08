@@ -88,6 +88,8 @@ public class Battle implements Controller, Interaction {
             } else if (enemyParty.isDefeated()) {
                 // TODO: text for victory
                 //Calculate experience earned from battle
+                mainParty.clearPowerup();
+                mainParty.clearDefend();
                 int earnedExp = 0;
                 for(int i=0;i<enemyParty.size();i++)
                     earnedExp += enemyParty.get(i).getLevel() * 2;

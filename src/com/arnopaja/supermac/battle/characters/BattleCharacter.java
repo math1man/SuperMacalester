@@ -19,6 +19,7 @@ public abstract class BattleCharacter {
     protected Weapon equippedWeapon;
     protected SpellBook spellBook;
     protected boolean isDefending;
+    protected Effect powerup = null;
     //TODO: image definitions
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
@@ -81,13 +82,24 @@ public abstract class BattleCharacter {
     public int getLevel() { return level; }
     public int getMaxHealth() { return maxHealth; }
     public int getMaxMana() { return maxMana; }
-    public int getAttack() { return attack; }
+    public int getAttack() {
+        if(this.isPoweredUp() && powerup.isAttack()) return attack + powerup.value;
+        else return attack;
+    }
     public int getDefense() {
-        if(isDefending) return defense * 2;
+        if(this.isPoweredUp() && powerup.isDefense() && isDefending) return (defense * 2) + powerup.value;
+        else if(this.isPoweredUp() && powerup.isDefense()) return defense + powerup.value;
+        else if(isDefending) return defense * 2;
         else return defense;
     }
-    public int getSpecial() { return special; }
-    public int getSpeed() { return speed; }
+    public int getSpecial() {
+        if(this.isPoweredUp() && powerup.isSpecial()) return special + powerup.value;
+        else return special;
+    }
+    public int getSpeed() {
+        if(this.isPoweredUp() && powerup.isSpeed()) return speed + powerup.value;
+        return speed;
+    }
     public int getHealth() { return currentHealth; }
     public int getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
@@ -162,6 +174,27 @@ public abstract class BattleCharacter {
 
     public void clearDefend() {
         isDefending = false;
+    }
+
+    public void setPowerup(Effect e)
+    {
+        if(e.isStatus()) this.powerup = e;
+        else System.out.println("An invalid effect was passed as a powerup!");
+    }
+
+    public boolean isPoweredUp()
+    {
+        return powerup != null;
+    }
+
+    public Effect getPowerup()
+    {
+        return powerup;
+    }
+
+    public void clearPowerup()
+    {
+        powerup = null;
     }
 
     protected void updateStats() {
