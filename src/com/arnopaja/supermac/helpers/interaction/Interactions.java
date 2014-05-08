@@ -19,19 +19,28 @@ public enum Interactions implements Interaction {
             screen.endDialogue();
         }
     },
+    SAVE {
+        @Override
+        public void run(GameScreen screen) {
+            screen.save();
+        }
+    },
+    LOAD {
+        @Override
+        public void run(GameScreen screen) {
+            screen.load();
+        }
+    },
     RESET {
         @Override
         public void run(GameScreen screen) {
             AssetLoader.prefs.clear();
             Settings.save(true); // resave Settings
-//            if (screen.getWorld() != null) {
-//                screen.getWorld().clear();
-//            }
             screen.load(); // will load the default
             END_DIALOGUE.run(screen);
         }
     },
-    CLOSE {
+    EXIT {
         @Override
         public void run(GameScreen screen) {
             Gdx.app.exit();

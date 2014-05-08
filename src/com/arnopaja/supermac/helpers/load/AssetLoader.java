@@ -63,6 +63,7 @@ public class AssetLoader {
     public static FileHandle itemHandle;
     public static FileHandle spellHandle;
     public static FileHandle dialogueHandle;
+    public static FileHandle cleanDialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
     public static FileHandle entitiesHandle;
@@ -178,13 +179,13 @@ public class AssetLoader {
         itemHandle = getHandle("items.txt");
         spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
+        cleanDialogueHandle = getHandle("macalester/dialogues_clean.txt");
         mapHandle = getHandle("macalester/maps");
         plotHandle = getHandle("macalester/plot.txt");
         entitiesHandle = getHandle("macalester/entities.txt");
 
         SuperParser.parseAll(AssetLoader.itemHandle, GenericItem.class);
         SuperParser.parseAll(AssetLoader.spellHandle, Spell.class);
-        dialogues = SuperParser.parseAll(AssetLoader.dialogueHandle, Dialogue.class);
         grids = MapLoader.generateGrids(AssetLoader.mapHandle);
 
         //--------------------------
@@ -268,6 +269,15 @@ public class AssetLoader {
 
     private static FileHandle getHandle(String path) {
         return Gdx.files.internal("data/" + path);
+    }
+
+    public static void setCleanDialogue(boolean clean) {
+        if (clean) {
+            dialogues.clear(); // This shouldn't be necessary, but it doesn't work otherwise
+            dialogues = SuperParser.parseAll(cleanDialogueHandle, Dialogue.class);
+        } else {
+            dialogues = SuperParser.parseAll(dialogueHandle, Dialogue.class);
+        }
     }
 
     public static void dispose() {

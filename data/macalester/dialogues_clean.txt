@@ -1,0 +1,266 @@
+{
+    "Prologue" : {
+        "class" : "Dialogue",
+        "name" : "Prologue",
+        "text" : "Touch the edges of the screen to move, and tap while facing things to interact with them.
+        <d>All characters and events in this game - even those based on real people - are entirely fictional.
+        The following game contains coarse language and due to its content it should not be played by anyone.
+        <d>IN THE YEAR 187X, A PRIVATE LIBERAL ARTS COLLEGE NAMED MACALESTER WAS CREATED. DEWITT WALLACE, THE FIRST LEADER OF THAT BRAVE NEW COLLEGE, SET A STANDARD FOR FIGHTING FOR THE GOOD OF HIS PEOPLE.
+
+        TIMES ARE NOT AS THEY ONCE WERE.
+
+        THE NEW LEADER, BRIAN ROSENBERG, ALSO ONCE STOOD FOR THE GOOD OF OTHERS.
+        <d>HOWEVER, YEARS OF FIGHTING THE GOOD FIGHT HAVE TAKEN THEIR TOLL. THE GOOD PRESIDENT HAS BECOME OBSESSED WITH TRYING TO SOLVE THE WORLD'S PROBLEMS BY ANY MEANS NECESSARY, WITH NO REGARD FOR HIS LOYAL SUBJECTS. THUS WERE THE SOCIAL JUSTICE WARRIORS BORN: AN ELITE FORCE CREATED TO MAINTAIN A STATE OF EQUAL PRIVILEGE. NOW, ANYONE WHO TRIES TO POINT OUT ROSENBERG'S SHORTSIGHTEDNESS IS BRANDED AN ENEMY OF THE STATE, AND FEW STILL STAND TO RESIST HIS DELUDED TOTALITARIAN REGIME."
+    },
+    "TestBattle" : {
+        "class" : "Dialogue",
+        "name" : "TestBattle",
+        "header" : "Do you want to fight?",
+        "options" : [
+            {
+                "text" : "yes",
+                "interaction" : {
+                    "class" : "Interaction",
+                    "battle" : {
+                        "class" : "Battle",
+                        "background" : "",
+                        "enemy" : {
+                            "class" : "EnemyParty",
+                            "characters" : [
+                                {
+                                    "class" : "Enemy",
+                                    "name" : "Dave",
+                                    "battleclass" : "COMP_SCI",
+                                    "level" : 1,
+                                    "item" : {
+                                        "class" : "Item",
+                                        "id" : 0
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "text" : "no",
+                "interaction" : {
+                    "class" : "Interaction",
+                    "dialogue" : {
+                        "class" : "Dialogue",
+                        "text" : "Lame..."
+                    }
+                }
+            }
+        ]
+    },
+    "Betsy" : {
+        "class" : "Dialogue",
+        "name" : "Betsy",
+        "text" : "Hi! My name is Betsy! I like animals! They are so cute! I hate companies though. Companies torture animals for their own
+        <d>evil profit! I like animals, and I don't want to see animals tortured!",
+        "interaction" : {
+            "class" : "Interaction",
+            "dialogue" : {
+                "class" : "Dialogue",
+                "header" : "Do you like animals?",
+                "options" : [
+                    {
+                        "text" : "Yes",
+                        "interaction" : {
+                            "class" : "Interaction",
+                            "dialogue" : {
+                                "class" : "Dialogue",
+                                "text" : "Yay!"
+                            }
+                        }
+                    },
+                    {
+                        "text" : "No",
+                        "interaction" : {
+                            "class" : "Interaction",
+                            "dialogue" : {
+                                "class" : "Dialogue",
+                                "text" : "Meanie-face..."
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "Slackathon" : {
+        "class" : "Dialogue",
+        "name" : "Slackathon",
+        "text" : "I am problematizing Macalester's normative paradigm of righteous indignation through the conscious
+        <d>practice of apathetic indifference and willful ignorance.",
+        "interaction" : {
+            "class" : "Interaction",
+            "dialogue" : {
+                "class" : "Dialogue",
+                "header" : "Want to help?",
+                "options" : [
+                    {
+                        "text" : "Where do I sign?!",
+                        "interaction" : {
+                            "class" : "Interaction",
+                            "dialogue" : {
+                                "class" : "Dialogue",
+                                "text" : "No! Caring enough to sign a petition makes you part of the problem!"
+                            }
+                        }
+                    },
+                    {
+                        "text" : "Sure, I'll help you organize an event.",
+                        "interaction" : {
+                            "class" : "Interaction",
+                            "dialogue" : {
+                                "class" : "Dialogue",
+                                "text" : "We're going to hold a Slackathon to help decrease awareness, just as soon as somebody else gets around to caring
+                                <d>enough to organize it.
+                                <d>But you'd better not care, or you'll get kicked out."
+                            }
+                        }
+                    },
+                    {
+                        "text" : "Whatever",
+                        "interaction" : {
+                            "class" : "Interaction",
+                            "dialogue" : {
+                                "class" : "Dialogue",
+                                "text" : "Excellent! A kindred spirit! Carry on! I'm off to take a nap."
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "Asteroid" : {
+        "class" : "Dialogue",
+        "name" : "Asteroid",
+        "text" : "This asteroid seems to be pulsating with a strange energy."
+    },
+    "Bell" : {
+        "class" : "Dialogue",
+        "name" : "Bell",
+        "text" : "You ring the old bell...
+                  <d>DONG!
+                  <d>You and your party feel completely rejuvenated.",
+        "interaction" : {
+            "class" : "interaction",
+            "heal" : "HEAL"
+        }
+    },
+    "Quest_0_0" : {
+        "class" : "Dialogue",
+        "name" : "Quest_0_0",
+        "text" : "Tom: What was that?
+                  <d>John: There was a bright flash in the sky. Something's happening.
+                  <d>Tom: Could this finally be the happening that the Libertarian students warned us about?
+                  <d>John: Quite possibly.
+                  <d>Tom: Either way, this seems serious. I'm going out for a look.
+                  <d>John: Be careful."
+    },
+    "Quest_0_1" : {
+        "class" : "Dialogue",
+        "name" : "Quest_0_1",
+        "text" : "Brian Rosenberg: Do you like it, boy? This is the culmination of my righteous plans for Macalester. This asteroid contains
+                  <d>a core of solid BarackObamium, which will cause all of the politically involved students on this campus to go out of
+                  <d>control! My Social Justice Warriors and I shall use this chaos to finally quell the resistance and bring equality to
+                  <d>Macalester! Hahahahahaha!
+                  <d>Tom: Wait, how did you make this asteroid fall here?
+                  <d>Rosenberg: Witchcraft.
+                  <d>Tom: What? How did you even get this thing?
+                  <d>Rosenberg: I found it.
+                  <d>Tom: You FOUND it?! This is as weak as the plot of some crappy video game from the 90's.
+                  <d>Rosenberg: Just go with it."
+    },
+    "Quest_0_2" : {
+        "class" : "Dialogue",
+        "name" : "Quest_0_2",
+        "text" : "Social Justice Warrior 1: Hey! I found one! I don't think this one has checked his privilege today!
+        <d>SJW 2: I bet the patriarchy did this.
+           SJW 3: I smell cis-scum!
+        <d>Tom: What are these words you're using?
+        <d>SJW 1: [incoherent rage]",
+        "interaction" : {
+            "class" : "Interaction",
+            "battle" : {
+                "class" : "Battle",
+                "enemy" : {
+                    "class" : "EnemyParty",
+                    "characters" : [
+                        {
+                            "class" : "Enemy",
+                            "name" : "SJW1",
+                            "battleclass" : "humanities",
+                            "level" : 1,
+                            "boss" : true
+                        },
+                        {
+                            "class" : "Enemy",
+                            "name" : "SJW2",
+                            "battleclass" : "humanities",
+                            "level" : 1
+                        },
+                        {
+                            "class" : "Enemy",
+                            "name" : "SJW3",
+                            "battleclass" : "humanities",
+                            "level" : 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Quest_0_3" : {
+        "class" : "Dialogue",
+        "name" : "Quest_0_3",
+        "text" : "Baal Thrice: Whoooaa buddy. Looks like they went ham on you.
+        <d>Tom: Who are you, and what the hell is going on?
+        <d>Baal: I'm Baal Thrice, but my friends call me Baal G. Thrice.
+        <d>Tom: What does the G stand for?
+        <d>Baal: It's just this thing. Anyway, you're lucky I came in time. Those Social Justice Warriors are really going crazy.
+        <d>Something's in the air, alright.
+        <d>Tom: Why didn't they attack you?
+        <d>Baal: Buddy, you need to learn how to become more powerful - How to get TURNT UP a bit - if you know what I mean.
+        <d>Tom: What?
+        <d>Baal: You know, living that young based lifestyle.
+        <d>Tom: Seriously, I don't know what anybody is talking about anymore.
+        <d>Baal: Well, there's no time to explain it all. Take this Fragrant Herb.
+        <d>Tom: What is this? It smells like skunk!
+        <d>Baal: That there is a power-up. Take that to make yourself stronger in battle. You'll also get stronger from the experience of
+        <d>battling a lot. You'll figure it out. It's a mediocre RPG, not rocket science. Anyway, I'll stick around in the meantime. Looks
+        <d>like you could use my help. We should probably start looking for clues as to how we can stop all of this madness from
+        <d>happening. The Campus Center is probably a good place to start looking. Also if you're feeling a little under weather or need some
+        <d>mana, head over to the bell. The bell makes ERRbody feel better.",
+        "interaction" : {
+            "class" : "Interaction",
+            "item" : {
+                "class" : "Item",
+                "id" = 0,
+                "name" = "Fragrant Herb"
+            },
+            "hero" : {
+                "class" : "Hero",
+                "name" : "Baal",
+                "battleclass" : "ECON",
+                "level" : 2,
+                "spells" : [
+                    {
+                        "class" : "Spell",
+                        "id" : 1
+                    }
+                ]
+            },
+            "remove" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 45,
+                "y" : 48
+            }
+        }
+    }
+}

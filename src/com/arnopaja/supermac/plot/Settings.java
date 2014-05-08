@@ -17,7 +17,7 @@ public class Settings {
     private static Settings INSTANCE = new Settings();
 
     private float volume = 1.0f;
-    private boolean isClean = true;
+    private boolean isClean = false;
 
     private Settings() {}
 
@@ -37,6 +37,7 @@ public class Settings {
 
     public static void setClean(boolean clean) {
         INSTANCE.isClean = clean;
+        AssetLoader.setCleanDialogue(clean);
     }
 
     public static void save() {
