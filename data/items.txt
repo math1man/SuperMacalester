@@ -3,7 +3,8 @@
         "class" : "Item",
         "id" : 0,
         "name" : "Fragrant Herb",
-        "value" : 20
+        "value" : 20,
+        "effects" : "A10"
     },
     "PBR" : {
         "class" : "Item",
