@@ -39,12 +39,21 @@ public class Battle implements Controller, Interaction {
     protected MainParty mainParty;
     protected RenderGrid backgroundGrid;
     protected GameScreen screen;
+    protected boolean isFleeable;
 
     public Battle(EnemyParty enemyParty) {
         this(enemyParty, "");
     }
 
+    public Battle(EnemyParty enemyParty, boolean isFleeable) {
+        this(enemyParty, "", isFleeable);
+    }
+
     public Battle(EnemyParty enemyParty, String backgroundName) {
+        this(enemyParty, backgroundName, !enemyParty.containsBoss());
+    }
+
+    public Battle(EnemyParty enemyParty, String backgroundName, boolean isFleeable) {
         this.enemyParty = enemyParty;
         this.isBossFight = enemyParty.containsBoss();
         this.backgroundName = backgroundName;
@@ -58,6 +67,7 @@ public class Battle implements Controller, Interaction {
                     }
                 }
         );
+       this.isFleeable = isFleeable;
     }
 
     public void ready(MainParty mainParty, RenderGrid backgroundGrid, GameScreen screen) {
@@ -182,7 +192,7 @@ public class Battle implements Controller, Interaction {
 //        if (!Inventory.getMain().getAll(Item.class).isEmpty()) {
 //            members.add(new DialogueMember("Item", selectItem(hero, interaction)));
 //        }
-        members.add(new DialogueMember("Flee", selectFlee(hero, interaction)));
+        if(isFleeable) members.add(new DialogueMember("Flee", selectFlee(hero, interaction)));
         return new DialogueOptions("Action Menu", "What should " + hero + " do?",
                 members, DialogueStyle.BATTLE_CONSOLE);
     }
@@ -269,13 +279,19 @@ public class Battle implements Controller, Interaction {
         public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
-            return new Battle(enemy);
+            if (object.has("fleeable")) {
+                boolean isFleeable = getBoolean(object, "fleeable");
+                return new Battle(enemy, isFleeable);
+            } else {
+                return new Battle(enemy);
+            }
         }
 
         @Override
         public JsonElement toJson(Battle object) {
             JsonObject json = new JsonObject();
             addObject(json, "enemy", object.enemyParty, EnemyParty.class);
+            addBoolean(json, "fleeable", object.isFleeable);
             return json;
         }
     }
