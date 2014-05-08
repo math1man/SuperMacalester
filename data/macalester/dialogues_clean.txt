@@ -195,7 +195,8 @@
                             "class" : "Enemy",
                             "name" : "SJW1",
                             "battleclass" : "humanities",
-                            "level" : 1
+                            "level" : 1,
+                            "boss" : true
                         },
                         {
                             "class" : "Enemy",

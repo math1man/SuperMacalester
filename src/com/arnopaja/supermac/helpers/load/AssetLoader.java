@@ -273,6 +273,7 @@ public class AssetLoader {
 
     public static void setCleanDialogue(boolean clean) {
         if (clean) {
+            dialogues.clear(); // This shouldn't be necessary, but it doesn't work otherwise
             dialogues = SuperParser.parseAll(cleanDialogueHandle, Dialogue.class);
         } else {
             dialogues = SuperParser.parseAll(dialogueHandle, Dialogue.class);
