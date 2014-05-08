@@ -291,7 +291,8 @@
                                     <d>Baal: That there is a power-up. Take that to make yourself stronger in battle. You'll also get stronger from the experience of
                                     <d>battling a lot. You'll figure it out. It's a mediocre RPG, not rocket science. Anyway, I'll stick around in the meantime. Looks
                                     <d>like you could use my help. We should probably start looking for clues as to how we can stop all of this madness from
-                                    <d>happening. The Campus Center is probably a good place to start looking.",
+                                    <d>happening. The Campus Center is probably a good place to start looking. Also if you're feeling a little under weather or need some
+                                    <d>mana, head over to the bell. The bell makes ERRbody feel better.",
                                     "interaction" : {
                                         "class" : "Interaction",
                                         "item" : {
