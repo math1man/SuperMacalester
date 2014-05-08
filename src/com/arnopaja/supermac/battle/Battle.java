@@ -84,10 +84,14 @@ public class Battle implements Controller, Interaction {
         if (isReady()) {
             if (mainParty.isDefeated()) {
                 // TODO: code specific to defeat
+                mainParty.clearDefend();
+                mainParty.clearPowerup();
                 end();
             } else if (enemyParty.isDefeated()) {
                 // TODO: text for victory
                 //Calculate experience earned from battle
+                mainParty.clearPowerup();
+                mainParty.clearDefend();
                 int earnedExp = 0;
                 for(int i=0;i<enemyParty.size();i++)
                     earnedExp += enemyParty.get(i).getLevel() * 2;
@@ -107,6 +111,8 @@ public class Battle implements Controller, Interaction {
             } else if (mainParty.partyHasFled()) {
                 // TODO: code specific to fleeing
                 mainParty.clearHasFled();
+                mainParty.clearDefend();
+                mainParty.clearPowerup();
                 this.end();
             } else {
                 BattleAction action = actionQueue.poll();

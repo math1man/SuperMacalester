@@ -20,12 +20,47 @@ public class Effect {
         return type == Type.HEALTH && value > 0;
     }
 
+    public boolean isResurrect()
+    {
+        return type == Type.HEALTH && value == 0;
+    }
+
     public boolean isDamage() {
         return type == Type.HEALTH && value < 0;
     }
 
+    public boolean isManaRestore()
+    {
+        return type == Type.MANA && value >= 0;
+    }
+
+    public boolean isManaBurn()
+    {
+        return type == Type.MANA && value < 0;
+    }
+
     public boolean isStatus() {
         return type != Type.HEALTH && type != Type.MANA;
+    }
+
+    public boolean isSpecial()
+    {
+        return type == Type.SPECIAL;
+    }
+
+    public boolean isAttack()
+    {
+        return type == Type.ATTACK;
+    }
+
+    public boolean isDefense()
+    {
+        return type == Type.DEFENSE;
+    }
+
+    public boolean isSpeed()
+    {
+        return type == Type.SPEED;
     }
 
     @Override

@@ -84,6 +84,12 @@ public abstract class Party<T extends BattleCharacter> {
         }
     }
 
+    public void clearPowerup(){
+        for (T bc : characters){
+            bc.clearPowerup();
+        }
+    }
+
     public String status() {
         StringBuilder sb = new StringBuilder();
         for (T bc : getBattleParty()) {
