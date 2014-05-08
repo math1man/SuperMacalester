@@ -91,7 +91,6 @@ public class World implements Controller {
                 // so nothing else needs to be done here
                 Entity entity = SuperParser.fromJson(e, Entity.class);
                 if (entity instanceof MainMapCharacter) {
-                    System.out.println("found main");
                     mainCharacter = (MainMapCharacter) entity;
                 }
             }

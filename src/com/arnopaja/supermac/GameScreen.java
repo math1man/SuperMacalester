@@ -82,6 +82,8 @@ public class GameScreen implements Screen {
         battleInputHandler = new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT,
                 scaleFactorX, scaleFactorY);
 
+        AssetLoader.setCleanDialogue(Settings.isClean());
+
         Interactions.RESET.run(this);
 
         load();
