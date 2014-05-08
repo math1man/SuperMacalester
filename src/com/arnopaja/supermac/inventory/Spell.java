@@ -1,10 +1,10 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -48,7 +48,7 @@ public class Spell {
             case BLACK:
                 int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
                 destination.modifyHealth(damage);
-                dialogue += damage + " damage done.";
+                dialogue += -damage + " damage done.";
                 if (destination.isFainted()) {
                     dialogue += "\n" + destination + " fell!";
                 }

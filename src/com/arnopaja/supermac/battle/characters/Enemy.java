@@ -43,6 +43,7 @@ public class Enemy extends BattleCharacter {
             int level = getInt(object, "level");
             Item item = getObject(object, Item.class, null);
             boolean isBoss = getBoolean(object, "boss", false);
+            System.out.println(isBoss);
             Enemy enemy = new Enemy(name, battleClass, level, isBoss, item);
             if (has(object, Armor.class)) {
                 enemy.setEquippedArmor(getObject(object, Armor.class));

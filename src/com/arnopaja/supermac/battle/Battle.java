@@ -243,6 +243,7 @@ public class Battle implements Controller, Interaction {
         }
         return new DialogueOptions("Which item?", items,
                 itemInteractions, DialogueStyle.BATTLE_CONSOLE);
+        // TEST
     }
 
     private Interaction selectFlee(Hero hero, Interaction interaction) {
