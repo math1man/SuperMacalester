@@ -202,7 +202,7 @@ public class AssetLoader {
         compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
         natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
         healingSound = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
-        powerupSound = Gdx.audio.newSound(getHandle("sounds/powerupsound.ogg"));
+        powerupSound = Gdx.audio.newSound(getHandle("sounds/powerup.ogg"));
 
         BattleClass.init(); // needed to init the magic sounds
 
