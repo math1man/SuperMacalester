@@ -33,6 +33,6 @@ public class WorldRenderer extends Renderer<World> {
 
         dialogueHandler.render(shapeRenderer, batch);
 
-        // TODO: add a Pause Button, and handle it in the WorldInputHandler
+        // TODO: add a Pause Button
     }
 }

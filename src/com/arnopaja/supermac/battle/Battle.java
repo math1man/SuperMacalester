@@ -6,6 +6,7 @@ import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.dialogue.DialogueMember;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
@@ -15,6 +16,7 @@ import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.SpellBook;
+import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
@@ -83,37 +85,31 @@ public class Battle implements Controller, Interaction {
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                // TODO: code specific to defeat
-                mainParty.clearDefend();
-                mainParty.clearPowerup();
                 end();
+                new DialogueText("You have been defeated!", DialogueStyle.WORLD);
             } else if (enemyParty.isDefeated()) {
-                // TODO: text for victory
-                //Calculate experience earned from battle
-                mainParty.clearPowerup();
-                mainParty.clearDefend();
+                String dialogue = "You are victorious!";
                 int earnedExp = 0;
                 for(int i=0;i<enemyParty.size();i++)
                     earnedExp += enemyParty.get(i).getLevel() * 2;
-                //Apply this to each surviving character, checking for levelup
-                for(Hero h:mainParty.getActiveParty())
-                {
+                for(Hero h : mainParty.getActiveParty()) {
                     h.incExp(earnedExp);
-                    System.out.println(h + " earned " + earnedExp + " exp!");
-                    if(h.getExperience() >= h.getNextExp())
-                    {
+                    dialogue += "<d>" + h + " earned " + earnedExp + " exp!";
+                    if(h.getExperience() >= h.getNextExp()) {
                         int d = h.getExperience() - h.getNextExp();
                         h.levelUp();
                         h.incExp(d);
+                        dialogue += h + " gained a level!";
                     }
                 }
                 end();
+                new DialogueText(dialogue, DialogueStyle.WORLD);
             } else if (mainParty.partyHasFled()) {
-                // TODO: code specific to fleeing
-                mainParty.clearHasFled();
-                mainParty.clearDefend();
-                mainParty.clearPowerup();
-                this.end();
+                end();
+                String dialogue = "You have fled like a ";
+                if (Settings.isClean()) dialogue += "wuss!";
+                else dialogue += "bitch!";
+                new DialogueText(dialogue, DialogueStyle.WORLD);
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
@@ -129,7 +125,7 @@ public class Battle implements Controller, Interaction {
         enemyParty.clearDefend();
         mainParty.clearDefend();
         for (BattleCharacter enemy : enemyParty.getActiveParty()) {
-            // TODO: make the enemies more intelligent?
+            // TODO: make the enemies more intelligent
             addAction(BattleAction.attack(enemy, mainParty.getRandom()));
         }
         makeActions().run(screen);
@@ -144,7 +140,9 @@ public class Battle implements Controller, Interaction {
     }
 
     public void end() {
-        // TODO: general ending code
+        mainParty.clearHasFled();
+        mainParty.clearDefend();
+        mainParty.clearPowerup();
         screen.world();
     }
 
@@ -194,7 +192,6 @@ public class Battle implements Controller, Interaction {
         if (!hero.isOutOfMana() && hero.hasSpells()) {
             members.add(new DialogueMember("Spell", selectSpell(hero, interaction)));
         }
-        // TODO: eventually put this back when items work
         if (!Inventory.getMain().getAll(Item.class).isEmpty()) {
             members.add(new DialogueMember("Item", selectItem(hero, interaction)));
         }

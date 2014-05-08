@@ -20,7 +20,6 @@ public abstract class BattleCharacter {
     protected SpellBook spellBook;
     protected boolean isDefending;
     protected Effect powerup = null;
-    //TODO: image definitions
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;

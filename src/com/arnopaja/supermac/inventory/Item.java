@@ -24,13 +24,9 @@ public class Item extends GenericItem {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        // TODO: use item. Add new methods and variables to BattleCharacter to enable temporary powerups to attack, defense, speed, special
         String dialogue = source + " uses " + this + " on " + destination + "!";
-        for(Effect e:this.effects)
-        {
-            switch(e.type)
-            {
-                //TODO: Implement temporary powerups in BattleCharacter, then include here
+        for(Effect e : effects) {
+            switch(e.type) {
                 case HEALTH:
                     if(e.value == 0) {
                         if(destination.isFainted()) {

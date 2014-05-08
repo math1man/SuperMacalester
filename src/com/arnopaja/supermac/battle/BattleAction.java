@@ -23,7 +23,6 @@ public abstract class BattleAction implements Interaction {
     private static final Random random = new Random();
 
     public static final int DEFEND_PRIORITY = Integer.MAX_VALUE;
-    // TODO: should fleeing go first?
     public static final double AVG_MISS_CHANCE = 1.0 / 3.0;
     public static final double FLEE_CHANCE = 1.0 / 5.0;
 

@@ -41,9 +41,7 @@ public class Spell {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        // TODO: we need to check that source has enough mana
         String dialogue = source + " casts " + this + " on " + destination + "!\n";
-
         switch (type) {
             case BLACK:
                 int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
