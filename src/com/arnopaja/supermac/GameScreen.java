@@ -6,7 +6,9 @@ import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.InputHandler;
+import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -110,7 +112,8 @@ public class GameScreen implements Screen {
                 currentController = battle;
                 currentRenderer = battleRenderer;
                 currentInputHandler = battleInputHandler;
-                currentMusic = AssetLoader.battleMusic;
+                if(battle.isBossFight()) currentMusic = AssetLoader.bossMusic;
+                else currentMusic = AssetLoader.battleMusic;
                 break;
         }
         Gdx.input.setInputProcessor(currentInputHandler);
