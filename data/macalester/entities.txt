@@ -7,8 +7,8 @@
             "location" : {
                 "class" : "Location",
                 "grid" : "world",
-                "x" : 47,
-                "y" : 55
+                "x" : 40,
+                "y" : 35
             },
             "direction" : "West"
         },
