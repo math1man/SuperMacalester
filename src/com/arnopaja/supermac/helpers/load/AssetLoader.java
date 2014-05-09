@@ -247,7 +247,7 @@ public class AssetLoader {
             TextureRegion[] array = { person.get(dir), stepRight.get(dir),
                     person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
-            animation.setPlayMode(Animation.PlayMode.LOOP);
+            animation.setPlayMode(Animation.LOOP);
             personAnim.put(dir, animation);
         }
         characterAssetMap.put(name, new CharacterAsset(person, personAnim));
