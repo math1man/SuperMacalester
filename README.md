@@ -10,6 +10,6 @@ In order to run the program, you can either open up the SuperMacalester-desktop 
 
 The SuperMacalester-robovm module allows for iOS application support, however RoboVM and IntelliJ are not compatible.  For those familiar with RoboVM (I am not), you may be able to import the modules into Eclipse and run RoboVM through Eclipse.
 
-The SuperMacalester-html module allows for web applications, however I have little experience with web development.
+The SuperMacalester-html module allows for web applications, however I have little experience with web development and do not know how to use this module.
 
 The RoboVM and Android modules each maintain their own data folders, so it is necessary to copy the contents of data directory from the main module into their respective directories.  For Android, the folder is in the assets directory; for RoboVM it is a top level directory.  
