@@ -43,8 +43,6 @@ public class GameScreen implements Screen {
     public static enum GameMode { WORLD, BATTLE }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    private final MacGame game;
-
     private final DialogueHandler dialogueHandler;
 
     private final WorldRenderer worldRenderer;
@@ -67,8 +65,7 @@ public class GameScreen implements Screen {
     private MainParty party;
     private Battle battle;
 
-    public GameScreen(MacGame game) {
-        this.game = game;
+    public GameScreen() {
 
         Settings.load();
 
@@ -225,10 +222,6 @@ public class GameScreen implements Screen {
 
     public boolean isDialogue() {
         return state == GameState.DIALOGUE;
-    }
-
-    public MacGame getGame() {
-        return game;
     }
 
     public DialogueHandler getDialogueHandler() {

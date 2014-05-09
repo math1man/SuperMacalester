@@ -29,7 +29,6 @@ public class AssetLoader {
     public static final float FONT_SHADOW_OFFSET = 0.06f;
 
     private static Texture tilesTexture, entitiesTexture, characterTexture;
-    private static Texture splash;
 
     // Tiles
     public static TextureRegion grass0, grass1, grass2;
@@ -93,12 +92,6 @@ public class AssetLoader {
     public static Preferences prefs;
 
     public static void load() {
-
-//        splash = new Texture(getHandle("splash.png"));
-//        SpriteBatch batch = new SpriteBatch();
-//        batch.begin();
-//        batch.draw(splash, 0, 0);
-//        batch.end();
 
         tilesTexture = new Texture(getHandle("canvas/landscape_tiles.png"));
         tilesTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
