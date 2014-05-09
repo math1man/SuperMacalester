@@ -120,6 +120,12 @@ public class AssetLoader {
         asphaltCobbleSW = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, false);
         asphaltCobbleNW = SpriteUtils.makeSprite(tilesTexture, 6, 4);
 
+        TextureRegion[] temp = new TextureRegion[7];
+        for(int i = 0; i< 7; i++){
+            temp[i] = SpriteUtils.makeSprite(tilesTexture, 17 + 3*i , 0, 3, 3);
+        }
+        asteroid = new Animation(0.1f,temp);
+        asteroid.setPlayMode(Animation.LOOP_PINGPONG);
         //--------------------------
         //        Buildings
         //--------------------------
