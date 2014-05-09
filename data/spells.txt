@@ -1,0 +1,23 @@
+{
+    "CompSci" : {
+        "class" : "Spell",
+        "id" : 0,
+        "name" : "NullPointer",
+        "modifier" : -5,
+        "mana" : 2
+    },
+    "Heal" : {
+        "class" : "Spell",
+        "id" : 1,
+        "name" : "MaxUtils",
+        "modifier" : 10,
+        "mana" : 2
+    },
+    "Resurrect" : {
+        "class" : "Spell",
+        "id" : 2,
+        "name" : "Resurrect",
+        "modifier" : 0,
+        "mana" : 10
+    }
+}

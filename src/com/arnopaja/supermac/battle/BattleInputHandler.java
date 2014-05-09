@@ -1,12 +1,12 @@
 package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.helpers.BaseInputHandler;
+import com.arnopaja.supermac.helpers.InputHandler;
 import com.arnopaja.supermac.GameScreen;
 
 /**
  * @author Ari Weiland
  */
-public class BattleInputHandler extends BaseInputHandler {
+public class BattleInputHandler extends InputHandler {
 
     public BattleInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                               float scaleFactorX, float scaleFactorY) {
@@ -31,8 +31,8 @@ public class BattleInputHandler extends BaseInputHandler {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // convert screen coordinates to game coordinates
-        int gameX = scaleX(screenX);
-        int gameY = scaleY(screenY);
+        float gameX = scaleX(screenX);
+        float gameY = scaleY(screenY);
         if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {

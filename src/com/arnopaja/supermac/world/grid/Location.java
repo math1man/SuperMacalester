@@ -1,6 +1,9 @@
 package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.JsonElement;
@@ -9,7 +12,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Ari Weiland
  */
-public class Location {
+public class Location implements Interaction {
 
     private final Grid grid;
     private Vector2 position;
@@ -27,12 +30,8 @@ public class Location {
         this.position = position;
     }
 
-    public RenderGrid getRenderGrid(int renderGridWidth, int renderGridHeight) {
-        return grid.getRenderGrid(position, renderGridWidth, renderGridHeight);
-    }
-
-    public Location getNearestValidLocation(Direction direction) {
-        return grid.getNearestValidLocation(this, direction);
+    public RenderGrid getRenderGrid() {
+        return grid.getRenderGrid(position);
     }
 
     /**
@@ -62,6 +61,13 @@ public class Location {
     }
 
     @Override
+    public void run(GameScreen screen) {
+        if (getEntity() != null) {
+            getEntity().forceChangeGrid(null);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Location)) return false;
@@ -74,12 +80,20 @@ public class Location {
 
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "grid=" + grid +
+                ", position=" + position +
+                '}';
+    }
+
     public static class Parser extends SuperParser<Location> {
         @Override
         public Location fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             String gridName = getString(object, "grid");
-            Grid grid = world.getGrid(gridName);
+            Grid grid = AssetLoader.grids.get(gridName);
             int x = getInt(object, "x");
             int y = getInt(object, "y");
             return new Location(grid, x, y);

@@ -1,10 +1,14 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
+import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
@@ -13,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,50 +81,43 @@ public class Chest extends Container {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final Chest chest = this;
-        return new Interaction(chest) {
-            public void run(GameScreen screen) {
-                chest.open();
-                Dialogue dialogue;
-                if (chest.isEmpty()) {
-                    dialogue = new DialogueText(chest.closeInteraction(), "This chest is empty");
-                } else {
-                    // Items go into inventory from chest
-                    List<GenericItem> items = chest.getContents().getAll();
-                    int length = items.size() + 2;
+    public void run(GameScreen screen) {
+        open();
+        Dialogue dialogue;
+        if (isEmpty()) {
+            dialogue = new DialogueText("This chest is empty", closeInteraction(), DialogueStyle.WORLD);
+        } else {
+            // Items go into inventory from chest
+            List<GenericItem> items = getContents().getAll();
+            List<Object> objects = new ArrayList<Object>(items);
+            objects.add("All");
+            objects.add("Close");
 
-                    Object[] objects = Arrays.copyOf(items.toArray(), length);
-                    objects[length - 2] = "All";
-                    objects[length - 1] = "Close";
-
-                    Interaction[] interactions = new Interaction[length];
-                    interactions[length - 2] = Interaction.NULL;
-                    for (int i=0; i<length-2; i++) {
-                        Interaction temp = chest.takeItemInteraction(items.get(i));
-                        interactions[i] = Interaction.combine(temp, chest.toInteraction());
-                        interactions[length - 2] = Interaction.combine(interactions[length - 2], temp);
-                    }
-                    interactions[length - 1] = chest.closeInteraction();
-
-                    dialogue = new DialogueOptions("Take items?", objects, interactions);
-                }
-                screen.getDialogueHandler().displayDialogue(dialogue);
+            List<Interaction> interactions = new ArrayList<Interaction>(objects.size());
+            MultiInteraction all = new MultiInteraction();
+            for (GenericItem item : items) {
+                Interaction temp = takeItemInteraction(item);
+                interactions.add(new MultiInteraction(temp, this));
+                all.attach(temp);
             }
-        };
+            interactions.add(all);
+            interactions.add(closeInteraction());
+            dialogue = new DialogueOptions("Take items?", objects, interactions, DialogueStyle.WORLD);
+        }
+        dialogue.run(screen);
     }
 
     private Interaction closeInteraction() {
         final Chest chest = this;
-        return new Interaction(chest) {
+        return new Interaction() {
             public void run(GameScreen screen) {
-                Dialogue.CLEAR_DIALOGUE.run(screen);
+                Interactions.END_DIALOGUE.run(screen);
                 chest.close();
             }
         };
     }
 
-    public static class Parser extends Entity.Parser<Chest> {
+    public static class Parser extends SuperParser<Chest> {
         @Override
         public Chest fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
@@ -132,7 +129,8 @@ public class Chest extends Container {
 
         @Override
         public JsonElement toJson(Chest object) {
-            JsonObject json = toBaseJson(object);
+            JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
             addString(json, "color", object.color.name());
             addObject(json, "contents", object.getContents(), Inventory.class);
             return json;

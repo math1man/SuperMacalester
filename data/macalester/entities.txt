@@ -1,5 +1,278 @@
 {
+    "class" : "World",
+    "origin" : [ 0, 0 ],
     "entities" : [
-
+        {
+            "class" : "MainMapCharacter",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 40,
+                "y" : 35
+            },
+            "direction" : "West"
+        },
+        {
+            "class" : "MapNpc",
+            "name" : "Tom",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 33,
+                "y" : 33
+            },
+            "direction" : "West",
+            "canMove" : false,
+            "interactable" : true,
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "TestBattle"
+                }
+            }
+        },
+        {
+            "class" : "MapNpc",
+            "name" : "Betsy",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 33,
+                "y" : 36
+            },
+            "direction" : "North",
+            "interactable" : true,
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Betsy"
+                }
+            }
+        },
+        {
+            "class" : "MapNpc",
+            "name" : "Jeff",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 42,
+                "y" : 39
+            },
+            "direction" : "South",
+            "interactable" : true,
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Slackathon"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 50,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 55
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 56
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 51,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 50,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 57
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Asteroid",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 56
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Asteroid"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 48,
+                "y" : 67
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 67
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 48,
+                "y" : 68
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        },
+        {
+            "class" : "NonRenderedEntity",
+            "name" : "Bell",
+            "location" : {
+                "class" : "Location",
+                "grid" : "world",
+                "x" : 49,
+                "y" : 68
+            },
+            "interaction" : {
+                "class" : "Interaction",
+                "dialogue" : {
+                    "class" : "Dialogue",
+                    "name" : "Bell"
+                }
+            }
+        }
     ]
 }

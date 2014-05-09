@@ -1,12 +1,11 @@
 package com.arnopaja.supermac.plot;
 
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.Entity;
-import com.arnopaja.supermac.world.objects.MapNpc;
+import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.world.objects.QuestNpc;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 /**
  * A goal is a single plot interaction.
@@ -26,46 +25,34 @@ import com.google.gson.JsonObject;
  */
 public class Goal {
 
-    private final MapNpc questNpc;
-    private final Location location;
-    private final Interaction mainInteraction;
-    private Interaction netInteraction = Interaction.NULL;
+    private final List<QuestNpc> questEntities;
+    private Quest quest;
     private boolean isActive = false;
 
-    public Goal(MapNpc questNpc, Location location, Interaction mainInteraction) {
-        this.questNpc = questNpc;
-        this.location = location;
-        this.mainInteraction = mainInteraction;
+    public Goal(List<QuestNpc> questEntities) {
+        this.questEntities = questEntities;
     }
 
     public void activate() {
-        questNpc.setInteractable(true);
-        questNpc.setInteraction(netInteraction);
-        questNpc.changeGrid(location, true);
-        questNpc.makeQuestNpc();
+        for (QuestNpc entity : questEntities) {
+            entity.activate(quest);
+        }
         isActive = true;
     }
 
     public void deactivate() {
-        questNpc.setInteractable(false);
-        questNpc.delayedRemoveFromGrid();
+        for (QuestNpc entity : questEntities) {
+            entity.deactivate();
+        }
         isActive = false;
     }
 
     protected void setQuest(Quest quest) {
-        netInteraction = Interaction.combine(mainInteraction, quest.toInteraction());
+        this.quest = quest;
     }
 
-    public Entity getQuestNpc() {
-        return questNpc;
-    }
-
-    public Interaction getMainInteraction() {
-        return mainInteraction;
-    }
-
-    public Location getLocation() {
-        return location;
+    public List<QuestNpc> getQuestEntities() {
+        return questEntities;
     }
 
     public boolean isActive() {
@@ -79,26 +66,21 @@ public class Goal {
 
         Goal goal = (Goal) o;
 
-        return questNpc.equals(goal.questNpc) && location.equals(goal.location)
-                && mainInteraction.equals(goal.mainInteraction);
+        return questEntities.equals(goal.questEntities);
     }
 
     public static class Parser extends SuperParser<Goal> {
         @Override
         public Goal fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            MapNpc entity = getObject(object, MapNpc.class);
-            Location location = getObject(object, Location.class);
-            Interaction interaction = getObject(object, Interaction.class);
-            return new Goal(entity, location, interaction);
+            List<QuestNpc> entities = getList(object, "entities", QuestNpc.class);
+            return new Goal(entities);
         }
 
         @Override
         public JsonElement toJson(Goal object) {
             JsonObject json = new JsonObject();
-            addObject(json, object.getQuestNpc(), Entity.class);
-            addObject(json, object.getLocation(), Location.class);
-            addObject(json, object.getMainInteraction(), Interaction.class);
+            addList(json, "entities", object.getQuestEntities(), QuestNpc.class);
             return json;
         }
     }

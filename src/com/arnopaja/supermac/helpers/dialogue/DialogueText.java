@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 
 import java.util.Arrays;
 
@@ -9,101 +10,62 @@ import java.util.Arrays;
  */
 public class DialogueText extends Dialogue {
 
-    private final String[] dialogue;
-    private final boolean hasOptions;
-    private final DialogueOptions options;
-    private final boolean hasPostInteraction;
-    private final Interaction postInteraction;
+    private final String rawDialogue;
+    private final DialogueMember member;
 
-    private int position;
-    private String currentDialogue;
-    private boolean hasNext;
-
-    public DialogueText(String rawDialogue) {
-        this(rawDialogue.split("<d>"));
+    public DialogueText(String rawDialogue, DialogueStyle style) {
+        this("", rawDialogue, style);
     }
 
-    public DialogueText(String... dialogue) {
-        this(dialogue, null, null);
+    public DialogueText(String name, String rawDialogue, DialogueStyle style) {
+        this(name, rawDialogue, null, style);
     }
 
-    public DialogueText(String rawDialogue, Interaction postInteraction) {
-        this(postInteraction, rawDialogue.split("<d>"));
+    public DialogueText(String rawDialogue, Interaction interaction, DialogueStyle style) {
+        this("", rawDialogue, interaction, style);
     }
 
-    public DialogueText(Interaction postInteraction, String... dialogue) {
-        this(dialogue, null, postInteraction);
+    public DialogueText(String name, String rawDialogue, Interaction interaction, DialogueStyle style) {
+        this(name, rawDialogue, rawDialogue.split("<d>"), interaction, style);
     }
 
-    public DialogueText(String rawDialogue, DialogueOptions options) {
-        this(options, rawDialogue.split("<d>"));
-    }
-
-    public DialogueText(DialogueOptions options, String... dialogue) {
-        this(dialogue, options, null);
-    }
-
-    private DialogueText(String[] dialogue, DialogueOptions options, Interaction postInteraction) {
-        this.dialogue = dialogue;
-        this.hasOptions = (options != null);
-        this.options = options;
-        this.hasPostInteraction = (postInteraction != null);
-        this.postInteraction = postInteraction;
-        reset();
-    }
-
-    public void next() {
-        position++;
-        currentDialogue = dialogue[position];
-        hasNext = position + 1 < dialogue.length ;
-    }
-
-    public String[] getDialogue() {
-        return dialogue;
-    }
-
-    public boolean hasOptions() {
-        return hasOptions;
-    }
-
-    public DialogueOptions getOptions() {
-        return options;
-    }
-
-
-    public boolean hasPostInteraction() {
-        return hasPostInteraction;
-    }
-
-    public Interaction getPostInteraction() {
-        return postInteraction;
-    }
-
-    public String getCurrentDialogue() {
-        return currentDialogue.trim();
-    }
-
-    public boolean hasNext() {
-        return hasNext;
-    }
-
-    public void reset() {
-        position = 0;
-        currentDialogue = dialogue[0];
-        hasNext = dialogue.length > 1;
-    }
-
-    public String getRaw() {
-        StringBuilder sb = new StringBuilder();
-        for (String line : dialogue) {
-            sb.append(line);
-            sb.append("<d>");
+    protected DialogueText(String name, String rawDialogue, String[] text, Interaction interaction, DialogueStyle style) {
+        super(name, style);
+        this.rawDialogue = rawDialogue;
+        if (text.length > 1) {
+            member = new DialogueMember(text[0], new DialogueText(name, rawDialogue,
+                    Arrays.copyOfRange(text, 1, text.length), interaction, style));
+        } else if (interaction == null) {
+            member = new DialogueMember(text[0], Interactions.END_DIALOGUE);
+        } else {
+            member = new DialogueMember(text[0], interaction);
         }
-        return sb.toString();
+    }
+
+    public DialogueMember getMember() {
+        return member;
+    }
+
+    @Override
+    public String getText() {
+        return member.getText();
+    }
+
+    @Override
+    public String getRaw() {
+        return rawDialogue;
+    }
+
+    public boolean hasInteraction() {
+        return member.hasInteraction();
+    }
+
+    public Interaction getInteraction() {
+        return member.getInteraction();
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(dialogue);
+        return getText();
     }
 }

@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.math.Vector2;
@@ -14,34 +15,41 @@ import java.util.Map;
  *
  * @author Ari Weiland
  */
-public class Grid extends GameMap {
+public class Grid {
 
     // the pixel width and height of a grid space
     public static final int GRID_PIXEL_DIMENSION = 32;
+    public static final int RENDER_GRID_WIDTH = getRenderDimension(GameScreen.GAME_WIDTH);
+    public static final int RENDER_GRID_HEIGHT = getRenderDimension(GameScreen.GAME_HEIGHT);
+    public static final Vector2 RENDER_GRID_OFFSET = new Vector2(GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT)
+            .scl(1f / Grid.GRID_PIXEL_DIMENSION)
+            .sub(new Vector2(Grid.RENDER_GRID_WIDTH, Grid.RENDER_GRID_HEIGHT))
+            .scl(0.5f);
 
     protected final int gridWidth, gridHeight;
+    private final String name;
 
-    protected Tile[][] tileArray;
+    protected Tile[][] tileMatrix;
     protected Map<Vector2, Entity> entityMap;
 
     public Grid(String name, int gridWidth, int gridHeight) {
         this(name, new Tile[gridWidth][gridHeight]);
     }
 
-    public Grid(String name, Tile[][] tileArray) {
-        this(name, tileArray, new Hashtable<Vector2, Entity>());
+    public Grid(String name, Tile[][] tileMatrix) {
+        this(name, tileMatrix, new Hashtable<Vector2, Entity>());
     }
 
-    public Grid(String name, Tile[][] tileArray, Map<Vector2, Entity> entityMap) {
-        super(name, true);
-        this.tileArray = tileArray;
+    public Grid(String name, Tile[][] tileMatrix, Map<Vector2, Entity> entityMap) {
+        this.name = name;
+        this.tileMatrix = tileMatrix;
         this.entityMap = entityMap;
-        gridWidth = tileArray.length;
-        gridHeight = tileArray[0].length;
+        gridWidth = tileMatrix.length;
+        gridHeight = tileMatrix[0].length;
     }
 
     public Grid(Grid grid) {
-        this(grid.getName(), grid.getTileGrid(), grid.getEntityMap());
+        this(grid.getName(), grid.tileMatrix, grid.entityMap);
     }
 
     /**
@@ -102,40 +110,12 @@ public class Grid extends GameMap {
         return entityMap.remove(position);
     }
 
-    public Location getNearestValidLocation(Location location, Direction direction) {
-        return getNearestValidLocation(location.getPosition(), direction);
+    public Collection<Entity> getEntities() {
+        return entityMap.values();
     }
 
-    /**
-     * Returns the nearest valid location to the specified position.
-     * If the position is off the grid, it tests the nearest position in the grid.
-     * If the position in the grid is blocked, it tests the next position
-     * @param position
-     * @param direction
-     * @return
-     */
-    public Location getNearestValidLocation(Vector2 position, Direction direction) {
-        if (isPathable(position)) {
-            // The current position is valid and pathable
-            return new Location(this, position);
-        } else if (position.x < 0) {
-            // These next four cases handle the position being invalid
-            return getNearestValidLocation(new Vector2(0, position.y), direction);
-        } else if (position.x >= gridWidth) {
-            return getNearestValidLocation(new Vector2(gridWidth - 1, position.y), direction);
-        } else if (position.y < 0) {
-            return getNearestValidLocation(new Vector2(position.x, 0), direction);
-        } else if (position.y >= gridHeight) {
-            return getNearestValidLocation(new Vector2(position.x, gridHeight - 1), direction);
-        } else {
-            // The current position is valid but not pathable
-            Vector2 newPosition = Direction.getAdjacent(position, direction);
-            if (!isInBounds(newPosition)) {
-                // This is the case that it has found no pathable position in the direction
-                return null; // TODO: is there a better way to handle this case?
-            }
-            return getNearestValidLocation(newPosition, direction);
-        }
+    public void clear() {
+        entityMap.clear();
     }
 
     /**
@@ -144,14 +124,12 @@ public class Grid extends GameMap {
      * set as blank elements.
      *
      * @param position the coordinates of the center of the RenderGrid
-     * @param renderGridWidth the width of the RenderGrid
-     * @param renderGridHeight the height of the RenderGrid
      * @return the RenderGrid
      */
-    public RenderGrid getRenderGrid(Vector2 position, int renderGridWidth, int renderGridHeight) {
-        Vector2 corner = new Vector2(renderGridWidth, renderGridHeight)
+    public RenderGrid getRenderGrid(Vector2 position) {
+        Vector2 corner = new Vector2(RENDER_GRID_WIDTH, RENDER_GRID_HEIGHT)
                 .add(-1, -1).scl(-0.5f).add(position);
-        return new RenderGrid(getSubGrid(corner, renderGridWidth, renderGridHeight));
+        return new RenderGrid(getSubGrid(corner, RENDER_GRID_WIDTH, RENDER_GRID_HEIGHT));
     }
 
     /**
@@ -178,38 +156,7 @@ public class Grid extends GameMap {
     }
 
     public Tile getTile(Vector2 position) {
-        return tileArray[cast(position.x)][cast(position.y)];
-    }
-
-    public Tile[][] getTileGrid() {
-        return tileArray;
-    }
-
-    public void clearTiles() {
-        tileArray = new Tile[gridWidth][gridHeight];
-    }
-
-    public Map<Vector2, Entity> getEntityMap() {
-        return entityMap;
-    }
-
-    @Override
-    public Collection<Entity> getEntities() {
-        return entityMap.values();
-    }
-
-    public void clearEntities() {
-        entityMap.clear();
-    }
-
-    public void clearAll() {
-        clearTiles();
-        clearEntities();
-    }
-
-    @Override
-    public Grid getGrid(int index) {
-        return this;
+        return tileMatrix[cast(position.x)][cast(position.y)];
     }
 
     @Override
@@ -219,7 +166,7 @@ public class Grid extends GameMap {
 
         Grid grid = (Grid) o;
 
-        return Arrays.equals(this.getTileGrid(), grid.getTileGrid());
+        return Arrays.equals(this.tileMatrix, grid.tileMatrix);
     }
 
     protected Tile[][] getSubTileGrid(Vector2 corner, int width, int height) {
@@ -228,7 +175,7 @@ public class Grid extends GameMap {
             for (int j=0; j<height; j++) {
                 Vector2 position = new Vector2(i, j).add(corner);
                 if (isInBounds(position)) {
-                    subTileArray[i][j] = tileArray[cast(position.x)][cast(position.y)];
+                    subTileArray[i][j] = tileMatrix[cast(position.x)][cast(position.y)];
                 } else {
                     subTileArray[i][j] = Tile.NULL;
                 }
@@ -270,5 +217,19 @@ public class Grid extends GameMap {
 
     protected static int cast(float f) {
         return (int) f;
+    }
+
+    protected static int getRenderDimension(float gameDimension) {
+        int renderDimension = (int) Math.ceil(gameDimension / Grid.GRID_PIXEL_DIMENSION);
+        if (renderDimension % 2 == 0) {
+            renderDimension += 3;
+        } else {
+            renderDimension += 2;
+        }
+        return renderDimension;
+    }
+
+    public String getName() {
+        return name;
     }
 }

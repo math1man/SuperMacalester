@@ -1,15 +1,12 @@
 package com.arnopaja.supermac.world;
 
-import com.arnopaja.supermac.helpers.AssetLoader;
 import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.world.grid.GameMap;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Grid;
-import com.arnopaja.supermac.world.grid.Location;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
-import com.arnopaja.supermac.world.objects.MapNpc;
+import com.arnopaja.supermac.world.objects.QuestNpc;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,28 +20,19 @@ import java.util.Map;
  */
 public class World implements Controller {
 
-    private final Map<String, GameMap> maps;
+    private final Map<String, Grid> grids;
     private final MainMapCharacter mainCharacter;
 
-    public World(Map<String, GameMap> maps) {
-        if (!maps.containsKey("world") || maps.get("world") == null || !maps.get("world").isGrid()) {
+    public World(Map<String, Grid> grids, MainMapCharacter mainCharacter) {
+        if (!grids.containsKey("world") || grids.get("world") == null) {
             throw new IllegalArgumentException("Missing or malformed world grid!");
         }
-        this.maps = maps;
-        mainCharacter = new MainMapCharacter(new Location(getWorld(), 36, 36));
-        initCharacters();
+        this.grids = grids;
+        this.mainCharacter = mainCharacter;
     }
 
     public World(World world) {
-        this(world.maps);
-    }
-
-    private void initCharacters() {
-        MapNpc character = new MapNpc();
-        character.setAsset(AssetLoader.getAsset("Betsy"));
-        character.setInteractable(true);
-        character.setInteraction(SuperParser.parse("Betsy", AssetLoader.dialogueHandle, Dialogue.class).toInteraction());
-        character.changeGrid(new Location(getWorld(), 40, 40));
+        this(world.grids, world.mainCharacter);
     }
 
     @Override
@@ -57,28 +45,26 @@ public class World implements Controller {
         }
     }
 
-    public Grid getGrid(String name) {
-        String gridName = name.replaceAll("[^\\p{Alpha}]*", ""); // get the text portion
-        String number = name.replaceAll("[\\D]*", "");           // get the numeric portion
-        int floor;
-        if (number.isEmpty()) {
-            floor = 1;
-        } else {
-            floor = Integer.parseInt(number);
+    public void clear() {
+        for (Grid grid : grids.values()) {
+            grid.clear();
         }
-        return getGrid(gridName, floor);
     }
 
-    public Grid getGrid(String name, int floor) {
-        return maps.get(name).getGrid(floor);
+    public Grid getGrid(String name) {
+        return grids.get(name);
     }
 
     public Grid getWorld() {
-        return maps.get("world").getGrid(0);
+        return getGrid("world");
     }
 
-    public Collection<GameMap> getMaps() {
-        return Collections.unmodifiableCollection(maps.values());
+    public Collection<Grid> getGrids() {
+        return Collections.unmodifiableCollection(grids.values());
+    }
+
+    public Map<String, Grid> getGridMap() {
+        return grids;
     }
 
     public MainMapCharacter getMainCharacter() {
@@ -94,29 +80,70 @@ public class World implements Controller {
     public static class Parser extends SuperParser<World> {
         @Override
         public World fromJson(JsonElement element) {
+            for (Grid map : AssetLoader.grids.values()) {
+                map.clear();
+            }
             JsonObject object = element.getAsJsonObject();
-            JsonArray array = object.getAsJsonArray("entities");
-            for (JsonElement e : array) {
+            JsonArray entities = getEntitiesJson(object);
+            MainMapCharacter mainCharacter = null;
+            for (JsonElement e : entities) {
                 // Just instantiating entities puts them in the world,
                 // so nothing else needs to be done here
-                SuperParser.fromJson(e, Entity.class);
+                Entity entity = SuperParser.fromJson(e, Entity.class);
+                if (entity instanceof MainMapCharacter) {
+                    mainCharacter = (MainMapCharacter) entity;
+                }
             }
-            return SuperParser.world;
+            if (mainCharacter == null) {
+                throw new IllegalArgumentException("Main character not found!");
+            }
+            return new World(AssetLoader.grids, mainCharacter);
         }
 
         @Override
         public JsonElement toJson(World object) {
             JsonObject json = new JsonObject();
             JsonArray array = new JsonArray();
-            for (GameMap map : object.getMaps()) {
+            for (Grid map : object.getGrids()) {
                 for (Entity entity : map.getEntities()) {
-                    if (!entity.isQuestEntity() && !(entity instanceof MainMapCharacter)) {
+                    if (!(entity instanceof QuestNpc)) {
                         array.add(SuperParser.toJson(entity, Entity.class));
                     }
                 }
             }
             json.add("entities", array);
             return json;
+        }
+
+        private JsonArray getEntitiesJson(JsonObject object) {
+            JsonArray entities = object.getAsJsonArray("entities");
+            if (object.has("origin")) {
+                JsonArray array = object.getAsJsonArray("origin");
+                int originX = array.get(0).getAsInt();
+                int originY = array.get(1).getAsInt();
+                for (int i=0; i<entities.size(); i++) {
+                    JsonObject entity = entities.get(i).getAsJsonObject();
+                    JsonObject location = entity.getAsJsonObject("location");
+                    if (location.getAsJsonPrimitive("grid").getAsString().equals("world")) {
+                        shiftLocation(location, originX, originY);
+                    }
+                    if (entity.has("destination")) {
+                        JsonObject destination = entity.getAsJsonObject("destination");
+                        if (destination.getAsJsonPrimitive("grid").getAsString().equals("world")) {
+                            shiftLocation(destination, originX, originY);
+                        }
+                    }
+                }
+            }
+            return entities;
+        }
+
+        private void shiftLocation(JsonObject location, int shiftX, int shiftY) {
+            // this should adjust the coordinates
+            int x = location.getAsJsonPrimitive("x").getAsInt() + shiftX;
+            int y = location.getAsJsonPrimitive("y").getAsInt() + shiftY;
+            location.addProperty("x", x);
+            location.addProperty("y", y);
         }
     }
 }
