@@ -9,7 +9,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 
 /**
  * @author Ari Weiland
@@ -22,7 +22,7 @@ public class BattleRenderer extends Renderer<Battle> {
 
     public void render(float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderBackgroundColor();
 

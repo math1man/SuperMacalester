@@ -28,7 +28,7 @@ public class AssetLoader {
 
     public static final float FONT_SHADOW_OFFSET = 0.06f;
 
-    private static Texture tilesTexture, entitiesTexture, characterTexture;
+    private static Texture tilesTexture, entitiesTexture, characterTexture, indoorsTexture;
 
     // Tiles
     public static TextureRegion grass0, grass1, grass2;
@@ -41,6 +41,9 @@ public class AssetLoader {
     public static TextureRegion asphaltCobbleN, asphaltCobbleE, asphaltCobbleS, asphaltCobbleW;
     public static TextureRegion asphaltCobbleNE, asphaltCobbleSE, asphaltCobbleSW, asphaltCobbleNW;
     public static Animation asteroid;
+    //Indoor Tiles
+    public static TextureRegion wh, wv, wne, wse,wsw,wnw,wtn,wte,wts,wtw,wp,wen,wee,wes,wew,wene,wese,wesw,wenw,wine,wise,wisw,winw,wetn,wete,wets,wetw;
+    public static TextureRegion wdoor, edoor, ndoor, sdoor;
 
     // Buildings
     public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
@@ -159,6 +162,51 @@ public class AssetLoader {
         olinRiceStairs = SpriteUtils.makeSprite(tilesTexture, 38, 43, 3, 5);
         rice = SpriteUtils.makeSprite(tilesTexture, 34, 53, 24, 16);
 
+        indoorsTexture = new Texture(getHandle("canvas/indoor_tiles.png"));
+        wetw = SpriteUtils.makeSprite(indoorsTexture, 1, 7);
+        wets = SpriteUtils.makeSprite(indoorsTexture, 7, 3);
+        wete = SpriteUtils.makeSprite(indoorsTexture, 2, 0);
+        wetn = SpriteUtils.makeSprite(indoorsTexture, 0, 3);
+        wenw = SpriteUtils.makeSprite(indoorsTexture, 0, 7);
+        wesw = SpriteUtils.makeSprite(indoorsTexture, 7, 7);
+        wese = SpriteUtils.makeSprite(indoorsTexture, 7, 0);
+        wene = SpriteUtils.makeSprite(indoorsTexture, 0, 0);
+        wew = SpriteUtils.makeSprite(indoorsTexture, 2, 7);
+        wes = SpriteUtils.makeSprite(indoorsTexture, 7, 2);
+        wen = SpriteUtils.makeSprite(indoorsTexture, 0, 2);
+        wee = SpriteUtils.makeSprite(indoorsTexture, 2, 0);
+        wp = SpriteUtils.makeSprite(indoorsTexture, 6, 4);
+        wes = SpriteUtils.makeSprite(indoorsTexture, 7, 2);
+        wv = SpriteUtils.makeSprite(indoorsTexture, 2, 1);
+        wne = SpriteUtils.makeSprite(indoorsTexture, 2, 2);
+        wse = SpriteUtils.makeSprite(indoorsTexture, 3, 2);
+        wsw = SpriteUtils.makeSprite(indoorsTexture, 3, 4);
+        wnw = SpriteUtils.makeSprite(indoorsTexture, 4, 4);
+        wtn = SpriteUtils.makeSprite(indoorsTexture, 6, 5);
+        wte = SpriteUtils.makeSprite(indoorsTexture, 4, 3);
+        wts = SpriteUtils.makeSprite(indoorsTexture, 1, 4);
+        wtw = SpriteUtils.makeSprite(indoorsTexture, 2, 3);
+        wdoor = SpriteUtils.makeSprite(indoorsTexture, 4, 7);
+        edoor = SpriteUtils.makeSprite(indoorsTexture, 3, 0);
+        ndoor = SpriteUtils.makeSprite(indoorsTexture, 0, 5);
+        sdoor = SpriteUtils.makeSprite(indoorsTexture, 7, 5);
+        wh = SpriteUtils.makeSprite(indoorsTexture, 1, 3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         MapLoader.initTileMap(); // Must be called after all tiles and buildings are loaded
 
         //--------------------------
@@ -216,6 +264,7 @@ public class AssetLoader {
         BattleClass.init(); // needed to init the magic sounds
 
         //--------------------------
+
         //          Other
         //--------------------------
 
