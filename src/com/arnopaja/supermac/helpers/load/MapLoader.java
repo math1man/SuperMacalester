@@ -97,5 +97,32 @@ public class MapLoader {
         Tile.TILE_MAP.put("_tu", AssetLoader.turk);
         Tile.TILE_MAP.put("_wa", AssetLoader.wallace);
         Tile.TILE_MAP.put("_we", AssetLoader.weyerhauser);
+        Tile.TILE_MAP.put("_wh", AssetLoader.wh);
+        Tile.TILE_MAP.put("_wv", AssetLoader.wv);
+        Tile.TILE_MAP.put("_wne", AssetLoader.wne);
+        Tile.TILE_MAP.put("_wse", AssetLoader.wse);
+        Tile.TILE_MAP.put("_wsw", AssetLoader.wsw);
+        Tile.TILE_MAP.put("_wnw", AssetLoader.wnw);
+        Tile.TILE_MAP.put("_wtn", AssetLoader.wtn);
+        Tile.TILE_MAP.put("_wte", AssetLoader.wte);
+        Tile.TILE_MAP.put("_wts", AssetLoader.wts);
+        Tile.TILE_MAP.put("_wtw", AssetLoader.wtw);
+        Tile.TILE_MAP.put("_wp", AssetLoader.wp);
+        Tile.TILE_MAP.put("_wen", AssetLoader.wen);
+        Tile.TILE_MAP.put("_wee" , AssetLoader.wee);
+        Tile.TILE_MAP.put("_wes", AssetLoader.wes);
+        Tile.TILE_MAP.put("_wew", AssetLoader.wew);
+        Tile.TILE_MAP.put("_wene", AssetLoader.wene);
+        Tile.TILE_MAP.put("_wese", AssetLoader.wese);
+        Tile.TILE_MAP.put("_wesw", AssetLoader.wesw);
+        Tile.TILE_MAP.put("_wenw", AssetLoader.wenw);
+        Tile.TILE_MAP.put("_wetn", AssetLoader.wetn);
+        Tile.TILE_MAP.put("_wets", AssetLoader.wets);
+        Tile.TILE_MAP.put("_wetw", AssetLoader.wetw);
+        Tile.TILE_MAP.put("_wete", AssetLoader.wete);
+
+
+
+
     }
 }
