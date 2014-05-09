@@ -65,7 +65,7 @@
                     [
                         {
                             "class" : "QuestNpc",
-                            "name" : "Betsy",
+                            "name" : "Blondie",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
@@ -84,7 +84,7 @@
                         },
                         {
                             "class" : "QuestNpc",
-                            "name" : "Betsy",
+                            "name" : "Blondie",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
@@ -103,7 +103,7 @@
                         },
                         {
                             "class" : "QuestNpc",
-                            "name" : "Betsy",
+                            "name" : "Blondie",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
@@ -127,7 +127,7 @@
                     "entities" : [
                         {
                             "class" : "QuestNpc",
-                            "name" : "Jeff",
+                            "name" : "Baal",
                             "location" : {
                                 "class" : "Location",
                                 "grid" : "world",
