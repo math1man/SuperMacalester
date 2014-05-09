@@ -135,12 +135,15 @@ public class AssetLoader {
         asphaltCobbleSW = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, false);
         asphaltCobbleNW = SpriteUtils.makeSprite(tilesTexture, 6, 4);
 
-        TextureRegion[] temp = new TextureRegion[7];
-        for(int i = 0; i< 7; i++){
+        TextureRegion[] temp = new TextureRegion[12];
+        for(int i = 0; i<7; i++){
             temp[i] = SpriteUtils.makeSprite(tilesTexture, 17 + 3*i , 0, 3, 3);
+            if (i != 0) {
+                temp[12-i] = temp[i];
+            }
         }
-        asteroid = new Animation(0.1f,temp);
-        asteroid.setPlayMode(Animation.LOOP_PINGPONG);
+        asteroid = new Animation(0.5f, temp);
+
         //--------------------------
         //        Buildings
         //--------------------------
@@ -244,7 +247,7 @@ public class AssetLoader {
             TextureRegion[] array = { person.get(dir), stepRight.get(dir),
                     person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
-            animation.setPlayMode(Animation.LOOP);
+            animation.setPlayMode(Animation.PlayMode.LOOP);
             personAnim.put(dir, animation);
         }
         characterAssetMap.put(name, new CharacterAsset(person, personAnim));
