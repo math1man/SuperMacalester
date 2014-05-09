@@ -1,10 +1,174 @@
 {
     "class" : "Plot",
-    "origin" : [0,0],
     "dependencies" : [
 
     ],
     "quests" : [
-
+        {
+            "class" : "Quest",
+            "id" : 0,
+            "goals" : [
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Tom",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 41,
+                                "y" : 35
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_0"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Jeff",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 47,
+                                "y" : 56
+                            },
+                            "direction" : "North",
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "remove" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 41,
+                                    "y" : 35
+                                },
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_1"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "class" : "Goal",
+                    "entities" :
+                    [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Betsy",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 44,
+                                "y" : 55
+                            },
+                            "direction" : "south",
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_2"
+                                }
+                            },
+                            "primary" : true
+                        },
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Betsy",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 44,
+                                "y" : 56
+                            },
+                            "direction" : "south",
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_2"
+                                }
+                            },
+                            "primary" : true
+                        },
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Betsy",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 44,
+                                "y" : 57
+                            },
+                            "direction" : "south",
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_2"
+                                }
+                            },
+                            "primary" : true
+                        }
+                    ]
+                },
+                {
+                    "class" : "Goal",
+                    "entities" : [
+                        {
+                            "class" : "QuestNpc",
+                            "name" : "Jeff",
+                            "location" : {
+                                "class" : "Location",
+                                "grid" : "world",
+                                "x" : 45,
+                                "y" : 48
+                            },
+                            "interaction" : {
+                                "class" : "Interaction",
+                                "remove_SJW1" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 44,
+                                    "y" : 55
+                                },
+                                "remove_SJW2" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 44,
+                                    "y" : 56
+                                },
+                                "remove_SJW3" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 47,
+                                    "y" : 56
+                                },
+                                "remove_PBR" : {
+                                    "class" : "Location",
+                                    "grid" : "world",
+                                    "x" : 44,
+                                    "y" : 57
+                                },
+                                "dialogue" : {
+                                    "class" : "Dialogue",
+                                    "name" : "Quest_0_3"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }

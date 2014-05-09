@@ -4,7 +4,6 @@ import com.arnopaja.supermac.battle.characters.*;
 import com.arnopaja.supermac.inventory.Spell;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 /**
  * @author Ari Weiland
@@ -56,19 +55,15 @@ public class BattleTest extends Battle {
     protected void setTurnActions() {
         enemyParty.clearDefend();
         mainParty.clearDefend();
-        // implement me!
-        Random r = new Random();
         //Set enemy actions
         BattleAction a;
         for (Enemy e:enemyParty.getActiveParty()) {
-//            System.out.println(e);
             a = BattleAction.attack(e, mainParty.getRandom());
             addAction(a);
             System.out.println(a);
         }
         //Set friendly actions
         for (Hero h:mainParty.getActiveParty()) {
-            //System.out.println(h);
             if(autoBattle)
             {
                 if(h.getMana() > h.getSpell(0).getManaCost()){
@@ -165,18 +160,18 @@ public class BattleTest extends Battle {
         //create enemy party
         //create main party
         System.out.println("IT'S HAPPENING");
-        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, null, false);
-        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, null, false);
-        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, null, false);
-        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, null, false);
+        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, false, null);
+        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, false, null);
+        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, false, null);
+        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, false, null);
         ArrayList<Enemy> enemlist = new ArrayList<Enemy>();
         enemlist.add(dumb);
         enemlist.add(dumb2);
         enemlist.add(dumb3);
         enemlist.add(dumb4);
         EnemyParty teamyolo = new EnemyParty(enemlist);
-        Spell yoloswag = new Spell(1, "Damage Spell", 2, 3, true);
-        Spell smokeWeedEveryDay = new Spell(2, "Healing Spell", 5, 3, false);
+        Spell yoloswag = new Spell(1, "Damage Spell", -2, 3);
+        Spell smokeWeedEveryDay = new Spell(2, "Healing Spell", 5, 3);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
         Hero smart2 = new Hero("Hero Nat Sci", BattleClass.NAT_SCI, 5);
         Hero smart3 = new Hero("Hero Humanities", BattleClass.HUMANITIES, 5);

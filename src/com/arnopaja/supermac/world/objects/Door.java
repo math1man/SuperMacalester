@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.grid.Location;
 import com.google.gson.JsonElement;
@@ -15,7 +15,7 @@ public class Door extends NonRenderedEntity {
     private final Location destination;
 
     public Door(Location location, Location destination) {
-        super(location);
+        super(location, makeInteraction(destination));
         this.destination = destination;
     }
 
@@ -23,12 +23,22 @@ public class Door extends NonRenderedEntity {
         return destination;
     }
 
-    @Override
-    public Interaction toInteraction() {
-        return new Interaction(destination) {
+//    @Override
+//    public void run(GameScreen screen) {
+//        MainMapCharacter main = screen.getWorld().getMainCharacter();
+//        for (Entity e : main.getGrid().getEntities()) {
+//            if (e.isDelayed()) {
+//                e.forceChangeGrid();
+//            }
+//        }
+//        main.changeGrid(destination);
+//    }
+
+    private static Interaction makeInteraction(final Location destination) {
+        return new Interaction() {
             @Override
             public void run(GameScreen screen) {
-                MainMapCharacter main = screen.getWorld().getMainCharacter();
+                MainMapCharacter main = screen.getMainCharacter();
                 for (Entity e : main.getGrid().getEntities()) {
                     if (e.isDelayed()) {
                         e.forceChangeGrid();

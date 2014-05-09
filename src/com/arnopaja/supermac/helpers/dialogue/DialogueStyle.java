@@ -1,7 +1,6 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
 
 /**
 * @author Ari Weiland
@@ -55,24 +54,5 @@ public enum DialogueStyle {
 
     public int getRows() {
         return rows;
-    }
-
-    public Interaction clear() {
-        final DialogueStyle style = this;
-        return new Interaction(style) {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getDialogueHandler().clear(style);
-            }
-        };
-    }
-
-    public static Interaction clearAll() {
-        return new Interaction() {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getDialogueHandler().clear();
-            }
-        };
     }
 }

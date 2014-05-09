@@ -2,7 +2,7 @@ package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.inventory.*;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * @author Nolan Varani
@@ -19,7 +19,7 @@ public abstract class BattleCharacter {
     protected Weapon equippedWeapon;
     protected SpellBook spellBook;
     protected boolean isDefending;
-    //TODO: image definitions
+    protected Effect powerup = null;
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;
@@ -66,8 +66,13 @@ public abstract class BattleCharacter {
         return currentMana == 0;
     }
 
-    public boolean hasMana(float amount) {
-        return currentMana >= amount / maxMana;
+    public boolean hasMana(int amount) {
+        return currentMana >= amount;
+    }
+
+    public void fullRestore() {
+        currentHealth = maxHealth;
+        currentMana = maxMana;
     }
 
     //GET
@@ -76,13 +81,24 @@ public abstract class BattleCharacter {
     public int getLevel() { return level; }
     public int getMaxHealth() { return maxHealth; }
     public int getMaxMana() { return maxMana; }
-    public int getAttack() { return attack; }
-    public int getDefense() {
-        if(isDefending) return defense * 2;
-        else return defense;
+    public int getAttack() {
+        if(this.isPoweredUp() && powerup.isAttack()) return attack + powerup.value;
+        else return attack;
     }
-    public int getSpecial() { return special; }
-    public int getSpeed() { return speed; }
+    public int getDefense() {
+        int modifiedDefense = defense;
+        if (isDefending) modifiedDefense *= 2;
+        if (this.isPoweredUp() && powerup.isDefense()) modifiedDefense += powerup.value;
+        return modifiedDefense;
+    }
+    public int getSpecial() {
+        if(this.isPoweredUp() && powerup.isSpecial()) return special + powerup.value;
+        else return special;
+    }
+    public int getSpeed() {
+        if(this.isPoweredUp() && powerup.isSpeed()) return speed + powerup.value;
+        return speed;
+    }
     public int getHealth() { return currentHealth; }
     public int getMana() { return currentMana; }
     public Armor getEquippedArmor() { return equippedArmor; }
@@ -91,6 +107,10 @@ public abstract class BattleCharacter {
 
     public Spell getSpell(int id) {
         return spellBook.get(id);
+    }
+
+    public boolean hasSpells() {
+        return !spellBook.isEmpty();
     }
 
     public boolean hasEquippedArmor() {
@@ -147,15 +167,36 @@ public abstract class BattleCharacter {
         updateStats();
     }
 
-    public void setDefending(boolean a) {
-        this.isDefending = a;
+    public void defend() {
+        isDefending = true;
     }
 
-    public boolean isDefending() {
-        return this.isDefending;
+    public void clearDefend() {
+        isDefending = false;
     }
 
-    private void updateStats() {
+    public void setPowerup(Effect e)
+    {
+        if(e.isStatus()) this.powerup = e;
+        else System.out.println("An invalid effect was passed as a powerup!");
+    }
+
+    public boolean isPoweredUp()
+    {
+        return powerup != null;
+    }
+
+    public Effect getPowerup()
+    {
+        return powerup;
+    }
+
+    public void clearPowerup()
+    {
+        powerup = null;
+    }
+
+    protected void updateStats() {
         int statMultiplier = level - 1; // the starting level is level 1, but this should not increase stats
         attack = battleClass.getBaseAttack() + statMultiplier;
         defense = battleClass.getBaseDefense() + statMultiplier;

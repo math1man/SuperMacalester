@@ -2,8 +2,11 @@ package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.characters.*;
-import com.arnopaja.supermac.helpers.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.inventory.*;
 import com.arnopaja.supermac.plot.Goal;
 import com.arnopaja.supermac.plot.Plot;
@@ -25,40 +28,45 @@ import java.util.*;
  */
 public abstract class SuperParser<T> {
 
+    private static final Gson gson = new Gson();
     private static final JsonParser parser = new JsonParser();
     private static final Map<String, SuperParser> parsers = new HashMap<String, SuperParser>();
     static {
-        addParser(Armor.class,            new Armor.Parser());
-        addParser(Asteroid.class,         new Asteroid.Parser());
-        addParser(Battle.class,           new Battle.Parser());
-        addParser(BattleClass.class,      new EnumParser<BattleClass>(BattleClass.class));
-        addParser(Chest.class,            new Chest.Parser());
-        addParser(Dialogue.class,         new Dialogue.Parser());
-        addParser(Direction.class,        new EnumParser<Direction>(Direction.class));
-        addParser(Door.class,             new Door.Parser());
-        addParser(Enemy.class,            new Enemy.Parser());
-        addParser(EnemyParty.class,       new EnemyParty.Parser());
-        addParser(GarbageCan.class,       new GarbageCan.Parser());
-        addParser(Goal.class,             new Goal.Parser());
-        addParser(Hero.class,             new Hero.Parser());
-        addParser(Interaction.class,      new Interaction.Parser());
-        addParser(Inventory.class,        new Inventory.Parser());
-        addParser(Item.class,             new Item.Parser());
-        addParser(Location.class,         new Location.Parser());
-        addParser(MainMapCharacter.class, new MainMapCharacter.Parser());
-        addParser(MainParty.class,        new MainParty.Parser());
-        addParser(MapNpc.class,           new MapNpc.Parser());
-        addParser(Plot.class,             new Plot.Parser());
-        addParser(Quest.class,            new Quest.Parser());
-        addParser(QuestNpc.class,         new QuestNpc.Parser());
-        addParser(Settings.class,         new Settings.Parser());
-        addParser(SpecialItem.class,      new SpecialItem.Parser());
-        addParser(Spell.class,            new Spell.Parser());
-        addParser(Weapon.class,           new Weapon.Parser());
-        addParser(World.class,            new World.Parser());
+        Dialogue.Parser parser = new Dialogue.Parser();
+        addParser(Armor.class,             new Armor.Parser());
+        addParser(Battle.class,            new Battle.Parser());
+        addParser(BattleClass.class,       new EnumParser<BattleClass>(BattleClass.class));
+        addParser(Chest.class,             new Chest.Parser());
+        addParser(Dialogue.class,          parser);
+        addParser(DialogueOptions.class,   parser);
+        addParser(DialogueText.class,      parser);
+        addParser(Direction.class,         new EnumParser<Direction>(Direction.class));
+        addParser(Door.class,              new Door.Parser());
+        addParser(Enemy.class,             new Enemy.Parser());
+        addParser(EnemyParty.class,        new EnemyParty.Parser());
+        addParser(GarbageCan.class,        new GarbageCan.Parser());
+        addParser(Goal.class,              new Goal.Parser());
+        addParser(Hero.class,              new Hero.Parser());
+        addParser(Interaction.class,       new Interaction.Parser());
+        addParser(Interactions.class,      new EnumParser<Interactions>(Interactions.class));
+        addParser(Inventory.class,         new Inventory.Parser());
+        addParser(Item.class,              new Item.Parser());
+        addParser(Location.class,          new Location.Parser());
+        addParser(MainMapCharacter.class,  new MainMapCharacter.Parser());
+        addParser(MainParty.class,         new MainParty.Parser());
+        addParser(MapNpc.class,            new MapNpc.Parser());
+        addParser(NonRenderedEntity.class, new NonRenderedEntity.Parser());
+        addParser(Plot.class,              new Plot.Parser());
+        addParser(Quest.class,             new Quest.Parser());
+        addParser(QuestNpc.class,          new QuestNpc.Parser());
+        addParser(Settings.class,          new Settings.Parser());
+        addParser(SpecialItem.class,       new SpecialItem.Parser());
+        addParser(Spell.class,             new Spell.Parser());
+        addParser(Weapon.class,            new Weapon.Parser());
+        addParser(World.class,             new World.Parser());
     }
 
-    private static <U> void addParser(Class<U> clazz, SuperParser<U> parser) {
+    private static <U> void addParser(Class<? extends U> clazz, SuperParser<U> parser) {
         parsers.put(clazz.getSimpleName(), parser);
     }
 
@@ -124,6 +132,10 @@ public abstract class SuperParser<T> {
             addClass(json, element.getClass());
             return json;
         }
+    }
+
+    public static <U> String toJsonString(U element, Class<U> clazz) {
+        return gson.toJson(toJson(element, clazz));
     }
 
     /**
@@ -215,12 +227,26 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive(name).getAsBoolean();
     }
 
+    protected static boolean getBoolean(JsonObject json, String name, boolean defval) {
+        if (json.has(name)) {
+            return getBoolean(json, name);
+        }
+        return defval;
+    }
+
     protected static void addBoolean(JsonObject json, String name, boolean b) {
         json.addProperty(name, b);
     }
 
     protected static int getInt(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsInt();
+    }
+
+    protected static int getInt(JsonObject json, String name, int defval) {
+        if (json.has(name)) {
+            return getInt(json, name);
+        }
+        return defval;
     }
 
     protected static void addInt(JsonObject json, String name, int i) {
@@ -231,12 +257,26 @@ public abstract class SuperParser<T> {
         return json.getAsJsonPrimitive(name).getAsFloat();
     }
 
+    protected static float getFloat(JsonObject json, String name, float defval) {
+        if (json.has(name)) {
+            return getFloat(json, name);
+        }
+        return defval;
+    }
+
     protected static void addFloat(JsonObject json, String name, float f) {
         json.addProperty(name, f);
     }
 
     protected static String getString(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsString();
+    }
+
+    protected static String getString(JsonObject json, String name, String defval) {
+        if (json.has(name)) {
+            return getString(json, name);
+        }
+        return defval;
     }
 
     protected static void addString(JsonObject json, String name, String string) {
@@ -247,8 +287,19 @@ public abstract class SuperParser<T> {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz);
     }
 
+    protected static <U> U getObject(JsonObject json, Class<U> clazz, U defval) {
+        return getObject(json, clazz.getSimpleName().toLowerCase(), clazz, defval);
+    }
+
     protected static <U> U getObject(JsonObject json, String name, Class<U> clazz) {
         return fromJson(json.get(name), clazz);
+    }
+
+    protected static <U> U getObject(JsonObject json, String name, Class<U> clazz, U defval) {
+        if (json.has(name)) {
+            return getObject(json, name, clazz);
+        }
+        return defval;
     }
 
     protected static <U> void addObject(JsonObject json, U object, Class<U> clazz) {

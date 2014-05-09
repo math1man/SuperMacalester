@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
-import com.arnopaja.supermac.helpers.InteractionBuilder;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,10 +17,10 @@ import java.util.List;
  *
  * @author Ari Weiland
  */
-public abstract class Dialogue implements InteractionBuilder {
+public abstract class Dialogue implements Interaction {
 
     private final String name;
-    private DialogueStyle style;
+    private final DialogueStyle style;
 
     protected Dialogue(String name, DialogueStyle style) {
         this.name = name;
@@ -40,37 +40,10 @@ public abstract class Dialogue implements InteractionBuilder {
     }
 
     @Override
-    public Interaction toInteraction() {
-        final Dialogue dialogue = this;
-        return new Interaction(dialogue) {
-            @Override
-            public void run(GameScreen screen) {
-                screen.getDialogueHandler().display(dialogue);
-                screen.dialogue();
-            }
-        };
+    public void run(GameScreen screen) {
+        screen.getDialogueHandler().display(this);
+        screen.dialogue();
     }
-
-    public static final Interaction CLEAR_DIALOGUE = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            screen.endDialogue();
-        }
-
-        @Override
-        public Interaction attach(InteractionBuilder builder) {
-            if (builder == CLEAR_DIALOGUE) {
-                return CLEAR_DIALOGUE;
-            } else {
-                return super.attach(builder);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "CLEAR_DIALOGUE";
-        }
-    };
 
     public static class Parser extends SuperParser<Dialogue> {
         @Override
@@ -86,24 +59,18 @@ public abstract class Dialogue implements InteractionBuilder {
             }
             if (object.has("text")) {
                 String dialogue = getString(object, "text");
-                Interaction interaction = CLEAR_DIALOGUE;
-                if (has(object, Interaction.class)) {
-                    interaction = getObject(object, Interaction.class);
-                }
+                Interaction interaction = getObject(object, Interaction.class, Interactions.END_DIALOGUE);
                 return new DialogueText(name, dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
+                String header = getString(object, "header");
                 List<DialogueMember> members = new ArrayList<DialogueMember>(array.size() + 1);
-                members.add(new DialogueMember(getString(object, "header")));
                 for (int i=0; i<array.size(); i++) {
                     JsonObject member = array.get(i).getAsJsonObject();
-                    Interaction interaction = Dialogue.CLEAR_DIALOGUE;
-                    if (has(member, Interaction.class)) {
-                        interaction = getObject(member, Interaction.class);
-                    }
+                    Interaction interaction = getObject(member, Interaction.class, Interactions.END_DIALOGUE);
                     members.add(new DialogueMember(getString(member, "text"), interaction));
                 }
-                return new DialogueOptions(name, members, DialogueStyle.WORLD);
+                return new DialogueOptions(name, header, members, DialogueStyle.WORLD);
             }
             return null;
         }

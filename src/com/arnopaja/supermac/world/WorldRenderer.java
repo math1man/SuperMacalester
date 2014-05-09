@@ -6,7 +6,7 @@ import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -21,7 +21,7 @@ public class WorldRenderer extends Renderer<World> {
     @Override
     public void render(float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         MainMapCharacter mainCharacter = getController().getMainCharacter();
         RenderGrid renderGrid = mainCharacter.getLocation().getRenderGrid();
@@ -33,6 +33,6 @@ public class WorldRenderer extends Renderer<World> {
 
         dialogueHandler.render(shapeRenderer, batch);
 
-        // TODO: add a Pause Button, and handle it in the WorldInputHandler
+        // TODO: add a Pause Button
     }
 }

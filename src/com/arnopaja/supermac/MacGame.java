@@ -7,8 +7,8 @@ public class MacGame extends Game {
 
     @Override
     public void create() {
+        setScreen(new SplashScreen(this));
         AssetLoader.load();
-        setScreen(new GameScreen(this));
     }
 
     @Override

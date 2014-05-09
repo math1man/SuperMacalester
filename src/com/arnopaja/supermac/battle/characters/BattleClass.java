@@ -1,5 +1,8 @@
 package com.arnopaja.supermac.battle.characters;
 
+import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.badlogic.gdx.audio.Sound;
+
 /**
  * @author Nolan Varani
  */
@@ -14,9 +17,10 @@ public enum BattleClass {     // hp  m   a   d   s   speed
     private final SpecialType specialType;
     private final int baseMaxHealth, baseMaxMana;
     private final int baseAttack, baseDefense, baseSpecial, baseSpeed;
+    private transient Sound magicSound;
 
     private BattleClass(SpecialType specialType, int baseMaxHealth, int baseMaxMana,
-              int baseAttack, int baseDefense, int baseSpecial, int baseSpeed) {
+                        int baseAttack, int baseDefense, int baseSpecial, int baseSpeed) {
         this.specialType = specialType;
         this.baseMaxHealth = baseMaxHealth;
         this.baseMaxMana = baseMaxMana;
@@ -60,5 +64,16 @@ public enum BattleClass {     // hp  m   a   d   s   speed
 
     public int getIntelligence() {
         return (int) Math.round(baseMaxMana / 8.0);
+    }
+
+    public Sound getMagicSound() {
+        return magicSound;
+    }
+
+    public static void init() {
+        COMP_SCI.magicSound = AssetLoader.compSciMagic;
+        ECON.magicSound = AssetLoader.healingSound;
+        NAT_SCI.magicSound = AssetLoader.natSciMagic;
+        HUMANITIES.magicSound = null;
     }
 }

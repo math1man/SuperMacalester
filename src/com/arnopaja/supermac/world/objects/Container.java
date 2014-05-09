@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.world.grid.Location;
@@ -32,7 +32,7 @@ public abstract class Container extends StaticEntity {
 
     protected Interaction takeItemInteraction(final GenericItem item) {
         final Container container = this;
-        return new Interaction(item, container) {
+        return new Interaction() {
             @Override
             public void run(GameScreen screen) {
                 container.removeItem(item);      // take item from container

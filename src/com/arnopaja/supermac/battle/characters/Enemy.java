@@ -13,10 +13,10 @@ import com.google.gson.JsonObject;
  */
 public class Enemy extends BattleCharacter {
 
-    private final Item item;
     private final boolean isBoss;
+    private final Item item;
 
-    public Enemy(String name, BattleClass battleClass, int level, Item item, boolean isBoss) {
+    public Enemy(String name, BattleClass battleClass, int level, boolean isBoss, Item item) {
         super(name, battleClass, level, -1, -1);
         this.item = item;
         this.isBoss = isBoss;
@@ -24,6 +24,10 @@ public class Enemy extends BattleCharacter {
 
     public Item getItem() {
         return item;
+    }
+
+    public boolean hasItem() {
+        return item != null;
     }
 
     public boolean isBoss() {
@@ -37,15 +41,9 @@ public class Enemy extends BattleCharacter {
             String name = getString(object, "name");
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
-            Item item = null;
-            if (has(object, Item.class)) {
-                item = getObject(object, Item.class);
-            }
-            boolean isBoss = false;
-            if (object.has("boss")) {
-                isBoss = getBoolean(object, "boss");
-            }
-            Enemy enemy = new Enemy(name, battleClass, level, item, isBoss);
+            Item item = getObject(object, Item.class, null);
+            boolean isBoss = getBoolean(object, "boss", false);
+            Enemy enemy = new Enemy(name, battleClass, level, isBoss, item);
             if (has(object, Armor.class)) {
                 enemy.setEquippedArmor(getObject(object, Armor.class));
             }
@@ -64,8 +62,10 @@ public class Enemy extends BattleCharacter {
             addString(json, "name", object.name);
             addObject(json, object.battleClass, BattleClass.class);
             addInt(json, "level", object.level);
-            addObject(json, object.item, Item.class);
             addBoolean(json, "boss", object.isBoss);
+            if (object.hasItem()) {
+                addObject(json, object.item, Item.class);
+            }
             if (object.hasEquippedArmor()) {
                 addObject(json, object.getEquippedArmor(), Armor.class);
             }

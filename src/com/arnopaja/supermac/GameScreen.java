@@ -6,21 +6,27 @@ import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.*;
+import com.arnopaja.supermac.helpers.Controller;
+import com.arnopaja.supermac.helpers.InputHandler;
+import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
+import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
 import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
+import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 
 import java.util.Collections;
 
@@ -37,8 +43,6 @@ public class GameScreen implements Screen {
     public static enum GameMode { WORLD, BATTLE }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    private final MacGame game;
-
     private final DialogueHandler dialogueHandler;
 
     private final WorldRenderer worldRenderer;
@@ -50,6 +54,7 @@ public class GameScreen implements Screen {
     private Renderer currentRenderer;
     private InputHandler currentInputHandler;
     private Controller currentController;
+    private Music currentMusic;
 
     private GameMode mode;
     private GameState state;
@@ -60,52 +65,58 @@ public class GameScreen implements Screen {
     private MainParty party;
     private Battle battle;
 
-    public GameScreen(MacGame game) {
-        this.game = game;
-
-        RESET.run(this);
+    public GameScreen() {
 
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
 
-        load();
-
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
 
         worldRenderer = new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
-        worldRenderer.setController(world);
         worldInputHandler = new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
 
         battleRenderer = new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
         battleInputHandler = new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT,
                 scaleFactorX, scaleFactorY);
 
+        AssetLoader.setCleanDialogue(Settings.isClean());
+
+        Interactions.RESET.run(this);
+
+        load();
+
         changeMode(GameMode.WORLD);
         state = GameState.RUNNING;
         runTime = 0;
 
-        new DialogueText(AssetLoader.dialogues.get("Prologue"), DialogueStyle.FULL_SCEEN)
-                .toInteraction().run(this);
+        new DialogueText(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
     }
 
     public void changeMode(GameMode mode) {
+        if(currentMusic != null){
+            currentMusic.stop();
+        }
         this.mode = mode;
         switch (this.mode) {
             case WORLD:
                 currentController = world;
                 currentRenderer = worldRenderer;
                 currentInputHandler = worldInputHandler;
+                currentMusic = AssetLoader.worldMusic;
                 break;
             case BATTLE:
                 battleRenderer.setController(battle);
                 currentController = battle;
                 currentRenderer = battleRenderer;
                 currentInputHandler = battleInputHandler;
+                if(battle.isBossFight()) currentMusic = AssetLoader.bossMusic;
+                else currentMusic = AssetLoader.battleMusic;
                 break;
         }
         Gdx.input.setInputProcessor(currentInputHandler);
+        currentMusic.play();
     }
 
     @Override
@@ -174,10 +185,12 @@ public class GameScreen implements Screen {
     }
 
     public void load() {
-        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
-        party = SaverLoader.load(MainParty.class, new MainParty(
-                Collections.singletonList(new Hero("Tom", BattleClass.COMP_SCI, 1))));
+        worldRenderer.setController(world);
+        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
+        Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
+        hero.addSpell(Spell.getCached(0));
+        party = SaverLoader.load(MainParty.class, new MainParty(Collections.singletonList(hero)));
         Inventory.load();
     }
 
@@ -209,10 +222,6 @@ public class GameScreen implements Screen {
 
     public boolean isDialogue() {
         return state == GameState.DIALOGUE;
-    }
-
-    public MacGame getGame() {
-        return game;
     }
 
     public DialogueHandler getDialogueHandler() {
@@ -255,6 +264,10 @@ public class GameScreen implements Screen {
         return world;
     }
 
+    public MainMapCharacter getMainCharacter() {
+        return getWorld().getMainCharacter();
+    }
+
     public MainParty getParty() {
         return party;
     }
@@ -262,30 +275,4 @@ public class GameScreen implements Screen {
     public Battle getBattle() {
         return battle;
     }
-
-    public static final Interaction RESET = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            AssetLoader.prefs.clear();
-            Settings.save(true); // resave Settings
-            screen.load(); // will load the default
-        }
-
-        @Override
-        public String toString() {
-            return "RESET";
-        }
-    };
-
-    public static final Interaction CLOSE = new Interaction() {
-        @Override
-        public void run(GameScreen screen) {
-            screen.getGame().dispose();
-        }
-
-        @Override
-        public String toString() {
-            return "CLOSE";
-        }
-    };
 }

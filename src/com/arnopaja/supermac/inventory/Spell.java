@@ -1,10 +1,10 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -17,59 +17,66 @@ import java.util.Map;
  */
 public class Spell {
 
+    private static enum Type { BLACK, WHITE, RESURRECT }
+
     private final int id;
     private final String name;
     private final float damageModifier;
     private final int manaCost;
-    private boolean isBlack; // true = Black, false = White
-                             // TODO: why not just use +/- modifiers to signify healing and damage?
-    public Spell(int id, String name, float damageModifier, int manaCost, boolean offensive) {
+    private final Type type;
+
+    public Spell(int id, String name, float damageModifier, int manaCost) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
         this.manaCost = manaCost;
-        this.isBlack = offensive;
+        if (damageModifier > 0) {
+            type = Type.WHITE;
+        } else if (damageModifier < 0) {
+            type = Type.BLACK;
+        } else {
+            type = Type.RESURRECT;
+        }
         cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        String dialogue;
-        if(isBlack)
-        {                           // TODO: I think this should no divide by four so the modifier is the only multiplier
-            int damage = (int) Math.ceil((getDamageModifier() / (1.0 + destination.getSpecial() / 4.0)) * source.getSpecial());
-            destination.modifyHealth(-damage);
-            dialogue = source + " casts " + this + "!\n" +
-                    damage + " damage done.";
-            if (destination.isFainted()) {
-                dialogue += "\n" + destination + " fell!";
-            }
-            source.modifyMana(-manaCost);
-            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
-            if (source.isOutOfMana()) {
-                dialogue += "\n" + source + " is out of mana...";
-            }                            // 0 will be easier to parse, and no other spells should have a 0 modifier
-        } else if(damageModifier == 0) { // Use this special value for resurrect spells
-            source.modifyMana(-manaCost);
-            if(destination.isFainted()) {
-                destination.resurrect();
-                dialogue = source + " casts " + this + "!\n" +
-                         destination.getName() + " has been resurrected!" ;
-            } else {
-                dialogue = source + " casts " + this + "!\n" +
-                        "It has no effect on " + destination.getName() + "." ;
-            }
-        } else if(destination.isFainted()) {
-            dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
-        } else {
-            int healing = (int) getDamageModifier() * source.getSpecial();
-            destination.modifyHealth(healing);
-            dialogue = source + " casts " + this + "!\n" +
-                    healing + " health restored to " + destination + "." ;
-            source.modifyMana(-manaCost);
-            dialogue += "<d>" + source + " has  " + source.getMana() + " mana.";
-            if (source.isOutOfMana()) {
-                dialogue += "\n" + source + " is out of mana...";
-            }
+        String dialogue = source + " casts " + this + " on " + destination + "!\n";
+        switch (type) {
+            case BLACK:
+                int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
+                destination.modifyHealth(damage);
+                dialogue += -damage + " damage done.";
+                if (destination.isFainted()) {
+                    dialogue += "\n" + destination + " fell!";
+                }
+                source.modifyMana(-manaCost);
+                if (source.isOutOfMana()) {
+                    dialogue += "<d>" + source + " is out of mana...";
+                }
+                break;
+            case RESURRECT:
+                source.modifyMana(-manaCost);
+                if(destination.isFainted()) {
+                    destination.resurrect();
+                    dialogue += destination + " has been resurrected!" ;
+                } else {
+                    dialogue += "It has no effect on " + destination + "." ;
+                }
+                break;
+            case WHITE:
+                if(destination.isFainted()) {
+                    dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
+                } else {
+                    int healing = (int) getDamageModifier() * source.getSpecial() / 10; // This way modifiers aren't ridiculous
+                    destination.modifyHealth(healing);
+                    dialogue += healing + " health restored." ;
+                    source.modifyMana(-manaCost);
+                    if (source.isOutOfMana()) {
+                        dialogue += "<d>" + source + " is out of mana...";
+                    }
+                }
+                break;
         }
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
@@ -78,7 +85,17 @@ public class Spell {
         return id;
     }
 
-    public boolean isBlack() { return isBlack; }
+    public boolean isBlack() {
+        return type == Type.BLACK;
+    }
+
+    public boolean isWhite() {
+        return type == Type.WHITE;
+    }
+
+    public boolean isResurrect() {
+        return type == Type.RESURRECT;
+    }
 
     public String getName() {
         return name;
@@ -88,7 +105,7 @@ public class Spell {
         return damageModifier;
     }
 
-    public float getManaCost() {
+    public int getManaCost() {
         return manaCost;
     }
 
@@ -129,8 +146,7 @@ public class Spell {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
-                boolean offensive = getBoolean(object, "type");
-                return new Spell(id, name, modifier, manaCost,offensive);
+                return new Spell(id, name, modifier, manaCost);
             }
         }
 

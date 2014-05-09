@@ -74,7 +74,8 @@ public class Tile implements Renderable {
 
     @Override
     public TextureRegion getSprite(float runTime) {
-        return animation.getKeyFrame(runTime);
+        // TODO: this shouldn't need the second param, but looping doesn't work otherwise
+        return animation.getKeyFrame(runTime, true);
     }
 
     public Animation getAnimation() {

@@ -1,11 +1,11 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
-import com.arnopaja.supermac.helpers.load.EffectParser;
-import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.EffectParser;
+import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -24,8 +24,49 @@ public class Item extends GenericItem {
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        // TODO: use item. Add new methods and variables to BattleCharacter to enable temporary powerups to attack, defense, speed, special
         String dialogue = source + " uses " + this + " on " + destination + "!";
+        for(Effect e : effects) {
+            switch(e.type) {
+                case HEALTH:
+                    if(e.value == 0) {
+                        if(destination.isFainted()) {
+                            destination.resurrect();
+                            dialogue += "\n" + destination + " has been resurrected!";
+                        } else {
+                            dialogue += "\nIt had no effect!";
+                        }
+                    } else {
+                        destination.modifyHealth(e.value);
+                        if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
+                        else dialogue += "\n" + e.value + " damage done!";
+                    }
+                    break;
+                case MANA:
+                    destination.modifyMana(e.value);
+                    if(e.value > 0) dialogue += "\n"  + e.value + " mana restored!";
+                    else dialogue += "\n" + e.value + " mana burned!";
+                    break;
+                case ATTACK:
+                    dialogue += "\nAttack Up!";
+                    destination.setPowerup(e);
+                    break;
+                case DEFENSE:
+                    dialogue += "\nDefense Up!";
+                    destination.setPowerup(e);
+                    break;
+                case SPEED:
+                    dialogue += "\nSpeed Up!";
+                    destination.setPowerup(e);
+                    break;
+                case SPECIAL:
+                    dialogue += "\nSpecial Up!";
+                    destination.setPowerup(e);
+                    break;
+                default:
+                    dialogue += "\nNothing happened, because this isn't even a real item (yet)!";
+                    break;
+            }
+        }
         return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
@@ -52,7 +93,7 @@ public class Item extends GenericItem {
             }
             String name = getString(object, "name");
             int value = getInt(object, "value");
-            String effect = ""; // getString(object, "effects"); TODO: update items.txt with effects
+            String effect = getString(object, "effects", "");
             Item item = new Item(id, name, value, EffectParser.parse(effect));
             cache(item);
             return item;

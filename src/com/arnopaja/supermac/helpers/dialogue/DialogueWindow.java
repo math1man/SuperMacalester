@@ -1,7 +1,8 @@
 package com.arnopaja.supermac.helpers.dialogue;
 
+import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.Interaction;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -118,7 +119,7 @@ public class DialogueWindow {
                 }
             }
         }
-        return Interaction.NULL;
+        return Interactions.NULL;
     }
 
     public float getWidth() {

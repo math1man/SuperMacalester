@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.InputHandler;
+import com.arnopaja.supermac.helpers.dialogue.menu.PauseMenu;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
@@ -14,19 +15,22 @@ public class WorldInputHandler extends InputHandler {
 
     public static final float SIDE_BUTTON_WIDTH = Grid.GRID_PIXEL_DIMENSION * 2f;
 
-    private final MainMapCharacter character;
-
     public WorldInputHandler(GameScreen screen, float gameWidth, float gameHeight,
                              float scaleFactorX, float scaleFactorY) {
         super(screen, gameWidth, gameHeight, scaleFactorX, scaleFactorY);
-        this.character = this.screen.getWorld().getMainCharacter();
     }
 
     @Override
     public boolean keyDown(int keycode) {
         if (screen.isRunning()) {
-            move(getDirection(keycode));
-        } else if (screen.isDialogue()) {
+            if (getDirection(keycode) != null) {
+                move(getDirection(keycode));
+            } else {
+                if (keycode == Keys.SPACE) {
+                    screen.getMainCharacter().run(screen);
+                }
+            }
+        } else if (screen.isDialogue() && keycode == Keys.SPACE) {
             dialogueInput(0, 0);
         } else {
             return false;
@@ -49,7 +53,11 @@ public class WorldInputHandler extends InputHandler {
         float gameX = scaleX(screenX);
         float gameY = scaleY(screenY);
         if (screen.isRunning()) {
-            move(getDirection(gameX, gameY));
+            if (gameX < SIDE_BUTTON_WIDTH && gameY < SIDE_BUTTON_WIDTH) {
+                new PauseMenu().run(screen);
+            } else {
+                move(getDirection(gameX, gameY));
+            }
         } else if (screen.isDialogue()) {
             dialogueInput(gameX, gameY);
         } else {
@@ -81,12 +89,13 @@ public class WorldInputHandler extends InputHandler {
     }
 
     private void move(Direction direction) {
-        if (!character.move(direction)) {
-            character.toInteraction().run(screen);
+        if (!screen.getMainCharacter().move(direction)) {
+            screen.getMainCharacter().run(screen);
         }
     }
 
     private boolean stop(Direction direction) {
+        MainMapCharacter character = screen.getMainCharacter();
         if (character.continueMoving() && character.getMovingDirection() == direction) {
             character.stop();
             return true;

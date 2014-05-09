@@ -7,6 +7,8 @@ import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -63,6 +65,7 @@ public class AssetLoader {
     public static FileHandle itemHandle;
     public static FileHandle spellHandle;
     public static FileHandle dialogueHandle;
+    public static FileHandle cleanDialogueHandle;
     public static FileHandle plotHandle;
     public static FileHandle mapHandle;
     public static FileHandle entitiesHandle;
@@ -71,6 +74,17 @@ public class AssetLoader {
     // Caches
     public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
     public static Map<String, Grid> grids = new HashMap<String, Grid>();
+
+    // Music
+    public static Music worldMusic;
+    public static Music battleMusic;
+    public static Music bossMusic;
+
+    // Sounds
+    public static Sound compSciMagic;
+    public static Sound natSciMagic;
+    public static Sound healingSound;
+    public static Sound powerupSound;
 
     // Font
     public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
@@ -123,13 +137,15 @@ public class AssetLoader {
         asphaltCobbleSW = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, false);
         asphaltCobbleNW = SpriteUtils.makeSprite(tilesTexture, 6, 4);
 
-        TextureRegion[] temp = new TextureRegion[7];
-        for(int i = 0; i< 7; i++){
+        TextureRegion[] temp = new TextureRegion[12];
+        for(int i = 0; i<7; i++){
             temp[i] = SpriteUtils.makeSprite(tilesTexture, 17 + 3*i , 0, 3, 3);
+            if (i != 0) {
+                temp[12-i] = temp[i];
+            }
         }
-        asteroid = new Animation(0.1f,temp);
-        asteroid.isAnimationFinished(0);
-        asteroid.setPlayMode(Animation.LOOP_PINGPONG);
+        asteroid = new Animation(0.5f, temp);
+
         //--------------------------
         //        Buildings
         //--------------------------
@@ -214,22 +230,41 @@ public class AssetLoader {
         }
 
         //--------------------------
-        //          Other
+        //    Handles and Caches
         //--------------------------
-
-        // TODO: battle backgrounds (for now, we just use RenderGrids)
 
         itemHandle = getHandle("items.txt");
         spellHandle = getHandle("spells.txt");
         dialogueHandle = getHandle("macalester/dialogues.txt");
+        cleanDialogueHandle = getHandle("macalester/dialogues_clean.txt");
         mapHandle = getHandle("macalester/maps");
         plotHandle = getHandle("macalester/plot.txt");
         entitiesHandle = getHandle("macalester/entities.txt");
 
         SuperParser.parseAll(AssetLoader.itemHandle, GenericItem.class);
         SuperParser.parseAll(AssetLoader.spellHandle, Spell.class);
-        dialogues = SuperParser.parseAll(AssetLoader.dialogueHandle, Dialogue.class);
         grids = MapLoader.generateGrids(AssetLoader.mapHandle);
+
+        //--------------------------
+        //     Music and Sounds
+        //--------------------------
+        //TODO: Give credit to Rolemusic for the music under the Creative Commons Attribution License
+        //Artist: Rolemusic
+        //Album: gigs n' contest
+        worldMusic = loadMusic("Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3");
+        battleMusic = loadMusic("Rolemusic_-_04_-_Scape_from_the_city.mp3");
+        bossMusic = loadMusic("Rolemusic_-_05_-_Death_on_the_battlefield.mp3");
+
+        compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
+        natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
+        healingSound = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
+        powerupSound = Gdx.audio.newSound(getHandle("sounds/powerup.ogg"));
+
+        BattleClass.init(); // needed to init the magic sounds
+
+        //--------------------------
+        //          Other
+        //--------------------------
 
         font = new BitmapFont(getHandle("font/text.fnt"));
         shadow = new BitmapFont(getHandle("font/shadow.fnt"));
@@ -259,10 +294,16 @@ public class AssetLoader {
             TextureRegion[] array = { person.get(dir), stepRight.get(dir),
                     person.get(dir), stepLeft.get(dir) };
             Animation animation = new Animation(0.1f, array);
-            animation.setPlayMode(Animation.LOOP);
+            animation.setPlayMode(Animation.PlayMode.LOOP);
             personAnim.put(dir, animation);
         }
         characterAssetMap.put(name, new CharacterAsset(person, personAnim));
+    }
+
+    public static Music loadMusic(String file) {
+        Music music = Gdx.audio.newMusic(getHandle("music/" + file));
+        music.setLooping(true);
+        return music;
     }
 
     public static void scaleFont(float scale) {
@@ -270,20 +311,10 @@ public class AssetLoader {
         shadow.setScale(scale, -scale);
     }
 
-    public static void drawFont(SpriteBatch batch, String string, float x, float y) {
-        float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
-        AssetLoader.shadow.drawMultiLine(batch, string, x + shadowOffset, y + shadowOffset);
-        AssetLoader.font.drawMultiLine(batch, string, x, y);
-    }
-
     public static void drawWrappedFont(SpriteBatch batch, String string, float x, float y, float width) {
         float shadowOffset = font.getLineHeight() * FONT_SHADOW_OFFSET * -1;
         AssetLoader.shadow.drawWrapped(batch, string, x + shadowOffset, y + shadowOffset, width);
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
-    }
-
-    public static String getMap(String name) {
-        return mapHandle.child(name + ".txt").readString();
     }
 
     public static TextureRegion getBackground(String name) {
@@ -298,10 +329,22 @@ public class AssetLoader {
         return Gdx.files.internal("data/" + path);
     }
 
+    public static void setCleanDialogue(boolean clean) {
+        if (clean) {
+            dialogues.clear(); // This shouldn't be necessary, but it doesn't work otherwise
+            dialogues = SuperParser.parseAll(cleanDialogueHandle, Dialogue.class);
+        } else {
+            dialogues = SuperParser.parseAll(dialogueHandle, Dialogue.class);
+        }
+    }
+
     public static void dispose() {
         tilesTexture.dispose();
         entitiesTexture.dispose();
         characterTexture.dispose();
+        worldMusic.dispose();
+        battleMusic.dispose();
+        compSciMagic.dispose();
         font.dispose();
         shadow.dispose();
     }
