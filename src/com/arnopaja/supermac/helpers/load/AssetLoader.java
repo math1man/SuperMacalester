@@ -40,7 +40,7 @@ public class AssetLoader {
     public static Animation asteroid;
     //Indoor Tiles
     public static TextureRegion wh, wv, wne, wse,wsw,wnw,wtn,wte,wts,wtw,wp,wen,wee,wes,wew,wene,wese,wesw,wenw,wine,wise,wisw,winw,wetn,wete,wets,wetw;
-
+    public static TextureRegion wdoor, edoor, ndoor, sdoor;
 
     // Buildings
     public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
@@ -165,22 +165,26 @@ public class AssetLoader {
         wse = SpriteUtils.makeSprite(indoorsTexture, 3, 2);
         wsw = SpriteUtils.makeSprite(indoorsTexture, 3, 4);
         wnw = SpriteUtils.makeSprite(indoorsTexture, 4, 4);
-        wtn = SpriteUtils.makeSprite(indoorsTexture, 3, 2);
+        wtn = SpriteUtils.makeSprite(indoorsTexture, 6, 5);
+        wte = SpriteUtils.makeSprite(indoorsTexture, 4, 3);
+        wts = SpriteUtils.makeSprite(indoorsTexture, 1, 4);
+        wtw = SpriteUtils.makeSprite(indoorsTexture, 2, 3);
+        wdoor = SpriteUtils.makeSprite(indoorsTexture, 4, 7);
+        edoor = SpriteUtils.makeSprite(indoorsTexture, 3, 0);
+        ndoor = SpriteUtils.makeSprite(indoorsTexture, 0, 5);
+        sdoor = SpriteUtils.makeSprite(indoorsTexture, 7, 5);
+        wh = SpriteUtils.makeSprite(indoorsTexture, 1, 3);
 
 
 
 
-/*
-
-        wh - Horizontal wall
-
-wtn - North T wall
-wte - East T wall
-wts - South T wall
-wtw - West T wall
 
 
-         */
+
+
+
+
+
 
 
 
