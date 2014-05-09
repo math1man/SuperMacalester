@@ -2,6 +2,7 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
@@ -33,6 +34,10 @@ public class WorldRenderer extends Renderer<World> {
 
         dialogueHandler.render(shapeRenderer, batch);
 
-        // TODO: add a Pause Button
+        if (!dialogueHandler.isDisplaying()) {
+            batch.begin();
+            batch.draw(AssetLoader.pauseButton, 0, 0);
+            batch.end();
+        }
     }
 }

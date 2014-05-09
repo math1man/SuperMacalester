@@ -41,6 +41,7 @@ public class AssetLoader {
     public static TextureRegion asphaltCobbleN, asphaltCobbleE, asphaltCobbleS, asphaltCobbleW;
     public static TextureRegion asphaltCobbleNE, asphaltCobbleSE, asphaltCobbleSW, asphaltCobbleNW;
     public static Animation asteroid;
+
     //Indoor Tiles
     public static TextureRegion wh, wv, wne, wse,wsw,wnw,wtn,wte,wts,wtw,wp,wen,wee,wes,wew,wene,wese,wesw,wenw,wine,wise,wisw,winw,wetn,wete,wets,wetw;
     public static TextureRegion wdoor, edoor, ndoor, sdoor;
@@ -55,6 +56,8 @@ public class AssetLoader {
     public static TextureRegion chestRedOpen, chestRedClosed;
     public static TextureRegion chestGreenOpen, chestGreenClosed;
     public static TextureRegion garbageCan;
+
+    public static TextureRegion pauseButton;
 
     // Characters
     public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
@@ -192,21 +195,6 @@ public class AssetLoader {
         sdoor = SpriteUtils.makeSprite(indoorsTexture, 7, 5);
         wh = SpriteUtils.makeSprite(indoorsTexture, 1, 3);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         MapLoader.initTileMap(); // Must be called after all tiles and buildings are loaded
 
         //--------------------------
@@ -220,6 +208,8 @@ public class AssetLoader {
         chestRedOpen = SpriteUtils.makeSprite(tilesTexture, 1, 1);
         chestGreenClosed = SpriteUtils.makeSprite(tilesTexture, 2, 0);
         chestGreenOpen = SpriteUtils.makeSprite(tilesTexture, 2, 1);
+
+        pauseButton = SpriteUtils.makeSprite(entitiesTexture, 3, 0, 2, 2);
 
         //--------------------------
         //       Characters
@@ -342,6 +332,7 @@ public class AssetLoader {
 
     public static void dispose() {
         tilesTexture.dispose();
+        indoorsTexture.dispose();
         entitiesTexture.dispose();
         characterTexture.dispose();
         worldMusic.dispose();
