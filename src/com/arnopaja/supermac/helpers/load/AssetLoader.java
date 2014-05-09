@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.helpers.load;
 
+import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Spell;
@@ -263,6 +264,7 @@ public class AssetLoader {
         BattleClass.init(); // needed to init the magic sounds
 
         //--------------------------
+
         //          Other
         //--------------------------
 
