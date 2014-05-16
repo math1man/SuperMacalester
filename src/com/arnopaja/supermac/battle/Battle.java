@@ -18,6 +18,7 @@ import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.SpellBook;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.grid.RenderGrid;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -144,6 +145,16 @@ public class Battle implements Controller, Interaction {
         mainParty.clearDefend();
         mainParty.clearPowerup();
         screen.world();
+    }
+
+    @Override
+    public Music getMusic() {
+        // TODO: handle music via the parser maybe?
+        if (isBossFight()) {
+            return AssetLoader.bossMusic;
+        } else {
+            return AssetLoader.battleMusic;
+        }
     }
 
     public MainParty getMainParty() {

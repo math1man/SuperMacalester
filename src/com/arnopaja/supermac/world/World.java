@@ -7,6 +7,7 @@ import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.arnopaja.supermac.world.objects.QuestNpc;
+import com.badlogic.gdx.audio.Music;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -61,6 +62,11 @@ public class World implements Controller {
 
     public Collection<Grid> getGrids() {
         return Collections.unmodifiableCollection(grids.values());
+    }
+
+    @Override
+    public Music getMusic() {
+        return AssetLoader.worldMusic;
     }
 
     public Map<String, Grid> getGridMap() {

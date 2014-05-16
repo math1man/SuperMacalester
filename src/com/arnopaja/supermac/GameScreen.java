@@ -6,9 +6,6 @@ import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.InputHandler;
-import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -26,7 +23,6 @@ import com.arnopaja.supermac.world.WorldRenderer;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 
 import java.util.Collections;
 
@@ -40,30 +36,19 @@ public class GameScreen implements Screen {
     public static final float GAME_HEIGHT = 352;
     public static final float GAME_WIDTH = GAME_HEIGHT * ASPECT_RATIO;
 
-    public static enum GameMode { WORLD, BATTLE }
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
 
-    private final WorldRenderer worldRenderer;
-    private final WorldInputHandler worldInputHandler;
-
-    private final BattleRenderer battleRenderer;
-    private final BattleInputHandler battleInputHandler;
-
-    private Renderer currentRenderer;
-    private InputHandler currentInputHandler;
-    private Controller currentController;
-    private Music currentMusic;
+    private final GameMode<World> worldMode;
+    private final GameMode<Battle> battleMode;
 
     private GameMode mode;
     private GameState state;
     private float runTime;
 
     private Plot plot;
-    private World world;
     private MainParty party;
-    private Battle battle;
 
     public GameScreen() {
 
@@ -74,49 +59,34 @@ public class GameScreen implements Screen {
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
 
-        worldRenderer = new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
-        worldInputHandler = new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
+        worldMode = new GameMode<World>(new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT),
+                new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY));
 
-        battleRenderer = new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT);
-        battleInputHandler = new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT,
-                scaleFactorX, scaleFactorY);
+        battleMode = new GameMode<Battle>(new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT),
+                new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY));
 
         AssetLoader.setCleanDialogue(Settings.isClean());
 
+        // TODO: get rid of this
         Interactions.RESET.run(this);
 
         load();
 
-        changeMode(GameMode.WORLD);
+        changeMode(worldMode);
         state = GameState.RUNNING;
         runTime = 0;
 
+        // TODO: first load only
         new DialogueText(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
     }
 
-    public void changeMode(GameMode mode) {
-        if(currentMusic != null){
-            currentMusic.stop();
+    public void changeMode(GameMode newMode) {
+        if (mode != null) {
+            mode.getMusic().stop();
         }
-        this.mode = mode;
-        switch (this.mode) {
-            case WORLD:
-                currentController = world;
-                currentRenderer = worldRenderer;
-                currentInputHandler = worldInputHandler;
-                currentMusic = AssetLoader.worldMusic;
-                break;
-            case BATTLE:
-                battleRenderer.setController(battle);
-                currentController = battle;
-                currentRenderer = battleRenderer;
-                currentInputHandler = battleInputHandler;
-                if(battle.isBossFight()) currentMusic = AssetLoader.bossMusic;
-                else currentMusic = AssetLoader.battleMusic;
-                break;
-        }
-        Gdx.input.setInputProcessor(currentInputHandler);
-        currentMusic.play();
+        mode = newMode;
+        Gdx.input.setInputProcessor(mode.getInputHandler());
+        mode.getMusic().play();
     }
 
     @Override
@@ -128,9 +98,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         if (isRunning()) {
             runTime += delta;
-            currentController.update(delta);
+            mode.getController().update(delta);
         }
-        currentRenderer.render(runTime);
+        mode.getRenderer().render(runTime);
     }
 
     @Override
@@ -149,6 +119,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        save();
         if (isRunning()) {
             state = GameState.PAUSED;
         }
@@ -170,23 +141,21 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        Settings.save();
         save();
-        worldRenderer.dispose();
-        battleRenderer.dispose();
+        worldMode.getRenderer().dispose();
+        battleMode.getRenderer().dispose();
     }
 
     public void save() {
-        SaverLoader.save(plot, Plot.class);
-        SaverLoader.save(world, World.class);
-        SaverLoader.save(party, MainParty.class);
+        SaverLoader.save(getPlot(), Plot.class);
+        SaverLoader.save(getWorld(), World.class);
+        SaverLoader.save(getParty(), MainParty.class);
         Inventory.save();
         SaverLoader.flush();
     }
 
     public void load() {
-        world = SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class));
-        worldRenderer.setController(world);
+        worldMode.setController(SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class)));
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
         hero.addSpell(Spell.getCached(0));
@@ -194,22 +163,22 @@ public class GameScreen implements Screen {
         Inventory.load();
     }
 
-    public void battle(Battle battle) {
-        this.battle = battle;
-        this.battle.ready(party, world.getMainCharacter().getLocation().getRenderGrid(), this);
-        changeMode(GameMode.BATTLE);
+    public void battle(Battle newBattle) {
+        newBattle.ready(party, getMainCharacter().getLocation().getRenderGrid(), this);
+        battleMode.setController(newBattle);
+        changeMode(battleMode);
     }
 
     public void world() {
-        changeMode(GameMode.WORLD);
+        changeMode(worldMode);
     }
 
     public boolean isWorld() {
-        return mode == GameMode.WORLD;
+        return mode == worldMode;
     }
 
     public boolean isBattle() {
-        return mode == GameMode.BATTLE;
+        return mode == battleMode;
     }
 
     public boolean isRunning() {
@@ -228,51 +197,27 @@ public class GameScreen implements Screen {
         return dialogueHandler;
     }
 
-    public WorldRenderer getWorldRenderer() {
-        return worldRenderer;
-    }
-
-    public WorldInputHandler getWorldInputHandler() {
-        return worldInputHandler;
-    }
-
-    public BattleRenderer getBattleRenderer() {
-        return battleRenderer;
-    }
-
-    public BattleInputHandler getBattleInputHandler() {
-        return battleInputHandler;
-    }
-
-    public Renderer getCurrentRenderer() {
-        return currentRenderer;
-    }
-
-    public InputHandler getCurrentInputHandler() {
-        return currentInputHandler;
-    }
-
-    public Controller getCurrentController() {
-        return currentController;
+    public GameMode getMode() {
+        return mode;
     }
 
     public Plot getPlot() {
         return plot;
     }
 
+    public MainParty getParty() {
+        return party;
+    }
+
     public World getWorld() {
-        return world;
+        return worldMode.getController();
     }
 
     public MainMapCharacter getMainCharacter() {
         return getWorld().getMainCharacter();
     }
 
-    public MainParty getParty() {
-        return party;
-    }
-
     public Battle getBattle() {
-        return battle;
+        return battleMode.getController();
     }
 }

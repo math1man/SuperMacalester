@@ -15,8 +15,6 @@ public class PauseMenu extends Menu {
                 new DialogueMember("Settings", new SettingsMenu()),
                 new DialogueMember("Reset", new ConfirmationMenu("Are you sure you want to reset your game?",
                         Interactions.RESET, Interactions.END_DIALOGUE)),
-                new DialogueMember("Exit", new ConfirmationMenu("Are you sure you want to exit?",
-                        Interactions.EXIT, Interactions.END_DIALOGUE)),
                 new DialogueMember("Close", Interactions.END_DIALOGUE)
         );
     }

@@ -4,6 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.badlogic.gdx.InputProcessor;
 
 /**
+ * TODO: make this non-abstract and universal maybe?
  * @author Ari Weiland
  */
 public abstract class InputHandler implements InputProcessor {
@@ -11,7 +12,6 @@ public abstract class InputHandler implements InputProcessor {
     protected final GameScreen screen;
     protected final float gameWidth, gameHeight;
     protected final float scaleFactorX, scaleFactorY;
-
 
     public InputHandler(GameScreen screen, float gameWidth, float gameHeight,
                         float scaleFactorX, float scaleFactorY) {
