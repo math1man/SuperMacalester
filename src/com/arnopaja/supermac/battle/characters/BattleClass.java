@@ -1,12 +1,13 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.badlogic.gdx.audio.Sound;
 
 /**
  * @author Nolan Varani
  */
-public enum BattleClass {     // hp  m   a   d   s   speed
+public enum BattleClass implements Parsable {     // hp  m   a   d   s   speed
     COMP_SCI(SpecialType.BLACK,  30, 10, 5,  10, 25, 15),
     ECON(SpecialType.WHITE,      40, 5,  20, 15, 10, 5),
     NAT_SCI(SpecialType.RED,     35, 5,  10, 10, 15, 10),

@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.battle.characters;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.inventory.*;
 
 import java.util.Collection;
@@ -7,7 +8,7 @@ import java.util.Collection;
 /**
  * @author Nolan Varani
  */
-public abstract class BattleCharacter {
+public abstract class BattleCharacter implements Parsable {
 
     protected final String name;
     protected final BattleClass battleClass;

@@ -68,4 +68,6 @@ public class DialogueText extends Dialogue {
     public String toString() {
         return getText();
     }
+
+    public static class Parser extends Dialogue.Parser {}
 }

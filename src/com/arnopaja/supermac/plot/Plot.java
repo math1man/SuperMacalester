@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,7 +18,7 @@ import java.util.Set;
  *
  * @author Ari Weiland
  */
-public class Plot {
+public class Plot implements Parsable {
 
     private Map<Integer, Quest> quests;
 

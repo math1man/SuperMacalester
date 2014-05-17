@@ -4,6 +4,7 @@ import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,7 +16,7 @@ import java.util.Map;
  * TODO: implement effects?
  * @author Nolan Varani
  */
-public class Spell {
+public class Spell implements Parsable {
 
     private static enum Type { BLACK, WHITE, RESURRECT }
 

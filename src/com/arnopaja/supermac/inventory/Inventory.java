@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonArray;
@@ -21,7 +22,7 @@ import java.util.*;
  *
  * @author Nolan Varani
  */
-public class Inventory {
+public class Inventory implements Parsable {
 
     private Map<Integer, Integer> idMap = new LinkedHashMap<Integer, Integer>();
 

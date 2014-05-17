@@ -5,27 +5,27 @@ package com.arnopaja.supermac.helpers.load;
  */
 public class SaverLoader {
 
-    public static <T> void save(T savable, Class<T> clazz) {
+    public static <T extends Parsable> void save(T savable, Class<T> clazz) {
         save(savable, clazz.getName(), clazz);
     }
 
-    public static <T> void save(T savable, String name, Class<T> clazz) {
+    public static <T extends Parsable> void save(T savable, String name, Class<T> clazz) {
         AssetLoader.prefs.putString(name, SuperParser.toJsonString(savable, clazz));
     }
 
-    public static <T> T load(Class<T> clazz) {
+    public static <T extends Parsable> T load(Class<T> clazz) {
         return load(clazz, null);
     }
 
-    public static <T> T load(Class<T> clazz, T defVal) {
+    public static <T extends Parsable> T load(Class<T> clazz, T defVal) {
         return load(clazz.getName(), clazz, defVal);
     }
 
-    public static <T> T load(String name, Class<T> clazz) {
+    public static <T extends Parsable> T load(String name, Class<T> clazz) {
         return load(name, clazz, null);
     }
 
-    public static <T> T load(String name, Class<T> clazz, T defVal) {
+    public static <T extends Parsable> T load(String name, Class<T> clazz, T defVal) {
         if (isSaved(name)) {
             return SuperParser.parse(AssetLoader.prefs.getString(name), clazz);
         } else if (defVal != null) {

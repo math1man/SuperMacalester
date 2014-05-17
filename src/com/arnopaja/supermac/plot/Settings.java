@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
@@ -12,7 +13,7 @@ import com.google.gson.JsonObject;
  *
  * @author Ari Weiland
  */
-public class Settings {
+public class Settings implements Parsable {
 
     private static Settings INSTANCE = new Settings();
 

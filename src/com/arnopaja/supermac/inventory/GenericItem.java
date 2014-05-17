@@ -1,9 +1,9 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
+import com.arnopaja.supermac.helpers.interaction.Interaction;
 
 import java.util.HashMap;
 import java.util.Map;

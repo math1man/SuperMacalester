@@ -1,23 +1,8 @@
 package com.arnopaja.supermac.helpers.load;
 
-import com.arnopaja.supermac.battle.Battle;
-import com.arnopaja.supermac.battle.characters.*;
-import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
-import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.interaction.Interactions;
-import com.arnopaja.supermac.inventory.*;
-import com.arnopaja.supermac.plot.Goal;
-import com.arnopaja.supermac.plot.Plot;
-import com.arnopaja.supermac.plot.Quest;
-import com.arnopaja.supermac.plot.Settings;
-import com.arnopaja.supermac.world.World;
-import com.arnopaja.supermac.world.grid.Direction;
-import com.arnopaja.supermac.world.grid.Location;
-import com.arnopaja.supermac.world.objects.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.*;
+import org.reflections.Reflections;
 
 import java.util.*;
 
@@ -26,56 +11,51 @@ import java.util.*;
  *
  * @author Ari Weiland
  */
-public abstract class SuperParser<T> {
+public abstract class SuperParser<T extends Parsable> {
 
     private static final Gson gson = new Gson();
     private static final JsonParser parser = new JsonParser();
-    private static final Map<String, SuperParser> parsers = new HashMap<String, SuperParser>();
-    static {
-        Dialogue.Parser parser = new Dialogue.Parser();
-        addParser(Armor.class,             new Armor.Parser());
-        addParser(Battle.class,            new Battle.Parser());
-        addParser(BattleClass.class,       new EnumParser<BattleClass>(BattleClass.class));
-        addParser(Chest.class,             new Chest.Parser());
-        addParser(Dialogue.class,          parser);
-        addParser(DialogueOptions.class,   parser);
-        addParser(DialogueText.class,      parser);
-        addParser(Direction.class,         new EnumParser<Direction>(Direction.class));
-        addParser(Door.class,              new Door.Parser());
-        addParser(Enemy.class,             new Enemy.Parser());
-        addParser(EnemyParty.class,        new EnemyParty.Parser());
-        addParser(GarbageCan.class,        new GarbageCan.Parser());
-        addParser(Goal.class,              new Goal.Parser());
-        addParser(Hero.class,              new Hero.Parser());
-        addParser(Interaction.class,       new Interaction.Parser());
-        addParser(Interactions.class,      new EnumParser<Interactions>(Interactions.class));
-        addParser(Inventory.class,         new Inventory.Parser());
-        addParser(Item.class,              new Item.Parser());
-        addParser(Location.class,          new Location.Parser());
-        addParser(MainMapCharacter.class,  new MainMapCharacter.Parser());
-        addParser(MainParty.class,         new MainParty.Parser());
-        addParser(MapNpc.class,            new MapNpc.Parser());
-        addParser(NonRenderedEntity.class, new NonRenderedEntity.Parser());
-        addParser(Plot.class,              new Plot.Parser());
-        addParser(Quest.class,             new Quest.Parser());
-        addParser(QuestNpc.class,          new QuestNpc.Parser());
-        addParser(Settings.class,          new Settings.Parser());
-        addParser(SpecialItem.class,       new SpecialItem.Parser());
-        addParser(Spell.class,             new Spell.Parser());
-        addParser(Weapon.class,            new Weapon.Parser());
-        addParser(World.class,             new World.Parser());
+
+    private static final Reflections reflections = new Reflections("com.arnopaja.supermac");
+    private static final Set<Class<? extends Parsable>> classes = reflections.getSubTypesOf(Parsable.class);
+    private static final Map<Class<? extends Parsable>, SuperParser> parserCache = new HashMap<Class<? extends Parsable>, SuperParser>(classes.size());
+
+    //--------------------------------
+    //       Parser Retrieval
+    //--------------------------------
+
+    private static SuperParser getParser(JsonElement element, Class clazz) {
+        if (element.isJsonObject()) {
+            Class tryClass = getClass(element.getAsJsonObject());
+            return getParser(tryClass, clazz);
+        } else {
+            return getParser(clazz);
+        }
     }
 
-    private static <U> void addParser(Class<? extends U> clazz, SuperParser<U> parser) {
-        parsers.put(clazz.getSimpleName(), parser);
+    private static SuperParser getParser(Class tryClass, Class defClass) {
+        SuperParser parser = getParser(tryClass);
+        if (parser == null) {
+            parser = getParser(defClass);
+        }
+        return parser;
     }
 
-    protected static <U> SuperParser<U> getParser(Class<U> clazz) {
-        return getParser(clazz.getSimpleName());
-    }
-
-    protected static <U> SuperParser<U> getParser(String className) {
-        return parsers.get(className);
+    private static SuperParser getParser(Class clazz) {
+        if (!parserCache.containsKey(clazz)) {
+            if (clazz.isEnum()) {
+                parserCache.put(clazz, new EnumParser(clazz));
+            } else try {
+                parserCache.put(clazz, (SuperParser) Class.forName(clazz.getName() + "$Parser").newInstance());
+            } catch (ClassNotFoundException e) {
+                return null;
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return parserCache.get(clazz);
     }
 
     //--------------------------------
@@ -98,16 +78,8 @@ public abstract class SuperParser<T> {
      * @param <U>
      * @return
      */
-    public static <U> U fromJson(JsonElement element, Class<U> clazz) {
-        SuperParser parser;
-        if (clazz.isEnum()) {
-            parser = getParser(clazz);
-        } else {
-            parser = getParser(getClass(element.getAsJsonObject()));
-        }
-        if (parser == null) {
-            parser = getParser(clazz);
-        }
+    public static <U extends Parsable> U fromJson(JsonElement element, Class<U> clazz) {
+        SuperParser parser = getParser(element, clazz);
         return clazz.cast(parser.fromJson(element));
     }
 
@@ -115,26 +87,24 @@ public abstract class SuperParser<T> {
      * Creates a JSON of the element. The element must be of the specified
      * class, but the class does not otherwise affect the code. It is only
      * used to differentiate this method from the non-static equivalent.
-     * @param element
+     * @param object
      * @param clazz
      * @param <U>
      * @return
      */
-    public static <U> JsonElement toJson(U element, Class<U> clazz) {
+    public static <U extends Parsable> JsonElement toJson(U object, Class<U> clazz) {
+        // TODO: get rid of this conditional
         if (clazz.isEnum()) {
-            return getParser(clazz).toJson(element);
+            return getParser(clazz).toJson(object);
         } else {
-            SuperParser parser = getParser(element.getClass());
-            if (parser == null) {
-                parser = getParser(clazz);
-            }
-            JsonObject json = parser.toJson(element).getAsJsonObject();
-            addClass(json, element.getClass());
+            SuperParser parser = getParser(object.getClass(), clazz);
+            JsonObject json = parser.toJson(object).getAsJsonObject();
+            addClass(json, object.getClass());
             return json;
         }
     }
 
-    public static <U> String toJsonString(U element, Class<U> clazz) {
+    public static <U extends Parsable> String toJsonString(U element, Class<U> clazz) {
         return gson.toJson(toJson(element, clazz));
     }
 
@@ -146,7 +116,7 @@ public abstract class SuperParser<T> {
      * @param json
      * @return
      */
-    public static <U> U parse(String name, String json, Class<U> clazz) {
+    public static <U extends Parsable> U parse(String name, String json, Class<U> clazz) {
         JsonElement element = getJsonHead(json);
         if (element == null || !element.isJsonObject()) {
             return null;
@@ -166,7 +136,7 @@ public abstract class SuperParser<T> {
      * @param handle
      * @return
      */
-    public static <U> U parse(String name, FileHandle handle, Class<U> clazz) {
+    public static <U extends Parsable> U parse(String name, FileHandle handle, Class<U> clazz) {
         return parse(name, handle.readString(), clazz);
     }
 
@@ -177,7 +147,7 @@ public abstract class SuperParser<T> {
      * @param <U>
      * @return
      */
-    public static <U> U parse(String json, Class<U> clazz) {
+    public static <U extends Parsable> U parse(String json, Class<U> clazz) {
         return fromJson(getJsonHead(json), clazz);
     }
 
@@ -188,7 +158,7 @@ public abstract class SuperParser<T> {
      * @param <U>
      * @return
      */
-    public static <U> U parse(FileHandle handle, Class<U> clazz) {
+    public static <U extends Parsable> U parse(FileHandle handle, Class<U> clazz) {
         return parse(handle.readString(), clazz);
     }
 
@@ -198,7 +168,7 @@ public abstract class SuperParser<T> {
      * @param json
      * @return
      */
-    public static <U> Map<String, U> parseAll(String json, Class<U> clazz) {
+    public static <U extends Parsable> Map<String, U> parseAll(String json, Class<U> clazz) {
         JsonElement element = getJsonHead(json);
         Map<String, U> parsables = new HashMap<String, U>();
         Set<Map.Entry<String, JsonElement>> entries = element.getAsJsonObject().entrySet();
@@ -214,7 +184,7 @@ public abstract class SuperParser<T> {
      * @param handle
      * @return
      */
-    public static <U> Map<String, U> parseAll(FileHandle handle, Class<U> clazz) {
+    public static <U extends Parsable> Map<String, U> parseAll(FileHandle handle, Class<U> clazz) {
         return parseAll(handle.readString(), clazz);
     }
 
@@ -283,34 +253,34 @@ public abstract class SuperParser<T> {
         json.addProperty(name, string);
     }
 
-    protected static <U> U getObject(JsonObject json, Class<U> clazz) {
+    protected static <U extends Parsable> U getObject(JsonObject json, Class<U> clazz) {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz);
     }
 
-    protected static <U> U getObject(JsonObject json, Class<U> clazz, U defval) {
+    protected static <U extends Parsable> U getObject(JsonObject json, Class<U> clazz, U defval) {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz, defval);
     }
 
-    protected static <U> U getObject(JsonObject json, String name, Class<U> clazz) {
+    protected static <U extends Parsable> U getObject(JsonObject json, String name, Class<U> clazz) {
         return fromJson(json.get(name), clazz);
     }
 
-    protected static <U> U getObject(JsonObject json, String name, Class<U> clazz, U defval) {
+    protected static <U extends Parsable> U getObject(JsonObject json, String name, Class<U> clazz, U defval) {
         if (json.has(name)) {
             return getObject(json, name, clazz);
         }
         return defval;
     }
 
-    protected static <U> void addObject(JsonObject json, U object, Class<U> clazz) {
+    protected static <U extends Parsable> void addObject(JsonObject json, U object, Class<U> clazz) {
         addObject(json, clazz.getSimpleName().toLowerCase(), object, clazz);
     }
 
-    protected static <U> void addObject(JsonObject json, String name, U object, Class<U> clazz) {
+    protected static <U extends Parsable> void addObject(JsonObject json, String name, U object, Class<U> clazz) {
         json.add(name, toJson(object, clazz));
     }
 
-    protected static <U> List<U> getList(JsonObject json, String name, Class<U> clazz) {
+    protected static <U extends Parsable> List<U> getList(JsonObject json, String name, Class<U> clazz) {
         JsonArray array = json.getAsJsonArray(name);
         List<U> contents = new ArrayList<U>();
         for (JsonElement e : array) {
@@ -319,7 +289,7 @@ public abstract class SuperParser<T> {
         return contents;
     }
 
-    protected static <U> void addList(JsonObject json, String name, Collection<U> list, Class<U> clazz) {
+    protected static <U extends Parsable> void addList(JsonObject json, String name, Collection<U> list, Class<U> clazz) {
         JsonArray array = new JsonArray();
         for (U element : list) {
             array.add(toJson(element, clazz));
@@ -335,8 +305,15 @@ public abstract class SuperParser<T> {
         return json.has(clazz.getSimpleName().toLowerCase());
     }
 
-    protected static String getClass(JsonObject json) {
-        return json.getAsJsonPrimitive("class").getAsString();
+    protected static Class<?> getClass(JsonObject json) {
+        String className = json.getAsJsonPrimitive("class").getAsString();
+        System.out.println(className);
+        for (Class clazz : classes) {
+            if (clazz.getSimpleName().equals(className)) {
+                return clazz;
+            }
+        }
+        return null;
     }
 
     protected static void addClass(JsonObject json, Class clazz) {
@@ -351,7 +328,7 @@ public abstract class SuperParser<T> {
         return parser.parse(json);
     }
 
-    public static class EnumParser<T extends Enum> extends SuperParser<T> {
+    public static class EnumParser<T extends Enum & Parsable> extends SuperParser<T> {
 
         private final Class<T> clazz;
 

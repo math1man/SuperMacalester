@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.battle.characters;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +13,7 @@ import java.util.Random;
 /**
  * @author Nolan Varani
  */
-public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
+public abstract class Party<T extends BattleCharacter> implements Iterable<T>, Parsable {
 
     protected static final Random random = new Random();
 

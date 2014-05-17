@@ -1,5 +1,6 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.world.objects.QuestNpc;
 import com.google.gson.JsonElement;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  * @author Ari Weiland
  */
-public class Goal {
+public class Goal implements Parsable {
 
     private final List<QuestNpc> questEntities;
     private Quest quest;

@@ -79,7 +79,6 @@ public class BattleTest extends Battle {
                 Scanner input = new Scanner(System.in);
                 Character userInput;
                 int index;
-                BattleAction.ActionType at;
                 a = null;
                 while(a == null)
                 {

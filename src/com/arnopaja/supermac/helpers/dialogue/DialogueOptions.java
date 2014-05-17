@@ -104,4 +104,6 @@ public class DialogueOptions extends Dialogue {
     public String toString() {
         return getRaw();
     }
+
+    public static class Parser extends Dialogue.Parser {}
 }

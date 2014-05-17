@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.helpers.interaction;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,7 +14,7 @@ import java.util.Map;
  *
  * @author Ari Weiland
  */
-public interface Interaction {
+public interface Interaction extends Parsable {
 
     void run(GameScreen screen);
 

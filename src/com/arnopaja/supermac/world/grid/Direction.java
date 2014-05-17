@@ -1,12 +1,13 @@
 package com.arnopaja.supermac.world.grid;
 
+import com.arnopaja.supermac.helpers.load.Parsable;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Note that East is up and North is left
  * @author Ari Weiland
  */
-public enum Direction {
+public enum Direction implements Parsable {
 
     EAST, SOUTH, WEST, NORTH;
 
