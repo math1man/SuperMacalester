@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * @author Nolan Varani
  */
-public abstract class Party<T extends BattleCharacter> {
+public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
 
     protected static final Random random = new Random();
 

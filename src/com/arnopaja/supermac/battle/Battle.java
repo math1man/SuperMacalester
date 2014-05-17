@@ -61,60 +61,33 @@ public class Battle implements Controller, Interaction {
         this.isBossFight = enemyParty.containsBoss();
         this.backgroundName = backgroundName;
         this.background = AssetLoader.getBackground(backgroundName);
-        //We don't instantiate the mainparty's character list, so we get null pointer exception. WORD.
-        actionQueue = new PriorityBlockingQueue<BattleAction>(4 + enemyParty.size(),
-                new Comparator<BattleAction>() {
-                    public int compare(BattleAction a, BattleAction b) {
-                        // compare n1 and n2
-                        return b.getPriority() - a.getPriority();
-                    }
-                }
-        );
-       this.isFleeable = isFleeable;
+        actionQueue = new PriorityBlockingQueue<BattleAction>(4 + enemyParty.size());
+        this.isFleeable = isFleeable;
     }
 
     public void ready(MainParty mainParty, RenderGrid backgroundGrid, GameScreen screen) {
-        if (!isReady) {
-            isReady = true;
-            this.mainParty = mainParty;
-            this.backgroundGrid = backgroundGrid;
-            this.screen = screen;
+        if (isReady) {
+            throw new IllegalStateException("Battle has already been readied!");
         }
+        isReady = true;
+        this.mainParty = mainParty;
+        this.backgroundGrid = backgroundGrid;
+        this.screen = screen;
     }
 
     @Override
     public void update(float delta) {
         if (isReady()) {
             if (mainParty.isDefeated()) {
-                end();
-                new DialogueText("You have been defeated!", DialogueStyle.WORLD);
+                mainPartyDefeated();
             } else if (enemyParty.isDefeated()) {
-                String dialogue = "You are victorious!";
-                int earnedExp = 0;
-                for(int i=0;i<enemyParty.size();i++)
-                    earnedExp += enemyParty.get(i).getLevel() * 2;
-                for(Hero h : mainParty.getActiveParty()) {
-                    h.incExp(earnedExp);
-                    dialogue += "<d>" + h + " earned " + earnedExp + " exp!";
-                    if(h.getExperience() >= h.getNextExp()) {
-                        int d = h.getExperience() - h.getNextExp();
-                        h.levelUp();
-                        h.incExp(d);
-                        dialogue += h + " gained a level!";
-                    }
-                }
-                end();
-                new DialogueText(dialogue, DialogueStyle.WORLD);
-            } else if (mainParty.partyHasFled()) {
-                end();
-                String dialogue = "You have fled like a ";
-                if (Settings.isClean()) dialogue += "wuss!";
-                else dialogue += "bitch!";
-                new DialogueText(dialogue, DialogueStyle.WORLD);
+                enemyPartyDefeated();
+            } else if (mainParty.hasFled()) {
+                mainPartyFled();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
-                    setTurnActions();
+                    resetTurnActions();
                 } else {
                     action.run(delta).run(screen);
                 }
@@ -122,7 +95,40 @@ public class Battle implements Controller, Interaction {
         }
     }
 
-    protected void setTurnActions() {
+    protected void mainPartyDefeated() {
+        end();
+        new DialogueText("You have been defeated!", DialogueStyle.WORLD);
+    }
+
+    protected void enemyPartyDefeated() {
+        String dialogue = "You are victorious!";
+        int earnedExp = 0;
+        for (Enemy enemy : enemyParty.getBattleParty()) {
+            earnedExp += enemy.getLevel() * 2;
+        }
+        for (Hero h : mainParty.getActiveParty()) {
+            h.incExp(earnedExp);
+            dialogue += "<d>" + h + " earned " + earnedExp + " exp!";
+            if (h.getExperience() >= h.getNextExp()) {
+                int d = h.getExperience() - h.getNextExp();
+                h.levelUp();
+                h.incExp(d);
+                dialogue += h + " gained a level!";
+            }
+        }
+        end();
+        new DialogueText(dialogue, DialogueStyle.WORLD);
+    }
+
+    protected void mainPartyFled() {
+        end();
+        String dialogue = "You have fled like a ";
+        if (Settings.isClean()) dialogue += "wuss!";
+        else dialogue += "bitch!";
+        new DialogueText(dialogue, DialogueStyle.WORLD);
+    }
+
+    protected void resetTurnActions() {
         enemyParty.clearDefend();
         mainParty.clearDefend();
         for (BattleCharacter enemy : enemyParty.getActiveParty()) {

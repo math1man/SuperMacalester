@@ -30,14 +30,14 @@ public class BattleTest extends Battle {
                 // run code for if the enemy party is defeated'
                 System.out.println("You have won!");
                 setOver();
-            } else if (mainParty.partyHasFled()) {
+            } else if (mainParty.hasFled()) {
                 mainParty.clearHasFled();
                 setOver();
             } else {
                 BattleAction action = actionQueue.poll();
                 if (action == null) {
                     System.out.println("\nSetting turn actions");
-                    setTurnActions();
+                    resetTurnActions();
                 } else {
                     System.out.println(action.run(delta));
                     // Nolan, I have moved the conditional testing you
@@ -52,7 +52,7 @@ public class BattleTest extends Battle {
     }
 
     @Override
-    protected void setTurnActions() {
+    protected void resetTurnActions() {
         enemyParty.clearDefend();
         mainParty.clearDefend();
         //Set enemy actions

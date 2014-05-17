@@ -18,13 +18,7 @@ public class MainParty extends Party<Hero> {
         super(characters);
     }
 
-//    @Override
-//    public Hero getRandom()
-//    {
-//        return characters.get(random.nextInt(4));
-////        return characters.get(0);
-//    }
-    public boolean partyHasFled() {
+    public boolean hasFled() {
         for(Hero h:characters)
         {
             if(h.getHasFled()) return true;
