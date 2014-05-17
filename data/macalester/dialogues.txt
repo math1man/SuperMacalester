@@ -148,7 +148,7 @@
                   <d>DONG!
                   <d>You and your party feel completely rejuvenated.",
         "interaction" : {
-            "class" : "interaction",
+            "class" : "Interaction",
             "heal" : "HEAL"
         }
     },
