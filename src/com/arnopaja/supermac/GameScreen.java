@@ -1,11 +1,12 @@
 package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.battle.Battle;
-import com.arnopaja.supermac.battle.BattleInputHandler;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.MainParty;
+import com.arnopaja.supermac.helpers.GameMode;
+import com.arnopaja.supermac.helpers.InputHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.dialogue.DialogueText;
@@ -18,7 +19,6 @@ import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
-import com.arnopaja.supermac.world.WorldInputHandler;
 import com.arnopaja.supermac.world.WorldRenderer;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
     private final DialogueHandler dialogueHandler;
+    private final InputHandler inputHandler;
 
     private final GameMode<World> worldMode;
     private final GameMode<Battle> battleMode;
@@ -55,15 +56,13 @@ public class GameScreen implements Screen {
         Settings.load();
 
         dialogueHandler = new DialogueHandler();
-
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
+        inputHandler = new InputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
+        Gdx.input.setInputProcessor(inputHandler);
 
-        worldMode = new GameMode<World>(new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT),
-                new WorldInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY));
-
-        battleMode = new GameMode<Battle>(new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT),
-                new BattleInputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY));
+        worldMode = new GameMode<World>(new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT));
+        battleMode = new GameMode<Battle>(new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT));
 
         AssetLoader.setCleanDialogue(Settings.isClean());
 
@@ -85,7 +84,6 @@ public class GameScreen implements Screen {
             mode.getMusic().stop();
         }
         mode = newMode;
-        Gdx.input.setInputProcessor(mode.getInputHandler());
         mode.getMusic().play();
     }
 

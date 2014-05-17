@@ -1,29 +1,20 @@
-package com.arnopaja.supermac;
+package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.helpers.Controller;
-import com.arnopaja.supermac.helpers.InputHandler;
-import com.arnopaja.supermac.helpers.Renderer;
 import com.badlogic.gdx.audio.Music;
 
 /**
-* @author Ari Weiland
-*/
+ * @author Ari Weiland
+ */
 public class GameMode<T extends Controller> {
     private final Renderer<T> renderer;
-    private final InputHandler inputHandler;
     private T controller;
 
-    public GameMode(Renderer<T> renderer, InputHandler inputHandler) {
+    public GameMode(Renderer<T> renderer) {
         this.renderer = renderer;
-        this.inputHandler = inputHandler;
     }
 
     public Renderer<T> getRenderer() {
         return renderer;
-    }
-
-    public InputHandler getInputHandler() {
-        return inputHandler;
     }
 
     public T getController() {
