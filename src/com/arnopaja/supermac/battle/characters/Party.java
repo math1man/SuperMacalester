@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -105,6 +106,11 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T> {
             sb.deleteCharAt(sb.length() - 1);
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return characters.iterator();
     }
 
     public static abstract class Parser<U extends Party> extends SuperParser<U> {
