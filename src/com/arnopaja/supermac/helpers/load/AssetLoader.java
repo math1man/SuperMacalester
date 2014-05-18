@@ -30,6 +30,8 @@ public class AssetLoader {
 
     private static Texture tilesTexture, entitiesTexture, characterTexture, indoorsTexture;
 
+    // TODO: stuff all these textures into cached maps
+
     // Tiles
     public static TextureRegion grass0, grass1, grass2;
     public static TextureRegion bush, bushH, bushV, bushFlowersH, bushFlowersV;
@@ -43,7 +45,8 @@ public class AssetLoader {
     public static Animation asteroid;
 
     //Indoor Tiles
-    public static TextureRegion wh, wv, wne, wse,wsw,wnw,wtn,wte,wts,wtw,wp,wen,wee,wes,wew,wene,wese,wesw,wenw,wine,wise,wisw,winw,wetn,wete,wets,wetw;
+    public static TextureRegion wh, wv, wne, wse, wsw, wnw, wtn, wte, wts, wtw, wp, wen, wee, wes, wew;
+    public static TextureRegion wene, wese, wesw, wenw, wine, wise, wisw, winw, wetn, wete, wets, wetw;
     public static TextureRegion wdoor, edoor, ndoor, sdoor;
 
     // Buildings
@@ -209,6 +212,7 @@ public class AssetLoader {
         chestGreenClosed = SpriteUtils.makeSprite(tilesTexture, 2, 0);
         chestGreenOpen = SpriteUtils.makeSprite(tilesTexture, 2, 1);
 
+        // TODO: this should probably have its own texture file
         pauseButton = SpriteUtils.makeSprite(entitiesTexture, 3, 0, 2, 2);
 
         //--------------------------
