@@ -4,9 +4,9 @@ import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
-import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueDisplay;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.Gdx;
@@ -17,8 +17,8 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class BattleRenderer extends Renderer<Battle> {
 
-    public BattleRenderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
-        super(dialogueHandler, gameWidth, gameHeight);
+    public BattleRenderer(DialogueDisplay dialogueDisplay, float gameWidth, float gameHeight) {
+        super(dialogueDisplay, gameWidth, gameHeight);
     }
 
     public void render(float runTime) {
@@ -31,9 +31,9 @@ public class BattleRenderer extends Renderer<Battle> {
 
         Party<Hero> mainParty = getController().getMainParty();
 
-        Dialogue status = new DialogueText(mainParty.status(), Interactions.NULL, DialogueStyle.BATTLE_STATUS);
-        dialogueHandler.display(status);
-        dialogueHandler.render(shapeRenderer, batch);
+        Dialogue status = new DialogueStep(mainParty.status(), Interactions.NULL, DialogueStyle.BATTLE_STATUS);
+        dialogueDisplay.display(status);
+        dialogueDisplay.render(shapeRenderer, batch);
 
         // TODO: render more shit
     }

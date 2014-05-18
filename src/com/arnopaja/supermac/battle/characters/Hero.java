@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.Armor;
@@ -51,7 +51,7 @@ public class Hero extends BattleCharacter implements Interaction {
     @Override
     public void run(GameScreen screen) {
         screen.getParty().addCharacter(this);
-        new DialogueText(this + " has joined the party!", DialogueStyle.WORLD).run(screen);
+        new DialogueStep(this + " has joined the party!", DialogueStyle.WORLD).run(screen);
     }
 
     public static class Parser extends SuperParser<Hero> {

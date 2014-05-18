@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.inventory.GenericItem;
@@ -29,13 +29,13 @@ public class GarbageCan extends Container {
         for (GenericItem item : items) {
             takeItemInteraction(item);
         }
-        DialogueText dialogue;
+        DialogueStep dialogue;
         if (items.isEmpty()) {
-            dialogue = new DialogueText("This garbage can is empty.", DialogueStyle.WORLD);
+            dialogue = new DialogueStep("This garbage can is empty.", DialogueStyle.WORLD);
         } else if (items.size() == 1) {
-            dialogue = new DialogueText("You find a " + items.get(0) + ".", DialogueStyle.WORLD);
+            dialogue = new DialogueStep("You find a " + items.get(0) + ".", DialogueStyle.WORLD);
         } else {
-            dialogue = new DialogueText("You find a lot of items!", DialogueStyle.WORLD);
+            dialogue = new DialogueStep("You find a lot of items!", DialogueStyle.WORLD);
         }
         dialogue.run(screen);
     }

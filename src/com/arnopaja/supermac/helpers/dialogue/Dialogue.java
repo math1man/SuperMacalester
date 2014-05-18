@@ -41,7 +41,7 @@ public abstract class Dialogue implements Interaction {
 
     @Override
     public void run(GameScreen screen) {
-        screen.getDialogueHandler().display(this);
+        screen.getDialogueDisplay().display(this);
         screen.dialogue();
     }
 
@@ -60,7 +60,7 @@ public abstract class Dialogue implements Interaction {
             if (object.has("text")) {
                 String dialogue = getString(object, "text");
                 Interaction interaction = getObject(object, Interaction.class, Interactions.END_DIALOGUE);
-                return new DialogueText(name, dialogue, interaction, DialogueStyle.WORLD);
+                return new DialogueStep(name, dialogue, interaction, DialogueStyle.WORLD);
             } else if (object.has("options")) {
                 JsonArray array = object.getAsJsonArray("options");
                 String header = getString(object, "header");
@@ -79,8 +79,8 @@ public abstract class Dialogue implements Interaction {
         public JsonElement toJson(Dialogue object) {
             JsonObject json = new JsonObject();
             addString(json, "name", object.getName());
-            if (object instanceof DialogueText) {
-                DialogueText text = (DialogueText) object;
+            if (object instanceof DialogueStep) {
+                DialogueStep text = (DialogueStep) object;
                 addString(json, "text", text.getText());
                 if (text.hasInteraction()) {
                     addObject(json, text.getInteraction(), Interaction.class);

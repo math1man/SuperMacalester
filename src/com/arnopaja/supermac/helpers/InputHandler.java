@@ -97,7 +97,7 @@ public class InputHandler implements InputProcessor {
     }
 
     private void dialogueInput(float gameX, float gameY) {
-        screen.getDialogueHandler().onClick(gameX, gameY).run(screen);
+        screen.getDialogueDisplay().onClick(gameX, gameY).run(screen);
     }
 
     private void move(Direction direction) {

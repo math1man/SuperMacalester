@@ -56,14 +56,14 @@ public class DialogueWindow {
     }
 
     private static DialogueMember[][] toArray(Dialogue dialogue, int rows) {
-        if (dialogue instanceof DialogueText) {
-            return toArray((DialogueText) dialogue);
+        if (dialogue instanceof DialogueStep) {
+            return toArray((DialogueStep) dialogue);
         } else {
             return toArray((DialogueOptions) dialogue, rows);
         }
     }
 
-    private static DialogueMember[][] toArray(DialogueText dialogue) {
+    private static DialogueMember[][] toArray(DialogueStep dialogue) {
         DialogueMember[][] array = new DialogueMember[1][1];
         array[0][0] = dialogue.getMember();
         return array;

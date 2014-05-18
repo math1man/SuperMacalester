@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.world.objects;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
@@ -9,7 +10,6 @@ import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.world.grid.Location;
@@ -85,7 +85,7 @@ public class Chest extends Container {
         open();
         Dialogue dialogue;
         if (isEmpty()) {
-            dialogue = new DialogueText("This chest is empty", closeInteraction(), DialogueStyle.WORLD);
+            dialogue = new DialogueStep("This chest is empty", closeInteraction(), DialogueStyle.WORLD);
         } else {
             // Items go into inventory from chest
             List<GenericItem> items = getContents().getAll();

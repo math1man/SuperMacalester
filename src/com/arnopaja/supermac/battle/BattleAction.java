@@ -4,8 +4,8 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.inventory.Inventory;
@@ -56,12 +56,12 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
      */
     public Dialogue run(float delta) {
         if (source.isFainted()) {
-            return new DialogueText(source + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
+            return new DialogueStep(source + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
         } else {
             if (canRun()) {
                 return subrun(delta);
             } else {
-                return new DialogueText(source + "'s target " + destination + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
+                return new DialogueStep(source + "'s target " + destination + " has fainted!", DialogueStyle.BATTLE_CONSOLE);
             }
         }
     }
@@ -86,7 +86,7 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
                         dialogue += "\n" + getDestination() + " fell!";
                     }
                 }
-                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+                return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
 
             @Override
@@ -120,7 +120,7 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
                     else AssetLoader.powerupSound.play(Settings.getVolume());
                     return getItem().use(getSource(), getDestination());
                 } else {
-                    return new DialogueText("You do not have any " + getItem() + "s left.", DialogueStyle.BATTLE_CONSOLE);
+                    return new DialogueStep("You do not have any " + getItem() + "s left.", DialogueStyle.BATTLE_CONSOLE);
                 }
             }
 
@@ -139,7 +139,7 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
                 //for the rest of the turn
                 getSource().defend();
                 String dialogue = getSource() + " is defending!";
-                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+                return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
 
             @Override
@@ -161,7 +161,7 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
                 } else {
                     dialogue = getSource() + " could not flee!";
                 }
-                return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+                return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
             }
 
             @Override

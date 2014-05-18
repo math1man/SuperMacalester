@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueDisplay;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,15 +10,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public abstract class Renderer<T extends Controller> {
 
-    protected final DialogueHandler dialogueHandler;
+    protected final DialogueDisplay dialogueDisplay;
     protected final ShapeRenderer shapeRenderer;
     protected final SpriteBatch batch;
     protected final float gameWidth, gameHeight;
 
     private T controller;
 
-    public Renderer(DialogueHandler dialogueHandler, float gameWidth, float gameHeight) {
-        this.dialogueHandler = dialogueHandler;
+    public Renderer(DialogueDisplay dialogueDisplay, float gameWidth, float gameHeight) {
+        this.dialogueDisplay = dialogueDisplay;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 

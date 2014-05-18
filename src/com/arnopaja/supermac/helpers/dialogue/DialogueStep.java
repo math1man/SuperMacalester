@@ -8,32 +8,32 @@ import java.util.Arrays;
 /**
  * @author Ari Weiland
  */
-public class DialogueText extends Dialogue {
+public class DialogueStep extends Dialogue {
 
     private final String rawDialogue;
     private final DialogueMember member;
 
-    public DialogueText(String rawDialogue, DialogueStyle style) {
+    public DialogueStep(String rawDialogue, DialogueStyle style) {
         this("", rawDialogue, style);
     }
 
-    public DialogueText(String name, String rawDialogue, DialogueStyle style) {
+    public DialogueStep(String name, String rawDialogue, DialogueStyle style) {
         this(name, rawDialogue, null, style);
     }
 
-    public DialogueText(String rawDialogue, Interaction interaction, DialogueStyle style) {
+    public DialogueStep(String rawDialogue, Interaction interaction, DialogueStyle style) {
         this("", rawDialogue, interaction, style);
     }
 
-    public DialogueText(String name, String rawDialogue, Interaction interaction, DialogueStyle style) {
+    public DialogueStep(String name, String rawDialogue, Interaction interaction, DialogueStyle style) {
         this(name, rawDialogue, rawDialogue.split("<d>"), interaction, style);
     }
 
-    protected DialogueText(String name, String rawDialogue, String[] text, Interaction interaction, DialogueStyle style) {
+    protected DialogueStep(String name, String rawDialogue, String[] text, Interaction interaction, DialogueStyle style) {
         super(name, style);
         this.rawDialogue = rawDialogue;
         if (text.length > 1) {
-            member = new DialogueMember(text[0], new DialogueText(name, rawDialogue,
+            member = new DialogueMember(text[0], new DialogueStep(name, rawDialogue,
                     Arrays.copyOfRange(text, 1, text.length), interaction, style));
         } else if (interaction == null) {
             member = new DialogueMember(text[0], Interactions.END_DIALOGUE);

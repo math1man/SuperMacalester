@@ -8,8 +8,8 @@ import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.dialogue.DialogueMember;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
@@ -90,7 +90,7 @@ public class Battle implements Controller, Interaction {
 
     protected void mainPartyDefeated() {
         end();
-        new DialogueText("You have been defeated!", DialogueStyle.WORLD);
+        new DialogueStep("You have been defeated!", DialogueStyle.WORLD);
     }
 
     protected void enemyPartyDefeated() {
@@ -110,7 +110,7 @@ public class Battle implements Controller, Interaction {
             }
         }
         end();
-        new DialogueText(dialogue, DialogueStyle.WORLD);
+        new DialogueStep(dialogue, DialogueStyle.WORLD);
     }
 
     protected void mainPartyFled() {
@@ -118,7 +118,7 @@ public class Battle implements Controller, Interaction {
         String dialogue = "You have fled like a ";
         if (Settings.isClean()) dialogue += "wuss!";
         else dialogue += "bitch!";
-        new DialogueText(dialogue, DialogueStyle.WORLD);
+        new DialogueStep(dialogue, DialogueStyle.WORLD);
     }
 
     protected void resetTurnActions() {

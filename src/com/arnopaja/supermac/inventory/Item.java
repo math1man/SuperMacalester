@@ -2,8 +2,8 @@ package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.load.EffectParser;
 import com.arnopaja.supermac.helpers.load.SuperParser;
 import com.google.gson.JsonElement;
@@ -67,7 +67,7 @@ public class Item extends GenericItem {
                     break;
             }
         }
-        return new DialogueText(dialogue, DialogueStyle.BATTLE_CONSOLE);
+        return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
     public List<Effect> getEffects() {

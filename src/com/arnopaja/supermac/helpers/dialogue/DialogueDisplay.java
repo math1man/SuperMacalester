@@ -15,7 +15,7 @@ import java.util.EnumMap;
  *
  * @author Ari Weiland
  */
-public class DialogueHandler {
+public class DialogueDisplay {
 
     private final EnumMap<DialogueStyle, DialogueWindow> windows = new EnumMap<DialogueStyle, DialogueWindow>(DialogueStyle.class);
     private boolean isDisplaying = false;

@@ -12,18 +12,18 @@ import java.util.List;
 */
 public class SetterMenu<T> extends Menu {
 
-    public SetterMenu(String header, List<T> values, Setter<T> setter, Interaction interaction) {
-        super(header, members(values, setter, interaction));
+    public SetterMenu(String header, List<T> values, Adjuster<T> adjuster, Interaction interaction) {
+        super(header, members(values, adjuster, interaction));
     }
 
-    private static <T> DialogueMember[] members(List<T> values, final Setter<T> setter, final Interaction interaction) {
+    private static <T> DialogueMember[] members(List<T> values, final Adjuster<T> adjuster, final Interaction interaction) {
         DialogueMember[] members = new DialogueMember[values.size()];
         for (int i=0; i<values.size(); i++) {
             final T value = values.get(i);
             members[i] = new DialogueMember(value.toString(), new Interaction() {
                 @Override
                 public void run(GameScreen screen) {
-                    setter.set(value);
+                    adjuster.adjust(value);
                     interaction.run(screen);
                 }
             });

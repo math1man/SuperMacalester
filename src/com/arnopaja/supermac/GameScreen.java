@@ -7,9 +7,9 @@ import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.GameMode;
 import com.arnopaja.supermac.helpers.InputHandler;
-import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
+import com.arnopaja.supermac.helpers.dialogue.DialogueDisplay;
+import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.dialogue.DialogueText;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
@@ -38,8 +38,7 @@ public class GameScreen implements Screen {
 
     public static enum GameState { RUNNING, PAUSED, DIALOGUE }
 
-    private final DialogueHandler dialogueHandler;
-    private final InputHandler inputHandler;
+    private final DialogueDisplay dialogueDisplay;
 
     private final GameMode<World> worldMode;
     private final GameMode<Battle> battleMode;
@@ -55,14 +54,14 @@ public class GameScreen implements Screen {
 
         Settings.load();
 
-        dialogueHandler = new DialogueHandler();
+        dialogueDisplay = new DialogueDisplay();
         float scaleFactorX = GAME_WIDTH  / Gdx.graphics.getWidth();
         float scaleFactorY = GAME_HEIGHT / Gdx.graphics.getHeight();
-        inputHandler = new InputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
+        InputHandler inputHandler = new InputHandler(this, GAME_WIDTH, GAME_HEIGHT, scaleFactorX, scaleFactorY);
         Gdx.input.setInputProcessor(inputHandler);
 
-        worldMode = new GameMode<World>(new WorldRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT));
-        battleMode = new GameMode<Battle>(new BattleRenderer(dialogueHandler, GAME_WIDTH, GAME_HEIGHT));
+        worldMode = new GameMode<World>(new WorldRenderer(dialogueDisplay, GAME_WIDTH, GAME_HEIGHT));
+        battleMode = new GameMode<Battle>(new BattleRenderer(dialogueDisplay, GAME_WIDTH, GAME_HEIGHT));
 
         AssetLoader.setCleanDialogue(Settings.isClean());
 
@@ -76,7 +75,7 @@ public class GameScreen implements Screen {
         runTime = 0;
 
         // TODO: first load only
-        new DialogueText(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
+        new DialogueStep(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
     }
 
     public void changeMode(GameMode newMode) {
@@ -125,7 +124,7 @@ public class GameScreen implements Screen {
 
     public void endDialogue() {
         if (isDialogue()) {
-            dialogueHandler.clear();
+            dialogueDisplay.clear();
             state = GameState.RUNNING;
         }
     }
@@ -191,8 +190,8 @@ public class GameScreen implements Screen {
         return state == GameState.DIALOGUE;
     }
 
-    public DialogueHandler getDialogueHandler() {
-        return dialogueHandler;
+    public DialogueDisplay getDialogueDisplay() {
+        return dialogueDisplay;
     }
 
     public GameMode getMode() {
