@@ -23,9 +23,8 @@
                     "class" : "Interaction",
                     "battle" : {
                         "class" : "Battle",
-                        "background" : "",
                         "enemy" : {
-                            "class" : "EnemyParty",
+                            "class" : "Party",
                             "characters" : [
                                 {
                                     "class" : "Enemy",
@@ -189,14 +188,13 @@
             "battle" : {
                 "class" : "Battle",
                 "enemy" : {
-                    "class" : "EnemyParty",
+                    "class" : "Party",
                     "characters" : [
                         {
                             "class" : "Enemy",
                             "name" : "SJW1",
                             "battleclass" : "humanities",
-                            "level" : 1,
-                            "boss" : true
+                            "level" : 1
                         },
                         {
                             "class" : "Enemy",
@@ -211,7 +209,8 @@
                             "level" : 1
                         }
                     ]
-                }
+                },
+                "boss" : true
             }
         }
     },

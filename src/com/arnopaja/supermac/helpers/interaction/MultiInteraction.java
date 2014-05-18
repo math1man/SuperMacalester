@@ -50,12 +50,7 @@ public class MultiInteraction implements Interaction {
     }
 
     private void purgeNulls() {
-        while (interactions.contains(null)) {
-            interactions.remove(null);
-        }
-        while(interactions.contains(Interactions.NULL)) {
-            interactions.remove(Interactions.NULL);
-        }
+        interactions.removeAll(Arrays.asList(Interactions.NULL, null));
     }
 
     @Override

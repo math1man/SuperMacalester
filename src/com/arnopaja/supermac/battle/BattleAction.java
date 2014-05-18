@@ -156,9 +156,8 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
                 String dialogue;
                 // Only heroes can flee
                 if(random.nextDouble() < FLEE_CHANCE && getSource() instanceof Hero) {
-                    Hero h = (Hero) getSource();
-                    h.setHasFled(true);
-                    dialogue = h + " flees!";
+                    getSource().flee();
+                    dialogue = getSource() + " flees!";
                 } else {
                     dialogue = getSource() + " could not flee!";
                 }

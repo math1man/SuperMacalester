@@ -19,8 +19,10 @@ public abstract class BattleCharacter implements Parsable {
     protected Armor equippedArmor;
     protected Weapon equippedWeapon;
     protected SpellBook spellBook;
+    protected boolean hasFled;
     protected boolean isDefending;
-    protected Effect powerup = null;
+    // TODO: allow for multiple effects
+    protected Effect powerup;
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;
@@ -28,8 +30,10 @@ public abstract class BattleCharacter implements Parsable {
         setLevel(level);
         this.currentHealth = currentHealth == -1 ? maxHealth : currentHealth;
         this.currentMana = currentMana == -1 ? maxMana : currentMana;
+        this.hasFled = false;
         this.isDefending = false;
         this.spellBook = new SpellBook();
+        this.powerup = null;
     }
 
     public void addSpell(Spell spell) {
@@ -168,6 +172,18 @@ public abstract class BattleCharacter implements Parsable {
         updateStats();
     }
 
+    public void flee() {
+        hasFled = true;
+    }
+
+    public void clearFlee() {
+        hasFled = false;
+    }
+
+    public boolean hasFled() {
+        return hasFled;
+    }
+
     public void defend() {
         isDefending = true;
     }
@@ -176,9 +192,12 @@ public abstract class BattleCharacter implements Parsable {
         isDefending = false;
     }
 
-    public void setPowerup(Effect e)
-    {
-        if(e.isStatus()) this.powerup = e;
+    public boolean isDefending() {
+        return isDefending;
+    }
+
+    public void setPowerup(Effect e) {
+        if (e.isStatus()) this.powerup = e;
         else System.out.println("An invalid effect was passed as a powerup!");
     }
 

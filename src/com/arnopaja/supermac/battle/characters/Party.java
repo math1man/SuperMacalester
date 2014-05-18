@@ -13,13 +13,17 @@ import java.util.Random;
 /**
  * @author Nolan Varani
  */
-public abstract class Party<T extends BattleCharacter> implements Iterable<T>, Parsable {
+public class Party<T extends BattleCharacter> implements Iterable<T>, Parsable {
 
     protected static final Random random = new Random();
 
     protected final List<T> characters;
 
-    protected Party(List<T> characters) {
+    public Party() {
+        this(new ArrayList<T>());
+    }
+
+    public Party(List<T> characters) {
         this.characters = new ArrayList<T>(characters);
     }
     //Characters will be added to party in different methods, as defined by their non-abstract subclasses
@@ -114,20 +118,48 @@ public abstract class Party<T extends BattleCharacter> implements Iterable<T>, P
         return characters.iterator();
     }
 
-    public static abstract class Parser<U extends Party> extends SuperParser<U> {
+    public boolean hasFled() {
+        for (T bc : characters) {
+            if (bc.hasFled()) return true;
+        }
+        return false;
+    }
+
+    public void clearHasFled() {
+        for (T bc : characters) {
+            bc.clearFlee();
+        }
+    }
+
+    public void addCharacter(T bc) {
+        characters.add(bc);
+    }
+
+    public void swapCharacter(int index1, int index2) {
+        T temp;
+        temp = characters.get(index1);
+        characters.set(index1, characters.get(index2));
+        characters.set(index2, temp);
+    }
+
+    public void restoreAll() {
+        for (T bc : characters) {
+            bc.fullRestore();
+        }
+    }
+
+    public static class Parser extends SuperParser<Party> {
         @Override
-        public U fromJson(JsonElement element) {
+        public Party fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            return construct(object);
+            return new Party(getList(object, "characters", BattleCharacter.class));
         }
 
         @Override
-        public JsonElement toJson(U object) {
+        public JsonElement toJson(Party object) {
             JsonObject json = new JsonObject();
             addList(json, "characters", object.characters, BattleCharacter.class);
             return json;
         }
-
-        protected abstract U construct(JsonObject object);
     }
 }

@@ -15,8 +15,8 @@ public class BattleTest extends Battle {
     public static final boolean autoBattle = true;
     private boolean isOver = false;
 
-    public BattleTest(EnemyParty enemyParty, String backgroundName) {
-        super(enemyParty, backgroundName);
+    public BattleTest(Party<Enemy> enemyParty) {
+        super(enemyParty, false);
     }
 
     @Override
@@ -159,16 +159,16 @@ public class BattleTest extends Battle {
         //create enemy party
         //create main party
         System.out.println("IT'S HAPPENING");
-        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, false, null);
-        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, false, null);
-        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, false, null);
-        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, false, null);
+        Enemy dumb = new Enemy("Enemy Comp Sci", BattleClass.COMP_SCI, 5, null);
+        Enemy dumb2 = new Enemy("Enemy Econ", BattleClass.ECON, 5, null);
+        Enemy dumb3 = new Enemy("Enemy Humanities", BattleClass.HUMANITIES, 5, null);
+        Enemy dumb4 = new Enemy("Enemy Nat Sci", BattleClass.NAT_SCI, 5, null);
         ArrayList<Enemy> enemlist = new ArrayList<Enemy>();
         enemlist.add(dumb);
         enemlist.add(dumb2);
         enemlist.add(dumb3);
         enemlist.add(dumb4);
-        EnemyParty teamyolo = new EnemyParty(enemlist);
+        Party<Enemy> teamyolo = new Party<Enemy>(enemlist);
         Spell yoloswag = new Spell(1, "Damage Spell", -2, 3);
         Spell smokeWeedEveryDay = new Spell(2, "Healing Spell", 5, 3);
         Hero smart = new Hero("Hero Econ", BattleClass.ECON, 5);
@@ -179,13 +179,13 @@ public class BattleTest extends Battle {
         smart2.addSpell(smokeWeedEveryDay);
         smart3.addSpell(yoloswag);
         smart4.addSpell(yoloswag);
-        MainParty teamswag = new MainParty();
+        Party<Hero> teamswag = new Party<Hero>();
         teamswag.addCharacter(smart);
         teamswag.addCharacter(smart2);
         teamswag.addCharacter(smart3);
         teamswag.addCharacter(smart4);
 
-        BattleTest battle = new BattleTest(teamyolo, "teamyolo");
+        BattleTest battle = new BattleTest(teamyolo);
         battle.ready(teamswag, null, null);
 
         while (!battle.isOver()) {

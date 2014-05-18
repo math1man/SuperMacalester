@@ -1,6 +1,7 @@
 package com.arnopaja.supermac.battle;
 
-import com.arnopaja.supermac.battle.characters.MainParty;
+import com.arnopaja.supermac.battle.characters.Hero;
+import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.Renderer;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
@@ -28,7 +29,7 @@ public class BattleRenderer extends Renderer<Battle> {
 
         getController().getBackgroundGrid().render(batch, Grid.RENDER_GRID_OFFSET, runTime);
 
-        MainParty mainParty = getController().getMainParty();
+        Party<Hero> mainParty = getController().getMainParty();
 
         Dialogue status = new DialogueText(mainParty.status(), Interactions.NULL, DialogueStyle.BATTLE_STATUS);
         dialogueHandler.display(status);

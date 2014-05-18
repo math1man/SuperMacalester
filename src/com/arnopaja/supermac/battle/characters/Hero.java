@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
  */
 public class Hero extends BattleCharacter implements Interaction {
 
-    protected boolean hasFled = false;
     private int experience;
     private int nextExp;
 
@@ -32,14 +31,6 @@ public class Hero extends BattleCharacter implements Interaction {
         super(name, battleClass, level, health, mana);
         this.experience = 0;
         this.nextExp = 16;
-    }
-
-    public void setHasFled(boolean a) {
-        hasFled = a;
-    }
-
-    public boolean getHasFled() {
-        return hasFled;
     }
 
     public void incExp(int i) {experience += i;}

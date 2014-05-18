@@ -1,7 +1,10 @@
 package com.arnopaja.supermac.battle;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.battle.characters.*;
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.battle.characters.Enemy;
+import com.arnopaja.supermac.battle.characters.Hero;
+import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.dialogue.DialogueMember;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
@@ -19,11 +22,13 @@ import com.arnopaja.supermac.inventory.SpellBook;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.grid.RenderGrid;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -33,39 +38,27 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class Battle implements Controller, Interaction {
 
-    protected final EnemyParty enemyParty;
+    protected final Party<Enemy> enemyParty;
     protected final boolean isBossFight;
-    protected final String backgroundName;
-    protected final TextureRegion background;
+    protected final boolean isFleeable;
     protected final Queue<BattleAction> actionQueue;
     protected boolean isReady = false;
-    protected MainParty mainParty;
+    protected Party<Hero> mainParty;
     protected RenderGrid backgroundGrid;
     protected GameScreen screen;
-    protected boolean isFleeable;
 
-    public Battle(EnemyParty enemyParty) {
-        this(enemyParty, "");
+    public Battle(Party<Enemy> enemyParty, boolean isBossFight) {
+        this(enemyParty, isBossFight, isBossFight);
     }
 
-    public Battle(EnemyParty enemyParty, boolean isFleeable) {
-        this(enemyParty, "", isFleeable);
-    }
-
-    public Battle(EnemyParty enemyParty, String backgroundName) {
-        this(enemyParty, backgroundName, !enemyParty.containsBoss());
-    }
-
-    public Battle(EnemyParty enemyParty, String backgroundName, boolean isFleeable) {
+    public Battle(Party<Enemy> enemyParty, boolean isBossFight, boolean isFleeable) {
         this.enemyParty = enemyParty;
-        this.isBossFight = enemyParty.containsBoss();
-        this.backgroundName = backgroundName;
-        this.background = AssetLoader.getBackground(backgroundName);
-        actionQueue = new PriorityBlockingQueue<BattleAction>(4 + enemyParty.size());
+        this.isBossFight = isBossFight;
         this.isFleeable = isFleeable;
+        actionQueue = new PriorityBlockingQueue<BattleAction>(4 + enemyParty.size());
     }
 
-    public void ready(MainParty mainParty, RenderGrid backgroundGrid, GameScreen screen) {
+    public void ready(Party<Hero> mainParty, RenderGrid backgroundGrid, GameScreen screen) {
         if (isReady) {
             throw new IllegalStateException("Battle has already been readied!");
         }
@@ -156,27 +149,23 @@ public class Battle implements Controller, Interaction {
     @Override
     public Music getMusic() {
         // TODO: handle music via the parser maybe?
-        if (isBossFight()) {
-            return AssetLoader.bossMusic;
-        } else {
+//        if (isBossFight()) {
+//            return AssetLoader.bossMusic;
+//        } else {
             return AssetLoader.battleMusic;
-        }
+//        }
     }
 
-    public MainParty getMainParty() {
+    public Party<Hero> getMainParty() {
         return mainParty;
     }
 
-    public EnemyParty getEnemyParty() {
+    public Party<Enemy> getEnemyParty() {
         return enemyParty;
     }
 
     public boolean isBossFight() {
         return isBossFight;
-    }
-
-    public TextureRegion getBackground() {
-        return background;
     }
 
     public RenderGrid getBackgroundGrid() {
@@ -298,19 +287,21 @@ public class Battle implements Controller, Interaction {
         @Override
         public Battle fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
-            EnemyParty enemy = getObject(object, "enemy", EnemyParty.class);
+            Party enemy = getObject(object, "enemy", Party.class);
+            boolean isBossFight = getBoolean(object, "boss", false);
             if (object.has("fleeable")) {
                 boolean isFleeable = getBoolean(object, "fleeable");
-                return new Battle(enemy, isFleeable);
+                return new Battle(enemy, isBossFight, isFleeable);
             } else {
-                return new Battle(enemy);
+                return new Battle(enemy, isBossFight);
             }
         }
 
         @Override
         public JsonElement toJson(Battle object) {
             JsonObject json = new JsonObject();
-            addObject(json, "enemy", object.enemyParty, EnemyParty.class);
+            addObject(json, "enemy", object.enemyParty, Party.class);
+            addBoolean(json, "boss", object.isBossFight);
             addBoolean(json, "fleeable", object.isFleeable);
             return json;
         }

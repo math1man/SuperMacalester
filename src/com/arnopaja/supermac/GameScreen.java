@@ -4,7 +4,7 @@ import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleRenderer;
 import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
-import com.arnopaja.supermac.battle.characters.MainParty;
+import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.GameMode;
 import com.arnopaja.supermac.helpers.InputHandler;
 import com.arnopaja.supermac.helpers.dialogue.DialogueHandler;
@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
     private float runTime;
 
     private Plot plot;
-    private MainParty party;
+    private Party<Hero> party;
 
     public GameScreen() {
 
@@ -147,7 +147,7 @@ public class GameScreen implements Screen {
     public void save() {
         SaverLoader.save(getPlot(), Plot.class);
         SaverLoader.save(getWorld(), World.class);
-        SaverLoader.save(getParty(), MainParty.class);
+        SaverLoader.save(getParty(), Party.class);
         Inventory.save();
         SaverLoader.flush();
     }
@@ -157,7 +157,7 @@ public class GameScreen implements Screen {
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
         Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
         hero.addSpell(Spell.getCached(0));
-        party = SaverLoader.load(MainParty.class, new MainParty(Collections.singletonList(hero)));
+        party = SaverLoader.load(Party.class, new Party<Hero>(Collections.singletonList(hero)));
         Inventory.load();
     }
 
@@ -203,7 +203,7 @@ public class GameScreen implements Screen {
         return plot;
     }
 
-    public MainParty getParty() {
+    public Party<Hero> getParty() {
         return party;
     }
 

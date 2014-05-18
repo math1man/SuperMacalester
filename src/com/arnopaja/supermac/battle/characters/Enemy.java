@@ -13,13 +13,13 @@ import com.google.gson.JsonObject;
  */
 public class Enemy extends BattleCharacter {
 
-    private final boolean isBoss;
+    // Boss determination has been moved to the Battle class,
+    // since it doesn't really matter which character is the boss
     private final Item item;
 
-    public Enemy(String name, BattleClass battleClass, int level, boolean isBoss, Item item) {
+    public Enemy(String name, BattleClass battleClass, int level, Item item) {
         super(name, battleClass, level, -1, -1);
         this.item = item;
-        this.isBoss = isBoss;
     }
 
     public Item getItem() {
@@ -30,10 +30,6 @@ public class Enemy extends BattleCharacter {
         return item != null;
     }
 
-    public boolean isBoss() {
-        return isBoss;
-    }
-
     public static class Parser extends SuperParser<Enemy> {
         @Override
         public Enemy fromJson(JsonElement element) {
@@ -42,8 +38,7 @@ public class Enemy extends BattleCharacter {
             BattleClass battleClass = getObject(object, BattleClass.class);
             int level = getInt(object, "level");
             Item item = getObject(object, Item.class, null);
-            boolean isBoss = getBoolean(object, "boss", false);
-            Enemy enemy = new Enemy(name, battleClass, level, isBoss, item);
+            Enemy enemy = new Enemy(name, battleClass, level, item);
             if (has(object, Armor.class)) {
                 enemy.setEquippedArmor(getObject(object, Armor.class));
             }
@@ -62,7 +57,6 @@ public class Enemy extends BattleCharacter {
             addString(json, "name", object.name);
             addObject(json, object.battleClass, BattleClass.class);
             addInt(json, "level", object.level);
-            addBoolean(json, "boss", object.isBoss);
             if (object.hasItem()) {
                 addObject(json, object.item, Item.class);
             }

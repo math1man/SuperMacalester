@@ -307,7 +307,6 @@ public abstract class SuperParser<T extends Parsable> {
 
     protected static Class<?> getClass(JsonObject json) {
         String className = json.getAsJsonPrimitive("class").getAsString();
-        System.out.println(className);
         for (Class clazz : classes) {
             if (clazz.getSimpleName().equals(className)) {
                 return clazz;
