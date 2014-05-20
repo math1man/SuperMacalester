@@ -1,5 +1,5 @@
 {
-    "file" : "landscape_tiles.png",
+    "file" : "tiles.png",
     "tiles" : [
         {
             "name" : "big tree",
@@ -306,26 +306,188 @@
         {
             "name" : "olin",
             "key" : "_ol",
-            "x" : 42,
-            "y" : 21,
+            "x" : 110,
+            "y" : 7,
             "width" : 16,
             "height" : 32
         },
         {
             "name" : "olin rice stairs",
             "key" : "_or",
-            "x" : 38,
-            "y" : 43,
+            "x" : 106,
+            "y" : 29,
             "width" : 3,
             "height" : 5
         },
         {
             "name" : "rice",
             "key" : "_ri",
-            "x" : 34,
-            "y" : 53,
+            "x" : 102,
+            "y" : 39,
             "width" : 24,
             "height" : 16
+        },
+        {
+            "name" : "west T edge wall",
+            "key" : "wetw",
+            "x" : 30,
+            "y" : 7
+        },
+        {
+            "name" : "south T edge wall",
+            "key" : "wets",
+            "x" : 36,
+            "y" : 3
+        },
+        {
+            "name" : "east T edge wall",
+            "key" : "wete",
+            "x" : 31,
+            "y" : 0
+        },
+        {
+            "name" : "north T edge wall",
+            "key" : "wete",
+            "x" : 29,
+            "y" : 3
+        },
+        {
+            "name" : "northwest edge wall",
+            "key" : "wenw",
+            "x" : 29,
+            "y" : 7
+        },
+        {
+            "name" : "southwest edge wall",
+            "key" : "wenw",
+            "x" : 36,
+            "y" : 7
+        },
+        {
+            "name" : "southeast edge wall",
+            "key" : "wese",
+            "x" : 36,
+            "y" : 0
+        },
+        {
+            "name" : "northeast edge wall",
+            "key" : "wene",
+            "x" : 29,
+            "y" : 0
+        },
+        {
+            "name" : "west edge wall",
+            "key" : "wew",
+            "x" : 31,
+            "y" : 7
+        },
+        {
+            "name" : "south edge wall",
+            "key" : "wes",
+            "x" : 36,
+            "y" : 2
+        },
+        {
+            "name" : "north edge wall",
+            "key" : "wen",
+            "x" : 29,
+            "y" : 2
+        },
+        {
+            "name" : "east edge wall",
+            "key" : "wee",
+            "x" : 31,
+            "y" : 0
+        },
+        {
+            "name" : "plus wall",
+            "key" : "wp",
+            "x" : 35,
+            "y" : 4
+        },
+        {
+            "name" : "horizontal wall",
+            "key" : "wh",
+            "x" : 30,
+            "y" : 3
+        },
+        {
+            "name" : "vertical wall",
+            "key" : "wv",
+            "x" : 31,
+            "y" : 1
+        },
+        {
+            "name" : "notheast wall",
+            "key" : "wne",
+            "x" : 31,
+            "y" : 2
+        },
+        {
+            "name" : "southeast wall",
+            "key" : "wse",
+            "x" : 32,
+            "y" : 2
+        },
+        {
+            "name" : "southwest wall",
+            "key" : "wsw",
+            "x" : 32,
+            "y" : 4
+        },
+        {
+            "name" : "northwest wall",
+            "key" : "wnw",
+            "x" : 33,
+            "y" : 4
+        },
+        {
+            "name" : "north T wall",
+            "key" : "wtn",
+            "x" : 35,
+            "y" : 4
+        },
+        {
+            "name" : "east T wall",
+            "key" : "wtn",
+            "x" : 33,
+            "y" : 3
+        },
+        {
+            "name" : "south T wall",
+            "key" : "wtn",
+            "x" : 30,
+            "y" : 4
+        },
+        {
+            "name" : "west T wall",
+            "key" : "wtn",
+            "x" : 31,
+            "y" : 3
+        },
+        {
+            "name" : "west door",
+            "key" : "dw",
+            "x" : 33,
+            "y" : 7
+        },
+        {
+            "name" : "east door",
+            "key" : "de",
+            "x" : 32,
+            "y" : 0
+        },
+        {
+            "name" : "north door",
+            "key" : "dn",
+            "x" : 29,
+            "y" : 5
+        },
+        {
+            "name" : "south door",
+            "key" : "ds",
+            "x" : 36,
+            "y" : 5
         }
     ]
 }

@@ -48,11 +48,6 @@ public class AssetLoader {
     private static BitmapFont font, shadow;
     private static Preferences prefs;
 
-    // TODO: remove these when I can
-    public static TextureRegion wh, wv, wne, wse, wsw, wnw, wtn, wte, wts, wtw, wp, wen, wee, wes, wew;
-    public static TextureRegion wene, wese, wesw, wenw, wine, wise, wisw, winw, wetn, wete, wets, wetw;
-    public static TextureRegion wdoor, edoor, ndoor, sdoor;
-
     //--------------------
     //    Load Methods
     //--------------------
@@ -62,37 +57,6 @@ public class AssetLoader {
         config = c;
 
         loadTiles(config.getTilesFile());
-        // TODO: add indoor tiles to other tile canvas
-        Texture indoorsTexture = getTexture(Gdx.files.internal("data/macalester/" + "images/indoor_tiles.png"));
-        wetw = SpriteUtils.makeSprite(indoorsTexture, 1, 7);
-        wets = SpriteUtils.makeSprite(indoorsTexture, 7, 3);
-        wete = SpriteUtils.makeSprite(indoorsTexture, 2, 0);
-        wetn = SpriteUtils.makeSprite(indoorsTexture, 0, 3);
-        wenw = SpriteUtils.makeSprite(indoorsTexture, 0, 7);
-        wesw = SpriteUtils.makeSprite(indoorsTexture, 7, 7);
-        wese = SpriteUtils.makeSprite(indoorsTexture, 7, 0);
-        wene = SpriteUtils.makeSprite(indoorsTexture, 0, 0);
-        wew = SpriteUtils.makeSprite(indoorsTexture, 2, 7);
-        wes = SpriteUtils.makeSprite(indoorsTexture, 7, 2);
-        wen = SpriteUtils.makeSprite(indoorsTexture, 0, 2);
-        wee = SpriteUtils.makeSprite(indoorsTexture, 2, 0);
-        wp = SpriteUtils.makeSprite(indoorsTexture, 6, 4);
-        wes = SpriteUtils.makeSprite(indoorsTexture, 7, 2);
-        wv = SpriteUtils.makeSprite(indoorsTexture, 2, 1);
-        wne = SpriteUtils.makeSprite(indoorsTexture, 2, 2);
-        wse = SpriteUtils.makeSprite(indoorsTexture, 3, 2);
-        wsw = SpriteUtils.makeSprite(indoorsTexture, 3, 4);
-        wnw = SpriteUtils.makeSprite(indoorsTexture, 4, 4);
-        wtn = SpriteUtils.makeSprite(indoorsTexture, 6, 5);
-        wte = SpriteUtils.makeSprite(indoorsTexture, 4, 3);
-        wts = SpriteUtils.makeSprite(indoorsTexture, 1, 4);
-        wtw = SpriteUtils.makeSprite(indoorsTexture, 2, 3);
-        wdoor = SpriteUtils.makeSprite(indoorsTexture, 4, 7);
-        edoor = SpriteUtils.makeSprite(indoorsTexture, 3, 0);
-        ndoor = SpriteUtils.makeSprite(indoorsTexture, 0, 5);
-        sdoor = SpriteUtils.makeSprite(indoorsTexture, 7, 5);
-        wh = SpriteUtils.makeSprite(indoorsTexture, 1, 3);
-
         loadSprites(config.getSpritesFile());
         loadPauseButton(config.getPauseImageFile());
         loadCharacters(config.getCharsDir());
