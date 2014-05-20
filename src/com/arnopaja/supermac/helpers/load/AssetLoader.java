@@ -239,12 +239,10 @@ public class AssetLoader {
     }
 
     private static void loadItems(FileHandle file) {
-        // TODO: maybe cache items here rather than in GenericItem?
         SuperParser.parseAll(file, GenericItem.class);
     }
 
     private static void loadSpells(FileHandle file) {
-        // TODO: maybe cache spells here rather than in Spell?
         SuperParser.parseAll(file, Spell.class);
     }
 
