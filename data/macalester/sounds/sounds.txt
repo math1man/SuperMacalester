@@ -1,0 +1,20 @@
+{
+    "sounds" : [
+        {
+            "file" : "compscimagic.ogg",
+            "name" : "comp sci magic"
+        },
+        {
+            "file" : "natscimagic.ogg",
+            "name" : "nat sci magic"
+        },
+        {
+            "file" : "healingmagic.ogg",
+            "name" : "healing"
+        },
+        {
+            "file" : "powerup.ogg",
+            "name" : "powerup"
+        }
+    ]
+}

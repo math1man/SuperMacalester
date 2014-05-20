@@ -13,7 +13,7 @@ import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.plot.Plot;
@@ -63,8 +63,6 @@ public class GameScreen implements Screen {
         worldMode = new GameMode<World>(new WorldRenderer(dialogueDisplay, GAME_WIDTH, GAME_HEIGHT));
         battleMode = new GameMode<Battle>(new BattleRenderer(dialogueDisplay, GAME_WIDTH, GAME_HEIGHT));
 
-        AssetLoader.setCleanDialogue(Settings.isClean());
-
         // TODO: get rid of this
         Interactions.RESET.run(this);
 
@@ -75,7 +73,7 @@ public class GameScreen implements Screen {
         runTime = 0;
 
         // TODO: first load only
-        new DialogueStep(AssetLoader.dialogues.get("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
+        new DialogueStep(AssetLoader.getDialogue("Prologue").getRaw(), DialogueStyle.FULL_SCEEN).run(this);
     }
 
     public void changeMode(GameMode newMode) {
@@ -152,8 +150,8 @@ public class GameScreen implements Screen {
     }
 
     public void load() {
-        worldMode.setController(SaverLoader.load(World.class, SuperParser.parse(AssetLoader.entitiesHandle, World.class)));
-        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.plotHandle, Plot.class));
+        worldMode.setController(SaverLoader.load(World.class, SuperParser.parse(AssetLoader.getEntitiesFile(), World.class)));
+        plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.getPlotFile(), Plot.class));
         Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
         hero.addSpell(Spell.getCached(0));
         party = SaverLoader.load(Party.class, new Party<Hero>(Collections.singletonList(hero)));

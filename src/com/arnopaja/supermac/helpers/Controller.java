@@ -1,6 +1,5 @@
 package com.arnopaja.supermac.helpers;
 
-import com.arnopaja.supermac.helpers.load.Parsable;
 import com.badlogic.gdx.audio.Music;
 
 /**

@@ -6,7 +6,7 @@ import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueOptions;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
@@ -25,38 +25,16 @@ import java.util.List;
  */
 public class Chest extends Container {
 
-    public static enum ChestColor {
-        BROWN(AssetLoader.chestBrownClosed, AssetLoader.chestBrownOpen),
-        RED(AssetLoader.chestRedClosed, AssetLoader.chestRedOpen),
-        GREEN(AssetLoader.chestGreenClosed, AssetLoader.chestGreenOpen);
-
-        public transient final TextureRegion closed;
-        public transient final TextureRegion open;
-
-        ChestColor(TextureRegion closed, TextureRegion open) {
-            this.closed = closed;
-            this.open = open;
-        }
-
-        public static ChestColor getColor(String name) {
-            switch (name.toLowerCase().charAt(0)) {
-                case 'g':
-                    return GREEN;
-                case 'r':
-                    return RED;
-                case 'b':
-                default:
-                    return BROWN;
-            }
-        }
-    }
-
-    private final ChestColor color;
+    private final String color;
+    private final TextureRegion open;
+    private final TextureRegion closed;
     private boolean isOpen = false;
 
-    public Chest(Location location, ChestColor color, Inventory contents) {
+    public Chest(Location location, String color, Inventory contents) {
         super(location, contents);
         this.color = color;
+        this.open = AssetLoader.getSprite(color + " open chest");
+        this.closed = AssetLoader.getSprite(color + " closed chest");
     }
 
     public boolean isOpen() {
@@ -72,7 +50,7 @@ public class Chest extends Container {
     }
 
     public TextureRegion getSprite() {
-        return isOpen ? color.open : color.closed;
+        return isOpen ? open : closed;
     }
 
     @Override
@@ -124,14 +102,14 @@ public class Chest extends Container {
             Location location = getObject(object, Location.class);
             String color = getString(object, "color");
             Inventory contents = getObject(object, "contents", Inventory.class);
-            return new Chest(location, Chest.ChestColor.getColor(color), contents);
+            return new Chest(location, color, contents);
         }
 
         @Override
         public JsonElement toJson(Chest object) {
             JsonObject json = new JsonObject();
             addObject(json, object.getLocation(), Location.class);
-            addString(json, "color", object.color.name());
+            addString(json, "color", object.color);
             addObject(json, "contents", object.getContents(), Inventory.class);
             return json;
         }

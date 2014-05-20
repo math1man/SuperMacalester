@@ -1,5 +1,8 @@
 package com.arnopaja.supermac.helpers.load;
 
+import com.arnopaja.supermac.helpers.Parsable;
+import com.arnopaja.supermac.helpers.SuperParser;
+
 /**
  * @author Ari Weiland
  */
@@ -10,7 +13,7 @@ public class SaverLoader {
     }
 
     public static <T extends Parsable> void save(T savable, String name, Class<T> clazz) {
-        AssetLoader.prefs.putString(name, SuperParser.toJsonString(savable, clazz));
+        AssetLoader.getPrefs().putString(name, SuperParser.toJsonString(savable, clazz));
     }
 
     public static <T extends Parsable> T load(Class<T> clazz) {
@@ -27,7 +30,7 @@ public class SaverLoader {
 
     public static <T extends Parsable> T load(String name, Class<T> clazz, T defVal) {
         if (isSaved(name)) {
-            return SuperParser.parse(AssetLoader.prefs.getString(name), clazz);
+            return SuperParser.parse(AssetLoader.getPrefs().getString(name), clazz);
         } else if (defVal != null) {
             save(defVal, name, clazz);
         }
@@ -39,10 +42,10 @@ public class SaverLoader {
     }
 
     public static boolean isSaved(String name) {
-        return AssetLoader.prefs.contains(name);
+        return AssetLoader.getPrefs().contains(name);
     }
 
     public static void flush() {
-        AssetLoader.prefs.flush();
+        AssetLoader.getPrefs().flush();
     }
 }

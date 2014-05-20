@@ -1,14 +1,11 @@
 package com.arnopaja.supermac.world.objects;
 
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * @author Ari Weiland
@@ -16,7 +13,6 @@ import java.util.Random;
 public class Tile implements Renderable {
 
     public static final Tile NULL = new Tile("", false, null, false);
-    public static final TileMap TILE_MAP = new TileMap();
 
     private final String tileKey; // primarily for debugging
     private final boolean isRendered;
@@ -40,7 +36,7 @@ public class Tile implements Renderable {
         }
         String[] temp = tileCode.split("-");
         String tileKey = temp[0];
-        Animation animation = TILE_MAP.get(tileKey);
+        Animation animation = AssetLoader.getTile(tileKey);
         if (animation == null) {
             return NULL;
         }
@@ -112,57 +108,4 @@ public class Tile implements Renderable {
 
     }
 
-    public static class TileMap {
-        private static final Random random = new Random();
-
-        private final Map<String, Animation> tileMap = new HashMap<String, Animation>();
-        private final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
-
-        /**
-         * Notes:
-         * _ is a prefix for large tiles
-         * only letters should be used otherwise
-         * @param code
-         * @param sprites
-         */
-        public void put(String code, TextureRegion... sprites) {
-            int length = sprites.length;
-            Animation[] animations = new Animation[length];
-            for (int i=0; i<length; i++) {
-                animations[i] = new Animation(1, sprites[i]);
-            }
-            put(code, animations);
-        }
-
-        /**
-         * Notes:
-         * _ is a prefix for large tiles
-         * only letters should be used otherwise
-         * @param code
-         * @param animations
-         */
-        public void put(String code, Animation... animations) {
-            int length = animations.length;
-            if (length > 1) {
-                randomTileMap.put(code, length);
-                for (int i=0; i<length; i++) {
-                    tileMap.put(code + i, animations[i]);
-                }
-            } else {
-                tileMap.put(code, animations[0]);
-            }
-        }
-
-        public Animation get(String tileKey) {
-            tileKey = tileKey.trim();
-            if (randomTileMap.containsKey(tileKey)) {
-                tileKey += random.nextInt(randomTileMap.get(tileKey));
-            }
-            return tileMap.get(tileKey);
-        }
-
-        public boolean contains(String tileKey) {
-            return tileMap.containsKey(tileKey) || randomTileMap.containsKey(tileKey);
-        }
-    }
 }

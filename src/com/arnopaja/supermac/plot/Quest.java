@@ -2,7 +2,7 @@ package com.arnopaja.supermac.plot;
 
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

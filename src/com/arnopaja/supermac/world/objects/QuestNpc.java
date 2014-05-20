@@ -4,7 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.plot.Quest;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Location;

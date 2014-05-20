@@ -3,7 +3,7 @@ package com.arnopaja.supermac.world.grid;
 import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.JsonElement;
@@ -93,7 +93,7 @@ public class Location implements Interaction {
         public Location fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             String gridName = getString(object, "grid");
-            Grid grid = AssetLoader.grids.get(gridName);
+            Grid grid = AssetLoader.getGrid(gridName);
             int x = getInt(object, "x");
             int y = getInt(object, "y");
             return new Location(grid, x, y);

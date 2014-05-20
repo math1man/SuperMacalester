@@ -1,9 +1,10 @@
 package com.arnopaja.supermac.plot;
 
+import com.arnopaja.supermac.helpers.Parsable;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.Parsable;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.badlogic.gdx.audio.Music;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -28,8 +29,9 @@ public class Settings implements Parsable {
 
     public static void setVolume(float volume) {
         INSTANCE.volume = volume;
-        AssetLoader.worldMusic.setVolume(volume);
-        AssetLoader.battleMusic.setVolume(volume);
+        for (Music m : AssetLoader.getMusic().values()) {
+            m.setVolume(volume);
+        }
     }
 
     public static boolean isClean() {
@@ -38,7 +40,6 @@ public class Settings implements Parsable {
 
     public static void setClean(boolean clean) {
         INSTANCE.isClean = clean;
-        AssetLoader.setCleanDialogue(clean);
     }
 
     public static void save() {

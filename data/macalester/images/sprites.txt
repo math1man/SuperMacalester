@@ -1,0 +1,45 @@
+{
+    "file" : "entities.png",
+    "sprites" : [
+        {
+            "name" : "brown closed chest",
+            "x" : 0,
+            "y" : 0
+        },
+        {
+            "name" : "brown open chest",
+            "x" : 0,
+            "y" : 1
+        },
+        {
+            "name" : "red closed chest",
+            "x" : 1,
+            "y" : 0
+        },
+        {
+            "name" : "red open chest",
+            "x" : 1,
+            "y" : 1
+        },
+        {
+            "name" : "green closed chest",
+            "x" : 2,
+            "y" : 0
+        },
+        {
+            "name" : "green open chest",
+            "x" : 2,
+            "y" : 1
+        },
+        {
+            "name" : "silver garbage can",
+            "x" : 1,
+            "y" : 2
+        },
+        {
+            "name" : "green garbage can",
+            "x" : 2,
+            "y" : 2
+        }
+    ]
+}

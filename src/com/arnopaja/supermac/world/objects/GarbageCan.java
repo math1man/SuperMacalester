@@ -4,7 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.world.grid.Location;
@@ -19,8 +19,13 @@ import java.util.List;
  */
 public class GarbageCan extends Container {
 
-    public GarbageCan(Location location, Inventory contents) {
+    private final String color;
+    private final TextureRegion sprite;
+
+    public GarbageCan(Location location, Inventory contents, String color) {
         super(location, contents);
+        this.color = color;
+        this.sprite = AssetLoader.getSprite(color + " garbage can");
     }
 
     @Override
@@ -42,7 +47,7 @@ public class GarbageCan extends Container {
 
     @Override
     public TextureRegion getSprite(float runTime) {
-        return AssetLoader.garbageCan;
+        return sprite;
     }
 
 
@@ -52,13 +57,16 @@ public class GarbageCan extends Container {
             JsonObject object = element.getAsJsonObject();
             Location location = getObject(object, Location.class);
             Inventory contents = getObject(object, "contents", Inventory.class);
-            return new GarbageCan(location, contents);
+            String color = getString(object, "color");
+            return new GarbageCan(location, contents, color);
         }
 
         @Override
         public JsonElement toJson(GarbageCan object) {
             JsonObject json = new JsonObject();
+            addObject(json, object.getLocation(), Location.class);
             addObject(json, "contents", object.getContents(), Inventory.class);
+            addString(json, "color", object.color);
             return json;
         }
     }

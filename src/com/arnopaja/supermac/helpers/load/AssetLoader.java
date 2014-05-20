@@ -1,11 +1,14 @@
 package com.arnopaja.supermac.helpers.load;
 
 import com.arnopaja.supermac.battle.characters.BattleClass;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.inventory.GenericItem;
 import com.arnopaja.supermac.inventory.Spell;
+import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.grid.Direction;
 import com.arnopaja.supermac.world.grid.Grid;
+import com.arnopaja.supermac.world.objects.Tile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
@@ -16,159 +19,51 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Ari Weiland
  */
 public class AssetLoader {
 
+    public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
     public static final float FONT_SHADOW_OFFSET = 0.06f;
 
-    private static Texture tilesTexture, entitiesTexture, characterTexture, indoorsTexture;
+    private static List<Texture> usedTextures = new ArrayList<Texture>();
 
-    // TODO: stuff all these textures into cached maps
+    private static Config config;
+    private static TileMap tiles = new TileMap();
+    private static Map<String, TextureRegion> sprites = new HashMap<String, TextureRegion>();
+    private static TextureRegion pauseButton;
+    private static Map<String, CharacterAsset> characters = new HashMap<String, CharacterAsset>();
+    private static Map<String, Grid> grids = new HashMap<String, Grid>();
+    private static Map<String, Music> music = new HashMap<String, Music>();
+    private static Map<String, Sound> sounds = new HashMap<String, Sound>();
+    private static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
+    private static Map<String, Dialogue> cleanDialogues = new HashMap<String, Dialogue>();
+    private static BitmapFont font, shadow;
+    private static Preferences prefs;
 
-    // Tiles
-    public static TextureRegion grass0, grass1, grass2;
-    public static TextureRegion bush, bushH, bushV, bushFlowersH, bushFlowersV;
-    public static TextureRegion treeSmall, treeBig;
-    public static TextureRegion sidewalk, cobble, cobbleRed;
-    public static TextureRegion asphalt, asphaltLineH, asphaltLineV;
-    public static TextureRegion asphaltGrassN, asphaltGrassE, asphaltGrassS, asphaltGrassW;
-    public static TextureRegion asphaltGrassNE, asphaltGrassSE, asphaltGrassSW, asphaltGrassNW;
-    public static TextureRegion asphaltCobbleN, asphaltCobbleE, asphaltCobbleS, asphaltCobbleW;
-    public static TextureRegion asphaltCobbleNE, asphaltCobbleSE, asphaltCobbleSW, asphaltCobbleNW;
-    public static Animation asteroid;
-
-    //Indoor Tiles
+    // TODO: remove these when I can
     public static TextureRegion wh, wv, wne, wse, wsw, wnw, wtn, wte, wts, wtw, wp, wen, wee, wes, wew;
     public static TextureRegion wene, wese, wesw, wenw, wine, wise, wisw, winw, wetn, wete, wets, wetw;
     public static TextureRegion wdoor, edoor, ndoor, sdoor;
 
-    // Buildings
-    public static TextureRegion art, artCommons, bigelow, campusCenter, carnegie, chapel, doty, dupre;
-    public static TextureRegion humanities, kagin, kirk, leonardCenter, library, markim, music, oldMain;
-    public static TextureRegion olin, olinRiceStairs, rice, theatre, thirtyMac, turk, wallace, weyerhauser;
+    //--------------------
+    //    Load Methods
+    //--------------------
 
-    // Non-character entities
-    public static TextureRegion chestBrownOpen, chestBrownClosed;
-    public static TextureRegion chestRedOpen, chestRedClosed;
-    public static TextureRegion chestGreenOpen, chestGreenClosed;
-    public static TextureRegion garbageCan;
+    public static void load(Config c) {
 
-    public static TextureRegion pauseButton;
+        config = c;
 
-    // Characters
-    public static Map<String, CharacterAsset> characterAssetMap = new HashMap<String, CharacterAsset>();
-
-    // Battle Backgrounds
-    public static Map<String, TextureRegion> battleBackgrounds = new HashMap<String, TextureRegion>();
-
-    // Data file handles
-    public static FileHandle itemHandle;
-    public static FileHandle spellHandle;
-    public static FileHandle dialogueHandle;
-    public static FileHandle cleanDialogueHandle;
-    public static FileHandle plotHandle;
-    public static FileHandle mapHandle;
-    public static FileHandle entitiesHandle;
-    public static FileHandle charactersHandle;
-
-    // Caches
-    public static Map<String, Dialogue> dialogues = new HashMap<String, Dialogue>();
-    public static Map<String, Grid> grids = new HashMap<String, Grid>();
-
-    // Music
-    public static Music worldMusic;
-    public static Music battleMusic;
-    public static Music bossMusic;
-
-    // Sounds
-    public static Sound compSciMagic;
-    public static Sound natSciMagic;
-    public static Sound healingSound;
-    public static Sound powerupSound;
-
-    // Font
-    public static final float FONT_HEIGHT = Grid.GRID_PIXEL_DIMENSION * 3f / 4f; // A line is 3/4 of a grid space
-    private static BitmapFont font, shadow;
-
-    // Preferences
-    public static Preferences prefs;
-
-    public static void load() {
-
-        tilesTexture = new Texture(getHandle("canvas/landscape_tiles.png"));
-        tilesTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
-        //--------------------------
-        //          Tiles
-        //--------------------------
-
-        treeBig = SpriteUtils.makeSprite(tilesTexture, 0, 0, 2, 2);
-        treeSmall = SpriteUtils.makeSprite(tilesTexture, 2, 0);
-        grass0 = SpriteUtils.makeSprite(tilesTexture, 3, 0);
-        grass1 = SpriteUtils.makeSprite(tilesTexture, 4, 0);
-        grass2 = SpriteUtils.makeSprite(tilesTexture, 5, 0);
-        bush = SpriteUtils.makeSprite(tilesTexture, 6, 0);
-        bushH = SpriteUtils.makeSprite(tilesTexture, 7, 0);
-        bushFlowersH = SpriteUtils.makeSprite(tilesTexture, 8, 0);
-        bushV = SpriteUtils.makeSprite(tilesTexture, 9, 0);
-        bushFlowersV = SpriteUtils.makeSprite(tilesTexture, 10, 0);
-
-        sidewalk = SpriteUtils.makeSprite(tilesTexture, 11, 0);
-        cobbleRed = SpriteUtils.makeSprite(tilesTexture, 0, 2);
-        cobble = SpriteUtils.makeSprite(tilesTexture, 1, 2);
-
-        asphalt = SpriteUtils.makeSprite(tilesTexture, 5, 4);
-        asphaltGrassE = SpriteUtils.makeSprite(tilesTexture, 0, 3);
-        asphaltGrassW = SpriteUtils.makeSprite(tilesTexture, 0, 3, false, true);
-        asphaltGrassN = SpriteUtils.makeSprite(tilesTexture, 0, 4);
-        asphaltGrassS = SpriteUtils.makeSprite(tilesTexture, 0, 4, true, false);
-        asphaltGrassNE = SpriteUtils.makeSprite(tilesTexture, 2, 3);
-        asphaltGrassSE = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, false);
-        asphaltGrassSW = SpriteUtils.makeSprite(tilesTexture, 2, 3, true, true);
-        asphaltGrassNW = SpriteUtils.makeSprite(tilesTexture, 2, 3, false, true);
-        asphaltLineH = SpriteUtils.makeSprite(tilesTexture, 4, 3);
-        asphaltLineV = SpriteUtils.makeSprite(tilesTexture, 4, 4);
-        asphaltCobbleE = SpriteUtils.makeSprite(tilesTexture, 6, 3, false, true);
-        asphaltCobbleW = SpriteUtils.makeSprite(tilesTexture, 6, 3);
-        asphaltCobbleN = SpriteUtils.makeSprite(tilesTexture, 5, 3);
-        asphaltCobbleS = SpriteUtils.makeSprite(tilesTexture, 5, 3, true, false);
-        asphaltCobbleNE = SpriteUtils.makeSprite(tilesTexture, 6, 4, false, true);
-        asphaltCobbleSE = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, true);
-        asphaltCobbleSW = SpriteUtils.makeSprite(tilesTexture, 6, 4, true, false);
-        asphaltCobbleNW = SpriteUtils.makeSprite(tilesTexture, 6, 4);
-
-        TextureRegion[] temp = new TextureRegion[12];
-        for(int i = 0; i<7; i++){
-            temp[i] = SpriteUtils.makeSprite(tilesTexture, 17 + 3*i , 0, 3, 3);
-            if (i != 0) {
-                temp[12-i] = temp[i];
-            }
-        }
-        asteroid = new Animation(0.5f, temp);
-
-        //--------------------------
-        //        Buildings
-        //--------------------------
-
-        weyerhauser = SpriteUtils.makeSprite(tilesTexture, 0, 5, 24, 12);
-        campusCenter = SpriteUtils.makeSprite(tilesTexture, 24, 5, 20, 16);
-        chapel = SpriteUtils.makeSprite(tilesTexture, 44, 5, 14, 16);
-        kirk = SpriteUtils.makeSprite(tilesTexture, 58, 29, 32, 16);
-        leonardCenter = SpriteUtils.makeSprite(tilesTexture, 58, 5, 52, 24);
-        library = SpriteUtils.makeSprite(tilesTexture, 0, 17, 16, 12);
-        oldMain = SpriteUtils.makeSprite(tilesTexture, 16, 17, 6, 12);
-        olin = SpriteUtils.makeSprite(tilesTexture, 42, 21, 16, 32);
-        olinRiceStairs = SpriteUtils.makeSprite(tilesTexture, 38, 43, 3, 5);
-        rice = SpriteUtils.makeSprite(tilesTexture, 34, 53, 24, 16);
-
-        indoorsTexture = new Texture(getHandle("canvas/indoor_tiles.png"));
+        loadTiles(config.getTilesFile());
+        // TODO: add indoor tiles to other tile canvas
+        Texture indoorsTexture = getTexture(Gdx.files.internal("data/macalester/" + "images/indoor_tiles.png"));
         wetw = SpriteUtils.makeSprite(indoorsTexture, 1, 7);
         wets = SpriteUtils.makeSprite(indoorsTexture, 7, 3);
         wete = SpriteUtils.makeSprite(indoorsTexture, 2, 0);
@@ -198,109 +93,236 @@ public class AssetLoader {
         sdoor = SpriteUtils.makeSprite(indoorsTexture, 7, 5);
         wh = SpriteUtils.makeSprite(indoorsTexture, 1, 3);
 
-        MapLoader.initTileMap(); // Must be called after all tiles and buildings are loaded
+        loadSprites(config.getSpritesFile());
+        loadPauseButton(config.getPauseImageFile());
+        loadCharacters(config.getCharsDir());
+        loadGrids(config.getMapsDir());
+        // TODO: Give credit to Rolemusic for the music under the Creative Commons Attribution License
+        // Artist: Rolemusic
+        // Album: gigs n' contest
+        loadMusic(config.getMusicFile());
+        loadSounds(config.getSoundsFile());
+        loadItems(config.getItemsFile());
+        loadSpells(config.getSpellsFile());
+        loadDialogues(config.getDialogueFile());
+        loadCleanDialogues(config.getCleanDialogueFile());
 
-        //--------------------------
-        //        Entities
-        //--------------------------
+        font = new BitmapFont(config.getFontFile());
+        shadow = new BitmapFont(config.getFontShadowFile());
+        scaleFont(FONT_HEIGHT / font.getLineHeight());
 
-        entitiesTexture = new Texture(getHandle("canvas/entities.png"));
-        chestBrownClosed = SpriteUtils.makeSprite(tilesTexture, 0, 0);
-        chestBrownOpen = SpriteUtils.makeSprite(tilesTexture, 0, 1);
-        chestRedClosed = SpriteUtils.makeSprite(tilesTexture, 1, 0);
-        chestRedOpen = SpriteUtils.makeSprite(tilesTexture, 1, 1);
-        chestGreenClosed = SpriteUtils.makeSprite(tilesTexture, 2, 0);
-        chestGreenOpen = SpriteUtils.makeSprite(tilesTexture, 2, 1);
-
-        // TODO: this should probably have its own texture file
-        pauseButton = SpriteUtils.makeSprite(entitiesTexture, 3, 0, 2, 2);
-
-        //--------------------------
-        //       Characters
-        //--------------------------
-
-        charactersHandle = getHandle("characters");
-        for (FileHandle handle : charactersHandle.list()) {
-            loadCharacter(handle);
-        }
-
-        //--------------------------
-        //    Handles and Caches
-        //--------------------------
-
-        itemHandle = getHandle("items.txt");
-        spellHandle = getHandle("spells.txt");
-        dialogueHandle = getHandle("macalester/dialogues.txt");
-        cleanDialogueHandle = getHandle("macalester/dialogues_clean.txt");
-        mapHandle = getHandle("macalester/maps");
-        plotHandle = getHandle("macalester/plot.txt");
-        entitiesHandle = getHandle("macalester/entities.txt");
-
-        SuperParser.parseAll(AssetLoader.itemHandle, GenericItem.class);
-        SuperParser.parseAll(AssetLoader.spellHandle, Spell.class);
-        grids = MapLoader.generateGrids(AssetLoader.mapHandle);
-
-        //--------------------------
-        //     Music and Sounds
-        //--------------------------
-        //TODO: Give credit to Rolemusic for the music under the Creative Commons Attribution License
-        //Artist: Rolemusic
-        //Album: gigs n' contest
-        worldMusic = loadMusic("Rolemusic_-_03_-_Another_beek_beep_beer_please.mp3");
-        battleMusic = loadMusic("Rolemusic_-_04_-_Scape_from_the_city.mp3");
-        bossMusic = loadMusic("Rolemusic_-_05_-_Death_on_the_battlefield.mp3");
-
-        compSciMagic = Gdx.audio.newSound(getHandle("sounds/compscimagic.ogg"));
-        natSciMagic  = Gdx.audio.newSound(getHandle("sounds/natscimagic.ogg"));
-        healingSound = Gdx.audio.newSound(getHandle("sounds/healingmagic.ogg"));
-        powerupSound = Gdx.audio.newSound(getHandle("sounds/powerup.ogg"));
-
-        BattleClass.init(); // needed to init the magic sounds
-
-        //--------------------------
-
-        //          Other
-        //--------------------------
-
-        font = new BitmapFont(getHandle("font/text.fnt"));
-        shadow = new BitmapFont(getHandle("font/shadow.fnt"));
-        scaleFont(FONT_HEIGHT / AssetLoader.font.getLineHeight());
-
-        prefs = Gdx.app.getPreferences("com_arnopaja_supermac");
+        prefs = Gdx.app.getPreferences("com_arnopaja_supermac_" + config.getVersion());
     }
 
-    public static void loadCharacter(FileHandle handle) {
-        EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
-        EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
-        String name = handle.nameWithoutExtension();
-        characterTexture = new Texture(handle);
-
-        TextureRegion[][] regions = SpriteUtils.split(characterTexture);
-        for (int i=0; i<4; i++) {
-            Direction dir = Direction.values()[i];
-            person.put(dir, regions[0][i]);
-            stepRight.put(dir, regions[1][i]);
-            if (i % 2 == 0) {
-                stepLeft.put(dir, regions[2][i]);
-            } else {
-                stepLeft.put(dir, regions[1][i]);
+    private static void loadTiles(FileHandle file) {
+        String config = file.readString();
+        JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
+        Texture texture = getTexture(file.parent().child(SuperParser.getString(object, "file")));
+        JsonArray array = object.getAsJsonArray("tiles");
+        for (JsonElement e : array) {
+            JsonObject o = e.getAsJsonObject();
+            String tileKey = SuperParser.getString(o, "key");
+            int count = SuperParser.getInt(o, "frames", 1);
+            float duration = SuperParser.getFloat(o, "duration", 0);
+            int width = SuperParser.getInt(o, "width", 1);
+            int height = SuperParser.getInt(o, "height", 1);
+            boolean flipX = SuperParser.getBoolean(o, "flipX", false);
+            boolean flipY = SuperParser.getBoolean(o, "flipY", false);
+            int x = SuperParser.getInt(o, "x");
+            int y = SuperParser.getInt(o, "y");
+            TextureRegion[] frames = new TextureRegion[count];
+            frames[0] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
+            if (count > 1) {
+                for (int i=1; i<count; i++) {
+                    x = SuperParser.getInt(o, "x" + i);
+                    y = SuperParser.getInt(o, "y" + i);
+                    frames[i] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
+                }
             }
-            TextureRegion[] array = { person.get(dir), stepRight.get(dir),
-                    person.get(dir), stepLeft.get(dir) };
-            Animation animation = new Animation(0.1f, array);
-            animation.setPlayMode(Animation.LOOP);
-            personAnim.put(dir, animation);
+            tiles.put(tileKey, new Animation(duration, frames));
         }
-        characterAssetMap.put(name, new CharacterAsset(person, personAnim));
     }
 
-    public static Music loadMusic(String file) {
-        Music music = Gdx.audio.newMusic(getHandle("music/" + file));
-        music.setLooping(true);
+    private static void loadSprites(FileHandle file) {
+        String config = file.readString();
+        JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
+        Texture texture = getTexture(file.parent().child(SuperParser.getString(object, "file")));
+        JsonArray array = object.getAsJsonArray("sprites");
+        for (JsonElement e : array) {
+            JsonObject o = e.getAsJsonObject();
+            String name = SuperParser.getString(o, "name");
+            int x = SuperParser.getInt(o, "x");
+            int y = SuperParser.getInt(o, "y");
+            TextureRegion sprite = SpriteUtils.makeSprite(texture, x, y);
+            sprites.put(name, sprite);
+        }
+    }
+
+    private static void loadPauseButton(FileHandle file) {
+        pauseButton = SpriteUtils.makeSprite(getTexture(file), 0, 0, 2, 2);
+    }
+
+    private static void loadCharacters(FileHandle folder) {
+        for (FileHandle file : folder.list()) {
+            EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
+            EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
+            EnumMap<Direction, TextureRegion> stepLeft = new EnumMap<Direction, TextureRegion>(Direction.class);
+            EnumMap<Direction, Animation> personAnim = new EnumMap<Direction, Animation>(Direction.class);
+            String name = file.nameWithoutExtension();
+            Texture characterTexture = getTexture(file);
+
+            TextureRegion[][] regions = SpriteUtils.split(characterTexture);
+            for (int i=0; i<4; i++) {
+                Direction dir = Direction.values()[i];
+                person.put(dir, regions[0][i]);
+                stepRight.put(dir, regions[1][i]);
+                if (i % 2 == 0) {
+                    stepLeft.put(dir, regions[2][i]);
+                } else {
+                    stepLeft.put(dir, regions[1][i]);
+                }
+                TextureRegion[] array = { person.get(dir), stepRight.get(dir),
+                        person.get(dir), stepLeft.get(dir) };
+                Animation animation = new Animation(0.1f, array);
+                animation.setPlayMode(Animation.LOOP);
+                personAnim.put(dir, animation);
+            }
+            characters.put(name, new CharacterAsset(person, personAnim));
+        }
+    }
+
+    private static void loadGrids(FileHandle folder) {
+        FileHandle[] handles = folder.list("txt");
+        for (FileHandle handle : handles) {
+            String name = handle.nameWithoutExtension().toLowerCase().replaceAll("[\\W_]", "");
+            String raw = handle.readString();
+            String[] lines = raw.split("\n");
+            int height = lines.length;
+            int width = lines[0].split("\t").length;
+            Tile[][] tileArray = new Tile[width][height];
+            for (int j=0; j<height; j++) {
+                String[] tileCodes = lines[j].split("\t");
+                for (int i=0; i<width; i++) {
+                    tileArray[i][j] = Tile.createTile(tileCodes[i].trim());
+                }
+            }
+            SpriteUtils.split(tileArray);
+            grids.put(name, new Grid(name, tileArray));
+        }
+    }
+
+    private static void loadMusic(FileHandle file) {
+        String config = file.readString();
+        JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
+        JsonArray array = object.getAsJsonArray("music");
+        for (JsonElement e : array) {
+            JsonObject o = e.getAsJsonObject();
+            String track = SuperParser.getString(o, "file");
+            String name = SuperParser.getString(o, "name");
+            Music m = Gdx.audio.newMusic(file.parent().child(track));
+            music.put(name, m);
+        }
+    }
+
+    private static void loadSounds(FileHandle file) {
+        String config = file.readString();
+        JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
+        JsonArray array = object.getAsJsonArray("sounds");
+        for (JsonElement e : array) {
+            JsonObject o = e.getAsJsonObject();
+            String sound = SuperParser.getString(o, "file");
+            String name = SuperParser.getString(o, "name");
+            Sound s = Gdx.audio.newSound(file.parent().child(sound));
+            sounds.put(name, s);
+        }
+        BattleClass.init(); // needed to init the magic sounds
+    }
+
+    private static void loadItems(FileHandle file) {
+        // TODO: maybe cache items here rather than in GenericItem?
+        SuperParser.parseAll(file, GenericItem.class);
+    }
+
+    private static void loadSpells(FileHandle file) {
+        // TODO: maybe cache spells here rather than in Spell?
+        SuperParser.parseAll(file, Spell.class);
+    }
+
+    private static void loadDialogues(FileHandle file) {
+        dialogues = SuperParser.parseAll(file, Dialogue.class);
+    }
+
+    private static void loadCleanDialogues(FileHandle file) {
+        cleanDialogues = SuperParser.parseAll(file, Dialogue.class);
+    }
+
+    //--------------------
+    //    Get Methods
+    //--------------------
+
+    public static Config getConfig() {
+        return config;
+    }
+
+    public static Animation getTile(String tileKey) {
+        return tiles.get(tileKey);
+    }
+
+    public static TextureRegion getSprite(String name) {
+        return sprites.get(name);
+    }
+
+    public static TextureRegion getPauseButton() {
+        return pauseButton;
+    }
+
+    public static CharacterAsset getCharacter(String name) {
+        return characters.get(name.toLowerCase());
+    }
+
+    public static Grid getGrid(String gridName) {
+        return grids.get(gridName);
+    }
+
+    public static Map<String,Grid> getGrids() {
+        return grids;
+    }
+
+    public static Music getMusic(String name) {
+        return music.get(name);
+    }
+
+    public static Map<String, Music> getMusic() {
         return music;
     }
+
+    public static Sound getSound(String name) {
+        return sounds.get(name);
+    }
+
+    public static Dialogue getDialogue(String name) {
+        if (Settings.isClean()) {
+            return cleanDialogues.get(name);
+        } else {
+            return dialogues.get(name);
+        }
+    }
+
+    public static FileHandle getPlotFile() {
+        return config.getPlotFile();
+    }
+
+    public static FileHandle getEntitiesFile() {
+        return config.getEntitiesFile();
+    }
+
+    public static Preferences getPrefs() {
+        return prefs;
+    }
+
+    //--------------------
+    //    Font Methods
+    //--------------------
 
     public static void scaleFont(float scale) {
         font.setScale(scale, -scale);
@@ -313,36 +335,79 @@ public class AssetLoader {
         AssetLoader.font.drawWrapped(batch, string, x, y, width);
     }
 
-    public static TextureRegion getBackground(String name) {
-        return battleBackgrounds.get(name);
-    }
-
-    public static CharacterAsset getCharacter(String name) {
-        return characterAssetMap.get(name.toLowerCase());
-    }
-
-    private static FileHandle getHandle(String path) {
-        return Gdx.files.internal("data/" + path);
-    }
-
-    public static void setCleanDialogue(boolean clean) {
-        if (clean) {
-            dialogues.clear(); // This shouldn't be necessary, but it doesn't work otherwise
-            dialogues = SuperParser.parseAll(cleanDialogueHandle, Dialogue.class);
-        } else {
-            dialogues = SuperParser.parseAll(dialogueHandle, Dialogue.class);
-        }
-    }
+    //--------------------
+    //       Other
+    //--------------------
 
     public static void dispose() {
-        tilesTexture.dispose();
-        indoorsTexture.dispose();
-        entitiesTexture.dispose();
-        characterTexture.dispose();
-        worldMusic.dispose();
-        battleMusic.dispose();
-        compSciMagic.dispose();
+        for (Texture texture : usedTextures) {
+            texture.dispose();
+        }
+        for (Music m : music.values()) {
+            m.dispose();
+        }
+        for (Sound s : sounds.values()) {
+            s.dispose();
+        }
         font.dispose();
         shadow.dispose();
+    }
+
+    private static Texture getTexture(FileHandle handle) {
+        Texture texture = new Texture(handle);
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        usedTextures.add(texture);
+        return texture;
+    }
+
+    private static class TileMap {
+        private static final Random random = new Random();
+
+        private final Map<String, Animation> tileMap = new HashMap<String, Animation>();
+        private final Map<String, Integer> randomTileMap = new HashMap<String, Integer>();
+
+        public void put(String key, TextureRegion... sprites) {
+            int length = sprites.length;
+            Animation[] animations = new Animation[length];
+            for (int i=0; i<length; i++) {
+                animations[i] = new Animation(1, sprites[i]);
+            }
+            put(key, animations);
+        }
+
+        public void put(String key, Animation... animations) {
+            int shift = 0;
+            int length = animations.length;
+            if (contains(key)) {
+                if (tileMap.containsKey(key)) { // add the old animation to the array
+                    animations = Arrays.copyOf(animations, length + 1);
+                    animations[length] = tileMap.get(key);
+                    length++;
+                    tileMap.remove(key);
+                } else { // just add them as a continuation of the randomness
+                    shift = randomTileMap.get(key);
+                }
+            }
+            if (length + shift > 1) {
+                randomTileMap.put(key, length + shift);
+                for (int i=0; i<length; i++) {
+                    tileMap.put(key + (i + shift), animations[i]);
+                }
+            } else {
+                tileMap.put(key, animations[0]);
+            }
+        }
+
+        public Animation get(String key) {
+            key = key.trim();
+            if (randomTileMap.containsKey(key)) {
+                key += random.nextInt(randomTileMap.get(key));
+            }
+            return tileMap.get(key);
+        }
+
+        public boolean contains(String key) {
+            return tileMap.containsKey(key) || randomTileMap.containsKey(key);
+        }
     }
 }

@@ -4,7 +4,7 @@ import com.arnopaja.supermac.GameScreen;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -53,7 +53,7 @@ public abstract class Dialogue implements Interaction {
             if (object.has("name")) {
                 name = getString(object, "name");
             }
-            Dialogue cached = AssetLoader.dialogues.get(name);
+            Dialogue cached = AssetLoader.getDialogue(name);
             if (cached != null) {
                 return cached;
             }

@@ -1,4 +1,4 @@
-package com.arnopaja.supermac.helpers.load;
+package com.arnopaja.supermac.helpers;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.*;
@@ -199,97 +199,96 @@ public abstract class SuperParser<T extends Parsable> {
 
     //--------------------------------
     //     Convenience methods
-    //     for subclasses
     //--------------------------------
 
-    protected static boolean getBoolean(JsonObject json, String name) {
+    public static boolean getBoolean(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsBoolean();
     }
 
-    protected static boolean getBoolean(JsonObject json, String name, boolean defval) {
+    public static boolean getBoolean(JsonObject json, String name, boolean defval) {
         if (json.has(name)) {
             return getBoolean(json, name);
         }
         return defval;
     }
 
-    protected static void addBoolean(JsonObject json, String name, boolean b) {
+    public static void addBoolean(JsonObject json, String name, boolean b) {
         json.addProperty(name, b);
     }
 
-    protected static int getInt(JsonObject json, String name) {
+    public static int getInt(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsInt();
     }
 
-    protected static int getInt(JsonObject json, String name, int defval) {
+    public static int getInt(JsonObject json, String name, int defval) {
         if (json.has(name)) {
             return getInt(json, name);
         }
         return defval;
     }
 
-    protected static void addInt(JsonObject json, String name, int i) {
+    public static void addInt(JsonObject json, String name, int i) {
         json.addProperty(name, i);
     }
 
-    protected static float getFloat(JsonObject json, String name) {
+    public static float getFloat(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsFloat();
     }
 
-    protected static float getFloat(JsonObject json, String name, float defval) {
+    public static float getFloat(JsonObject json, String name, float defval) {
         if (json.has(name)) {
             return getFloat(json, name);
         }
         return defval;
     }
 
-    protected static void addFloat(JsonObject json, String name, float f) {
+    public static void addFloat(JsonObject json, String name, float f) {
         json.addProperty(name, f);
     }
 
-    protected static String getString(JsonObject json, String name) {
+    public static String getString(JsonObject json, String name) {
         return json.getAsJsonPrimitive(name).getAsString();
     }
 
-    protected static String getString(JsonObject json, String name, String defval) {
+    public static String getString(JsonObject json, String name, String defval) {
         if (json.has(name)) {
             return getString(json, name);
         }
         return defval;
     }
 
-    protected static void addString(JsonObject json, String name, String string) {
+    public static void addString(JsonObject json, String name, String string) {
         json.addProperty(name, string);
     }
 
-    protected static <T extends Parsable> T getObject(JsonObject json, Class<T> clazz) {
+    public static <T extends Parsable> T getObject(JsonObject json, Class<T> clazz) {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz);
     }
 
-    protected static <T extends Parsable> T getObject(JsonObject json, Class<T> clazz, T defval) {
+    public static <T extends Parsable> T getObject(JsonObject json, Class<T> clazz, T defval) {
         return getObject(json, clazz.getSimpleName().toLowerCase(), clazz, defval);
     }
 
-    protected static <T extends Parsable> T getObject(JsonObject json, String name, Class<T> clazz) {
+    public static <T extends Parsable> T getObject(JsonObject json, String name, Class<T> clazz) {
         return fromJson(json.get(name), clazz);
     }
 
-    protected static <T extends Parsable> T getObject(JsonObject json, String name, Class<T> clazz, T defval) {
+    public static <T extends Parsable> T getObject(JsonObject json, String name, Class<T> clazz, T defval) {
         if (json.has(name)) {
             return getObject(json, name, clazz);
         }
         return defval;
     }
 
-    protected static <T extends Parsable> void addObject(JsonObject json, T object, Class<T> clazz) {
+    public static <T extends Parsable> void addObject(JsonObject json, T object, Class<T> clazz) {
         addObject(json, clazz.getSimpleName().toLowerCase(), object, clazz);
     }
 
-    protected static <T extends Parsable> void addObject(JsonObject json, String name, T object, Class<T> clazz) {
+    public static <T extends Parsable> void addObject(JsonObject json, String name, T object, Class<T> clazz) {
         json.add(name, toJson(object, clazz));
     }
 
-    protected static <T extends Parsable> List<T> getList(JsonObject json, String name, Class<T> clazz) {
+    public static <T extends Parsable> List<T> getList(JsonObject json, String name, Class<T> clazz) {
         JsonArray array = json.getAsJsonArray(name);
         List<T> contents = new ArrayList<T>();
         for (JsonElement e : array) {
@@ -298,7 +297,7 @@ public abstract class SuperParser<T extends Parsable> {
         return contents;
     }
 
-    protected static <T extends Parsable> void addList(JsonObject json, String name, Collection<T> list, Class<T> clazz) {
+    public static <T extends Parsable> void addList(JsonObject json, String name, Collection<T> list, Class<T> clazz) {
         JsonArray array = new JsonArray();
         for (T element : list) {
             array.add(toJson(element, clazz));
@@ -306,15 +305,15 @@ public abstract class SuperParser<T extends Parsable> {
         json.add(name, array);
     }
 
-    protected static void addNull(JsonObject json, String name) {
+    public static void addNull(JsonObject json, String name) {
         json.add(name, JsonNull.INSTANCE);
     }
 
-    protected static boolean has(JsonObject json, Class clazz) {
+    public static boolean has(JsonObject json, Class clazz) {
         return json.has(clazz.getSimpleName().toLowerCase());
     }
 
-    protected static Class<?> getClass(JsonObject json) {
+    public static Class<?> getClass(JsonObject json) {
         String className = json.getAsJsonPrimitive("class").getAsString();
         for (Class clazz : classes) {
             if (clazz.getSimpleName().equals(className)) {
@@ -324,11 +323,11 @@ public abstract class SuperParser<T extends Parsable> {
         return null;
     }
 
-    protected static void addClass(JsonObject json, Class clazz) {
+    public static void addClass(JsonObject json, Class clazz) {
         json.addProperty("class", clazz.getSimpleName());
     }
 
-    protected static JsonElement getJsonHead(String json) {
+    public static JsonElement getJsonHead(String json) {
         return parser.parse(json);
     }
 

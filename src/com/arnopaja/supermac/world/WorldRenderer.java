@@ -36,7 +36,7 @@ public class WorldRenderer extends Renderer<World> {
 
         if (!dialogueDisplay.isDisplaying()) {
             batch.begin();
-            batch.draw(AssetLoader.pauseButton, 0, 0);
+            batch.draw(AssetLoader.getPauseButton(), 0, 0);
             batch.end();
         }
     }

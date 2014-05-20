@@ -116,8 +116,8 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
             @Override
             public Dialogue subrun(float delta) {
                 if (Inventory.getMain().take(getItem())) {
-                    if(getItem().isHealing()) AssetLoader.healingSound.play(Settings.getVolume());
-                    else AssetLoader.powerupSound.play(Settings.getVolume());
+                    if(getItem().isHealing()) AssetLoader.getSound("healing").play(Settings.getVolume());
+                    else AssetLoader.getSound("powerup").play(Settings.getVolume());
                     return getItem().use(getSource(), getDestination());
                 } else {
                     return new DialogueStep("You do not have any " + getItem() + "s left.", DialogueStyle.BATTLE_CONSOLE);

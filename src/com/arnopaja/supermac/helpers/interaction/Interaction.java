@@ -1,8 +1,8 @@
 package com.arnopaja.supermac.helpers.interaction;
 
 import com.arnopaja.supermac.GameScreen;
-import com.arnopaja.supermac.helpers.load.Parsable;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.Parsable;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

@@ -1,0 +1,17 @@
+{
+    "class" : "Config",
+    "version" : "macalester",
+    "tiles file" : "images/tiles.txt",
+    "sprites file" : "images/sprites.txt",
+    "pause image" : "images/pause.png",
+    "characters directory" : "characters",
+    "maps directory" : "maps",
+    "music file" : "music/music.txt",
+    "sounds file" : "sounds/sounds.txt",
+    "items file" : "items.txt",
+    "spells file" : "spells.txt",
+    "dialogue file" : "dialogues.txt",
+    "clean dialogue file" : "dialogues_clean.txt",
+    "plot file" : "plot.txt",
+    "entities file" : "entities.txt"
+}

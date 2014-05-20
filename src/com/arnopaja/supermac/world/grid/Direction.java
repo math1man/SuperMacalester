@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.world.grid;
 
-import com.arnopaja.supermac.helpers.load.Parsable;
+import com.arnopaja.supermac.helpers.Parsable;
 import com.badlogic.gdx.math.Vector2;
 
 /**

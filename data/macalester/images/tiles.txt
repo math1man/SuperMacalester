@@ -1,0 +1,331 @@
+{
+    "file" : "landscape_tiles.png",
+    "tiles" : [
+        {
+            "name" : "big tree",
+            "key" : "tb",
+            "x" : 0,
+            "y" : 0,
+            "width" : 2,
+            "height" : 2
+        },
+        {
+            "name" : "small tree",
+            "key" : "ts",
+            "x" : 2,
+            "y" : 0
+        },
+        {
+            "name" : "grass 0",
+            "key" : "g",
+            "x" : 3,
+            "y" : 0
+        },
+        {
+            "name" : "grass 1",
+            "key" : "g",
+            "x" : 4,
+            "y" : 0
+        },
+        {
+            "name" : "grass 2",
+            "key" : "g",
+            "x" : 5,
+            "y" : 0
+        },
+        {
+            "name" : "bush",
+            "key" : "b",
+            "x" : 6,
+            "y" : 0
+        },
+        {
+            "name" : "horizontal bush",
+            "key" : "bh",
+            "x" : 7,
+            "y" : 0
+        },
+        {
+            "name" : "horizontal flowering bush",
+            "key" : "bfh",
+            "x" : 8,
+            "y" : 0
+        },
+        {
+            "name" : "vertical bush",
+            "key" : "bv",
+            "x" : 9,
+            "y" : 0
+        },
+        {
+            "name" : "vertical flowering bush",
+            "key" : "bfv",
+            "x" : 10,
+            "y" : 0
+        },
+        {
+            "name" : "sidewalk",
+            "key" : "s",
+            "x" : 11,
+            "y" : 0
+        },
+        {
+            "name" : "red cobblestone",
+            "key" : "cr",
+            "x" : 0,
+            "y" : 2
+        },
+        {
+            "name" : "cobblestone",
+            "key" : "c",
+            "x" : 1,
+            "y" : 2
+        },
+        {
+            "name" : "asphalt",
+            "key" : "a",
+            "x" : 5,
+            "y" : 4
+        },
+        {
+            "name" : "asphalt with horizontal line",
+            "key" : "ah",
+            "x" : 4,
+            "y" : 3
+        },
+        {
+            "name" : "asphalt with vertical line",
+            "key" : "av",
+            "x" : 4,
+            "y" : 4
+        },
+        {
+            "name" : "asphalt to grass east",
+            "key" : "ae",
+            "x" : 0,
+            "y" : 3
+        },
+        {
+            "name" : "asphalt to grass west",
+            "key" : "aw",
+            "x" : 0,
+            "y" : 3,
+            "flipX" : false,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to grass north",
+            "key" : "an",
+            "x" : 0,
+            "y" : 4
+        },
+        {
+            "name" : "asphalt to grass south",
+            "key" : "as",
+            "x" : 0,
+            "y" : 4,
+            "flipX" : true,
+            "flipY" : false
+        },
+        {
+            "name" : "asphalt to grass northeast",
+            "key" : "ane",
+            "x" : 2,
+            "y" : 3
+        },
+        {
+            "name" : "asphalt to grass southeast",
+            "key" : "ase",
+            "x" : 2,
+            "y" : 3,
+            "flipX" : true,
+            "flipY" : false
+        },
+        {
+            "name" : "asphalt to grass southwest",
+            "key" : "asw",
+            "x" : 2,
+            "y" : 3,
+            "flipX" : true,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to grass northwest",
+            "key" : "anw",
+            "x" : 2,
+            "y" : 3,
+            "flipX" : false,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to cobblestone east",
+            "key" : "ace",
+            "x" : 6,
+            "y" : 3,
+            "flipX" : false,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to cobblestone west",
+            "key" : "acw",
+            "x" : 6,
+            "y" : 3
+        },
+        {
+            "name" : "asphalt to cobblestone north",
+            "key" : "acn",
+            "x" : 5,
+            "y" : 3
+        },
+        {
+            "name" : "asphalt to cobblestone south",
+            "key" : "acs",
+            "x" : 5,
+            "y" : 3,
+            "flipX" : true,
+            "flipY" : false
+        },
+        {
+            "name" : "asphalt to cobblestone northeast",
+            "key" : "acne",
+            "x" : 6,
+            "y" : 4,
+            "flipX" : false,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to cobblestone southeast",
+            "key" : "acse",
+            "x" : 6,
+            "y" : 4,
+            "flipX" : true,
+            "flipY" : true
+        },
+        {
+            "name" : "asphalt to cobblestone southwest",
+            "key" : "acsw",
+            "x" : 6,
+            "y" : 4,
+            "flipX" : true,
+            "flipY" : false
+        },
+        {
+            "name" : "asphalt to cobblestone northwest",
+            "key" : "acnw",
+            "x" : 6,
+            "y" : 4
+        },
+        {
+            "name" : "asteroid",
+            "key" : "ast",
+            "frames" : 12,
+            "duration" : 0.5,
+            "width" : 3,
+            "height" : 3,
+            "x" : 17,
+            "y" : 0,
+            "x1" : 20,
+            "y1" : 0,
+            "x2" : 23,
+            "y2" : 0,
+            "x3" : 26,
+            "y3" : 0,
+            "x4" : 29,
+            "y4" : 0,
+            "x5" : 32,
+            "y5" : 0,
+            "x6" : 35,
+            "y6" : 0,
+            "x7" : 32,
+            "y7" : 0,
+            "x8" : 29,
+            "y8" : 0,
+            "x9" : 26,
+            "y9" : 0,
+            "x10" : 23,
+            "y10" : 0,
+            "x11" : 20,
+            "y11" : 0
+        },
+        {
+            "name" : "weyerhauser",
+            "key" : "_we",
+            "x" : 0,
+            "y" : 5,
+            "width" : 24,
+            "height" : 12
+        },
+        {
+            "name" : "campus center",
+            "key" : "_cc",
+            "x" : 24,
+            "y" : 5,
+            "width" : 20,
+            "height" : 16
+        },
+        {
+            "name" : "chapel",
+            "key" : "_ch",
+            "x" : 44,
+            "y" : 5,
+            "width" : 14,
+            "height" : 16
+        },
+        {
+            "name" : "kirk",
+            "key" : "_ki",
+            "x" : 58,
+            "y" : 29,
+            "width" : 32,
+            "height" : 16
+        },
+        {
+            "name" : "leonard center",
+            "key" : "_lc",
+            "x" : 58,
+            "y" : 5,
+            "width" : 52,
+            "height" : 24
+        },
+        {
+            "name" : "library",
+            "key" : "_li",
+            "x" : 0,
+            "y" : 17,
+            "width" : 16,
+            "height" : 12
+        },
+        {
+            "name" : "old main",
+            "key" : "_om",
+            "x" : 16,
+            "y" : 17,
+            "width" : 6,
+            "height" : 12
+        },
+        {
+            "name" : "olin",
+            "key" : "_ol",
+            "x" : 42,
+            "y" : 21,
+            "width" : 16,
+            "height" : 32
+        },
+        {
+            "name" : "olin rice stairs",
+            "key" : "_or",
+            "x" : 38,
+            "y" : 43,
+            "width" : 3,
+            "height" : 5
+        },
+        {
+            "name" : "rice",
+            "key" : "_ri",
+            "x" : 34,
+            "y" : 53,
+            "width" : 24,
+            "height" : 16
+        }
+    ]
+}

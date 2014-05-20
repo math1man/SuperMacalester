@@ -14,7 +14,7 @@ import com.arnopaja.supermac.helpers.interaction.Interaction;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.interaction.MultiInteraction;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
@@ -148,12 +148,11 @@ public class Battle implements Controller, Interaction {
 
     @Override
     public Music getMusic() {
-        // TODO: handle music via the parser maybe?
-//        if (isBossFight()) {
-//            return AssetLoader.bossMusic;
-//        } else {
-            return AssetLoader.battleMusic;
-//        }
+        if (isBossFight()) {
+            return AssetLoader.getMusic("boss");
+        } else {
+            return AssetLoader.getMusic("battle");
+        }
     }
 
     public Party<Hero> getMainParty() {

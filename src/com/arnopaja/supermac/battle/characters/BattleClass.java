@@ -1,7 +1,7 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.Parsable;
+import com.arnopaja.supermac.helpers.Parsable;
 import com.badlogic.gdx.audio.Sound;
 
 /**
@@ -72,9 +72,9 @@ public enum BattleClass implements Parsable {     // hp  m   a   d   s   speed
     }
 
     public static void init() {
-        COMP_SCI.magicSound = AssetLoader.compSciMagic;
-        ECON.magicSound = AssetLoader.healingSound;
-        NAT_SCI.magicSound = AssetLoader.natSciMagic;
+        COMP_SCI.magicSound = AssetLoader.getSound("comp sci magic");
+        ECON.magicSound = AssetLoader.getSound("healing");
+        NAT_SCI.magicSound = AssetLoader.getSound("nat sci magic");
         HUMANITIES.magicSound = null;
     }
 }

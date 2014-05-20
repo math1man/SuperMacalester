@@ -4,8 +4,8 @@ import com.arnopaja.supermac.battle.characters.BattleCharacter;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.load.Parsable;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.Parsable;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

@@ -1,6 +1,6 @@
 package com.arnopaja.supermac.battle.characters;
 
-import com.arnopaja.supermac.helpers.load.Parsable;
+import com.arnopaja.supermac.helpers.Parsable;
 import com.arnopaja.supermac.inventory.*;
 
 import java.util.Collection;

@@ -47,7 +47,7 @@ public class SplashScreen implements Screen {
         spriteBatch = new SpriteBatch();
         splash = new Texture(Gdx.files.internal("data/splash.png"));
         splashRegion = new TextureRegion(splash, 0, 0, 800, 480);
-        render(0);
+        render(1f / 60);
     }
 
     @Override

@@ -34,7 +34,7 @@ public enum Interactions implements Interaction {
     RESET {
         @Override
         public void run(GameScreen screen) {
-            AssetLoader.prefs.clear();
+            AssetLoader.getPrefs().clear();
             Settings.save(true); // resave Settings
             screen.load(); // will load the default
             END_DIALOGUE.run(screen);

@@ -2,7 +2,7 @@ package com.arnopaja.supermac.world;
 
 import com.arnopaja.supermac.helpers.Controller;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
-import com.arnopaja.supermac.helpers.load.SuperParser;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.world.grid.Grid;
 import com.arnopaja.supermac.world.objects.Entity;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
@@ -66,7 +66,7 @@ public class World implements Controller {
 
     @Override
     public Music getMusic() {
-        return AssetLoader.worldMusic;
+        return AssetLoader.getMusic("world");
     }
 
     public Map<String, Grid> getGridMap() {
@@ -86,7 +86,7 @@ public class World implements Controller {
     public static class Parser extends SuperParser<World> {
         @Override
         public World fromJson(JsonElement element) {
-            for (Grid map : AssetLoader.grids.values()) {
+            for (Grid map : AssetLoader.getGrids().values()) {
                 map.clear();
             }
             JsonObject object = element.getAsJsonObject();
@@ -103,7 +103,7 @@ public class World implements Controller {
             if (mainCharacter == null) {
                 throw new IllegalArgumentException("Main character not found!");
             }
-            return new World(AssetLoader.grids, mainCharacter);
+            return new World(AssetLoader.getGrids(), mainCharacter);
         }
 
         @Override
