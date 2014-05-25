@@ -117,13 +117,13 @@ public class InputHandler implements InputProcessor {
 
     private Direction getDirection(float gameX, float gameY) {
         if (gameY < SIDE_BUTTON_WIDTH) {
-            return Direction.EAST;
-        } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
-            return Direction.WEST;
-        } else if (gameX < SIDE_BUTTON_WIDTH) {
             return Direction.NORTH;
-        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+        } else if (gameY > gameHeight - SIDE_BUTTON_WIDTH) {
             return Direction.SOUTH;
+        } else if (gameX < SIDE_BUTTON_WIDTH) {
+            return Direction.WEST;
+        } else if (gameX > gameWidth - SIDE_BUTTON_WIDTH) {
+            return Direction.EAST;
         } else {
             return null;
         }
@@ -132,13 +132,13 @@ public class InputHandler implements InputProcessor {
     private Direction getDirection(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                return Direction.EAST;
-            case Input.Keys.RIGHT:
-                return Direction.SOUTH;
-            case Input.Keys.DOWN:
-                return Direction.WEST;
-            case Input.Keys.LEFT:
                 return Direction.NORTH;
+            case Input.Keys.RIGHT:
+                return Direction.EAST;
+            case Input.Keys.DOWN:
+                return Direction.SOUTH;
+            case Input.Keys.LEFT:
+                return Direction.WEST;
             default:
                 return null;
         }

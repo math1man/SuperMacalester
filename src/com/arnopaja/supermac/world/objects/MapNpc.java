@@ -27,7 +27,7 @@ public class MapNpc extends MapCharacter {
     }
 
     public MapNpc(String name, Location location) {
-        this(name, location, Direction.WEST);
+        this(name, location, Direction.SOUTH);
     }
 
     public MapNpc(String name, Location location, Direction direction) {
@@ -90,7 +90,7 @@ public class MapNpc extends MapCharacter {
             JsonObject object = element.getAsJsonObject();
             String name = getString(object, "name", null);
             Location location = getObject(object, Location.class, null);
-            Direction direction = getObject(object, Direction.class, Direction.WEST);
+            Direction direction = getObject(object, Direction.class, Direction.SOUTH);
             boolean isInteractable = getBoolean(object, "interactable", false);
             Interaction interaction = getObject(object, Interaction.class, Interactions.NULL);
             boolean canMove = getBoolean(object, "canMove", MapNpc.DEFAULT_CAN_MOVE);

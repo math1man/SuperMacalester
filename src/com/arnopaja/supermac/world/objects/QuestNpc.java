@@ -27,7 +27,7 @@ public class QuestNpc extends MapNpc {
      * @param isPrimary
      */
     public QuestNpc(Location location, Interaction interaction, boolean isPrimary) {
-        this(null, location, Direction.WEST, interaction, isPrimary);
+        this(null, location, Direction.SOUTH, interaction, isPrimary);
     }
 
     /**
@@ -68,7 +68,7 @@ public class QuestNpc extends MapNpc {
             JsonObject object = element.getAsJsonObject();
             String name = getString(object, "name", null);
             Location location = getObject(object, Location.class);
-            Direction direction = getObject(object, Direction.class, Direction.WEST);
+            Direction direction = getObject(object, Direction.class, Direction.SOUTH);
             Interaction interaction = getObject(object, Interaction.class, Interactions.NULL);
             boolean isPrimary = getBoolean(object, "primary", true);
             return new QuestNpc(name, location, direction, interaction, isPrimary);
