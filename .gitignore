@@ -3,3 +3,4 @@
 .temp/*
 out/*
 *.iml
+*/.DS_Store
