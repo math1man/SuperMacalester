@@ -18,7 +18,7 @@ public class MainMapCharacter extends MapCharacter {
     private Direction movingDirection = null;
 
     public MainMapCharacter(Location location) {
-        this(location, Direction.WEST);
+        this(location, Direction.SOUTH);
     }
 
     public MainMapCharacter(Location location, Direction direction) {
@@ -68,7 +68,7 @@ public class MainMapCharacter extends MapCharacter {
         public MainMapCharacter fromJson(JsonElement element) {
             JsonObject object = element.getAsJsonObject();
             Location location = getObject(object, Location.class);
-            Direction direction = getObject(object, Direction.class, Direction.WEST);
+            Direction direction = getObject(object, Direction.class, Direction.SOUTH);
             return new MainMapCharacter(location, direction);
         }
 

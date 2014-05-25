@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum Direction implements Parsable {
 
-    EAST, SOUTH, WEST, NORTH;
+    NORTH, EAST, SOUTH, WEST;
 
     public static Direction getOpposite(Direction dir) {
         return Direction.values()[(dir.ordinal() + 2) % 4];
@@ -25,16 +25,16 @@ public enum Direction implements Parsable {
             return new Vector2(position);
         }
         switch (dir) {
-            case EAST:
+            case NORTH:
                 destination = new Vector2(position.x, position.y-1);
                 break;
-            case SOUTH:
+            case EAST:
                 destination = new Vector2(position.x+1, position.y);
                 break;
-            case WEST:
+            case SOUTH:
                 destination = new Vector2(position.x, position.y+1);
                 break;
-            case NORTH:
+            case WEST:
                 destination = new Vector2(position.x-1, position.y);
                 break;
             default:
@@ -55,13 +55,13 @@ public enum Direction implements Parsable {
     public static Direction getDirectionToward(Vector2 from, Vector2 toward) {
         float angle = toward.cpy().sub(from).angle();
         if (angle < 45 || angle >= 315) {
-            return Direction.SOUTH;
-        } else if (angle < 135) {
-            return Direction.WEST;
-        } else if (angle < 225) {
-            return Direction.NORTH;
-        } else {
             return Direction.EAST;
+        } else if (angle < 135) {
+            return Direction.SOUTH;
+        } else if (angle < 225) {
+            return Direction.WEST;
+        } else {
+            return Direction.NORTH;
         }
     }
 }

@@ -10,7 +10,7 @@
                 "x" : 40,
                 "y" : 35
             },
-            "direction" : "West"
+            "direction" : "south"
         },
         {
             "class" : "MapNpc",
@@ -21,7 +21,7 @@
                 "x" : 33,
                 "y" : 33
             },
-            "direction" : "West",
+            "direction" : "south",
             "canMove" : false,
             "interactable" : true,
             "interaction" : {
@@ -41,7 +41,7 @@
                 "x" : 33,
                 "y" : 36
             },
-            "direction" : "North",
+            "direction" : "west",
             "interactable" : true,
             "interaction" : {
                 "class" : "Interaction",
@@ -60,7 +60,7 @@
                 "x" : 42,
                 "y" : 39
             },
-            "direction" : "South",
+            "direction" : "east",
             "interactable" : true,
             "interaction" : {
                 "class" : "Interaction",
