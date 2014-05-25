@@ -77,7 +77,12 @@ public class Effect {
     }
 
     public static enum Type {
-        HEALTH("h"), MANA("m"), ATTACK("a"), DEFENSE("d"), SPEED("s"), SPECIAL("z");
+        HEALTH("h"),
+        MANA("m"),
+        ATTACK("a"),
+        DEFENSE("d"),
+        SPEED("s"),
+        SPECIAL("z");
 
         private final String prefix;
 

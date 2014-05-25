@@ -1,11 +1,11 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.load.EffectParser;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -17,56 +17,48 @@ import java.util.List;
 public class Item extends GenericItem {
 
     private List<Effect> effects;
+    private Powerup powerup;
 
     protected Item(int id, String name, int value, List<Effect> effects) {
         super(id, name, value);
         this.effects = effects;
+        this.powerup = new Powerup(effects);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
         String dialogue = source + " uses " + this + " on " + destination + "!";
-        for(Effect e : effects) {
-            switch(e.type) {
-                case HEALTH:
-                    if(e.value == 0) {
-                        if(destination.isFainted()) {
-                            destination.resurrect();
-                            dialogue += "\n" + destination + " has been resurrected!";
-                        } else {
-                            dialogue += "\nIt had no effect!";
-                        }
-                    } else {
-                        destination.modifyHealth(e.value);
-                        if(e.value > 0) dialogue += "\n"  + e.value + " health restored!";
-                        else dialogue += "\n" + e.value + " damage done!";
-                    }
-                    break;
-                case MANA:
-                    destination.modifyMana(e.value);
-                    if(e.value > 0) dialogue += "\n"  + e.value + " mana restored!";
-                    else dialogue += "\n" + e.value + " mana burned!";
-                    break;
-                case ATTACK:
-                    dialogue += "\nAttack Up!";
-                    destination.setPowerup(e);
-                    break;
-                case DEFENSE:
-                    dialogue += "\nDefense Up!";
-                    destination.setPowerup(e);
-                    break;
-                case SPEED:
-                    dialogue += "\nSpeed Up!";
-                    destination.setPowerup(e);
-                    break;
-                case SPECIAL:
-                    dialogue += "\nSpecial Up!";
-                    destination.setPowerup(e);
-                    break;
-                default:
-                    dialogue += "\nNothing happened, because this isn't even a real item (yet)!";
-                    break;
-            }
+        boolean affected = false;
+        if (isResurrect() && destination.isFainted()) {
+            destination.resurrect();
+            dialogue += "\n" + destination + " has been resurrected!";
+            affected = true;
         }
+        if (isHealth()) {
+            int health = powerup.getValue(Effect.Type.HEALTH);
+            destination.modifyHealth(health);
+            if (health > 0) {
+                dialogue += "\n" + health + " health restored!";
+            } else {
+                dialogue += "\n" + (-health) + " damage done!";
+            }
+            affected = true;
+        }
+        if (isMana()) {
+            int mana = powerup.getValue(Effect.Type.MANA);
+            destination.modifyMana(mana);
+            if (mana > 0) {
+                dialogue += "\n" + mana + " mana restored!";
+            } else {
+                dialogue += "\n" + (-mana) + " mana burned!";
+            }
+            affected = true;
+        }
+        if (isStatus()) {
+            dialogue += "<d>" + powerup.statusDialogue();
+            destination.powerup(powerup);
+            affected = true;
+        }
+        if (!affected) dialogue += "\nIt had no effect!";
         return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
@@ -75,12 +67,23 @@ public class Item extends GenericItem {
     }
 
     public boolean isHealing() {
-        for (Effect effect : effects) {
-            if (effect.isHealing()) {
-                return true;
-            }
-        }
-        return false;
+        return powerup.getValue(Effect.Type.HEALTH) > 0;
+    }
+
+    public boolean isResurrect() {
+        return powerup.isResurrect();
+    }
+
+    public boolean isHealth() {
+        return powerup.has(Effect.Type.HEALTH);
+    }
+
+    public boolean isMana() {
+        return powerup.has(Effect.Type.MANA);
+    }
+
+    public boolean isStatus() {
+        return powerup.isStatus();
     }
 
     public static class Parser extends SuperParser<Item> {

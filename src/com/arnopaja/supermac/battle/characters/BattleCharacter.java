@@ -21,8 +21,7 @@ public abstract class BattleCharacter implements Parsable {
     protected SpellBook spellBook;
     protected boolean hasFled;
     protected boolean isDefending;
-    // TODO: allow for multiple effects
-    protected Effect powerup;
+    protected Powerup powerup;
 
     protected BattleCharacter(String name, BattleClass battleClass, int level, int currentHealth, int currentMana) {
         this.name = name;
@@ -33,7 +32,7 @@ public abstract class BattleCharacter implements Parsable {
         this.hasFled = false;
         this.isDefending = false;
         this.spellBook = new SpellBook();
-        this.powerup = null;
+        this.powerup = new Powerup();
     }
 
     public void addSpell(Spell spell) {
@@ -87,22 +86,18 @@ public abstract class BattleCharacter implements Parsable {
     public int getMaxHealth() { return maxHealth; }
     public int getMaxMana() { return maxMana; }
     public int getAttack() {
-        if(this.isPoweredUp() && powerup.isAttack()) return attack + powerup.value;
-        else return attack;
+        return attack + powerup.getValue(Effect.Type.ATTACK);
     }
     public int getDefense() {
         int modifiedDefense = defense;
         if (isDefending) modifiedDefense *= 2;
-        if (this.isPoweredUp() && powerup.isDefense()) modifiedDefense += powerup.value;
-        return modifiedDefense;
+        return modifiedDefense + powerup.getValue(Effect.Type.DEFENSE);
     }
     public int getSpecial() {
-        if(this.isPoweredUp() && powerup.isSpecial()) return special + powerup.value;
-        else return special;
+        return special + powerup.getValue(Effect.Type.SPECIAL);
     }
     public int getSpeed() {
-        if(this.isPoweredUp() && powerup.isSpeed()) return speed + powerup.value;
-        return speed;
+        return speed + powerup.getValue(Effect.Type.SPEED);
     }
     public int getHealth() { return currentHealth; }
     public int getMana() { return currentMana; }
@@ -196,24 +191,20 @@ public abstract class BattleCharacter implements Parsable {
         return isDefending;
     }
 
-    public void setPowerup(Effect e) {
-        if (e.isStatus()) this.powerup = e;
-        else System.out.println("An invalid effect was passed as a powerup!");
+    public void powerup(Powerup powerup) {
+        this.powerup.combine(powerup);
     }
 
-    public boolean isPoweredUp()
-    {
-        return powerup != null;
+    public boolean isPoweredUp() {
+        return !powerup.isEmpty();
     }
 
-    public Effect getPowerup()
-    {
+    public Powerup getPowerup() {
         return powerup;
     }
 
-    public void clearPowerup()
-    {
-        powerup = null;
+    public void clearPowerup() {
+        powerup.clear();
     }
 
     protected void updateStats() {

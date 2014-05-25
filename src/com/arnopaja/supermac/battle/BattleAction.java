@@ -126,7 +126,7 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
 
             @Override
             protected boolean canRun() {
-                return !getDestination().isFainted() || getItem().isHealing();
+                return !getDestination().isFainted() || getItem().isResurrect();
             }
         };
     }
