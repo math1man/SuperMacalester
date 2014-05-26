@@ -29,7 +29,10 @@
                                 {
                                     "class" : "Enemy",
                                     "name" : "Dave",
-                                    "battleclass" : "COMP_SCI",
+                                    "battleclass" : {
+                                        "class" : "BattleClass",
+                                        "name" : "Comp Sci"
+                                    },
                                     "level" : 1,
                                     "item" : {
                                         "class" : "Item",
@@ -193,19 +196,28 @@
                         {
                             "class" : "Enemy",
                             "name" : "SJW1",
-                            "battleclass" : "humanities",
+                            "battleclass" : {
+                                "class" : "BattleClass",
+                                "name" : "Humanities"
+                            },
                             "level" : 1
                         },
                         {
                             "class" : "Enemy",
                             "name" : "SJW2",
-                            "battleclass" : "humanities",
+                            "battleclass" : {
+                                "class" : "BattleClass",
+                                "name" : "Humanities"
+                            },
                             "level" : 1
                         },
                         {
                             "class" : "Enemy",
                             "name" : "SJW3",
-                            "battleclass" : "humanities",
+                            "battleclass" : {
+                                "class" : "BattleClass",
+                                "name" : "Humanities"
+                            },
                             "level" : 1
                         }
                     ]
@@ -245,7 +257,10 @@
             "hero" : {
                 "class" : "Hero",
                 "name" : "Baal",
-                "battleclass" : "ECON",
+                "battleclass" : {
+                    "class" : "BattleClass",
+                    "name" : "Econ"
+                },
                 "level" : 2,
                 "spells" : [
                     {

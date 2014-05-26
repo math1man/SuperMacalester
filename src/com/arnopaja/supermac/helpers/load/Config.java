@@ -26,10 +26,11 @@ public class Config implements Parsable {
     private final String cleanDialogueFile;
     private final String plotFile;
     private final String entitiesFile;
+    private final String battleClassesFile;
 
     public Config(String version, String tilesFile, String spritesFile, String pauseImageFile, String charsDir,
                   String mapsDir, String musicFile, String soundsFile, String itemsFile, String spellsFile,
-                  String dialogueFile, String cleanDialogueFile, String plotFile, String entitiesFile) {
+                  String dialogueFile, String cleanDialogueFile, String plotFile, String entitiesFile, String battleClassesFile) {
         this.version = version;
         this.tilesFile = tilesFile;
         this.spritesFile = spritesFile;
@@ -44,6 +45,7 @@ public class Config implements Parsable {
         this.cleanDialogueFile = cleanDialogueFile;
         this.plotFile = plotFile;
         this.entitiesFile = entitiesFile;
+        this.battleClassesFile = battleClassesFile;
     }
 
     public String getVersion() {
@@ -102,6 +104,10 @@ public class Config implements Parsable {
         return getHandle(getFullPath(entitiesFile));
     }
 
+    public FileHandle getBattleClassesFile() {
+        return getHandle(getFullPath(battleClassesFile));
+    }
+
     public FileHandle getFontFile() {
         return getHandle("font/text.fnt");
     }
@@ -140,9 +146,10 @@ public class Config implements Parsable {
             String cleanDialogueFile = getString(object, "clean dialogue file");
             String plotFile = getString(object, "plot file");
             String entitiesFile = getString(object, "entities file");
+            String battleClassesFile = getString(object, "battle classes file");
             return new Config(version, tilesFile, spritesFile, pauseImageFile, charsDir,
                     mapsDir, musicDir, soundsDir, itemsFile, spellsFile,
-                    dialogueFile, cleanDialogueFile, plotFile, entitiesFile);
+                    dialogueFile, cleanDialogueFile, plotFile, entitiesFile, battleClassesFile);
         }
 
         @Override
@@ -162,6 +169,7 @@ public class Config implements Parsable {
             addString(json, "clean dialogue file", object.cleanDialogueFile);
             addString(json, "plot file", object.plotFile);
             addString(json, "entities file", object.entitiesFile);
+            addString(json, "battle classes file", object.battleClassesFile);
             return json;
         }
     }

@@ -1,0 +1,49 @@
+{
+    "comp sci" : {
+        "class" : "BattleClass",
+        "name" : "Comp Sci",
+        "special type" : "black",
+        "hp" : 30,
+        "mana" : 10,
+        "attack" : 5,
+        "defense" : 10,
+        "special" : 25,
+        "speed" : 15,
+        "sound" : "comp sci magic"
+    },
+    "econ" : {
+        "class" : "BattleClass",
+        "name" : "Econ",
+        "special type" : "white",
+        "hp" : 40,
+        "mana" : 5,
+        "attack" : 20,
+        "defense" : 15,
+        "special" : 10,
+        "speed" : 5,
+        "sound" : "healing"
+    },
+    "nat sci" : {
+        "class" : "BattleClass",
+        "name" : "Nat Sci",
+        "special type" : "red",
+        "hp" : 35,
+        "mana" : 5,
+        "attack" : 10,
+        "defense" : 10,
+        "special" : 15,
+        "speed" : 10,
+        "sound" : "nat sci magic"
+    },
+    "humanities" : {
+        "class" : "BattleClass",
+        "name" : "Humanities",
+        "special type" : "none",
+        "hp" : 30,
+        "mana" : 0,
+        "attack" : 20,
+        "defense" : 10,
+        "special" : 5,
+        "speed" : 20
+    }
+}

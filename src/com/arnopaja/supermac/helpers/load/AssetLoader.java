@@ -68,6 +68,7 @@ public class AssetLoader {
         loadSounds(config.getSoundsFile());
         loadItems(config.getItemsFile());
         loadSpells(config.getSpellsFile());
+        loadBattleClasses(config.getBattleClassesFile());
         loadDialogues(config.getDialogueFile());
         loadCleanDialogues(config.getCleanDialogueFile());
 
@@ -199,7 +200,6 @@ public class AssetLoader {
             Sound s = Gdx.audio.newSound(file.parent().child(sound));
             sounds.put(name, s);
         }
-        BattleClass.init(); // needed to init the magic sounds
     }
 
     private static void loadItems(FileHandle file) {
@@ -208,6 +208,10 @@ public class AssetLoader {
 
     private static void loadSpells(FileHandle file) {
         SuperParser.parseAll(file, Spell.class);
+    }
+
+    private static void loadBattleClasses(FileHandle file) {
+        SuperParser.parseAll(file, BattleClass.class);
     }
 
     private static void loadDialogues(FileHandle file) {
