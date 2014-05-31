@@ -1,5 +1,5 @@
 {
-    "file" : "entities.png",
+    "file" : "sprites.png",
     "sprites" : [
         {
             "name" : "brown closed chest",

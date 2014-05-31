@@ -22,15 +22,15 @@ public class Config implements Parsable {
     private final String soundsFile;
     private final String itemsFile;
     private final String spellsFile;
+    private final String battleClassesFile;
     private final String dialogueFile;
     private final String cleanDialogueFile;
     private final String plotFile;
     private final String entitiesFile;
-    private final String battleClassesFile;
 
     public Config(String version, String tilesFile, String spritesFile, String pauseImageFile, String charsDir,
                   String mapsDir, String musicFile, String soundsFile, String itemsFile, String spellsFile,
-                  String dialogueFile, String cleanDialogueFile, String plotFile, String entitiesFile, String battleClassesFile) {
+                  String battleClassesFile, String dialogueFile, String cleanDialogueFile, String plotFile, String entitiesFile) {
         this.version = version;
         this.tilesFile = tilesFile;
         this.spritesFile = spritesFile;
@@ -41,11 +41,11 @@ public class Config implements Parsable {
         this.soundsFile = soundsFile;
         this.itemsFile = itemsFile;
         this.spellsFile = spellsFile;
+        this.battleClassesFile = battleClassesFile;
         this.dialogueFile = dialogueFile;
         this.cleanDialogueFile = cleanDialogueFile;
         this.plotFile = plotFile;
         this.entitiesFile = entitiesFile;
-        this.battleClassesFile = battleClassesFile;
     }
 
     public String getVersion() {
@@ -88,6 +88,10 @@ public class Config implements Parsable {
         return getHandle(getFullPath(spellsFile));
     }
 
+    public FileHandle getBattleClassesFile() {
+        return getHandle(getFullPath(battleClassesFile));
+    }
+
     public FileHandle getDialogueFile() {
         return getHandle(getFullPath(dialogueFile));
     }
@@ -102,10 +106,6 @@ public class Config implements Parsable {
 
     public FileHandle getEntitiesFile() {
         return getHandle(getFullPath(entitiesFile));
-    }
-
-    public FileHandle getBattleClassesFile() {
-        return getHandle(getFullPath(battleClassesFile));
     }
 
     public FileHandle getFontFile() {
@@ -142,14 +142,14 @@ public class Config implements Parsable {
             String soundsDir = getString(object, "sounds file");
             String itemsFile = getString(object, "items file");
             String spellsFile = getString(object, "spells file");
+            String battleClassesFile = getString(object, "battle classes file");
             String dialogueFile = getString(object, "dialogue file");
             String cleanDialogueFile = getString(object, "clean dialogue file");
             String plotFile = getString(object, "plot file");
             String entitiesFile = getString(object, "entities file");
-            String battleClassesFile = getString(object, "battle classes file");
             return new Config(version, tilesFile, spritesFile, pauseImageFile, charsDir,
                     mapsDir, musicDir, soundsDir, itemsFile, spellsFile,
-                    dialogueFile, cleanDialogueFile, plotFile, entitiesFile, battleClassesFile);
+                    battleClassesFile, dialogueFile, cleanDialogueFile, plotFile, entitiesFile);
         }
 
         @Override
@@ -165,11 +165,11 @@ public class Config implements Parsable {
             addString(json, "sounds file", object.soundsFile);
             addString(json, "items file", object.itemsFile);
             addString(json, "spells file", object.spellsFile);
+            addString(json, "battle classes file", object.battleClassesFile);
             addString(json, "dialogue file", object.dialogueFile);
             addString(json, "clean dialogue file", object.cleanDialogueFile);
             addString(json, "plot file", object.plotFile);
             addString(json, "entities file", object.entitiesFile);
-            addString(json, "battle classes file", object.battleClassesFile);
             return json;
         }
     }

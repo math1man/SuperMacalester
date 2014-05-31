@@ -42,7 +42,7 @@
                                 "x" : 47,
                                 "y" : 56
                             },
-                            "direction" : "North",
+                            "direction" : "West",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "remove" : {
@@ -72,7 +72,7 @@
                                 "x" : 44,
                                 "y" : 55
                             },
-                            "direction" : "south",
+                            "direction" : "east",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -91,7 +91,7 @@
                                 "x" : 44,
                                 "y" : 56
                             },
-                            "direction" : "south",
+                            "direction" : "east",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {
@@ -110,7 +110,7 @@
                                 "x" : 44,
                                 "y" : 57
                             },
-                            "direction" : "south",
+                            "direction" : "east",
                             "interaction" : {
                                 "class" : "Interaction",
                                 "dialogue" : {

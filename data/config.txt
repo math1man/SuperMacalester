@@ -10,9 +10,9 @@
     "sounds file" : "sounds/sounds.txt",
     "items file" : "items.txt",
     "spells file" : "spells.txt",
+    "battle classes file" : "battle_classes.txt",
     "dialogue file" : "dialogues.txt",
     "clean dialogue file" : "dialogues_clean.txt",
     "plot file" : "plot.txt",
-    "entities file" : "entities.txt",
-    "battle classes file" : "battle_classes.txt"
+    "entities file" : "entities.txt"
 }

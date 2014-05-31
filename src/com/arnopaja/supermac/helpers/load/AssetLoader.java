@@ -56,21 +56,21 @@ public class AssetLoader {
 
         config = c;
 
-        loadTiles(config.getTilesFile());
-        loadSprites(config.getSpritesFile());
-        loadPauseButton(config.getPauseImageFile());
-        loadCharacters(config.getCharsDir());
-        loadGrids(config.getMapsDir());
+        tiles = loadTiles(config.getTilesFile());
+        sprites = loadSprites(config.getSpritesFile());
+        pauseButton = loadPauseButton(config.getPauseImageFile());
+        characters = loadCharacters(config.getCharsDir());
+        grids = loadGrids(config.getMapsDir());
         // TODO: Give credit to Rolemusic for the music under the Creative Commons Attribution License
         // Artist: Rolemusic
         // Album: gigs n' contest
-        loadMusic(config.getMusicFile());
-        loadSounds(config.getSoundsFile());
-        loadItems(config.getItemsFile());
-        loadSpells(config.getSpellsFile());
-        loadBattleClasses(config.getBattleClassesFile());
-        loadDialogues(config.getDialogueFile());
-        loadCleanDialogues(config.getCleanDialogueFile());
+        music = loadMusic(config.getMusicFile());
+        sounds = loadSounds(config.getSoundsFile());
+        SuperParser.parseAll(config.getItemsFile(), GenericItem.class);
+        SuperParser.parseAll(config.getSpellsFile(), Spell.class);
+        SuperParser.parseAll(config.getBattleClassesFile(), BattleClass.class);
+        dialogues = SuperParser.parseAll(config.getDialogueFile(), Dialogue.class);
+        cleanDialogues = SuperParser.parseAll(config.getCleanDialogueFile(), Dialogue.class);
 
         font = new BitmapFont(config.getFontFile());
         shadow = new BitmapFont(config.getFontShadowFile());
@@ -79,40 +79,46 @@ public class AssetLoader {
         prefs = Gdx.app.getPreferences("com_arnopaja_supermac_" + config.getVersion());
     }
 
-    private static void loadTiles(FileHandle file) {
+    private static TileMap loadTiles(FileHandle file) {
         String config = file.readString();
         JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
-        Texture texture = getTexture(file.parent().child(SuperParser.getString(object, "file")));
-        JsonArray array = object.getAsJsonArray("tiles");
-        for (JsonElement e : array) {
-            JsonObject o = e.getAsJsonObject();
-            String tileKey = SuperParser.getString(o, "key");
-            int count = SuperParser.getInt(o, "frames", 1);
-            float duration = SuperParser.getFloat(o, "duration", 0);
-            int width = SuperParser.getInt(o, "width", 1);
-            int height = SuperParser.getInt(o, "height", 1);
-            boolean flipX = SuperParser.getBoolean(o, "flipX", false);
-            boolean flipY = SuperParser.getBoolean(o, "flipY", false);
-            int x = SuperParser.getInt(o, "x");
-            int y = SuperParser.getInt(o, "y");
-            TextureRegion[] frames = new TextureRegion[count];
-            frames[0] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
-            if (count > 1) {
-                for (int i=1; i<count; i++) {
-                    x = SuperParser.getInt(o, "x" + i);
-                    y = SuperParser.getInt(o, "y" + i);
-                    frames[i] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
+        TileMap tiles = new TileMap();
+        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+            JsonObject canvas = entry.getValue().getAsJsonObject();
+            Texture texture = getTexture(file.parent().child(SuperParser.getString(canvas, "file")));
+            JsonArray array = canvas.getAsJsonArray("tiles");
+            for (JsonElement e : array) {
+                JsonObject o = e.getAsJsonObject();
+                String tileKey = SuperParser.getString(o, "key");
+                int count = SuperParser.getInt(o, "frames", 1);
+                float duration = SuperParser.getFloat(o, "duration", 0);
+                int width = SuperParser.getInt(o, "width", 1);
+                int height = SuperParser.getInt(o, "height", 1);
+                boolean flipX = SuperParser.getBoolean(o, "flipX", false);
+                boolean flipY = SuperParser.getBoolean(o, "flipY", false);
+                int x = SuperParser.getInt(o, "x");
+                int y = SuperParser.getInt(o, "y");
+                TextureRegion[] frames = new TextureRegion[count];
+                frames[0] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
+                if (count > 1) {
+                    for (int i=1; i<count; i++) {
+                        x = SuperParser.getInt(o, "x" + i);
+                        y = SuperParser.getInt(o, "y" + i);
+                        frames[i] = SpriteUtils.makeSprite(texture, x, y, width, height, flipX, flipY);
+                    }
                 }
+                tiles.put(tileKey, new Animation(duration, frames));
             }
-            tiles.put(tileKey, new Animation(duration, frames));
         }
+        return tiles;
     }
 
-    private static void loadSprites(FileHandle file) {
+    private static Map<String, TextureRegion> loadSprites(FileHandle file) {
         String config = file.readString();
         JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
         Texture texture = getTexture(file.parent().child(SuperParser.getString(object, "file")));
         JsonArray array = object.getAsJsonArray("sprites");
+        Map<String, TextureRegion> sprites = new HashMap<String, TextureRegion>();
         for (JsonElement e : array) {
             JsonObject o = e.getAsJsonObject();
             String name = SuperParser.getString(o, "name");
@@ -121,13 +127,15 @@ public class AssetLoader {
             TextureRegion sprite = SpriteUtils.makeSprite(texture, x, y);
             sprites.put(name, sprite);
         }
+        return sprites;
     }
 
-    private static void loadPauseButton(FileHandle file) {
-        pauseButton = SpriteUtils.makeSprite(getTexture(file), 0, 0, 2, 2);
+    private static TextureRegion loadPauseButton(FileHandle file) {
+        return SpriteUtils.makeSprite(getTexture(file), 0, 0, 2, 2);
     }
 
-    private static void loadCharacters(FileHandle folder) {
+    private static Map<String, CharacterAsset> loadCharacters(FileHandle folder) {
+        Map<String, CharacterAsset> characters = new HashMap<String, CharacterAsset>();
         for (FileHandle file : folder.list()) {
             EnumMap<Direction, TextureRegion> person = new EnumMap<Direction, TextureRegion>(Direction.class);
             EnumMap<Direction, TextureRegion> stepRight = new EnumMap<Direction, TextureRegion>(Direction.class);
@@ -154,10 +162,12 @@ public class AssetLoader {
             }
             characters.put(name, new CharacterAsset(person, personAnim));
         }
+        return characters;
     }
 
-    private static void loadGrids(FileHandle folder) {
+    private static Map<String, Grid> loadGrids(FileHandle folder) {
         FileHandle[] handles = folder.list("txt");
+        Map<String, Grid> grids = new HashMap<String, Grid>();
         for (FileHandle handle : handles) {
             String name = handle.nameWithoutExtension().toLowerCase().replaceAll("[\\W_]", "");
             String raw = handle.readString();
@@ -174,12 +184,14 @@ public class AssetLoader {
             SpriteUtils.split(tileArray);
             grids.put(name, new Grid(name, tileArray));
         }
+        return grids;
     }
 
-    private static void loadMusic(FileHandle file) {
+    private static Map<String, Music> loadMusic(FileHandle file) {
         String config = file.readString();
         JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
         JsonArray array = object.getAsJsonArray("music");
+        Map<String, Music> music = new HashMap<String, Music>();
         for (JsonElement e : array) {
             JsonObject o = e.getAsJsonObject();
             String track = SuperParser.getString(o, "file");
@@ -187,12 +199,14 @@ public class AssetLoader {
             Music m = Gdx.audio.newMusic(file.parent().child(track));
             music.put(name, m);
         }
+        return music;
     }
 
-    private static void loadSounds(FileHandle file) {
+    private static Map<String, Sound> loadSounds(FileHandle file) {
         String config = file.readString();
         JsonObject object = SuperParser.getJsonHead(config).getAsJsonObject();
         JsonArray array = object.getAsJsonArray("sounds");
+        Map<String, Sound> sounds = new HashMap<String, Sound>();
         for (JsonElement e : array) {
             JsonObject o = e.getAsJsonObject();
             String sound = SuperParser.getString(o, "file");
@@ -200,26 +214,7 @@ public class AssetLoader {
             Sound s = Gdx.audio.newSound(file.parent().child(sound));
             sounds.put(name, s);
         }
-    }
-
-    private static void loadItems(FileHandle file) {
-        SuperParser.parseAll(file, GenericItem.class);
-    }
-
-    private static void loadSpells(FileHandle file) {
-        SuperParser.parseAll(file, Spell.class);
-    }
-
-    private static void loadBattleClasses(FileHandle file) {
-        SuperParser.parseAll(file, BattleClass.class);
-    }
-
-    private static void loadDialogues(FileHandle file) {
-        dialogues = SuperParser.parseAll(file, Dialogue.class);
-    }
-
-    private static void loadCleanDialogues(FileHandle file) {
-        cleanDialogues = SuperParser.parseAll(file, Dialogue.class);
+        return sounds;
     }
 
     //--------------------
