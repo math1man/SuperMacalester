@@ -4,7 +4,8 @@
         "id" : 0,
         "name" : "Fragrant Herb",
         "value" : 20,
-        "effects" : "A10"
+        "effects" : "A10",
+        "sound" : "powerup"
     },
     "PBR" : {
         "class" : "Item",

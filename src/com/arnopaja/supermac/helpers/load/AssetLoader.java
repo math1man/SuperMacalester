@@ -257,8 +257,13 @@ public class AssetLoader {
         return music;
     }
 
-    public static Sound getSound(String name) {
-        return sounds.get(name);
+    public static boolean playSound(String name) {
+        if (sounds.containsKey(name)) {
+            sounds.get(name).play(Settings.getVolume());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static Dialogue getDialogue(String name) {

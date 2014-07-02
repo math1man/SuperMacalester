@@ -1,5 +1,25 @@
 {
     "class" : "Plot",
+    "starting party" : {
+        "class" : "Party",
+        "characters" : [
+            {
+                "class" : "Hero",
+                "name" : "Tom",
+                "battleclass" : {
+                    "class" : "BattleClass",
+                    "name" : "Comp Sci"
+                },
+                "level" : 1,
+                "spells" : [
+                    {
+                        "class" : "Spell",
+                        "id" : 0
+                    }
+                ]
+            }
+        ]
+    },
     "dependencies" : [
 
     ],

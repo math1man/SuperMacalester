@@ -1,11 +1,12 @@
 package com.arnopaja.supermac.inventory;
 
 import com.arnopaja.supermac.battle.characters.BattleCharacter;
+import com.arnopaja.supermac.helpers.Parsable;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
-import com.arnopaja.supermac.helpers.Parsable;
-import com.arnopaja.supermac.helpers.SuperParser;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -25,8 +26,9 @@ public class Spell implements Parsable {
     private final float damageModifier;
     private final int manaCost;
     private final Type type;
+    private final String sound;
 
-    public Spell(int id, String name, float damageModifier, int manaCost) {
+    public Spell(int id, String name, float damageModifier, int manaCost, String sound) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
@@ -38,10 +40,12 @@ public class Spell implements Parsable {
         } else {
             type = Type.RESURRECT;
         }
+        this.sound = sound;
         cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
+        AssetLoader.playSound(sound);
         String dialogue = source + " casts " + this + " on " + destination + "!\n";
         switch (type) {
             case BLACK:
@@ -110,6 +114,14 @@ public class Spell implements Parsable {
         return manaCost;
     }
 
+    public String getSound() {
+        return sound;
+    }
+
+    public void playSound() {
+        AssetLoader.playSound(sound);
+    }
+
     @Override
     public String toString() {
         return name;
@@ -147,7 +159,8 @@ public class Spell implements Parsable {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
-                return new Spell(id, name, modifier, manaCost);
+                String sound = getString(object, "sound", null);
+                return new Spell(id, name, modifier, manaCost, sound);
             }
         }
 

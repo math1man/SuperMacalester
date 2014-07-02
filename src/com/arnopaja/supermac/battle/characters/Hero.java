@@ -1,10 +1,10 @@
 package com.arnopaja.supermac.battle.characters;
 
 import com.arnopaja.supermac.GameScreen;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Armor;
 import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.inventory.Weapon;

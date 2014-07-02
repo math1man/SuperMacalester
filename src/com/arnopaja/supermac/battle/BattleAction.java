@@ -7,11 +7,9 @@ import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.interaction.Interaction;
-import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.inventory.Inventory;
 import com.arnopaja.supermac.inventory.Item;
 import com.arnopaja.supermac.inventory.Spell;
-import com.arnopaja.supermac.plot.Settings;
 
 import java.util.Random;
 
@@ -100,7 +98,6 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
         return new BattleAction(source, destination, source.getSpeed(), spell, null) {
             @Override
             public Dialogue subrun(float delta) {
-                getSource().getBattleClass().getMagicSound().play(Settings.getVolume());
                 return getSpell().use(getSource(), getDestination());
             }
 
@@ -116,8 +113,6 @@ public abstract class BattleAction implements Interaction, Comparable<BattleActi
             @Override
             public Dialogue subrun(float delta) {
                 if (Inventory.getMain().take(getItem())) {
-                    if(getItem().isHealing()) AssetLoader.getSound("healing").play(Settings.getVolume());
-                    else AssetLoader.getSound("powerup").play(Settings.getVolume());
                     return getItem().use(getSource(), getDestination());
                 } else {
                     return new DialogueStep("You do not have any " + getItem() + "s left.", DialogueStyle.BATTLE_CONSOLE);

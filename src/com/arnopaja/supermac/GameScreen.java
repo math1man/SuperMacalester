@@ -2,20 +2,18 @@ package com.arnopaja.supermac;
 
 import com.arnopaja.supermac.battle.Battle;
 import com.arnopaja.supermac.battle.BattleRenderer;
-import com.arnopaja.supermac.battle.characters.BattleClass;
 import com.arnopaja.supermac.battle.characters.Hero;
 import com.arnopaja.supermac.battle.characters.Party;
 import com.arnopaja.supermac.helpers.GameMode;
 import com.arnopaja.supermac.helpers.InputHandler;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.DialogueDisplay;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.interaction.Interactions;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.SaverLoader;
-import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.inventory.Inventory;
-import com.arnopaja.supermac.inventory.Spell;
 import com.arnopaja.supermac.plot.Plot;
 import com.arnopaja.supermac.plot.Settings;
 import com.arnopaja.supermac.world.World;
@@ -23,8 +21,6 @@ import com.arnopaja.supermac.world.WorldRenderer;
 import com.arnopaja.supermac.world.objects.MainMapCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-
-import java.util.Collections;
 
 /**
  * @author Ari Weiland
@@ -152,9 +148,7 @@ public class GameScreen implements Screen {
     public void load() {
         worldMode.setController(SaverLoader.load(World.class, SuperParser.parse(AssetLoader.getEntitiesFile(), World.class)));
         plot = SaverLoader.load(Plot.class, SuperParser.parse(AssetLoader.getPlotFile(), Plot.class));
-        Hero hero = new Hero("Tom", BattleClass.COMP_SCI, 1);
-        hero.addSpell(Spell.getCached(0));
-        party = SaverLoader.load(Party.class, new Party<Hero>(Collections.singletonList(hero)));
+        party = SaverLoader.load(Party.class, SuperParser.parse("starting party", AssetLoader.getPlotFile(), Party.class));
         Inventory.load();
     }
 

@@ -1,17 +1,19 @@
 {
-    "CompSci" : {
+    "NullPointer" : {
         "class" : "Spell",
         "id" : 0,
         "name" : "NullPointer",
         "modifier" : -5,
-        "mana" : 2
+        "mana" : 2,
+        "sound" : "comp sci magic"
     },
-    "Heal" : {
+    "MaxUtils" : {
         "class" : "Spell",
         "id" : 1,
         "name" : "MaxUtils",
         "modifier" : 10,
-        "mana" : 2
+        "mana" : 2,
+        "sound" : "healing"
     },
     "Resurrect" : {
         "class" : "Spell",

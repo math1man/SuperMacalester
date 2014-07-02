@@ -8,8 +8,7 @@
         "attack" : 5,
         "defense" : 10,
         "special" : 25,
-        "speed" : 15,
-        "sound" : "comp sci magic"
+        "speed" : 15
     },
     "econ" : {
         "class" : "BattleClass",
@@ -20,8 +19,7 @@
         "attack" : 20,
         "defense" : 15,
         "special" : 10,
-        "speed" : 5,
-        "sound" : "healing"
+        "speed" : 5
     },
     "nat sci" : {
         "class" : "BattleClass",
@@ -32,8 +30,7 @@
         "attack" : 10,
         "defense" : 10,
         "special" : 15,
-        "speed" : 10,
-        "sound" : "nat sci magic"
+        "speed" : 10
     },
     "humanities" : {
         "class" : "BattleClass",

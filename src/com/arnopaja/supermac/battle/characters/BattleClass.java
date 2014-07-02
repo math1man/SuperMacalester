@@ -1,9 +1,7 @@
 package com.arnopaja.supermac.battle.characters;
 
-import com.arnopaja.supermac.helpers.SuperParser;
-import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.Parsable;
-import com.badlogic.gdx.audio.Sound;
+import com.arnopaja.supermac.helpers.SuperParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -15,10 +13,7 @@ import java.util.Map;
  */
 public class BattleClass implements Parsable {
                                                                                  // hp  m   a   d   s   speed
-    public static final BattleClass COMP_SCI   = new BattleClass("Comp Sci", SpecialType.BLACK, 30, 10, 5,  10, 25, 15, "comp sci magic");
-    public static final BattleClass ECON       = new BattleClass("Econ", SpecialType.WHITE, 40, 5,  20, 15, 10, 5,  "healing");
-    public static final BattleClass NAT_SCI    = new BattleClass("Nat Sci", SpecialType.RED,   35, 5,  10, 10, 15, 10, "nat sci magic");
-    public static final BattleClass HUMANITIES = new BattleClass("Humanities", SpecialType.NONE,  30, 0,  20, 10, 5,  20, null);
+    public static final BattleClass COMP_SCI   = new BattleClass("Comp Sci", SpecialType.BLACK, 30, 10, 5,  10, 25, 15);
 
     public static enum SpecialType implements Parsable { BLACK, WHITE, RED, NONE }
 
@@ -26,10 +21,9 @@ public class BattleClass implements Parsable {
     private final SpecialType specialType;
     private final int baseMaxHealth, baseMaxMana;
     private final int baseAttack, baseDefense, baseSpecial, baseSpeed;
-    private final String magicSound;
 
     protected BattleClass(String name, SpecialType specialType, int baseMaxHealth, int baseMaxMana,
-                          int baseAttack, int baseDefense, int baseSpecial, int baseSpeed, String magicSound) {
+                          int baseAttack, int baseDefense, int baseSpecial, int baseSpeed) {
         this.name = name;
         this.specialType = specialType;
         this.baseMaxHealth = baseMaxHealth;
@@ -38,7 +32,6 @@ public class BattleClass implements Parsable {
         this.baseDefense = baseDefense;
         this.baseSpecial = baseSpecial;
         this.baseSpeed = baseSpeed;
-        this.magicSound = magicSound;
     }
 
     public String getName() {
@@ -81,10 +74,6 @@ public class BattleClass implements Parsable {
         return (int) Math.round(baseMaxMana / 8.0);
     }
 
-    public Sound getMagicSound() {
-        return AssetLoader.getSound(magicSound);
-    }
-
     private static final Map<String, BattleClass> cache = new HashMap<String, BattleClass>();
 
     /**
@@ -124,8 +113,7 @@ public class BattleClass implements Parsable {
                 int defense = getInt(object, "defense");
                 int special = getInt(object, "special");
                 int speed = getInt(object, "speed");
-                String sound = getString(object, "sound", null);
-                BattleClass battleClass = new BattleClass(name, type, hp, mana, attack, defense, special, speed, sound);
+                BattleClass battleClass = new BattleClass(name, type, hp, mana, attack, defense, special, speed);
                 cache(battleClass);
                 return battleClass;
             }
@@ -142,7 +130,6 @@ public class BattleClass implements Parsable {
             addInt(json, "defense", object.baseDefense);
             addInt(json, "special", object.baseSpecial);
             addInt(json, "speed", object.baseSpeed);
-            addString(json, "sound", object.magicSound);
             return json;
         }
     }

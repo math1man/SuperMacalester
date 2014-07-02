@@ -5,6 +5,7 @@ import com.arnopaja.supermac.helpers.SuperParser;
 import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
+import com.arnopaja.supermac.helpers.load.AssetLoader;
 import com.arnopaja.supermac.helpers.load.EffectParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,16 +17,19 @@ import java.util.List;
  */
 public class Item extends GenericItem {
 
-    private List<Effect> effects;
+    private final List<Effect> effects;
+    private final String sound;
     private Powerup powerup;
 
-    protected Item(int id, String name, int value, List<Effect> effects) {
+    protected Item(int id, String name, int value, List<Effect> effects, String sound) {
         super(id, name, value);
         this.effects = effects;
+        this.sound = sound;
         this.powerup = new Powerup(effects);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
+        AssetLoader.playSound(sound);
         String dialogue = source + " uses " + this + " on " + destination + "!";
         boolean affected = false;
         if (isResurrect() && destination.isFainted()) {
@@ -86,6 +90,10 @@ public class Item extends GenericItem {
         return powerup.isStatus();
     }
 
+    public String getSound() {
+        return sound;
+    }
+
     public static class Parser extends SuperParser<Item> {
         @Override
         public Item fromJson(JsonElement element) {
@@ -97,7 +105,8 @@ public class Item extends GenericItem {
             String name = getString(object, "name");
             int value = getInt(object, "value");
             String effect = getString(object, "effects", "");
-            Item item = new Item(id, name, value, EffectParser.parse(effect));
+            String sound = getString(object, "sound", null);
+            Item item = new Item(id, name, value, EffectParser.parse(effect), sound);
             cache(item);
             return item;
         }
