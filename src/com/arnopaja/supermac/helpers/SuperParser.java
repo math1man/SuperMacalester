@@ -36,6 +36,9 @@ public abstract class SuperParser<T extends Parsable> {
     }
 
     private static SuperParser getParser(Class tryClass, Class defClass) {
+        if (defClass.isEnum()) {
+            return getParser(defClass);
+        }
         SuperParser parser = getParser(tryClass);
         if (parser == null) {
             parser = getParser(defClass);
@@ -95,7 +98,6 @@ public abstract class SuperParser<T extends Parsable> {
      * @return
      */
     public static <T extends Parsable> JsonElement toJson(T object, Class<T> clazz) {
-        // TODO: get rid of this conditional
         if (clazz.isEnum()) {
             return getParser(clazz).toJson(object);
         } else {
