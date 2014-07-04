@@ -19,75 +19,43 @@ public class Item extends GenericItem {
 
     private final List<Effect> effects;
     private final String sound;
-    private Powerup powerup;
+    private Powerup selfPowerup;
+    private Powerup otherPowerup;
 
     protected Item(int id, String name, int value, List<Effect> effects, String sound) {
         super(id, name, value);
         this.effects = effects;
         this.sound = sound;
-        this.powerup = new Powerup(effects);
+        this.selfPowerup = new Powerup(true, effects);
+        this.otherPowerup = new Powerup(false, effects);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        AssetLoader.playSound(sound);
         String dialogue = source + " uses " + this + " on " + destination + "!";
-        boolean affected = false;
-        if (isResurrect() && destination.isFainted()) {
-            destination.resurrect();
-            dialogue += "\n" + destination + " has been resurrected!";
-            affected = true;
+        AssetLoader.playSound(sound);
+        String temp = otherPowerup.applyTo(destination);
+        if (temp.isEmpty()) {
+            dialogue += "\nIt had no effect!";
+        } else {
+            dialogue += temp;
         }
-        if (isHealth()) {
-            int health = powerup.getValue(Effect.Type.HEALTH);
-            destination.modifyHealth(health);
-            if (health > 0) {
-                dialogue += "\n" + health + " health restored!";
-            } else {
-                dialogue += "\n" + (-health) + " damage done!";
-            }
-            affected = true;
+        temp = selfPowerup.applyTo(source);
+        if (!temp.isEmpty()) {
+            dialogue += "<d>Side effects:" + temp;
         }
-        if (isMana()) {
-            int mana = powerup.getValue(Effect.Type.MANA);
-            destination.modifyMana(mana);
-            if (mana > 0) {
-                dialogue += "\n" + mana + " mana restored!";
-            } else {
-                dialogue += "\n" + (-mana) + " mana burned!";
-            }
-            affected = true;
-        }
-        if (isStatus()) {
-            dialogue += "<d>" + powerup.statusDialogue();
-            destination.powerup(powerup);
-            affected = true;
-        }
-        if (!affected) dialogue += "\nIt had no effect!";
         return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
 
-    public List<Effect> getEffects() {
-        return effects;
+    public Powerup getSelfPowerup() {
+        return selfPowerup;
     }
 
-    public boolean isHealing() {
-        return powerup.getValue(Effect.Type.HEALTH) > 0;
+    public Powerup getOtherPowerup() {
+        return otherPowerup;
     }
 
     public boolean isResurrect() {
-        return powerup.isResurrect();
-    }
-
-    public boolean isHealth() {
-        return powerup.has(Effect.Type.HEALTH);
-    }
-
-    public boolean isMana() {
-        return powerup.has(Effect.Type.MANA);
-    }
-
-    public boolean isStatus() {
-        return powerup.isStatus();
+        return otherPowerup.isResurrect();
     }
 
     public String getSound() {
@@ -117,7 +85,8 @@ public class Item extends GenericItem {
             addInt(json, "id", object.getId());
             addString(json, "name", object.getName());
             addInt(json, "value", object.getValue());
-            addString(json, "effects", EffectParser.parse(object.getEffects()));
+            addString(json, "effects", EffectParser.parse(object.effects));
+            addString(json, "sound", object.getSound());
             return json;
         }
     }

@@ -1,37 +1,24 @@
 package com.arnopaja.supermac.inventory;
 
+import com.arnopaja.supermac.battle.characters.BattleCharacter;
+
 import java.util.*;
 
 /**
- * TODO: handle self vs other
  * @author Ari Weiland
  */
 public class Powerup {
 
+    private final boolean self;
     private final EnumMap<Effect.Type, Integer> effects = new EnumMap<Effect.Type, Integer>(Effect.Type.class);
     private boolean isResurrect = false;
 
-    /**
-     * Returns a 2-array of Powerups. The first powerup contains effects applied to self,
-     * while the second powerup contains effects applied to other.
-     * @param effects
-     * @return
-     */
-    public static Powerup[] getPowerups(Collection<Effect> effects) {
-        Powerup[] powerups = { new Powerup(), new Powerup() };
-        for (Effect e : effects) {
-            if (e.self) {
-                powerups[0].add(e);
-            } else {
-                powerups[1].add(e);
-            }
-        }
-        return powerups;
+    public Powerup(boolean self) {
+        this.self = self;
     }
 
-    public Powerup() {}
-
-    public Powerup(Collection<Effect> effects) {
+    public Powerup(boolean self, Collection<Effect> effects) {
+        this(self);
         addAll(effects);
     }
 
@@ -41,12 +28,16 @@ public class Powerup {
      * @return
      */
     public int getValue(Effect.Type type) {
-        return effects.containsKey(type) ? effects.get(type) : 0;
+        return has(type) ? effects.get(type) : 0;
     }
 
     public boolean has(Effect.Type type) {
         clean(type);
         return effects.containsKey(type);
+    }
+
+    public boolean isSelf() {
+        return self;
     }
 
     public boolean isResurrect() {
@@ -82,15 +73,17 @@ public class Powerup {
     }
 
     public void add(Effect effect) {
-        if (effect.isResurrect()) {
-            isResurrect = true;
-        } else {
-            int value = getValue(effect.type) + effect.value;
-            effects.put(effect.type, value);
+        if (effect.self == self) {
+            if (effect.isResurrect()) {
+                isResurrect = true;
+            } else {
+                int value = getValue(effect.type) + effect.value;
+                effects.put(effect.type, value);
+            }
         }
     }
 
-    public void addAll(Collection<? extends Effect> c) {
+    public void addAll(Collection<Effect> c) {
         for (Effect e : c) {
             add(e);
         }
@@ -106,6 +99,42 @@ public class Powerup {
 
     public void clear() {
         effects.clear();
+    }
+
+    public String applyTo(BattleCharacter character) {
+        StringBuilder dialogue = new StringBuilder();
+        if (isResurrect() && character.isFainted()) {
+            character.resurrect();
+            dialogue.append("\n").append(character).append(" has been resurrected!");
+        }
+        if (!character.isFainted()) {
+            if (has(Effect.Type.HEALTH)) {
+                int health = getValue(Effect.Type.HEALTH);
+                character.modifyHealth(health);
+                if (health > 0) {
+                    dialogue.append("\n").append(health).append(" health restored!");
+                } else {
+                    dialogue.append("\n").append(-health).append(" damage done!");
+                }
+            }
+            if (has(Effect.Type.MANA)) {
+                int mana = getValue(Effect.Type.MANA);
+                character.modifyMana(mana);
+                if (mana > 0) {
+                    dialogue.append("\n").append(mana).append(" mana restored!");
+                } else {
+                    dialogue.append("\n").append(-mana).append(" mana burned!");
+                }
+            }
+            if (isStatus()) {
+                if (dialogue.length() != 0) {
+                    dialogue.append("<d>");
+                }
+                dialogue.append(statusDialogue());
+                character.powerup(this);
+            }
+        }
+        return dialogue.toString();
     }
 
     private void clean(Effect.Type type) {

@@ -32,7 +32,7 @@ public abstract class BattleCharacter implements Parsable {
         this.hasFled = false;
         this.isDefending = false;
         this.spellBook = new SpellBook();
-        this.powerup = new Powerup();
+        this.powerup = new Powerup(true);
     }
 
     public void addSpell(Spell spell) {

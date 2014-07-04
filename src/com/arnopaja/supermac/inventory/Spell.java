@@ -7,81 +7,72 @@ import com.arnopaja.supermac.helpers.dialogue.Dialogue;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStep;
 import com.arnopaja.supermac.helpers.dialogue.DialogueStyle;
 import com.arnopaja.supermac.helpers.load.AssetLoader;
+import com.arnopaja.supermac.helpers.load.EffectParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: implement effects?
  * @author Nolan Varani
  */
 public class Spell implements Parsable {
-
-    private static enum Type { BLACK, WHITE, RESURRECT }
 
     private final int id;
     private final String name;
     private final float damageModifier;
     private final int manaCost;
-    private final Type type;
+    private final List<Effect> effects;
+    private final Powerup selfPowerup;
+    private final Powerup otherPowerup;
     private final String sound;
 
-    public Spell(int id, String name, float damageModifier, int manaCost, String sound) {
+    protected Spell(int id, String name, float damageModifier, int manaCost, List<Effect> effects, String sound) {
         this.id = id;
         this.name = name;
         this.damageModifier = damageModifier;
         this.manaCost = manaCost;
-        if (damageModifier > 0) {
-            type = Type.WHITE;
-        } else if (damageModifier < 0) {
-            type = Type.BLACK;
-        } else {
-            type = Type.RESURRECT;
-        }
+        this.effects = effects;
+        this.selfPowerup = new Powerup(true, effects);
+        this.otherPowerup = new Powerup(false, effects);
         this.sound = sound;
         cache.put(id, this);
     }
 
     public Dialogue use(BattleCharacter source, BattleCharacter destination) {
-        AssetLoader.playSound(sound);
         String dialogue = source + " casts " + this + " on " + destination + "!\n";
-        switch (type) {
-            case BLACK:
-                int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
-                destination.modifyHealth(damage);
-                dialogue += -damage + " damage done.";
-                if (destination.isFainted()) {
-                    dialogue += "\n" + destination + " fell!";
-                }
-                source.modifyMana(-manaCost);
-                if (source.isOutOfMana()) {
-                    dialogue += "<d>" + source + " is out of mana...";
-                }
-                break;
-            case RESURRECT:
-                source.modifyMana(-manaCost);
-                if(destination.isFainted()) {
-                    destination.resurrect();
-                    dialogue += destination + " has been resurrected!" ;
-                } else {
-                    dialogue += "It has no effect on " + destination + "." ;
-                }
-                break;
-            case WHITE:
-                if(destination.isFainted()) {
-                    dialogue = source + " cannot cast " + this + " on " + destination + " as it would have no effect!";
+        AssetLoader.playSound(sound);
+        source.modifyMana(-manaCost);
+        if (isBlack()) {
+            int damage = (int) Math.ceil((getDamageModifier() / (1 + destination.getSpecial())) * (1 + source.getSpecial()));
+            destination.modifyHealth(damage);
+            dialogue += -damage + " damage done.";
+            if (destination.isFainted()) {
+                dialogue += "\n" + destination + " fell!";
+            }
+        } else {
+            if(destination.isFainted()) {
+                    dialogue = destination + " is fainted!";
                 } else {
                     int healing = (int) getDamageModifier() * source.getSpecial() / 10; // This way modifiers aren't ridiculous
                     destination.modifyHealth(healing);
                     dialogue += healing + " health restored." ;
-                    source.modifyMana(-manaCost);
-                    if (source.isOutOfMana()) {
-                        dialogue += "<d>" + source + " is out of mana...";
-                    }
                 }
-                break;
+        }
+        String temp = otherPowerup.applyTo(destination);
+        if (temp.isEmpty()) {
+            dialogue += "\nIt had no effect!";
+        } else {
+            dialogue += temp;
+        }
+        temp = selfPowerup.applyTo(source);
+        if (!temp.isEmpty()) {
+            dialogue += "<d>Side effects:" + temp;
+        }
+        if (source.isOutOfMana()) {
+            dialogue += "<d>" + source + " is out of mana...";
         }
         return new DialogueStep(dialogue, DialogueStyle.BATTLE_CONSOLE);
     }
@@ -91,15 +82,15 @@ public class Spell implements Parsable {
     }
 
     public boolean isBlack() {
-        return type == Type.BLACK;
+        return damageModifier < 0;
     }
 
     public boolean isWhite() {
-        return type == Type.WHITE;
+        return damageModifier > 0;
     }
 
     public boolean isResurrect() {
-        return type == Type.RESURRECT;
+        return otherPowerup.isResurrect();
     }
 
     public String getName() {
@@ -159,18 +150,21 @@ public class Spell implements Parsable {
                 String name = getString(object, "name");
                 float modifier = getFloat(object, "modifier");
                 int manaCost = getInt(object, "mana");
+                String effect = getString(object, "effects", "");
                 String sound = getString(object, "sound", null);
-                return new Spell(id, name, modifier, manaCost, sound);
+                return new Spell(id, name, modifier, manaCost, EffectParser.parse(effect), sound);
             }
         }
 
         @Override
         public JsonElement toJson(Spell object) {
             JsonObject json = new JsonObject();
-            addInt(json, "id", object.id);
-            addString(json, "name", object.name);
-            addFloat(json, "modifier", object.damageModifier);
-            addInt(json, "mana", object.manaCost);
+            addInt(json, "id", object.getId());
+            addString(json, "name", object.getName());
+            addFloat(json, "modifier", object.getDamageModifier());
+            addInt(json, "mana", object.getManaCost());
+            addString(json, "effects", EffectParser.parse(object.effects));
+            addString(json, "sound", object.getSound());
             return json;
         }
     }
